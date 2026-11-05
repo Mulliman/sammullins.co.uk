@@ -95,8 +95,9 @@ blocks:
 
       ## Contact me
 
+      X: [\_SamMullins\_](https://x.com/_SamMullins_)
 
-      Twitter: [\_SamMullins\_](http://twitter.com/_SamMullins_)
+      GitHub: [Mulliman](https://github.com/Mulliman)
 
       LinkedIn: [sam-mullins-31471425](https://www.linkedin.com/in/sam-mullins-31471425/)
 ---

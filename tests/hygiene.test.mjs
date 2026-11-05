@@ -10,7 +10,7 @@ const srcFiles = () => [
   ...walk(join(ROOT, 'src'), (p) => /\.(astro|ts|mjs|md|yaml|json|css)$/.test(p)),
   ...walk(join(ROOT, 'public'), (p) => /\.(txt|html|js|json)$/.test(p)),
 ];
-const rel = (p) => relative(ROOT, p).split('\').join('/');
+const rel = (p) => relative(ROOT, p).split(/[\\/]/).join('/');
 
 function grepFiles(files, re) {
   return files.filter((f) => re.test(readFileSync(f, 'utf8'))).map(rel);
@@ -67,7 +67,8 @@ test('every <img> has an alt attribute', () => {
   const offenders = [];
   for (const f of html()) {
     for (const m of readFileSync(f, 'utf8').matchAll(/<img\b[^>]*>/g)) {
-      if (!/\salt=/.test(m[0])) offenders.push(`${rel(f)}: ${m[0].slice(0, 100)}`);
+      // `alt` with no value is valid and equals alt="" (decorative).
+      if (!/\salt(=|\s|>)/.test(m[0])) offenders.push(`${rel(f)}: ${m[0].slice(0, 100)}`);
     }
   }
   assert.deepEqual(offenders, []);

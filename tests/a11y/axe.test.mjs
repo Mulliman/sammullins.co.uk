@@ -8,7 +8,7 @@ import { DIST, walk } from '../helpers.mjs';
 import { serve } from './server.mjs';
 
 const pages = walk(DIST, (p) => p.endsWith('index.html'))
-  .map((p) => '/' + relative(DIST, p).split('\').join('/').replace(/index\.html$/, ''));
+  .map((p) => '/' + relative(DIST, p).split(/[\\/]/).join('/').replace(/index\.html$/, ''));
 
 let browser, srv;
 before(async () => { srv = await serve(); browser = await chromium.launch(); });
