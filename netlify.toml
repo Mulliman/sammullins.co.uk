@@ -1,0 +1,54 @@
+# Netlify config (tickets 701, 702). This file is the only source of build config.
+# Static files + headers only: no Functions, Forms, Identity or Edge Functions.
+
+[build]
+  command = "corepack enable && pnpm install --frozen-lockfile && pnpm build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+  # Full history so "last changed" dates come from git (ticket 902).
+  NETLIFY_BUILD_DEBUG = "false"
+
+[build.processing]
+  skip_processing = true
+
+# ---------- Security headers (all responses) ----------
+# The per-page CSP (script/style hashes) is emitted by Astro as a <meta> tag.
+# Directives that cannot live in <meta> are sent here as a header CSP; browsers enforce both.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; upgrade-insecure-requests"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-site"
+
+# Legacy media is hotlinked from GitHub, NuGet, npm and our.umbraco.com, so allow cross-origin use.
+[[headers]]
+  for = "/media/*"
+  [headers.values]
+    Cross-Origin-Resource-Policy = "cross-origin"
+    Cache-Control = "public, max-age=2592000"
+
+# Fingerprinted build assets never change.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Markdown twins for agents (ticket 901).
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    X-Robots-Tag = "noindex"

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import siteFiles from './integrations/site-files.mjs';
 
 // Ticket 003: static, URL-identical output (trailing slash, directory format).
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
   prefetch: false,
   devToolbar: { enabled: false },
   integrations: [
+    siteFiles(),
     sitemap({
       filter: (page) => !page.includes('/blocks-demo/') && !page.includes('/secret/'),
     }),
