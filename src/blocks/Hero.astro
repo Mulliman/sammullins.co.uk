@@ -5,16 +5,18 @@
  * A variant without an image falls back to plain.
  */
 import Pic from '../components/Pic.astro';
-import type { BlockOf } from '../lib/content';
+import { getSite, type BlockOf } from '../lib/content';
 
 interface Props { block: BlockOf<'hero'>; nested?: boolean }
 const { block } = Astro.props;
 const { heading, subheading, image, align } = block;
 const variant = image && block.variant !== 'plain' ? block.variant : 'plain';
+// Ticket 905 prototype B: the blurred backdrop comes into focus as you scroll (flag in site.yaml).
+const sharpen = (await getSite()).features.blurToSharpHero;
 const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 ---
 
-<section class:list={['hero', `hero--${variant}`, `hero--${align}`]}>
+<section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
   {variant === 'blurred' && image && (
     <div class="hero__backdrop" aria-hidden="true">
       <Pic src={image.src} alt="" preset="wide" priority />
@@ -122,5 +124,20 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
   @keyframes hero-drift {
     from { transform: translate3d(0, -3%, 0); }
     to { transform: translate3d(0, 3%, 0); }
+  }
+
+  /* Prototype B (905): scroll-driven focus pull on the backdrop. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero--sharpen .hero__backdrop :global(img) {
+        animation: hero-sharpen linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 80%;
+      }
+    }
+  }
+  @keyframes hero-sharpen {
+    from { filter: blur(14px) brightness(0.35); }
+    to { filter: blur(0) brightness(0.75); }
   }
 </style>

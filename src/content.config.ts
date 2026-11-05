@@ -271,6 +271,7 @@ const settings = defineCollection({
     footerLinks: z.array(link),
     socials: z.array(link.extend({ handle: z.string(), href: z.url() })),
     footerCards: z.array(z.object({ title: z.string(), body: z.string() })),
+    analytics: z.object({ goatcounter: z.string().regex(/^[a-z0-9-]*$/).default('') }).default({ goatcounter: '' }),
     features: z.object({
       viewTransitions: z.boolean().default(false),
       blurToSharpHero: z.boolean().default(false),
