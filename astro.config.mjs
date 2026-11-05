@@ -15,7 +15,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/_blocks/') && !page.includes('/secret/'),
+      filter: (page) => !page.includes('/blocks-demo/') && !page.includes('/secret/'),
     }),
   ],
   image: {
