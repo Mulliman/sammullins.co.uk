@@ -13,8 +13,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node --test tests/unit/",
-    "astro": "astro"
+    "test": "node --test tests/*.test.mjs",
+    "astro": "astro",
+    "test:a11y": "node --test tests/a11y/*.test.mjs",
+    "media:convert": "node scripts/media/convert.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
@@ -24,7 +26,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "@axe-core/playwright": "4.14.0",
     "node-html-parser": "9.0.5",
+    "playwright": "1.64.1",
     "turndown": "7.2.4",
     "typescript": "6.0.3"
   }
