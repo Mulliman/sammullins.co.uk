@@ -73,7 +73,28 @@ Where things go:
 
 ## Voice
 
-See [`_docs/voice.md`](_docs/voice.md). Short version: first person, British English, plain and specific, practical over hype, a little dry humour; show what was actually built and what went wrong.
+- Write as Sam, in the first person ("I"). Use "we" only when a team is actually meant.
+- British English: favourite, honour, customisation, licence (noun). Prefer -ise spellings. Keep "program" for software, as Sam does.
+- Plain and specific. Name the tool, library, version or platform, and say what it was used for.
+- Say what broke or was harder than expected. Be honest about limits.
+- Light, dry humour: at most one wry aside per piece. No jokes in code, steps or warnings.
+- No hype. Never use "revolutionary", "game-changing", "seamless", "delve", "leverage", "unlock", "supercharge", "cutting-edge", "robust" or "empower".
+- No em dashes (—) or en dashes as punctuation. Use full stops, commas, semicolons or brackets.
+- Mix sentence lengths: mostly medium, comma-led sentences, with the odd short closer.
+- Hedge once where unsure: "as far as I know", "I think", "seems to be".
+- Explain tech in one clause ("X is a Y that does Z"), then say why it was chosen.
+- Credit other people's tools and writing by name with a link, and say what each one saved.
+- Open with what the thing is or the problem that started it. No throat-clearing.
+- Close with one practical next step: a link, a command or "Give it a go!". Once per piece.
+- Use the house structures: numbered series ("5 cool things I used to build..."), "What's New in...", "Other articles in the series", "Give it a go!" cards, "Week N:" albums.
+- Exclamation marks: fine in titles and CTAs, at most one in running body text.
+- No emojis. No bullet lists of hyped benefits.
+- Never invent numbers, versions, dates, benchmarks or links. Put a placeholder in square brackets and ask Sam.
+- No job-seeking language: no "open to opportunities", "hire me", "passionate about", "excited to".
+- AI tooling pieces: practical and honest. Give the setup (model, hardware, versions), what worked, what failed, and where it should not be trusted.
+- If an AI drafted the words, set `authorship: sam-ai`. Sam decides whether it is `sam`.
+- Sam always merges. Never publish or merge on his behalf.
+- Full guide and examples: `_docs/voice.md`.
 
 ## Skills
 
