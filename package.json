@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "node-html-parser": "9.0.5",
+    "turndown": "7.2.4",
     "typescript": "7.0.2"
   }
 }

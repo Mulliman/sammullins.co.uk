@@ -11,3 +11,6 @@ Thumbs.db
 .idea/
 # local-only transcripts / scratch (see ticket 1001)
 .local/
+
+# agent worktrees
+.claude/worktrees/
