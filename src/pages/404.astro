@@ -1,0 +1,133 @@
+---
+/**
+ * Not found page (ticket 603). Netlify serves dist/404.html with status 404.
+ * "Did you mean" is progressive: the list of site URLs is built here, embedded as data-urls,
+ * and only the bundled script reads it. Without JS, the static links are all that show.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { urlFor, type AnyEntry } from '../lib/content';
+
+const all = [
+  ...(await getCollection('pages')),
+  ...(await getCollection('articles')),
+  ...(await getCollection('software')),
+  ...(await getCollection('albums')),
+] as AnyEntry[];
+const suggestions = all
+  .filter((e) => !e.data.hidden)
+  .map((e) => ({ href: urlFor(e), title: e.data.title }));
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page isn't here. Try the home page, articles, software or the archive."
+  noindex
+>
+  <section class="section not-found">
+    <div class="container--narrow">
+      <p class="not-found__code" aria-hidden="true">404</p>
+      <h1>Lost in the static</h1>
+      <p class="not-found__lede">
+        Nothing lives at this address, or it moved during one of the earlier chapters of this site.
+        Here are a few places that do exist.
+      </p>
+
+      <nav aria-label="Helpful links">
+        <ul class="not-found__links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/articles/">Articles</a></li>
+          <li><a href="/software/">Software</a></li>
+          <li><a href="/archive/">Archive</a></li>
+        </ul>
+      </nav>
+
+      <section class="did-you-mean" hidden data-did-you-mean data-urls={JSON.stringify(suggestions)} aria-labelledby="did-you-mean-heading">
+        <h2 id="did-you-mean-heading">Did you mean&hellip;?</h2>
+        <ul data-suggestions></ul>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found__code {
+    font-size: var(--step-4); font-weight: 100; line-height: 1; letter-spacing: var(--display-tracking);
+    color: var(--color-text-muted); margin-bottom: var(--space-2xs);
+  }
+  .not-found__lede { margin-top: var(--space-s); max-width: var(--measure); }
+  .not-found__links { list-style: none; padding: 0; margin-top: var(--space-m); display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); }
+  .not-found__links a {
+    display: inline-block; padding: var(--space-2xs) var(--space-s); border: 1px solid var(--color-border);
+    border-radius: var(--radius); text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: var(--step--1);
+  }
+  .not-found__links a:hover { border-color: var(--brand-orange); }
+  .did-you-mean { margin-top: var(--space-l); }
+  .did-you-mean h2 { font-size: var(--step-1); font-weight: 300; }
+  .did-you-mean ul { list-style: none; padding: 0; margin-top: var(--space-s); display: grid; gap: var(--space-2xs); }
+  .did-you-mean li + li { margin-top: 0; }
+</style>
+
+<script>
+  // Levenshtein distance between two strings (two-row dynamic programming).
+  function lev(a: string, b: string): number {
+    let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      const cur: number[] = [i];
+      for (let j = 1; j <= b.length; j++) {
+        cur[j] = Math.min(
+          (prev[j] ?? 0) + 1,
+          (cur[j - 1] ?? 0) + 1,
+          (prev[j - 1] ?? 0) + (a[i - 1] === b[j - 1] ? 0 : 1),
+        );
+      }
+      prev = cur;
+    }
+    return prev[b.length] ?? 0;
+  }
+
+  const norm = (p: string): string => p.toLowerCase().replace(/index\.html$/, '').replace(/\/+$/, '');
+  const segments = (p: string): string[] => p.split('/').filter(Boolean);
+
+  const box = document.querySelector<HTMLElement>('[data-did-you-mean]');
+  const list = box?.querySelector<HTMLUListElement>('[data-suggestions]');
+  if (box && list) {
+    try {
+      const urls = JSON.parse(box.dataset.urls ?? '[]') as { href: string; title: string }[];
+      let requested = '';
+      try { requested = norm(decodeURIComponent(location.pathname)); } catch { requested = norm(location.pathname); }
+      const reqSegs = segments(requested);
+      const reqLast = reqSegs[reqSegs.length - 1] ?? '';
+      const limit = Math.max(2, Math.round(reqLast.length / 3));
+
+      const scored = urls
+        .map((u) => {
+          const c = norm(u.href);
+          const cSegs = segments(c);
+          const cLast = cSegs[cSegs.length - 1] ?? '';
+          // Distance on the whole path, or on the last segment alone (catches a moved page under a new parent).
+          const dist = Math.min(lev(requested, c), lev(reqLast, cLast));
+          const shared = reqSegs.filter((s) => cSegs.includes(s)).length;
+          return { ...u, c, dist, shared };
+        })
+        .filter((s) => s.c !== requested && s.dist <= limit)
+        .sort((a, b) => a.dist - b.dist || b.shared - a.shared)
+        .slice(0, 3);
+
+      if (scored.length > 0) {
+        for (const s of scored) {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = s.href;
+          a.textContent = s.title;
+          li.append(a);
+          list.append(li);
+        }
+        box.hidden = false;
+      }
+    } catch {
+      // Malformed data or an odd URL: the static links still work.
+    }
+  }
+</script>
