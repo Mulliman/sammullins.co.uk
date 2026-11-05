@@ -1,7 +1,176 @@
 ---
-// STUB: replaced by the block implementation ticket.
-import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'listing'>, never>; nested?: boolean }
-const { block } = Astro.props;
+/**
+ * `listing` block (ticket 305): a collection query shown as a card grid, a list with
+ * thumbnails, or a compact notes feed. Hidden and (by default) archived items are excluded
+ * by `runQuery`.
+ */
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import Pic from '../components/Pic.astro';
+import { runQuery, urlFor, type BlockOf } from '../lib/content';
+
+interface Props { block: BlockOf<'listing'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+
+const entries = await runQuery(block.query);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
-<div data-block="listing" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested}>
+  {block.heading && <h2 class="listing__heading">{block.heading}</h2>}
+
+  {entries.length === 0 && <p class="listing__empty">Nothing here yet.</p>}
+
+  {entries.length > 0 && block.variant === 'grid' && (
+    <ul class="listing__grid">
+      {entries.map((e) => (
+        <li class="listing__cell">
+          <Card
+            title={e.data.title}
+            text={e.data.description}
+            image={e.data.cover}
+            href={urlFor(e)}
+            date={e.data.date}
+            variant="full"
+          />
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {entries.length > 0 && block.variant === 'list' && (
+    <ul class="listing__list">
+      {entries.map((e) => (
+        <li class="listing__row">
+          {e.data.cover && (
+            <div class="listing__thumb">
+              <Pic
+                src={e.data.cover.src}
+                alt={e.data.cover.decorative ? '' : e.data.cover.alt}
+                preset="thumb"
+                class="listing__img"
+              />
+            </div>
+          )}
+          <div class="listing__info">
+            {e.data.date && (
+              <p class="listing__meta"><time datetime={iso(e.data.date)}>{fmt(e.data.date)}</time></p>
+            )}
+            <h3 class="listing__title">
+              <a class="listing__link" href={urlFor(e)}>{e.data.title}</a>
+            </h3>
+            <p class="listing__desc">{e.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {entries.length > 0 && block.variant === 'notes' && (
+    <ul class="notes">
+      {entries.map((e) => (
+        <li class="note">
+          <p class="note__head">
+            {e.data.date && (
+              <time class="note__date" datetime={iso(e.data.date)}>{fmt(e.data.date)}</time>
+            )}
+            <a class="note__link" href={urlFor(e)}>{e.data.title}</a>
+          </p>
+          <p class="note__desc">{e.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  )}
+</Section>
+
+<style>
+  .listing__heading {
+    text-align: center;
+    margin-bottom: var(--space-l);
+  }
+  .listing__empty {
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  /* Grid: same ceiling-plus-collapse track rule as the cards block. */
+  .listing__grid {
+    --cols: 3;
+    --gap: var(--space-m);
+    --min: calc((var(--container) - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .listing__cell { display: flex; min-width: 0; }
+
+  /* List */
+  .listing__list, .notes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .listing__row {
+    position: relative;
+    display: flex;
+    gap: var(--space-s);
+    align-items: flex-start;
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .listing__thumb { flex: 0 0 6rem; }
+  .listing__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .listing__info { min-width: 0; display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .listing__meta { margin: 0; font-size: var(--step--1); color: var(--color-text-muted); }
+  .listing__title { font-size: var(--step-0); font-weight: 700; line-height: 1.3; margin: 0; text-transform: none; letter-spacing: 0; }
+  .listing__desc { margin: 0; color: var(--color-text-muted); }
+
+  /* Shared pattern: the title link's ::after covers its positioned row or note. */
+  .listing__link, .note__link { color: var(--color-text); text-decoration: none; }
+  .listing__link::after, .note__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .listing__link:focus-visible, .note__link:focus-visible { outline: none; }
+  .listing__row:focus-within:has(:focus-visible),
+  .note:focus-within:has(:focus-visible) {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .listing__row:hover .listing__link,
+  .note:hover .note__link { text-decoration: underline; text-underline-offset: 0.18em; }
+
+  /* Notes: compact feed, one line of date and title, description underneath */
+  .note {
+    position: relative;
+    padding-block: var(--space-2xs);
+    border-bottom: 1px dotted var(--color-border);
+  }
+  .note__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-s);
+    margin: 0;
+    font-weight: 700;
+  }
+  .note__date {
+    font-size: var(--step--1);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .note__desc { margin: 0; font-size: var(--step--1); color: var(--color-text-muted); }
+</style>

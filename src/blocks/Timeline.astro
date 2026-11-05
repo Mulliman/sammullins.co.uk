@@ -1,7 +1,118 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * `timeline` block (ticket 308): a semantic ordered list with a vertical line and a dot per
+ * item. The kind is shown as a text badge and a different dot shape, never colour alone.
+ */
+import Section from '../components/Section.astro';
+import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'timeline'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'timeline'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+
+const kindLabel = {
+  role: 'Role',
+  cert: 'Certification',
+  milestone: 'Milestone',
+  education: 'Education',
+} as const;
 ---
-<div data-block="timeline" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested}>
+  {block.heading && <h2 class="timeline__heading">{block.heading}</h2>}
+  <ol class="timeline">
+    {block.items.map((item) => (
+      <li class:list={['timeline__item', `timeline__item--${item.kind}`]}>
+        <p class="timeline__when">{item.when}</p>
+        <p class="timeline__badge">{kindLabel[item.kind]}</p>
+        <h3 class="timeline__title">{item.title}</h3>
+        {item.org && <p class="timeline__org">{item.org}</p>}
+        {item.body && <div class="timeline__body" set:html={md(item.body)} />}
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .timeline__heading {
+    text-align: center;
+    margin-bottom: var(--space-l);
+  }
+
+  /* Line sits at x = 0.5rem; items start at the padding edge (2.5rem) and dots centre on the line. */
+  .timeline {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 var(--space-l);
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: calc(0.5rem - 1px);
+    width: 2px;
+    background: var(--color-border);
+  }
+  .timeline__item {
+    position: relative;
+    padding-bottom: var(--space-l);
+  }
+  .timeline__item:last-child { padding-bottom: 0; }
+
+  /* Dots: the shape encodes the kind. */
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-l));
+    top: 0.4rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--color-link);
+  }
+  .timeline__item--cert::before {
+    border-radius: 2px;
+    transform: rotate(45deg) scale(0.85);
+  }
+  .timeline__item--milestone::before {
+    border-radius: 0;
+    background: var(--color-text);
+  }
+  .timeline__item--education::before {
+    background: var(--color-bg);
+    border: 3px solid var(--color-link);
+  }
+
+  .timeline__when {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+  }
+  .timeline__badge {
+    display: inline-block;
+    margin: var(--space-3xs) 0;
+    padding: 0 0.45em;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    font-size: var(--step--1);
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+  .timeline__title {
+    font-size: var(--step-1);
+    font-weight: 300;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .timeline__org {
+    margin: var(--space-3xs) 0 0;
+    font-weight: 700;
+  }
+  .timeline__body { margin-top: var(--space-2xs); color: var(--color-text-muted); }
+  .timeline__body :global(p) { margin: 0; }
+  .timeline__body :global(p + p) { margin-top: 0.75em; }
+</style>
