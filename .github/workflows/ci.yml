@@ -30,6 +30,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm lint
+      - name: Skills catalogue and .claude mirror are up to date
+        run: node scripts/skills/block-catalogue.mjs --check && node scripts/skills/sync.mjs --check
       - run: pnpm build
       - run: pnpm test
       - name: Dependency audit (high and critical)

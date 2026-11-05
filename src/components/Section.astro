@@ -14,21 +14,20 @@ interface Props {
 const { nested = false, surface = 'default', width = 'normal', tight = false, class: cls = '', label } = Astro.props;
 ---
 
-{
-  nested ? (
-    <div class:list={['nested-block', cls]}><slot /></div>
-  ) : (
-    <section
-      class:list={['section', `surface-${surface}`, { 'section--tight': tight }, cls]}
-      aria-label={label}
-    >
-      <div class={width === 'narrow' ? 'container--narrow' : 'container'}>
-        <slot />
-      </div>
-    </section>
-  )
-}
+{nested ? (
+  <div class:list={['nested-block', cls]}>
+    <slot />
+  </div>
+) : (
+  <section class:list={['section', `surface-${surface}`, { 'section--tight': tight }, cls]} aria-label={label}>
+    <div class={width === 'narrow' ? 'container--narrow' : 'container'}>
+      <slot />
+    </div>
+  </section>
+)}
 
 <style>
-  .nested-block + .nested-block { margin-top: var(--space-m); }
+  .nested-block + .nested-block {
+    margin-top: var(--space-m);
+  }
 </style>

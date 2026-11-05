@@ -36,26 +36,41 @@ function assertNever(x: never): never {
 }
 ---
 
-{
-  blocks.map((block) => {
-    switch (block.type) {
-      case 'hero': return <Hero block={block} />;
-      case 'intro': return <Intro block={block} nested={nested} />;
-      case 'prose': return <Prose block={block} nested={nested} />;
-      case 'body': return <BodySection block={block} Content={Content} nested={nested} />;
-      case 'callout': return <Callout block={block} nested={nested} />;
-      case 'image': return <ImageBlock block={block} nested={nested} />;
-      case 'gallery': return <Gallery block={block} nested={nested} />;
-      case 'cards': return <Cards block={block} nested={nested} />;
-      case 'listing': return <Listing block={block} nested={nested} />;
-      case 'logoWall': return <LogoWall block={block} nested={nested} />;
-      case 'quote': return <Quote block={block} nested={nested} />;
-      case 'code': return <Code block={block} nested={nested} />;
-      case 'nextPrev': return <NextPrev block={block} nested={nested} />;
-      case 'timeline': return <Timeline block={block} nested={nested} />;
-      case 'embed': return <Embed block={block} nested={nested} />;
-      case 'split': return <Split block={block} Content={Content} />;
-      default: return assertNever(block);
-    }
-  })
-}
+{blocks.map((block) => {
+  switch (block.type) {
+    case 'hero':
+      return <Hero block={block} />;
+    case 'intro':
+      return <Intro block={block} nested={nested} />;
+    case 'prose':
+      return <Prose block={block} nested={nested} />;
+    case 'body':
+      return <BodySection block={block} Content={Content} nested={nested} />;
+    case 'callout':
+      return <Callout block={block} nested={nested} />;
+    case 'image':
+      return <ImageBlock block={block} nested={nested} />;
+    case 'gallery':
+      return <Gallery block={block} nested={nested} />;
+    case 'cards':
+      return <Cards block={block} nested={nested} />;
+    case 'listing':
+      return <Listing block={block} nested={nested} />;
+    case 'logoWall':
+      return <LogoWall block={block} nested={nested} />;
+    case 'quote':
+      return <Quote block={block} nested={nested} />;
+    case 'code':
+      return <Code block={block} nested={nested} />;
+    case 'nextPrev':
+      return <NextPrev block={block} nested={nested} />;
+    case 'timeline':
+      return <Timeline block={block} nested={nested} />;
+    case 'embed':
+      return <Embed block={block} nested={nested} />;
+    case 'split':
+      return <Split block={block} Content={Content} />;
+    default:
+      return assertNever(block);
+  }
+})}

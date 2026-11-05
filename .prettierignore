@@ -1,0 +1,11 @@
+dist/
+.astro/
+node_modules/
+pnpm-lock.yaml
+public/
+src/content/
+src/assets/
+_docs/
+_tasks/
+.claude/
+.agents/skills/_shared/block-catalogue.md

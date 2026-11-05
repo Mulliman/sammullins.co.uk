@@ -2,7 +2,7 @@
 id: "402"
 title: Responsive Picture component
 epic: Media
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

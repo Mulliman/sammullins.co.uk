@@ -2,7 +2,7 @@
 id: "507"
 title: Archive index page
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

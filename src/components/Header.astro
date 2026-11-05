@@ -22,7 +22,11 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     <nav aria-label="Main" class="nav nav--desktop">
       <ul>
         {site.nav.map((item) => (
-          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
         ))}
       </ul>
     </nav>
@@ -37,7 +41,11 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       <nav aria-label="Main (mobile)">
         <ul>
           {site.nav.map((item) => (
-            <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
           ))}
         </ul>
       </nav>
@@ -71,84 +79,211 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
 </script>
 
 <style>
-  .site-header { padding-block: var(--space-s); }
-  .site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-m); position: relative; }
-  .logo { display: block; width: clamp(110px, 18vw, 150px); color: var(--color-text-inverse); }
-  .logo__mark :global(svg) { width: 100%; height: auto; display: block; }
-  .site-header :global(.theme-toggle) { margin-left: auto; color: var(--color-text-inverse); }
-  .nav ul { list-style: none; padding: 0; display: flex; gap: var(--space-m); }
+  .site-header {
+    padding-block: var(--space-s);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    position: relative;
+  }
+  .logo {
+    display: block;
+    width: clamp(110px, 18vw, 150px);
+    color: var(--color-text-inverse);
+  }
+  .logo__mark :global(svg) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .site-header :global(.theme-toggle) {
+    margin-left: auto;
+    color: var(--color-text-inverse);
+  }
+  .nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: var(--space-m);
+  }
   .nav a {
-    color: var(--color-text-inverse); text-decoration: none; text-transform: uppercase;
-    letter-spacing: 0.08em; font-size: var(--step--1); padding-block: var(--space-3xs);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--step--1);
+    padding-block: var(--space-3xs);
     border-bottom: 2px solid transparent;
   }
-  .nav a:hover, .nav a[aria-current='page'] { border-bottom-color: var(--brand-orange); color: #fff; }
+  .nav a:hover,
+  .nav a[aria-current='page'] {
+    border-bottom-color: var(--brand-orange);
+    color: #fff;
+  }
 
-  .nav--mobile { display: none; }
+  .nav--mobile {
+    display: none;
+  }
   .nav--mobile summary {
-    list-style: none; cursor: pointer; display: flex; align-items: center; gap: var(--space-2xs);
-    text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--step--1); padding: var(--space-2xs);
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--step--1);
+    padding: var(--space-2xs);
   }
-  .nav--mobile summary::-webkit-details-marker { display: none; }
-  .nav__burger, .nav__burger::before, .nav__burger::after {
-    display: block; width: 20px; height: 2px; background: currentColor; position: relative;
+  .nav--mobile summary::-webkit-details-marker {
+    display: none;
   }
-  .nav__burger::before, .nav__burger::after { content: ''; position: absolute; }
-  .nav__burger::before { top: -6px; }
-  .nav__burger::after { top: 6px; }
+  .nav__burger,
+  .nav__burger::before,
+  .nav__burger::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    position: relative;
+  }
+  .nav__burger::before,
+  .nav__burger::after {
+    content: '';
+    position: absolute;
+  }
+  .nav__burger::before {
+    top: -6px;
+  }
+  .nav__burger::after {
+    top: 6px;
+  }
   .nav--mobile nav {
-    position: absolute; right: 0; top: 100%; z-index: 20; background: var(--color-bg-inverse);
-    padding: var(--space-s) var(--space-m); border: 1px solid #333; min-width: 12rem;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 20;
+    background: var(--color-bg-inverse);
+    padding: var(--space-s) var(--space-m);
+    border: 1px solid #333;
+    min-width: 12rem;
   }
-  .nav--mobile ul { flex-direction: column; gap: var(--space-s); }
+  .nav--mobile ul {
+    flex-direction: column;
+    gap: var(--space-s);
+  }
 
   /* Signature (904). Strokes are invisible at rest, so the static logo is unchanged and nothing shifts.
      Animation only runs when motion is allowed. Stroke width is in SVG units (viewBox is 4471 wide). */
-  .logo__mark :global(path), .logo__mark :global(rect) {
-    stroke: currentColor; stroke-width: 36; stroke-linejoin: round;
-    stroke-dasharray: 1; stroke-dashoffset: 0; stroke-opacity: 0;
+  .logo__mark :global(path),
+  .logo__mark :global(rect) {
+    stroke: currentColor;
+    stroke-width: 36;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .logo.is-drawing :global(path), .logo.is-drawing :global(rect) {
+    .logo.is-drawing :global(path),
+    .logo.is-drawing :global(rect) {
       animation: sig-draw 0.9s var(--ease) both;
     }
     /* Stagger: each shape starts 20ms after the previous one (about 1.2s in total). */
-    .logo.is-drawing :global(g > :nth-child(2)) { animation-delay: 20ms; }
-    .logo.is-drawing :global(g > :nth-child(3)) { animation-delay: 40ms; }
-    .logo.is-drawing :global(g > :nth-child(4)) { animation-delay: 60ms; }
-    .logo.is-drawing :global(g > :nth-child(5)) { animation-delay: 80ms; }
-    .logo.is-drawing :global(g > :nth-child(6)) { animation-delay: 100ms; }
-    .logo.is-drawing :global(g > :nth-child(7)) { animation-delay: 120ms; }
-    .logo.is-drawing :global(g > :nth-child(8)) { animation-delay: 140ms; }
-    .logo.is-drawing :global(g > :nth-child(9)) { animation-delay: 160ms; }
-    .logo.is-drawing :global(g > :nth-child(10)) { animation-delay: 180ms; }
-    .logo.is-drawing :global(g > :nth-child(11)) { animation-delay: 200ms; }
-    .logo.is-drawing :global(g > :nth-child(12)) { animation-delay: 220ms; }
-    .logo.is-drawing :global(g > :nth-child(13)) { animation-delay: 240ms; }
-    .logo.is-drawing :global(g > :nth-child(14)) { animation-delay: 260ms; }
-    .logo.is-drawing :global(g > :nth-child(15)) { animation-delay: 280ms; }
-    .logo.is-drawing :global(g > :nth-child(16)) { animation-delay: 300ms; }
-    .logo.is-drawing :global(g > :nth-child(17)) { animation-delay: 320ms; }
+    .logo.is-drawing :global(g > :nth-child(2)) {
+      animation-delay: 20ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(3)) {
+      animation-delay: 40ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(4)) {
+      animation-delay: 60ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(5)) {
+      animation-delay: 80ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(6)) {
+      animation-delay: 100ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(7)) {
+      animation-delay: 120ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(8)) {
+      animation-delay: 140ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(9)) {
+      animation-delay: 160ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(10)) {
+      animation-delay: 180ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(11)) {
+      animation-delay: 200ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(12)) {
+      animation-delay: 220ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(13)) {
+      animation-delay: 240ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(14)) {
+      animation-delay: 260ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(15)) {
+      animation-delay: 280ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(16)) {
+      animation-delay: 300ms;
+    }
+    .logo.is-drawing :global(g > :nth-child(17)) {
+      animation-delay: 320ms;
+    }
 
     /* Hover and keyboard focus: a quick re-trace in the orange accent, then it fades back. */
-    .logo:is(:hover, :focus-visible) :global(path), .logo:is(:hover, :focus-visible) :global(rect) {
+    .logo:is(:hover, :focus-visible) :global(path),
+    .logo:is(:hover, :focus-visible) :global(rect) {
       stroke: var(--brand-orange);
       animation: sig-trace 0.8s var(--ease) both;
     }
   }
 
   @keyframes sig-draw {
-    0% { stroke-dashoffset: 1; stroke-opacity: 1; fill-opacity: 0; }
-    65% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0; }
-    100% { stroke-dashoffset: 0; stroke-opacity: 0; fill-opacity: 1; }
+    0% {
+      stroke-dashoffset: 1;
+      stroke-opacity: 1;
+      fill-opacity: 0;
+    }
+    65% {
+      stroke-dashoffset: 0;
+      stroke-opacity: 1;
+      fill-opacity: 0;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      stroke-opacity: 0;
+      fill-opacity: 1;
+    }
   }
   @keyframes sig-trace {
-    from { stroke-dashoffset: 1; stroke-opacity: 0.6; }
-    to { stroke-dashoffset: 0; stroke-opacity: 0; }
+    from {
+      stroke-dashoffset: 1;
+      stroke-opacity: 0.6;
+    }
+    to {
+      stroke-dashoffset: 0;
+      stroke-opacity: 0;
+    }
   }
 
   @media (max-width: 40rem) {
-    .nav--desktop { display: none; }
-    .nav--mobile { display: block; }
+    .nav--desktop {
+      display: none;
+    }
+    .nav--mobile {
+      display: block;
+    }
   }
 </style>

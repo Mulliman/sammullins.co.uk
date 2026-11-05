@@ -21,7 +21,8 @@ const { title, text, image, href, date, variant = 'full' } = Astro.props;
 // An image card with no image falls back to the text style.
 const kind = variant === 'image' && !image ? 'text' : variant;
 
-const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
@@ -33,10 +34,18 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   )}
   <div class:list={[kind === 'image' ? 'card__overlay' : 'card__body']}>
     <h3 class="card__title">
-      {href ? <a class="card__link" href={href}>{title}</a> : title}
+      {href ? (
+        <a class="card__link" href={href}>
+          {title}
+        </a>
+      ) : (
+        title
+      )}
     </h3>
     {kind !== 'image' && date && (
-      <p class="card__meta"><time datetime={iso(date)}>{fmt(date)}</time></p>
+      <p class="card__meta">
+        <time datetime={iso(date)}>{fmt(date)}</time>
+      </p>
     )}
     {kind !== 'image' && text && <div class="card__text" set:html={md(text)} />}
   </div>
@@ -50,21 +59,32 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     flex: 1;
     min-width: 0;
     border-radius: var(--radius);
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .card--text {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     padding: var(--space-m);
   }
-  .card--full { background: transparent; }
+  .card--full {
+    background: transparent;
+  }
 
   /* Image style: the bar sits on the image. Both share one grid cell, so the title link's
      ::after still covers the whole card (an absolutely positioned bar would become its own
      containing block). */
-  .card--image { display: grid; overflow: hidden; color: #fff; background: #000; }
+  .card--image {
+    display: grid;
+    overflow: hidden;
+    color: #fff;
+    background: #000;
+  }
   .card--image > .card__media,
-  .card--image > .card__overlay { grid-area: 1 / 1; }
+  .card--image > .card__overlay {
+    grid-area: 1 / 1;
+  }
   .card__overlay {
     align-self: end;
     padding: var(--space-xs) var(--space-s);
@@ -76,7 +96,10 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     border: 10px solid var(--color-frame);
     box-shadow: var(--shadow);
   }
-  .card--image .card__media { border: 0; box-shadow: none; }
+  .card--image .card__media {
+    border: 0;
+    box-shadow: none;
+  }
   .card__img {
     width: 100%;
     height: auto;
@@ -90,7 +113,9 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     gap: var(--space-2xs);
     padding-top: var(--space-s);
   }
-  .card--text .card__body { padding-top: 0; }
+  .card--text .card__body {
+    padding-top: 0;
+  }
 
   .card__title {
     font-size: var(--step-1);
@@ -98,29 +123,51 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     line-height: 1.25;
     margin: 0;
   }
-  .card--image .card__title { color: #fff; }
+  .card--image .card__title {
+    color: #fff;
+  }
 
-  .card__link { color: inherit; text-decoration: none; }
+  .card__link {
+    color: inherit;
+    text-decoration: none;
+  }
   .card__link::after {
     content: '';
     position: absolute;
     inset: 0;
   }
-  .card__link:focus-visible { outline: none; }
-  .card:hover .card__link { text-decoration: underline; text-underline-offset: 0.18em; }
+  .card__link:focus-visible {
+    outline: none;
+  }
+  .card:hover .card__link {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
 
   .card__meta {
     margin: 0;
     font-size: var(--step--1);
     color: var(--color-text-muted);
   }
-  .card__text { color: var(--color-text-muted); }
-  .card__text :global(p) { margin: 0; }
-  .card__text :global(p + p) { margin-top: 0.75em; }
-  .card__text :global(a) { position: relative; z-index: 1; }
+  .card__text {
+    color: var(--color-text-muted);
+  }
+  .card__text :global(p) {
+    margin: 0;
+  }
+  .card__text :global(p + p) {
+    margin-top: 0.75em;
+  }
+  .card__text :global(a) {
+    position: relative;
+    z-index: 1;
+  }
 
   @media (prefers-reduced-motion: no-preference) {
-    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
   }
   .card:focus-within:has(:focus-visible) {
     outline: 3px solid var(--color-focus);

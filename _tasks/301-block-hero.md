@@ -2,7 +2,7 @@
 id: "301"
 title: Block: hero
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

@@ -2,7 +2,7 @@
 id: "903"
 title: Console secret
 epic: Delight
-status: todo
+status: review
 priority: p1
 size: S
 owner: pair

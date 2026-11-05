@@ -2,7 +2,7 @@
 id: "505"
 title: Migrate photography (hidden)
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

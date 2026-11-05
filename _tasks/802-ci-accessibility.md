@@ -2,7 +2,7 @@
 id: "802"
 title: "CI: axe WCAG 2.2 AA on every page"
 epic: Quality gates
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

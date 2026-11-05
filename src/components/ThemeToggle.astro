@@ -3,7 +3,15 @@
 ---
 
 <button type="button" class="theme-toggle js-only" data-theme-toggle aria-pressed="false">
-  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+  <svg
+    aria-hidden="true"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+  >
     <circle cx="12" cy="12" r="5"></circle>
     <path d="M12 7a5 5 0 0 0 0 10z" fill="currentColor"></path>
   </svg>
@@ -22,7 +30,9 @@
   btn?.addEventListener('click', () => {
     const next = isDark() ? 'light' : 'dark';
     root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch {}
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
     sync();
   });
   sync();
@@ -30,10 +40,20 @@
 
 <style>
   .theme-toggle {
-    display: inline-flex; align-items: center; gap: var(--space-2xs);
-    background: transparent; border: 1px solid currentColor; border-radius: 999px;
-    padding: 0.3rem 0.7rem; cursor: pointer; font-size: var(--step--1);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    font-size: var(--step--1);
   }
-  html:not(.js) .theme-toggle { display: none; }
-  html.js .theme-toggle { display: inline-flex; }
+  html:not(.js) .theme-toggle {
+    display: none;
+  }
+  html.js .theme-toggle {
+    display: inline-flex;
+  }
 </style>

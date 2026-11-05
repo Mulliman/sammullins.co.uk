@@ -2,7 +2,7 @@
 id: "805"
 title: "CI: HTML validation, header & hygiene checks"
 epic: Quality gates
-status: todo
+status: in-progress
 priority: p0
 size: S
 owner: agent

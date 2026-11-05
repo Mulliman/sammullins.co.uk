@@ -17,13 +17,13 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 
 ## Commands
 
-| Command | What |
-|---|---|
-| `pnpm install --frozen-lockfile` | Install (new package versions must be ≥ 7 days old) |
-| `pnpm dev` | Dev server on http://localhost:4321 |
-| `pnpm build` | Static build to `dist/`: validates content, writes `_redirects` |
-| `pnpm check` | Type and content check (`astro check`) |
-| `pnpm test` | Unit tests, legacy URL test, hygiene checks |
+| Command                          | What                                                            |
+| -------------------------------- | --------------------------------------------------------------- |
+| `pnpm install --frozen-lockfile` | Install (new package versions must be ≥ 7 days old)             |
+| `pnpm dev`                       | Dev server on http://localhost:4321                             |
+| `pnpm build`                     | Static build to `dist/`: validates content, writes `_redirects` |
+| `pnpm check`                     | Type and content check (`astro check`)                          |
+| `pnpm test`                      | Unit tests, legacy URL test, hygiene checks                     |
 
 ## Repo map
 
@@ -44,19 +44,19 @@ _docs/            ← Decisions (source of truth), audit, content model, voice g
 
 ```yaml
 ---
-title: "Page title"
-description: "One or two sentences, ≤ 200 chars (used for SEO and cards)"
-date: 2027-01-15          # required for articles
-authorship: sam-ai        # sam | sam-ai
-kind: note                # articles only: article | note
-archived: false           # true = dated; shows the archive banner, listed on /archive/
-hidden: false             # true = never listed anywhere (still reachable by URL)
-cover: { src: ../../assets/media/x/y.avif, alt: "Describe the image" }
+title: 'Page title'
+description: 'One or two sentences, ≤ 200 chars (used for SEO and cards)'
+date: 2027-01-15 # required for articles
+authorship: sam-ai # sam | sam-ai
+kind: note # articles only: article | note
+archived: false # true = dated; shows the archive banner, listed on /archive/
+hidden: false # true = never listed anywhere (still reachable by URL)
+cover: { src: ../../assets/media/x/y.avif, alt: 'Describe the image' }
 blocks:
   - type: hero
-    variant: plain        # blurred | image | plain
-    heading: "Big thin heading"
-  - type: body            # the Markdown below the front matter goes here
+    variant: plain # blurred | image | plain
+    heading: 'Big thin heading'
+  - type: body # the Markdown below the front matter goes here
   - type: cards
     query: { from: articles, limit: 3 }
 ---
@@ -66,6 +66,7 @@ Markdown body (long-form text, code blocks get Prism highlighting).
 Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: `src/content/pages/blocks-demo/*.md`.
 
 Where things go:
+
 - An article lives at `src/content/articles/<slug>.md` and is served at `/articles/<slug>/`.
 - A note is the same, with `kind: note`.
 - A software page or docs lives at `src/content/software/<product>[/<doc>].md`. Docs set `series` and `order` to get prev/next automatically.

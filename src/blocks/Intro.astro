@@ -4,7 +4,10 @@ import Section from '../components/Section.astro';
 import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'intro'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'intro'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 const { kicker, heading, lead, align, surface } = block;
 ---
@@ -26,7 +29,9 @@ const { kicker, heading, lead, align, surface } = block;
     text-transform: uppercase;
     color: var(--color-text-muted);
   }
-  .intro__heading { margin: 0; }
+  .intro__heading {
+    margin: 0;
+  }
   .intro__lead {
     margin-top: var(--space-s);
     font-size: var(--step-1);
@@ -34,6 +39,10 @@ const { kicker, heading, lead, align, surface } = block;
     line-height: 1.5;
     color: var(--color-text-muted);
   }
-  .intro__lead :global(p) { margin: 0; }
-  .intro.text-center .intro__lead { margin-inline: auto; }
+  .intro__lead :global(p) {
+    margin: 0;
+  }
+  .intro.text-center .intro__lead {
+    margin-inline: auto;
+  }
 </style>

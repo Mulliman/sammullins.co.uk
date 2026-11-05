@@ -2,7 +2,7 @@
 id: "803"
 title: "CI: internal & external link check"
 epic: Quality gates
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

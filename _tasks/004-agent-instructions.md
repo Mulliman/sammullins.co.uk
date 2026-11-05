@@ -2,7 +2,7 @@
 id: "004"
 title: AGENTS.md and Agent Skills scaffold
 epic: Foundation
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

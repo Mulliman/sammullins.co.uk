@@ -2,7 +2,7 @@
 id: "401"
 title: Convert originals to AVIF masters + media map
 epic: Media
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

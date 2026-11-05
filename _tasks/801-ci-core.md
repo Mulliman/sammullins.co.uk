@@ -2,7 +2,7 @@
 id: "801"
 title: "CI core: check, lint, build"
 epic: Quality gates
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

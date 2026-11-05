@@ -37,7 +37,8 @@ function fail(msg, code = 2) {
   process.exit(code);
 }
 
-if (!folder || !/^[a-z0-9][a-z0-9-]*$/.test(folder)) fail('--to <folder> is required (lowercase letters, digits, hyphens)');
+if (!folder || !/^[a-z0-9][a-z0-9-]*$/.test(folder))
+  fail('--to <folder> is required (lowercase letters, digits, hyphens)');
 if (!files.length) fail('no input files given');
 if (!Number.isFinite(quality) || quality < 1 || quality > 100) fail('--quality must be 1 to 100');
 
@@ -52,7 +53,10 @@ for (const input of files) {
     if (ext === '.svg') throw new Error('SVG refused (can carry scripts); add it by hand after review');
     if (!RASTER_EXT.has(ext)) throw new Error(`unsupported type ${ext}`);
 
-    const base = basename(src, extname(src)).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+    const base = basename(src, extname(src))
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
     if (!base) throw new Error('file name has no usable characters');
     const destRel = `${folder}/${base}.avif`;
     const dest = join(OUT_ROOT, destRel);
@@ -66,12 +70,14 @@ for (const input of files) {
       .toBuffer({ resolveWithObject: true });
 
     writeFileSync(dest, data);
-    console.log(JSON.stringify({
-      file: input,
-      asset: `src/assets/media/${destRel}`,
-      width: info.width,
-      height: info.height,
-    }));
+    console.log(
+      JSON.stringify({
+        file: input,
+        asset: `src/assets/media/${destRel}`,
+        width: info.width,
+        height: info.height,
+      }),
+    );
   } catch (err) {
     failed++;
     console.error(`FAILED ${input}: ${err.message}`);

@@ -25,15 +25,25 @@ interface Props {
 }
 
 const {
-  title, description, image, imageAlt, type = 'website', published, modified,
-  noindex = false, markdownHref, jsonLd,
+  title,
+  description,
+  image,
+  imageAlt,
+  type = 'website',
+  published,
+  modified,
+  noindex = false,
+  markdownHref,
+  jsonLd,
 } = Astro.props;
 
 const site = await getSite();
 const goatcounter = site.analytics?.goatcounter;
 const vendoredCounter = goatcounter ? (await import('node:fs')).existsSync('public/js/count.js') : false;
 if (goatcounter && !vendoredCounter) {
-  throw new Error('site.yaml sets analytics.goatcounter but public/js/count.js is missing. Vendor it first (ticket 703).');
+  throw new Error(
+    'site.yaml sets analytics.goatcounter but public/js/count.js is missing. Vendor it first (ticket 703).',
+  );
 }
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const fullTitle = Astro.url.pathname === '/' ? `${site.name} | ${site.tagline}` : `${title} | ${site.name}`;
@@ -56,7 +66,9 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="preload" href="/fonts/lato-latin-100-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    {markdownHref && <link rel="alternate" type="text/markdown" href={markdownHref} title="Markdown version for agents" />}
+    {markdownHref && (
+      <link rel="alternate" type="text/markdown" href={markdownHref} title="Markdown version for agents" />
+    )}
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
 
     <meta property="og:site_name" content={site.name} />
@@ -76,7 +88,12 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     {site.features.viewTransitions && <link rel="stylesheet" href="/css/view-transitions.css" />}
     {/* Ticket 703: GoatCounter, self-hosted script, only when a site code is configured. Production only. */}
     {goatcounter && import.meta.env.PROD && (
-      <script is:inline async src="/js/count.js" data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}></script>
+      <script
+        is:inline
+        async
+        src="/js/count.js"
+        data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}
+      ></script>
     )}
 
     <script is:inline>
@@ -84,12 +101,17 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
       (function () {
         var d = document.documentElement;
         d.classList.add('js');
-        try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.dataset.theme = t; } catch (e) {}
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') d.dataset.theme = t;
+        } catch (e) {}
       })();
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to content</a>
+    <a class="skip-link" href="#content">
+      Skip to content
+    </a>
     <Header />
     <main id="content" tabindex="-1">
       <slot />

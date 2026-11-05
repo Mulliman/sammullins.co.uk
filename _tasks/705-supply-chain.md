@@ -2,7 +2,7 @@
 id: "705"
 title: Supply chain hardening
 epic: Hosting & security
-status: todo
+status: in-progress
 priority: p0
 size: M
 owner: agent

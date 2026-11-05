@@ -2,7 +2,7 @@
 id: "003"
 title: Astro config for static, URL-identical output
 epic: Foundation
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

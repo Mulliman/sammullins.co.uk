@@ -2,7 +2,7 @@
 id: "002"
 title: Toolchain: Node, pnpm, Astro 6, TypeScript
 epic: Foundation
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

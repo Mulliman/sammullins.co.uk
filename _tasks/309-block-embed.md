@@ -2,7 +2,7 @@
 id: "309"
 title: Block: embed (click-to-load facade)
 epic: Blocks
-status: todo
+status: review
 priority: p1
 size: S
 owner: agent

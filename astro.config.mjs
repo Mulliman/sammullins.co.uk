@@ -37,7 +37,7 @@ export default defineConfig({
         "img-src 'self' data:",
         "font-src 'self'",
         "connect-src 'self' https://sammullins.goatcounter.com",
-        "frame-src https://www.youtube-nocookie.com",
+        'frame-src https://www.youtube-nocookie.com',
         "base-uri 'none'",
         "form-action 'none'",
         "object-src 'none'",

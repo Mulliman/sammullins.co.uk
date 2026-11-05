@@ -2,7 +2,7 @@
 id: "502"
 title: Migrate home & CV
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

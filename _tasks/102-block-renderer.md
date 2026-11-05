@@ -2,7 +2,7 @@
 id: "102"
 title: Block renderer & page routing
 epic: Content model
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

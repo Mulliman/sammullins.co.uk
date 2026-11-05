@@ -10,19 +10,19 @@ site:
     - { label: Archive, href: /archive/ }
     - { label: Photography, href: /photography/ }
   socials:
-    - { label: GitHub, handle: Mulliman, href: "https://github.com/Mulliman" }
-    - { label: X, handle: _SamMullins_, href: "https://x.com/_SamMullins_" }
-    - { label: LinkedIn, handle: sam-mullins, href: "https://www.linkedin.com/in/sam-mullins-31471425/" }
+    - { label: GitHub, handle: Mulliman, href: 'https://github.com/Mulliman' }
+    - { label: X, handle: _SamMullins_, href: 'https://x.com/_SamMullins_' }
+    - { label: LinkedIn, handle: sam-mullins, href: 'https://www.linkedin.com/in/sam-mullins-31471425/' }
     # Bluesky: add once Sam confirms the handle (ticket 1202)
     # - { label: Bluesky, handle: "", href: "https://bsky.app/profile/" }
   footerCards:
     - title: What do I do?
       body: "I build websites based on the Sitecore and Umbraco CMS platforms. I have over 10 years of C# and JavaScript experience. I've also released a few open source projects and like to take photos."
     - title: Free stuff!
-      body: "Every component I built for the previous version of this site I open sourced as the free [UmbracoFolio package](/software/umbracofolio/). These days most of what I build ends up on [GitHub](https://github.com/Mulliman)."
+      body: 'Every component I built for the previous version of this site I open sourced as the free [UmbracoFolio package](/software/umbracofolio/). These days most of what I build ends up on [GitHub](https://github.com/Mulliman).'
   # Ticket 703: set to your GoatCounter site code (e.g. sammullins) once public/js/count.js is vendored.
   analytics:
-    goatcounter: ""
+    goatcounter: ''
   # Ticket 905 prototypes: flip to true on a branch to preview, then decide ship / tweak / drop.
   features:
     viewTransitions: false

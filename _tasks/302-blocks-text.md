@@ -2,7 +2,7 @@
 id: "302"
 title: Blocks: intro, prose, callout
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

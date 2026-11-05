@@ -7,7 +7,10 @@ import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
 import { runQuery, urlFor, type BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'cards'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'cards'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 
 type CardImage = NonNullable<NonNullable<BlockOf<'cards'>['items']>[number]['image']>;
@@ -71,10 +74,18 @@ const items: CardData[] = [
     margin: 0;
     padding: 0;
   }
-  .cards--cols-1 { --cols: 1; }
-  .cards--cols-2 { --cols: 2; }
-  .cards--cols-3 { --cols: 3; }
-  .cards--cols-4 { --cols: 4; }
+  .cards--cols-1 {
+    --cols: 1;
+  }
+  .cards--cols-2 {
+    --cols: 2;
+  }
+  .cards--cols-3 {
+    --cols: 3;
+  }
+  .cards--cols-4 {
+    --cols: 4;
+  }
   .cards__item {
     display: flex;
     min-width: 0;

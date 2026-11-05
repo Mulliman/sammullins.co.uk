@@ -2,7 +2,7 @@
 id: "1003"
 title: "Skills: add-images, redirect"
 epic: AI authoring
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

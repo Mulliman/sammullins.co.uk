@@ -10,11 +10,10 @@ function load(): Map<string, Date> {
   const map = new Map<string, Date>();
   try {
     // One git call for the whole repo: newest commit date per file under src/content.
-    const out = execFileSync(
-      'git',
-      ['log', '--format=@@%cI', '--name-only', '--no-renames', '--', 'src/content'],
-      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
-    );
+    const out = execFileSync('git', ['log', '--format=@@%cI', '--name-only', '--no-renames', '--', 'src/content'], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+    });
     let current: Date | undefined;
     for (const line of out.split('\n')) {
       if (line.startsWith('@@')) current = new Date(line.slice(2));

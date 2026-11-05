@@ -2,7 +2,7 @@
 id: "503"
 title: Migrate articles (+ merge duplicate)
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

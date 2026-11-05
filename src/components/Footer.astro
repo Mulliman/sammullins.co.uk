@@ -17,7 +17,11 @@ const year = new Date().getFullYear();
 
     <nav aria-label="Footer" class="footer-nav">
       <ul>
-        {[...site.nav, ...site.footerLinks].map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {[...site.nav, ...site.footerLinks].map((item) => (
+          <li>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))}
       </ul>
     </nav>
 
@@ -54,28 +58,90 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .site-footer { padding-block: var(--space-l) var(--space-m); margin-top: auto; }
-  .footer-nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s) var(--space-m); }
-  .footer-nav a { color: var(--color-text-inverse); text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--step--1); text-decoration: none; }
-  .footer-nav a:hover { text-decoration: underline; }
+  .site-footer {
+    padding-block: var(--space-l) var(--space-m);
+    margin-top: auto;
+  }
+  .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-s) var(--space-m);
+  }
+  .footer-nav a {
+    color: var(--color-text-inverse);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+  .footer-nav a:hover {
+    text-decoration: underline;
+  }
   .footer-cards {
-    display: grid; gap: var(--space-s); margin-top: var(--space-l);
+    display: grid;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     text-align: center;
   }
-  .footer-card { background: var(--color-surface-inverse); padding: var(--space-m); color: var(--color-text-inverse-muted); font-size: var(--step--1); }
-  .footer-card :global(p + p) { margin-top: 0.75em; }
-  .footer-card--logo { display: grid; place-items: center; color: var(--color-text-inverse); }
-  .footer-logo { width: 140px; display: block; }
-  .footer-logo :global(svg) { width: 100%; height: auto; }
-  .footer-card__title {
-    font-size: var(--step-1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--color-text-inverse); margin-bottom: var(--space-xs);
+  .footer-card {
+    background: var(--color-surface-inverse);
+    padding: var(--space-m);
+    color: var(--color-text-inverse-muted);
+    font-size: var(--step--1);
   }
-  .socials { list-style: none; padding: 0; display: grid; gap: var(--space-2xs); }
-  .socials a { display: flex; justify-content: center; gap: 0.5em; text-decoration: none; }
-  .socials__label { color: var(--color-text-inverse); }
-  .socials__handle { color: var(--color-link); }
-  .socials a:hover .socials__handle { text-decoration: underline; }
-  .copyright { text-align: center; margin-top: var(--space-m); font-size: var(--step--1); color: var(--color-text-inverse-muted); }
+  .footer-card :global(p + p) {
+    margin-top: 0.75em;
+  }
+  .footer-card--logo {
+    display: grid;
+    place-items: center;
+    color: var(--color-text-inverse);
+  }
+  .footer-logo {
+    width: 140px;
+    display: block;
+  }
+  .footer-logo :global(svg) {
+    width: 100%;
+    height: auto;
+  }
+  .footer-card__title {
+    font-size: var(--step-1);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-xs);
+  }
+  .socials {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .socials a {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    text-decoration: none;
+  }
+  .socials__label {
+    color: var(--color-text-inverse);
+  }
+  .socials__handle {
+    color: var(--color-link);
+  }
+  .socials a:hover .socials__handle {
+    text-decoration: underline;
+  }
+  .copyright {
+    text-align: center;
+    margin-top: var(--space-m);
+    font-size: var(--step--1);
+    color: var(--color-text-inverse-muted);
+  }
 </style>

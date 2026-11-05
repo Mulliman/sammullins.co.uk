@@ -2,7 +2,7 @@
 id: "602"
 title: "CI test: every legacy URL & media path resolves"
 epic: URLs & redirects
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

@@ -2,7 +2,7 @@
 id: "101"
 title: Content collections & Zod schemas
 epic: Content model
-status: todo
+status: review
 priority: p0
 size: L
 owner: agent

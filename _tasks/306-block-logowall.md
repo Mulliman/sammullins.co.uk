@@ -2,7 +2,7 @@
 id: "306"
 title: Block: logoWall
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

@@ -2,7 +2,7 @@
 id: "304"
 title: Block: gallery with dialog lightbox
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

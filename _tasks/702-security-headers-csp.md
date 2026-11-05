@@ -2,7 +2,7 @@
 id: "702"
 title: Security headers & strict CSP
 epic: Hosting & security
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

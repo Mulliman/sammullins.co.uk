@@ -2,7 +2,7 @@
 id: "901"
 title: "Agent view: Markdown twins, llms.txt, toggle"
 epic: Delight
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

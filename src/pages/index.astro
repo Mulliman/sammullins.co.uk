@@ -4,4 +4,5 @@ import EntryPage from '../components/EntryPage.astro';
 const entry = await getEntry('pages', 'home');
 if (!entry) throw new Error('src/content/pages/home.md is missing');
 ---
+
 <EntryPage entry={entry} />

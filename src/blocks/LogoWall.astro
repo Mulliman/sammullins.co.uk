@@ -7,7 +7,10 @@ import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'logoWall'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'logoWall'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 ---
 
@@ -19,7 +22,9 @@ const { block, nested = false } = Astro.props;
       return (
         <li class="logos__item">
           {item.href ? (
-            <a class="logos__link" href={item.href} rel="noopener">{pic}</a>
+            <a class="logos__link" href={item.href} rel="noopener">
+              {pic}
+            </a>
           ) : (
             pic
           )}
@@ -30,7 +35,9 @@ const { block, nested = false } = Astro.props;
 </Section>
 
 <style>
-  .logos__heading { margin-bottom: var(--space-m); }
+  .logos__heading {
+    margin-bottom: var(--space-m);
+  }
 
   .logos {
     display: grid;
@@ -68,7 +75,9 @@ const { block, nested = false } = Astro.props;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .logos__item :global(img) { transition: filter var(--dur) var(--ease); }
+    .logos__item :global(img) {
+      transition: filter var(--dur) var(--ease);
+    }
   }
 
   .logos__item:hover :global(img),

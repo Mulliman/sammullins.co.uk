@@ -2,7 +2,7 @@
 id: "305"
 title: Blocks: cards, listing, nextPrev
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: L
 owner: agent

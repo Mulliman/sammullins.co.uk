@@ -4,7 +4,10 @@ import Section from '../components/Section.astro';
 import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'quote'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'quote'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 const { text, attribution, source } = block;
 const caption = attribution ?? source;
@@ -15,17 +18,17 @@ const caption = attribution ?? source;
     <blockquote cite={source}>
       <div class="quote__text" set:html={md(text)} />
     </blockquote>
-    {caption && (
-      <figcaption class="quote__caption">
-        {source ? <a href={source}>{caption}</a> : caption}
-      </figcaption>
-    )}
+    {caption && <figcaption class="quote__caption">{source ? <a href={source}>{caption}</a> : caption}</figcaption>}
   </figure>
 </Section>
 
 <style>
-  .quote { margin: 0; }
-  .quote blockquote { margin: 0; }
+  .quote {
+    margin: 0;
+  }
+  .quote blockquote {
+    margin: 0;
+  }
 
   /* Large decorative opening mark, set above the text. */
   .quote blockquote::before {
@@ -42,8 +45,12 @@ const caption = attribution ?? source;
     font-weight: 300;
     line-height: 1.4;
   }
-  .quote__text :global(p) { margin: 0; }
-  .quote__text :global(p + p) { margin-top: 0.75em; }
+  .quote__text :global(p) {
+    margin: 0;
+  }
+  .quote__text :global(p + p) {
+    margin-top: 0.75em;
+  }
 
   .quote__caption {
     margin-top: var(--space-s);
@@ -53,5 +60,7 @@ const caption = attribution ?? source;
     letter-spacing: 0.04em;
     color: var(--color-text-muted);
   }
-  .quote__caption :global(p) { margin: 0; }
+  .quote__caption :global(p) {
+    margin: 0;
+  }
 </style>

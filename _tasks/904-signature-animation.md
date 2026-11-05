@@ -2,7 +2,7 @@
 id: "904"
 title: Signature draw + hover animation
 epic: Delight
-status: todo
+status: review
 priority: p1
 size: M
 owner: agent

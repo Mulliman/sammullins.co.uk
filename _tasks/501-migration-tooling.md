@@ -2,7 +2,7 @@
 id: "501"
 title: One-shot migration script (xStatic HTML to content)
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: L
 owner: agent

@@ -5,7 +5,10 @@ export async function getStaticPaths() {
   const items = await getCollection('software');
   return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
-interface Props { entry: CollectionEntry<'software'> }
+interface Props {
+  entry: CollectionEntry<'software'>;
+}
 const { entry } = Astro.props;
 ---
+
 <EntryPage entry={entry} />

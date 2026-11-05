@@ -5,10 +5,7 @@ import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 
 export type ListableCollection = 'articles' | 'software' | 'albums';
 export type AnyEntry =
-  | CollectionEntry<'pages'>
-  | CollectionEntry<'articles'>
-  | CollectionEntry<'software'>
-  | CollectionEntry<'albums'>;
+  CollectionEntry<'pages'> | CollectionEntry<'articles'> | CollectionEntry<'software'> | CollectionEntry<'albums'>;
 
 export type Block = CollectionEntry<'pages'>['data']['blocks'][number];
 export type BlockOf<T extends Block['type']> = Extract<Block, { type: T }>;
@@ -51,10 +48,14 @@ export async function runQuery(q: Query): Promise<AnyEntry[]> {
   const orderOf = (e: AnyEntry) => (e.collection === 'software' ? (e.data.order ?? 999) : 999);
   items.sort((a, b) => {
     switch (q.sort) {
-      case 'date-asc': return dateOf(a) - dateOf(b);
-      case 'order': return orderOf(a) - orderOf(b) || a.data.title.localeCompare(b.data.title);
-      case 'title': return a.data.title.localeCompare(b.data.title);
-      default: return dateOf(b) - dateOf(a);
+      case 'date-asc':
+        return dateOf(a) - dateOf(b);
+      case 'order':
+        return orderOf(a) - orderOf(b) || a.data.title.localeCompare(b.data.title);
+      case 'title':
+        return a.data.title.localeCompare(b.data.title);
+      default:
+        return dateOf(b) - dateOf(a);
     }
   });
 

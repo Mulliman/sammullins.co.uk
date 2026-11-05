@@ -2,7 +2,7 @@
 id: "1002"
 title: "Skills: new-article, new-note, new-page"
 epic: AI authoring
-status: todo
+status: review
 priority: p0
 size: M
 owner: agent

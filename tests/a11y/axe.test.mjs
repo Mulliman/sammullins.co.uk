@@ -7,12 +7,24 @@ import AxeBuilder from '@axe-core/playwright';
 import { DIST, walk } from '../helpers.mjs';
 import { serve } from './server.mjs';
 
-const pages = walk(DIST, (p) => p.endsWith('index.html'))
-  .map((p) => '/' + relative(DIST, p).split(/[\\/]/).join('/').replace(/index\.html$/, ''));
+const pages = walk(DIST, (p) => p.endsWith('index.html')).map(
+  (p) =>
+    '/' +
+    relative(DIST, p)
+      .split(/[\\/]/)
+      .join('/')
+      .replace(/index\.html$/, ''),
+);
 
 let browser, srv;
-before(async () => { srv = await serve(); browser = await chromium.launch(); });
-after(async () => { await browser?.close(); srv?.server.close(); });
+before(async () => {
+  srv = await serve();
+  browser = await chromium.launch();
+});
+after(async () => {
+  await browser?.close();
+  srv?.server.close();
+});
 
 for (const scheme of ['light', 'dark']) {
   test(`axe WCAG 2.2 AA (${scheme})`, async () => {
@@ -21,10 +33,15 @@ for (const scheme of ['light', 'dark']) {
     for (const path of pages) {
       const page = await ctx.newPage();
       const csp = [];
-      page.on('console', (m) => { if (/Content Security Policy/i.test(m.text())) csp.push(m.text()); });
+      page.on('console', (m) => {
+        if (/Content Security Policy/i.test(m.text())) csp.push(m.text());
+      });
       await page.goto(srv.origin + path, { waitUntil: 'load' });
-      const res = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
-      for (const v of res.violations) failures.push(`${path} [${v.id}] ${v.help} (${v.nodes.length}) e.g. ${v.nodes[0]?.target.join(' ')}`);
+      const res = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      for (const v of res.violations)
+        failures.push(`${path} [${v.id}] ${v.help} (${v.nodes.length}) e.g. ${v.nodes[0]?.target.join(' ')}`);
       for (const c of csp) failures.push(`${path} [csp] ${c.slice(0, 160)}`);
       await page.close();
     }

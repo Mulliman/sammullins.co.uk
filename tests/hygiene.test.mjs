@@ -21,7 +21,10 @@ test('no personal gmail address anywhere', () => {
 });
 
 test('no Google Analytics, Tag Manager or Google Fonts', () => {
-  assert.deepEqual(grepFiles([...srcFiles(), ...html()], /googletagmanager|google-analytics|gtag\(|fonts\.googleapis|fonts\.gstatic/i), []);
+  assert.deepEqual(
+    grepFiles([...srcFiles(), ...html()], /googletagmanager|google-analytics|gtag\(|fonts\.googleapis|fonts\.gstatic/i),
+    [],
+  );
 });
 
 test('no legacy UIkit classes in output', () => {
@@ -39,7 +42,8 @@ test('no inline style attributes in output HTML (CSP style-src self)', () => {
 });
 
 test('set:html is only used with sanitised helpers or trusted assets', () => {
-  const allowed = /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
+  const allowed =
+    /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
   const offenders = [];
   for (const f of walk(join(ROOT, 'src'), (p) => p.endsWith('.astro'))) {
     for (const line of readFileSync(f, 'utf8').split('\n')) {
@@ -57,7 +61,11 @@ test('every page has a CSP meta tag and a Markdown twin', () => {
     if (!/http-equiv="content-security-policy"/i.test(s)) missing.push(`${rel(f)}: no CSP`);
     if (f.endsWith('index.html')) {
       const md = f.replace(/index\.html$/, 'index.md');
-      try { readFileSync(md); } catch { missing.push(`${rel(f)}: no index.md twin`); }
+      try {
+        readFileSync(md);
+      } catch {
+        missing.push(`${rel(f)}: no index.md twin`);
+      }
     }
   }
   assert.deepEqual(missing, []);

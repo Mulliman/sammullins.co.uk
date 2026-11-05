@@ -8,7 +8,10 @@ import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'embed'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'embed'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 const watchUrl = `https://www.youtube.com/watch?v=${block.id}`;
 ---
@@ -81,7 +84,9 @@ const watchUrl = `https://www.youtube.com/watch?v=${block.id}`;
     color: inherit;
     text-decoration: none;
   }
-  .embed__link:focus-visible { outline-offset: -4px; }
+  .embed__link:focus-visible {
+    outline-offset: -4px;
+  }
 
   .embed__link :global(img) {
     position: absolute;
@@ -109,7 +114,9 @@ const watchUrl = `https://www.youtube.com/watch?v=${block.id}`;
     color: #111111;
     box-shadow: var(--shadow-soft);
   }
-  .embed__link:hover .embed__play { background: #ffffff; }
+  .embed__link:hover .embed__play {
+    background: #ffffff;
+  }
 
   .embed :global(iframe) {
     position: absolute;

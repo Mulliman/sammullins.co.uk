@@ -123,9 +123,7 @@ const leafBlocks = (image: ImageFn) => {
   const logoWall = z.object({
     type: z.literal('logoWall'),
     heading: z.string().optional(),
-    logos: z
-      .array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() }))
-      .min(1),
+    logos: z.array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() })).min(1),
   });
 
   const quote = z.object({
@@ -179,8 +177,21 @@ const leafBlocks = (image: ImageFn) => {
   });
 
   return [
-    hero, intro, prose, body, callout, imageBlock, gallery, cards, listing,
-    logoWall, quote, code, nextPrev, timeline, embed,
+    hero,
+    intro,
+    prose,
+    body,
+    callout,
+    imageBlock,
+    gallery,
+    cards,
+    listing,
+    logoWall,
+    quote,
+    code,
+    nextPrev,
+    timeline,
+    embed,
   ] as const;
 };
 
@@ -271,7 +282,14 @@ const settings = defineCollection({
     footerLinks: z.array(link),
     socials: z.array(link.extend({ handle: z.string(), href: z.url() })),
     footerCards: z.array(z.object({ title: z.string(), body: z.string() })),
-    analytics: z.object({ goatcounter: z.string().regex(/^[a-z0-9-]*$/).default('') }).default({ goatcounter: '' }),
+    analytics: z
+      .object({
+        goatcounter: z
+          .string()
+          .regex(/^[a-z0-9-]*$/)
+          .default(''),
+      })
+      .default({ goatcounter: '' }),
     features: z.object({
       viewTransitions: z.boolean().default(false),
       blurToSharpHero: z.boolean().default(false),

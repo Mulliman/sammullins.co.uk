@@ -2,7 +2,7 @@
 id: "905"
 title: "Prototypes: View Transitions & blur-to-sharp hero"
 epic: Delight
-status: todo
+status: in-progress
 priority: p1
 size: M
 owner: pair

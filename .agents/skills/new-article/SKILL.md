@@ -46,7 +46,7 @@ Turns source material into one article file, on its own branch, with a PR for Sa
     - a checklist of the gates you ran and their result,
     - any open questions for Sam,
     - the footer line `🤖 Generated with [Claude Code](https://claude.com/claude-code)`.
-    Do not pass `--auto`, do not run `gh pr merge`.
+      Do not pass `--auto`, do not run `gh pr merge`.
 12. **Stop.** Report the PR URL. Sam reviews and merges.
 
 ## Outputs

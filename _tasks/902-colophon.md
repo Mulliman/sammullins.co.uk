@@ -2,7 +2,7 @@
 id: "902"
 title: "Colophon: last changed + authorship icon"
 epic: Delight
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

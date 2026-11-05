@@ -2,7 +2,7 @@
 id: "701"
 title: Netlify site & config (static only)
 epic: Hosting & security
-status: todo
+status: in-progress
 priority: p0
 size: S
 owner: pair

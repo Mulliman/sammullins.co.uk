@@ -4,22 +4,44 @@ import Section from '../components/Section.astro';
 import Blocks from '../components/Blocks.astro';
 import type { Block } from '../lib/content';
 type SplitBlock = Extract<Block, { type: 'split' }>;
-interface Props { block: SplitBlock; Content?: any }
+interface Props {
+  block: SplitBlock;
+  Content?: any;
+}
 const { block, Content } = Astro.props;
 const [a, b] = block.columns;
 ---
+
 <Section>
-  <div class:list={["split", `split--${block.ratio.replace(":", "-")}`, { "split--reverse": block.reverseOnMobile }]}>
-    <div class="split__col"><Blocks blocks={a} Content={Content} nested /></div>
-    <div class="split__col"><Blocks blocks={b} Content={Content} nested /></div>
+  <div class:list={['split', `split--${block.ratio.replace(':', '-')}`, { 'split--reverse': block.reverseOnMobile }]}>
+    <div class="split__col">
+      <Blocks blocks={a} Content={Content} nested />
+    </div>
+    <div class="split__col">
+      <Blocks blocks={b} Content={Content} nested />
+    </div>
   </div>
 </Section>
 <style>
-  .split { display: grid; gap: var(--space-l); align-items: start; }
-  @media (min-width: 48rem) {
-    .split--1-1 { grid-template-columns: 1fr 1fr; }
-    .split--1-2 { grid-template-columns: 1fr 2fr; }
-    .split--2-1 { grid-template-columns: 2fr 1fr; }
+  .split {
+    display: grid;
+    gap: var(--space-l);
+    align-items: start;
   }
-  @media (max-width: 47.99rem) { .split--reverse .split__col:first-child { order: 2; } }
+  @media (min-width: 48rem) {
+    .split--1-1 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .split--1-2 {
+      grid-template-columns: 1fr 2fr;
+    }
+    .split--2-1 {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  @media (max-width: 47.99rem) {
+    .split--reverse .split__col:first-child {
+      order: 2;
+    }
+  }
 </style>

@@ -7,7 +7,10 @@ import Section from '../components/Section.astro';
 import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'prose'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'prose'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 
 /** Adds ids and anchor links to h2/h3. Heading text is already escaped by md(). */

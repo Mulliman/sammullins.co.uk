@@ -2,7 +2,7 @@
 id: "303"
 title: Block: image
 epic: Blocks
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

@@ -2,7 +2,7 @@
 id: "601"
 title: Redirect map to Netlify _redirects
 epic: URLs & redirects
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

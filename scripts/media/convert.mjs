@@ -7,15 +7,7 @@
 // Originals are files WITHOUT a `--NNNx0` suffix. Crops (`--300x0`, ...) are
 // never converted; they are only listed in the map when they exist on disk.
 
-import {
-  copyFileSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-} from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -47,8 +39,7 @@ if (!existsSync(legacyDir)) {
 }
 
 const mb = (n) => `${(n / 1024 / 1024).toFixed(2)} MB`;
-const isFresh = (dest, src) =>
-  !force && existsSync(dest) && statSync(dest).mtimeMs >= statSync(src).mtimeMs;
+const isFresh = (dest, src) => !force && existsSync(dest) && statSync(dest).mtimeMs >= statSync(src).mtimeMs;
 
 function walkSize(dir) {
   if (!existsSync(dir)) return { files: 0, bytes: 0 };

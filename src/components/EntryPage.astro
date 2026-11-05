@@ -12,7 +12,9 @@ import Callout from '../blocks/Callout.astro';
 import NextPrev from '../blocks/NextPrev.astro';
 import { urlFor, seriesNav, type AnyEntry, type Block } from '../lib/content';
 
-interface Props { entry: AnyEntry }
+interface Props {
+  entry: AnyEntry;
+}
 const { entry } = Astro.props;
 const { Content } = await render(entry as CollectionEntry<'pages'>);
 const data = entry.data;
@@ -44,7 +46,11 @@ const jsonLd = isArticle
         '@type': 'Person',
         name: 'Sam Mullins',
         url: 'https://www.sammullins.co.uk/',
-        sameAs: ['https://github.com/Mulliman', 'https://x.com/_SamMullins_', 'https://www.linkedin.com/in/sam-mullins-31471425/'],
+        sameAs: [
+          'https://github.com/Mulliman',
+          'https://x.com/_SamMullins_',
+          'https://www.linkedin.com/in/sam-mullins-31471425/',
+        ],
       }
     : undefined;
 

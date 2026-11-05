@@ -96,7 +96,11 @@ function describe(expr) {
     .replace(/\bz\.url\(\)/g, 'url')
     .replace(/\bz\.literal\('([^']+)'\)/g, '"$1"')
     .replace(/z\.enum\(\[([^\]]*)\]\)/g, (_, vals) =>
-      vals.split(',').map((v) => v.trim().replace(/^'|'$/g, '')).join(' | '))
+      vals
+        .split(',')
+        .map((v) => v.trim().replace(/^'|'$/g, ''))
+        .join(' | '),
+    )
     .replace(/z\.array\(([^()]*)\)/g, 'list of $1')
     .replace(/\.min\(1\)/g, ' (min 1)');
   if (refined) type += ' (refined: see notes)';
@@ -117,20 +121,29 @@ while ((m = literalRe.exec(text))) {
   if (objStart < 0) throw new Error(`no z.object before literal '${name}'`);
   const open = text.indexOf('{', objStart);
   const close = matchClose(text, open);
-  const fields = splitTopLevel(text.slice(open + 1, close)).map((part) => {
-    const kv = part.match(/^([A-Za-z_]\w*)\s*:\s*([\s\S]+)$/);
-    if (!kv) return null;
-    return { key: kv[1], expr: kv[2].trim() };
-  }).filter(Boolean);
+  const fields = splitTopLevel(text.slice(open + 1, close))
+    .map((part) => {
+      const kv = part.match(/^([A-Za-z_]\w*)\s*:\s*([\s\S]+)$/);
+      if (!kv) return null;
+      return { key: kv[1], expr: kv[2].trim() };
+    })
+    .filter(Boolean);
   blocks.set(name, fields);
 }
 
 // Shared objects referenced by name inside blocks, documented once.
 const SHARED = [
-  ['imageRef', 'Image with mandatory alt text', `src: image path (relative to the .md file), processed by Astro
+  [
+    'imageRef',
+    'Image with mandatory alt text',
+    `src: image path (relative to the .md file), processed by Astro
 alt: string. Required and non-empty unless decorative is true
-decorative: boolean, default false`],
-  ['query', 'Collection query used by cards and listing', `from: articles | software | albums (pages cannot be queried)
+decorative: boolean, default false`,
+  ],
+  [
+    'query',
+    'Collection query used by cards and listing',
+    `from: articles | software | albums (pages cannot be queried)
 tags: string list (optional), matches any tag
 kind: article | note (optional, articles only)
 status: active | legacy (optional, software only)
@@ -138,18 +151,35 @@ archived: exclude | include | only, default exclude
 parent: string (optional), id prefix, e.g. a software product
 topLevelOnly: boolean, default false
 sort: date-desc | date-asc | order | title, default date-desc
-limit: positive integer (optional)`],
+limit: positive integer (optional)`,
+  ],
 ];
 
 const ORDER = [
-  'hero', 'intro', 'prose', 'body', 'callout', 'image', 'gallery', 'cards', 'listing',
-  'logoWall', 'quote', 'code', 'nextPrev', 'timeline', 'embed', 'split',
+  'hero',
+  'intro',
+  'prose',
+  'body',
+  'callout',
+  'image',
+  'gallery',
+  'cards',
+  'listing',
+  'logoWall',
+  'quote',
+  'code',
+  'nextPrev',
+  'timeline',
+  'embed',
+  'split',
 ];
 
 const missing = ORDER.filter((n) => !blocks.has(n));
 const extra = [...blocks.keys()].filter((n) => !ORDER.includes(n));
 if (missing.length || extra.length) {
-  throw new Error(`block list drift. missing in schema: [${missing}] unexpected: [${extra}]. Update ORDER in block-catalogue.mjs`);
+  throw new Error(
+    `block list drift. missing in schema: [${missing}] unexpected: [${extra}]. Update ORDER in block-catalogue.mjs`,
+  );
 }
 
 const lines = [];
@@ -161,9 +191,13 @@ lines.push('-->');
 lines.push('');
 lines.push('# Block catalogue');
 lines.push('');
-lines.push(`Every page body is a list of blocks in front matter under \`blocks:\`. Each block has a \`type\` and the fields below. ${ORDER.length} types. Field reference and gotchas: [\`_docs/content-model.md\`](../../../_docs/content-model.md).`);
+lines.push(
+  `Every page body is a list of blocks in front matter under \`blocks:\`. Each block has a \`type\` and the fields below. ${ORDER.length} types. Field reference and gotchas: [\`_docs/content-model.md\`](../../../_docs/content-model.md).`,
+);
 lines.push('');
-lines.push('Field types are as written in the Zod schema. "optional" means the key may be left out. A "default" is what the site uses when the key is left out.');
+lines.push(
+  'Field types are as written in the Zod schema. "optional" means the key may be left out. A "default" is what the site uses when the key is left out.',
+);
 lines.push('');
 lines.push('## Shared shapes');
 lines.push('');
@@ -183,7 +217,10 @@ lines.push('');
 lines.push('| type | fields |');
 lines.push('|---|---|');
 for (const name of ORDER) {
-  const names = blocks.get(name).filter((f) => f.key !== 'type').map((f) => f.key);
+  const names = blocks
+    .get(name)
+    .filter((f) => f.key !== 'type')
+    .map((f) => f.key);
   lines.push(`| \`${name}\` | ${names.map((n) => `\`${n}\``).join(', ')} |`);
 }
 lines.push('');

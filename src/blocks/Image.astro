@@ -8,7 +8,10 @@ import Pic from '../components/Pic.astro';
 import { mdInline } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'image'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'image'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 const { image, width } = block;
 // Full bleed only makes sense at page level; inside a split column it stays in the column.
@@ -25,9 +28,16 @@ const bleed = width === 'full' && !nested;
 </Section>
 
 <style>
-  .image { margin: 0; }
-  .image--content { max-width: 52rem; margin-inline: auto; }
-  .image--wide { max-width: 100%; }
+  .image {
+    margin: 0;
+  }
+  .image--content {
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+  .image--wide {
+    max-width: 100%;
+  }
 
   .image__frame {
     border: 10px solid var(--color-frame);
@@ -54,5 +64,7 @@ const bleed = width === 'full' && !nested;
   }
 
   /* Stop the full-bleed figure causing sideways scroll on narrow screens. */
-  :global(section:has(> .container > .image--bleed)) { overflow-x: clip; }
+  :global(section:has(> .container > .image--bleed)) {
+    overflow-x: clip;
+  }
 </style>

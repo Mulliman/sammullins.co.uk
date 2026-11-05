@@ -2,7 +2,7 @@
 id: "005"
 title: Lint, format, editorconfig, PR-title check
 epic: Foundation
-status: todo
+status: in-progress
 priority: p0
 size: S
 owner: agent

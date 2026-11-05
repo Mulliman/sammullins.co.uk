@@ -2,7 +2,7 @@
 id: "103"
 title: Site settings: nav, socials, footer
 epic: Content model
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

@@ -6,7 +6,10 @@
 import Section from '../components/Section.astro';
 import type { BlockOf } from '../lib/content';
 
-interface Props { block: BlockOf<'nextPrev'>; nested?: boolean }
+interface Props {
+  block: BlockOf<'nextPrev'>;
+  nested?: boolean;
+}
 const { block, nested = false } = Astro.props;
 const { prev, next } = block;
 ---
@@ -16,13 +19,17 @@ const { prev, next } = block;
     <nav aria-label="Series" class="nextprev">
       {prev && (
         <a class="nextprev__tile nextprev__tile--prev" href={prev.href} rel="prev">
-          <span class="nextprev__label"><span aria-hidden="true">←</span> Previous</span>
+          <span class="nextprev__label">
+            <span aria-hidden="true">←</span> Previous
+          </span>
           <span class="nextprev__title">{prev.title}</span>
         </a>
       )}
       {next && (
         <a class="nextprev__tile nextprev__tile--next" href={next.href} rel="next">
-          <span class="nextprev__label">Next <span aria-hidden="true">→</span></span>
+          <span class="nextprev__label">
+            Next <span aria-hidden="true">→</span>
+          </span>
           <span class="nextprev__title">{next.title}</span>
         </a>
       )}
@@ -37,9 +44,13 @@ const { prev, next } = block;
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 40rem) {
-    .nextprev { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .nextprev {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
     /* With only a Next link, keep it on the right. */
-    .nextprev__tile--next:first-child { grid-column: 2; }
+    .nextprev__tile--next:first-child {
+      grid-column: 2;
+    }
   }
 
   .nextprev__tile {
@@ -56,9 +67,17 @@ const { prev, next } = block;
     text-decoration: none;
     transition: background var(--dur-fast) var(--ease);
   }
-  .nextprev__tile--next { text-align: right; align-items: flex-end; }
-  .nextprev__tile:hover { background: var(--color-border); }
-  .nextprev__tile:hover .nextprev__title { text-decoration: underline; text-underline-offset: 0.18em; }
+  .nextprev__tile--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+  .nextprev__tile:hover {
+    background: var(--color-border);
+  }
+  .nextprev__tile:hover .nextprev__title {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
 
   .nextprev__label {
     font-size: var(--step--1);

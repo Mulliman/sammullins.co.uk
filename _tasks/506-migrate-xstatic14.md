@@ -2,7 +2,7 @@
 id: "506"
 title: Migrate /xstatic14/
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

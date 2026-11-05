@@ -2,7 +2,7 @@
 id: "1001"
 title: Voice guide from articles + YouTube
 epic: AI authoring
-status: todo
+status: in-progress
 priority: p0
 size: M
 owner: agent

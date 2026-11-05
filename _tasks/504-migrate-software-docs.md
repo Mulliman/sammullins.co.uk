@@ -2,7 +2,7 @@
 id: "504"
 title: Migrate software + xStatic/XPEDITE docs
 epic: Migration
-status: todo
+status: review
 priority: p0
 size: L
 owner: agent

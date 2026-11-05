@@ -2,7 +2,7 @@
 id: "202"
 title: Self-hosted typography & thin heading rules
 epic: Design system
-status: todo
+status: review
 priority: p0
 size: S
 owner: agent

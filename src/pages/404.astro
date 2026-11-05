@@ -14,9 +14,7 @@ const all = [
   ...(await getCollection('software')),
   ...(await getCollection('albums')),
 ] as AnyEntry[];
-const suggestions = all
-  .filter((e) => !e.data.hidden)
-  .map((e) => ({ href: urlFor(e), title: e.data.title }));
+const suggestions = all.filter((e) => !e.data.hidden).map((e) => ({ href: urlFor(e), title: e.data.title }));
 ---
 
 <BaseLayout
@@ -26,23 +24,39 @@ const suggestions = all
 >
   <section class="section not-found">
     <div class="container--narrow">
-      <p class="not-found__code" aria-hidden="true">404</p>
+      <p class="not-found__code" aria-hidden="true">
+        404
+      </p>
       <h1>Lost in the static</h1>
       <p class="not-found__lede">
-        Nothing lives at this address, or it moved during one of the earlier chapters of this site.
-        Here are a few places that do exist.
+        Nothing lives at this address, or it moved during one of the earlier chapters of this site. Here are a few
+        places that do exist.
       </p>
 
       <nav aria-label="Helpful links">
         <ul class="not-found__links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/articles/">Articles</a></li>
-          <li><a href="/software/">Software</a></li>
-          <li><a href="/archive/">Archive</a></li>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/articles/">Articles</a>
+          </li>
+          <li>
+            <a href="/software/">Software</a>
+          </li>
+          <li>
+            <a href="/archive/">Archive</a>
+          </li>
         </ul>
       </nav>
 
-      <section class="did-you-mean" hidden data-did-you-mean data-urls={JSON.stringify(suggestions)} aria-labelledby="did-you-mean-heading">
+      <section
+        class="did-you-mean"
+        hidden
+        data-did-you-mean
+        data-urls={JSON.stringify(suggestions)}
+        aria-labelledby="did-you-mean-heading"
+      >
         <h2 id="did-you-mean-heading">Did you mean&hellip;?</h2>
         <ul data-suggestions></ul>
       </section>
@@ -52,21 +66,55 @@ const suggestions = all
 
 <style>
   .not-found__code {
-    font-size: var(--step-4); font-weight: 100; line-height: 1; letter-spacing: var(--display-tracking);
-    color: var(--color-text-muted); margin-bottom: var(--space-2xs);
+    font-size: var(--step-4);
+    font-weight: 100;
+    line-height: 1;
+    letter-spacing: var(--display-tracking);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2xs);
   }
-  .not-found__lede { margin-top: var(--space-s); max-width: var(--measure); }
-  .not-found__links { list-style: none; padding: 0; margin-top: var(--space-m); display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); }
+  .not-found__lede {
+    margin-top: var(--space-s);
+    max-width: var(--measure);
+  }
+  .not-found__links {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-m);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s) var(--space-m);
+  }
   .not-found__links a {
-    display: inline-block; padding: var(--space-2xs) var(--space-s); border: 1px solid var(--color-border);
-    border-radius: var(--radius); text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em;
+    display: inline-block;
+    padding: var(--space-2xs) var(--space-s);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     font-size: var(--step--1);
   }
-  .not-found__links a:hover { border-color: var(--brand-orange); }
-  .did-you-mean { margin-top: var(--space-l); }
-  .did-you-mean h2 { font-size: var(--step-1); font-weight: 300; }
-  .did-you-mean ul { list-style: none; padding: 0; margin-top: var(--space-s); display: grid; gap: var(--space-2xs); }
-  .did-you-mean li + li { margin-top: 0; }
+  .not-found__links a:hover {
+    border-color: var(--brand-orange);
+  }
+  .did-you-mean {
+    margin-top: var(--space-l);
+  }
+  .did-you-mean h2 {
+    font-size: var(--step-1);
+    font-weight: 300;
+  }
+  .did-you-mean ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-s);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .did-you-mean li + li {
+    margin-top: 0;
+  }
 </style>
 
 <script>
@@ -87,7 +135,11 @@ const suggestions = all
     return prev[b.length] ?? 0;
   }
 
-  const norm = (p: string): string => p.toLowerCase().replace(/index\.html$/, '').replace(/\/+$/, '');
+  const norm = (p: string): string =>
+    p
+      .toLowerCase()
+      .replace(/index\.html$/, '')
+      .replace(/\/+$/, '');
   const segments = (p: string): string[] => p.split('/').filter(Boolean);
 
   const box = document.querySelector<HTMLElement>('[data-did-you-mean]');
@@ -96,7 +148,11 @@ const suggestions = all
     try {
       const urls = JSON.parse(box.dataset.urls ?? '[]') as { href: string; title: string }[];
       let requested = '';
-      try { requested = norm(decodeURIComponent(location.pathname)); } catch { requested = norm(location.pathname); }
+      try {
+        requested = norm(decodeURIComponent(location.pathname));
+      } catch {
+        requested = norm(location.pathname);
+      }
       const reqSegs = segments(requested);
       const reqLast = reqSegs[reqSegs.length - 1] ?? '';
       const limit = Math.max(2, Math.round(reqLast.length / 3));
