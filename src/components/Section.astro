@@ -1,0 +1,34 @@
+---
+/**
+ * Standard block wrapper: a full-width section with a surface colour and a container.
+ * When `nested` (inside a split column) it renders only the inner content.
+ */
+interface Props {
+  nested?: boolean;
+  surface?: 'default' | 'muted' | 'inverse';
+  width?: 'normal' | 'narrow';
+  tight?: boolean;
+  class?: string;
+  label?: string;
+}
+const { nested = false, surface = 'default', width = 'normal', tight = false, class: cls = '', label } = Astro.props;
+---
+
+{
+  nested ? (
+    <div class:list={['nested-block', cls]}><slot /></div>
+  ) : (
+    <section
+      class:list={['section', `surface-${surface}`, { 'section--tight': tight }, cls]}
+      aria-label={label}
+    >
+      <div class={width === 'narrow' ? 'container--narrow' : 'container'}>
+        <slot />
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .nested-block + .nested-block { margin-top: var(--space-m); }
+</style>

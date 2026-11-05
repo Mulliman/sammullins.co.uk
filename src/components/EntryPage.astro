@@ -1,0 +1,79 @@
+---
+/**
+ * Renders any content entry: blocks (in order), Markdown body, archive banner, series nav,
+ * colophon and agent-view toggle.
+ */
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Blocks from './Blocks.astro';
+import Colophon from './Colophon.astro';
+import AgentView from './AgentView.astro';
+import Callout from '../blocks/Callout.astro';
+import NextPrev from '../blocks/NextPrev.astro';
+import { urlFor, seriesNav, type AnyEntry, type Block } from '../lib/content';
+
+interface Props { entry: AnyEntry }
+const { entry } = Astro.props;
+const { Content } = await render(entry as CollectionEntry<'pages'>);
+const data = entry.data;
+const url = urlFor(entry);
+
+let blocks: Block[] = [...data.blocks];
+const hasBody = (entry.body ?? '').trim().length > 0;
+if (hasBody && !blocks.some((b) => b.type === 'body')) blocks.push({ type: 'body', surface: 'default' });
+
+const series = entry.collection === 'software' ? await seriesNav(entry) : {};
+const hasSeriesNav = Boolean(series.prev || series.next) && !blocks.some((b) => b.type === 'nextPrev');
+
+const published = 'date' in data ? data.date : undefined;
+const isArticle = entry.collection === 'articles';
+const jsonLd = isArticle
+  ? {
+      '@context': 'https://schema.org',
+      '@type': data.kind === 'note' ? 'SocialMediaPosting' : 'BlogPosting',
+      headline: data.title,
+      description: data.description,
+      datePublished: published?.toISOString(),
+      dateModified: (data.updated ?? published)?.toISOString(),
+      author: { '@type': 'Person', name: 'Sam Mullins', url: 'https://www.sammullins.co.uk/' },
+      mainEntityOfPage: new URL(url, Astro.site).href,
+    }
+  : url === '/'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Sam Mullins',
+        url: 'https://www.sammullins.co.uk/',
+        sameAs: ['https://github.com/Mulliman', 'https://x.com/_SamMullins_', 'https://www.linkedin.com/in/sam-mullins-31471425/'],
+      }
+    : undefined;
+
+const archiveBlock = {
+  type: 'callout' as const,
+  tone: 'legacy' as const,
+  title: 'From the archive',
+  body: `This page is from an earlier chapter of my work and may be out of date. See the [archive](/archive/) for more like it, or the [home page](/) for what I'm doing now.`,
+};
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  image={data.cover?.src}
+  imageAlt={data.cover?.alt}
+  type={isArticle ? 'article' : 'website'}
+  published={published}
+  modified={data.updated}
+  noindex={data.noindex}
+  markdownHref={`${url}index.md`}
+  jsonLd={jsonLd}
+>
+  {data.archived && blocks[0]?.type === 'hero' && <Blocks blocks={[blocks[0]]} Content={Content} />}
+  {data.archived && <Callout block={archiveBlock} />}
+  <div data-agent-human>
+    <Blocks blocks={data.archived && blocks[0]?.type === 'hero' ? blocks.slice(1) : blocks} Content={Content} />
+  </div>
+  {hasSeriesNav && <NextPrev block={{ type: 'nextPrev', ...series }} />}
+  <AgentView href={`${url}index.md`} slot="colophon" />
+  <Colophon entry={entry} slot="colophon" />
+</BaseLayout>

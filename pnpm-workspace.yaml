@@ -1,0 +1,7 @@
+# Supply-chain hardening (ticket 002 / 705)
+# Wait 7 days before resolving any newly published version.
+minimumReleaseAge: 10080
+# Only these packages may run install scripts; all others are blocked.
+onlyBuiltDependencies:
+  - sharp
+  - esbuild

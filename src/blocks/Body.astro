@@ -1,0 +1,12 @@
+---
+/** `body` block: the entry's Markdown body, rendered by Astro (Shiki highlighting, heading ids). */
+import Section from '../components/Section.astro';
+import type { BlockOf } from '../lib/content';
+interface Props { block: BlockOf<'body'>; Content?: any; nested?: boolean }
+const { block, Content, nested = false } = Astro.props;
+---
+{Content && (
+  <Section surface={block.surface} width="narrow" nested={nested}>
+    <div class="prose"><Content /></div>
+  </Section>
+)}

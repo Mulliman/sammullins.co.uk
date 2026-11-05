@@ -1,0 +1,93 @@
+---
+/**
+ * Site header (ticket 203). The mobile menu is a <details> element, so it works without JS.
+ */
+import logo from '../assets/brand/logo.svg?raw';
+import { getSite } from '../lib/content';
+import ThemeToggle from './ThemeToggle.astro';
+
+const site = await getSite();
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<header class="site-header surface-inverse">
+  <div class="container site-header__inner">
+    <a href="/" class="logo" aria-label={`${site.name}, home`} data-signature>
+      <span class="logo__mark" aria-hidden="true" set:html={logo} />
+    </a>
+
+    <nav aria-label="Main" class="nav nav--desktop">
+      <ul>
+        {site.nav.map((item) => (
+          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <ThemeToggle />
+
+    <details class="nav nav--mobile">
+      <summary>
+        <span class="nav__burger" aria-hidden="true"></span>
+        <span>Menu</span>
+      </summary>
+      <nav aria-label="Main (mobile)">
+        <ul>
+          {site.nav.map((item) => (
+            <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Progressive enhancement: Escape closes the mobile menu and returns focus.
+  const menu = document.querySelector<HTMLDetailsElement>('.nav--mobile');
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+</script>
+
+<style>
+  .site-header { padding-block: var(--space-s); }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-m); position: relative; }
+  .logo { display: block; width: clamp(110px, 18vw, 150px); color: var(--color-text-inverse); }
+  .logo__mark :global(svg) { width: 100%; height: auto; display: block; }
+  .site-header :global(.theme-toggle) { margin-left: auto; color: var(--color-text-inverse); }
+  .nav ul { list-style: none; padding: 0; display: flex; gap: var(--space-m); }
+  .nav a {
+    color: var(--color-text-inverse); text-decoration: none; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: var(--step--1); padding-block: var(--space-3xs);
+    border-bottom: 2px solid transparent;
+  }
+  .nav a:hover, .nav a[aria-current='page'] { border-bottom-color: var(--brand-orange); color: #fff; }
+
+  .nav--mobile { display: none; }
+  .nav--mobile summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center; gap: var(--space-2xs);
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--step--1); padding: var(--space-2xs);
+  }
+  .nav--mobile summary::-webkit-details-marker { display: none; }
+  .nav__burger, .nav__burger::before, .nav__burger::after {
+    display: block; width: 20px; height: 2px; background: currentColor; position: relative;
+  }
+  .nav__burger::before, .nav__burger::after { content: ''; position: absolute; }
+  .nav__burger::before { top: -6px; }
+  .nav__burger::after { top: 6px; }
+  .nav--mobile nav {
+    position: absolute; right: 0; top: 100%; z-index: 20; background: var(--color-bg-inverse);
+    padding: var(--space-s) var(--space-m); border: 1px solid #333; min-width: 12rem;
+  }
+  .nav--mobile ul { flex-direction: column; gap: var(--space-s); }
+
+  @media (max-width: 40rem) {
+    .nav--desktop { display: none; }
+    .nav--mobile { display: block; }
+  }
+</style>

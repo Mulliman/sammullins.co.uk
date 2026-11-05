@@ -1,0 +1,29 @@
+{
+  "name": "sammullins.co.uk",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "packageManager": "pnpm@10.30.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test tests/unit/",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.4.4",
+    "marked": "18.1.2",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "typescript": "7.0.2"
+  }
+}

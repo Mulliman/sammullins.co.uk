@@ -1,0 +1,281 @@
+/**
+ * Content model (ticket 101).
+ *
+ * Every page is a typed list of blocks. A malformed block, missing alt text or
+ * missing authorship fails the build, which is the safety net for AI-written content.
+ * Field reference: _docs/content-model.md
+ */
+import { defineCollection, type SchemaContext } from 'astro:content';
+import { glob, file } from 'astro/loaders';
+import { z } from 'astro/zod';
+
+type ImageFn = SchemaContext['image'];
+
+/* ------------------------------------------------------------------ */
+/* Shared pieces                                                       */
+/* ------------------------------------------------------------------ */
+
+const align = z.enum(['center', 'left']);
+
+/** An image with mandatory alt text. `alt: ""` only when explicitly decorative. */
+const imageRef = (image: ImageFn) =>
+  z
+    .object({
+      src: image(),
+      alt: z.string(),
+      decorative: z.boolean().default(false),
+    })
+    .refine((v) => v.decorative || v.alt.trim().length > 0, {
+      message: 'Image needs alt text (or set decorative: true)',
+      path: ['alt'],
+    });
+
+const collectionName = z.enum(['articles', 'software', 'albums']);
+
+/** Query used by `cards` and `listing` to pull items from a collection. */
+const query = z.object({
+  from: collectionName,
+  tags: z.array(z.string()).optional(),
+  kind: z.enum(['article', 'note']).optional(),
+  status: z.enum(['active', 'legacy']).optional(),
+  archived: z.enum(['exclude', 'include', 'only']).default('exclude'),
+  parent: z.string().optional(),
+  topLevelOnly: z.boolean().default(false),
+  sort: z.enum(['date-desc', 'date-asc', 'order', 'title']).default('date-desc'),
+  limit: z.number().int().positive().optional(),
+});
+
+/* ------------------------------------------------------------------ */
+/* Blocks (discriminated union on `type`)                              */
+/* ------------------------------------------------------------------ */
+
+const leafBlocks = (image: ImageFn) => {
+  const img = imageRef(image);
+
+  const hero = z.object({
+    type: z.literal('hero'),
+    variant: z.enum(['image', 'blurred', 'plain']).default('blurred'),
+    heading: z.string(),
+    subheading: z.string().optional(),
+    image: img.optional(),
+    align: align.default('center'),
+  });
+
+  const intro = z.object({
+    type: z.literal('intro'),
+    kicker: z.string().optional(),
+    heading: z.string().optional(),
+    lead: z.string().optional(),
+    align: align.default('center'),
+    surface: z.enum(['default', 'muted', 'inverse']).default('muted'),
+  });
+
+  const prose = z.object({
+    type: z.literal('prose'),
+    markdown: z.string(),
+    align: align.default('left'),
+  });
+
+  const callout = z.object({
+    type: z.literal('callout'),
+    tone: z.enum(['note', 'tip', 'warning', 'legacy']).default('note'),
+    title: z.string().optional(),
+    body: z.string(),
+  });
+
+  const imageBlock = z.object({
+    type: z.literal('image'),
+    image: img,
+    caption: z.string().optional(),
+    width: z.enum(['content', 'wide', 'full']).default('content'),
+  });
+
+  const gallery = z.object({
+    type: z.literal('gallery'),
+    heading: z.string().optional(),
+    images: z.array(img.and(z.object({ caption: z.string().optional() }))).min(1),
+  });
+
+  const cardItem = z.object({
+    title: z.string(),
+    text: z.string().optional(),
+    image: img.optional(),
+    href: z.string().optional(),
+  });
+
+  const cards = z.object({
+    type: z.literal('cards'),
+    heading: z.string().optional(),
+    variant: z.enum(['full', 'image', 'text']).default('full'),
+    columns: z.number().int().min(1).max(4).default(3),
+    surface: z.enum(['default', 'muted', 'inverse']).default('default'),
+    items: z.array(cardItem).optional(),
+    query: query.optional(),
+  });
+
+  const listing = z.object({
+    type: z.literal('listing'),
+    heading: z.string().optional(),
+    variant: z.enum(['grid', 'list', 'notes']).default('grid'),
+    query,
+  });
+
+  const logoWall = z.object({
+    type: z.literal('logoWall'),
+    heading: z.string().optional(),
+    logos: z
+      .array(z.object({ name: z.string().min(1), logo: image(), href: z.string().url().optional() }))
+      .min(1),
+  });
+
+  const quote = z.object({
+    type: z.literal('quote'),
+    text: z.string(),
+    attribution: z.string().optional(),
+    source: z.string().url().optional(),
+  });
+
+  const code = z.object({
+    type: z.literal('code'),
+    lang: z.string().default('text'),
+    code: z.string(),
+    filename: z.string().optional(),
+  });
+
+  const nextPrev = z.object({
+    type: z.literal('nextPrev'),
+    prev: z.object({ title: z.string(), href: z.string() }).optional(),
+    next: z.object({ title: z.string(), href: z.string() }).optional(),
+  });
+
+  const timeline = z.object({
+    type: z.literal('timeline'),
+    heading: z.string().optional(),
+    items: z
+      .array(
+        z.object({
+          when: z.string(),
+          title: z.string(),
+          org: z.string().optional(),
+          kind: z.enum(['role', 'cert', 'milestone', 'education']).default('role'),
+          body: z.string().optional(),
+        }),
+      )
+      .min(1),
+  });
+
+  const embed = z.object({
+    type: z.literal('embed'),
+    provider: z.literal('youtube'),
+    id: z.string().regex(/^[\w-]{6,20}$/),
+    title: z.string().min(1),
+    poster: img.optional(),
+  });
+
+  /** Places the file's Markdown body (rendered by Astro, with Shiki) at this position. */
+  const body = z.object({
+    type: z.literal('body'),
+    surface: z.enum(['default', 'muted', 'inverse']).default('default'),
+  });
+
+  return [
+    hero, intro, prose, body, callout, imageBlock, gallery, cards, listing,
+    logoWall, quote, code, nextPrev, timeline, embed,
+  ] as const;
+};
+
+export const blockSchema = (image: ImageFn) => {
+  const leaves = leafBlocks(image);
+  const leaf = z.discriminatedUnion('type', leaves);
+  // `split` holds exactly one level of nested (non-split) blocks.
+  const split = z.object({
+    type: z.literal('split'),
+    ratio: z.enum(['1:1', '1:2', '2:1']).default('1:1'),
+    reverseOnMobile: z.boolean().default(false),
+    columns: z.tuple([z.array(leaf), z.array(leaf)]),
+  });
+  return z.discriminatedUnion('type', [...leaves, split]);
+};
+
+/* ------------------------------------------------------------------ */
+/* Base entry schema                                                   */
+/* ------------------------------------------------------------------ */
+
+const base = (image: ImageFn) =>
+  z.object({
+    title: z.string().min(1),
+    description: z.string().min(1).max(200),
+    date: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+    tags: z.array(z.string()).default([]),
+    cover: imageRef(image).optional(),
+    /** Who wrote the words: `sam` or `sam-ai` (Sam + AI). Not about how the page was built. */
+    authorship: z.enum(['sam', 'sam-ai']),
+    archived: z.boolean().default(false),
+    hidden: z.boolean().default(false),
+    noindex: z.boolean().default(false),
+    blocks: z.array(blockSchema(image)).default([]),
+  });
+
+/* ------------------------------------------------------------------ */
+/* Collections                                                         */
+/* ------------------------------------------------------------------ */
+
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: ({ image }) => base(image),
+});
+
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
+  schema: ({ image }) =>
+    base(image).extend({
+      date: z.coerce.date(),
+      kind: z.enum(['article', 'note']).default('article'),
+    }),
+});
+
+const software = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/software' }),
+  schema: ({ image }) =>
+    base(image).extend({
+      status: z.enum(['active', 'legacy']).default('active'),
+      /** Docs series this page belongs to, e.g. `xstatic-for-umbraco`. */
+      series: z.string().optional(),
+      order: z.number().optional(),
+    }),
+});
+
+const albums = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/albums' }),
+  schema: ({ image }) => base(image).extend({ date: z.coerce.date().optional() }),
+});
+
+const redirects = defineCollection({
+  loader: file('./src/data/redirects.yaml'),
+  schema: z.object({
+    to: z.string(),
+    status: z.union([z.literal(301), z.literal(302)]).default(301),
+    reason: z.string(),
+  }),
+});
+
+const link = z.object({ label: z.string(), href: z.string() });
+
+const settings = defineCollection({
+  loader: file('./src/data/site.yaml'),
+  schema: z.object({
+    name: z.string(),
+    tagline: z.string(),
+    nav: z.array(link),
+    footerLinks: z.array(link),
+    socials: z.array(link.extend({ handle: z.string(), href: z.string().url() })),
+    footerCards: z.array(z.object({ title: z.string(), body: z.string() })),
+    features: z.object({
+      viewTransitions: z.boolean().default(false),
+      blurToSharpHero: z.boolean().default(false),
+    }),
+  }),
+});
+
+export const collections = { pages, articles, software, albums, redirects, settings };

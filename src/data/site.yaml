@@ -1,0 +1,25 @@
+# Site-wide settings (ticket 103). Schema: src/content.config.ts → `settings`.
+site:
+  name: Sam Mullins
+  tagline: Developer
+  nav:
+    - { label: Software, href: /software/ }
+    - { label: Articles, href: /articles/ }
+    - { label: CV, href: /cv/ }
+  footerLinks:
+    - { label: Archive, href: /archive/ }
+    - { label: Photography, href: /photography/ }
+  socials:
+    - { label: GitHub, handle: Mulliman, href: "https://github.com/Mulliman" }
+    - { label: X, handle: _SamMullins_, href: "https://x.com/_SamMullins_" }
+    - { label: LinkedIn, handle: sam-mullins, href: "https://www.linkedin.com/in/sam-mullins-31471425/" }
+    # Bluesky: add once Sam confirms the handle (ticket 1202)
+    # - { label: Bluesky, handle: "", href: "https://bsky.app/profile/" }
+  footerCards:
+    - title: What do I do?
+      body: "I build websites based on the Sitecore and Umbraco CMS platforms. I have over 10 years of C# and JavaScript experience. I've also released a few open source projects and like to take photos."
+    - title: Free stuff!
+      body: "Every component I built for the previous version of this site I open sourced as the free [UmbracoFolio package](/software/umbracofolio/). These days most of what I build ends up on [GitHub](https://github.com/Mulliman)."
+  features:
+    viewTransitions: false
+    blurToSharpHero: false

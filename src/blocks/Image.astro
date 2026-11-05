@@ -1,0 +1,7 @@
+---
+// STUB: replaced by the block implementation ticket.
+import type { BlockOf } from '../lib/content';
+interface Props { block: Omit<BlockOf<'image'>, never>; nested?: boolean }
+const { block } = Astro.props;
+---
+<div data-block="image" data-stub>{JSON.stringify(block).slice(0, 80)}</div>

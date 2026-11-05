@@ -1,0 +1,11 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import EntryPage from '../../../components/EntryPage.astro';
+export async function getStaticPaths() {
+  const items = await getCollection('albums');
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+interface Props { entry: CollectionEntry<'albums'> }
+const { entry } = Astro.props;
+---
+<EntryPage entry={entry} />

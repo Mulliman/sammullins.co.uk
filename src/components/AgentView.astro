@@ -1,0 +1,98 @@
+---
+/**
+ * Agent view (ticket 901): flips the page into what an LLM sees (the Markdown twin).
+ * Without JS it is a plain link to index.md.
+ */
+interface Props { href: string }
+const { href } = Astro.props;
+---
+
+<div class="agent-view">
+  <a class="no-js-only" href={href}>View this page as Markdown (what an agent sees)</a>
+  <button type="button" class="agent-view__toggle js-only" data-agent-toggle data-href={href} aria-pressed="false">
+    <span aria-hidden="true">⌘</span> Agent view
+  </button>
+</div>
+
+<template id="agent-view-panel">
+  <section class="agent-panel" aria-label="Agent view: this page as Markdown">
+    <div class="container">
+      <div class="agent-panel__bar">
+        <p><strong>Agent view.</strong> This is the Markdown an AI agent gets for this page (<code>index.md</code>).</p>
+        <div class="agent-panel__actions">
+          <button type="button" data-agent-copy>Copy</button>
+          <a data-agent-raw>Open raw</a>
+          <button type="button" data-agent-close>Back to human view</button>
+        </div>
+      </div>
+      <pre class="agent-panel__md" tabindex="0"><code></code></pre>
+      <p class="agent-panel__status visually-hidden" aria-live="polite"></p>
+    </div>
+  </section>
+</template>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-agent-toggle]');
+  const human = document.querySelector<HTMLElement>('[data-agent-human]');
+  const main = document.getElementById('content');
+  let panel: HTMLElement | null = null;
+
+  async function open() {
+    if (!btn || !main) return;
+    const href = btn.dataset.href!;
+    const res = await fetch(href);
+    const text = res.ok ? await res.text() : 'Could not load the Markdown version.';
+    const tpl = document.getElementById('agent-view-panel') as HTMLTemplateElement;
+    panel = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+    panel.querySelector('code')!.textContent = text;
+    panel.querySelector<HTMLAnchorElement>('[data-agent-raw]')!.href = href;
+    panel.querySelector('[data-agent-close]')!.addEventListener('click', close);
+    panel.querySelector('[data-agent-copy]')!.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        panel!.querySelector('.agent-panel__status')!.textContent = 'Copied to clipboard';
+      } catch {}
+    });
+    main.querySelectorAll<HTMLElement>(':scope > *').forEach((el) => (el.hidden = true));
+    main.prepend(panel);
+    document.documentElement.classList.add('agent-mode');
+    btn.setAttribute('aria-pressed', 'true');
+    panel.querySelector<HTMLElement>('.agent-panel__md')!.focus();
+    window.scrollTo({ top: 0 });
+  }
+
+  function close() {
+    if (!main || !btn) return;
+    panel?.remove();
+    panel = null;
+    main.querySelectorAll<HTMLElement>(':scope > *').forEach((el) => (el.hidden = false));
+    document.documentElement.classList.remove('agent-mode');
+    btn.setAttribute('aria-pressed', 'false');
+    btn.focus();
+  }
+
+  btn?.addEventListener('click', () => (panel ? close() : open()));
+  void human;
+</script>
+
+<style>
+  .agent-view { text-align: center; margin-bottom: var(--space-s); font-size: var(--step--1); }
+  .agent-view a { color: var(--color-link-inverse); }
+  .agent-view__toggle {
+    font-family: var(--font-mono); background: transparent; color: var(--color-text-inverse);
+    border: 1px dashed var(--brand-orange); border-radius: var(--radius); padding: 0.3rem 0.8rem; cursor: pointer;
+  }
+  .agent-view__toggle[aria-pressed='true'] { background: var(--brand-orange); color: #000; }
+  :global(.agent-panel) { padding-block: var(--space-l); background: var(--color-bg-muted); }
+  :global(.agent-panel__bar) { display: flex; flex-wrap: wrap; gap: var(--space-s); justify-content: space-between; align-items: center; margin-bottom: var(--space-s); }
+  :global(.agent-panel__actions) { display: flex; gap: var(--space-2xs); flex-wrap: wrap; }
+  :global(.agent-panel__actions button), :global(.agent-panel__actions a) {
+    font: inherit; font-size: var(--step--1); padding: 0.3rem 0.7rem; border: 1px solid var(--color-border);
+    background: var(--color-bg); color: var(--color-text); border-radius: var(--radius); cursor: pointer; text-decoration: none;
+  }
+  :global(.agent-panel__md) {
+    font-family: var(--font-mono); font-size: 0.9rem; white-space: pre-wrap; word-break: break-word;
+    background: var(--color-bg); border: 1px solid var(--color-border); padding: var(--space-m); border-radius: var(--radius);
+    max-height: 75vh; overflow: auto;
+  }
+</style>
