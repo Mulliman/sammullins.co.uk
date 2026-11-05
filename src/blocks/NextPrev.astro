@@ -1,7 +1,74 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * `nextPrev` block (ticket 305): Previous and Next as two large tiles inside a Series nav.
+ * Works with only one of the two links. Renders nothing when there are neither.
+ */
+import Section from '../components/Section.astro';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'nextPrev'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'nextPrev'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const { prev, next } = block;
 ---
-<div data-block="nextPrev" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+{(prev || next) && (
+  <Section nested={nested}>
+    <nav aria-label="Series" class="nextprev">
+      {prev && (
+        <a class="nextprev__tile nextprev__tile--prev" href={prev.href} rel="prev">
+          <span class="nextprev__label"><span aria-hidden="true">←</span> Previous</span>
+          <span class="nextprev__title">{prev.title}</span>
+        </a>
+      )}
+      {next && (
+        <a class="nextprev__tile nextprev__tile--next" href={next.href} rel="next">
+          <span class="nextprev__label">Next <span aria-hidden="true">→</span></span>
+          <span class="nextprev__title">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  </Section>
+)}
+
+<style>
+  .nextprev {
+    display: grid;
+    gap: var(--space-s);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) {
+    .nextprev { grid-template-columns: 1fr 1fr; }
+    /* With only a Next link, keep it on the right. */
+    .nextprev__tile--next:first-child { grid-column: 2; }
+  }
+
+  .nextprev__tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    min-height: 8rem;
+    padding: var(--space-m) var(--space-l);
+    background: var(--color-bg-muted);
+    color: var(--color-text);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease);
+  }
+  .nextprev__tile--next { text-align: right; align-items: flex-end; }
+  .nextprev__tile:hover { background: var(--color-border); }
+  .nextprev__tile:hover .nextprev__title { text-decoration: underline; text-underline-offset: 0.18em; }
+
+  .nextprev__label {
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-muted);
+  }
+  .nextprev__title {
+    font-size: var(--step-2);
+    font-weight: 300;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: var(--display-tracking);
+  }
+</style>
