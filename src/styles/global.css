@@ -229,3 +229,10 @@
     transition-duration: 0.01ms !important; scroll-behavior: auto !important;
   }
 }
+
+/* Logo gradients are drawn dark-on-light; invert them on dark surfaces (header, footer, dark theme). */
+@layer utilities {
+  .surface-inverse stop[stop-color='#000'] { stop-color: #fff; }
+  .surface-inverse stop[stop-color='#3c3c3c'] { stop-color: #cfcfcf; }
+  .surface-inverse stop[stop-color='#808080'] { stop-color: #8c8c8c; }
+}
