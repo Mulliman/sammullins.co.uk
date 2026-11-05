@@ -47,14 +47,14 @@ The rebuild itself was planned and executed as tickets: see [`_tasks/`](_tasks/R
 
 ## Repo map
 
-| Path | What |
-|---|---|
-| `src/content/` | All content (`pages/`, `articles/`, `software/`, `albums/`) |
-| `src/content.config.ts` | The schema: every field and block |
-| `src/blocks/`, `src/components/`, `src/layouts/` | Rendering |
-| `src/assets/media/` | AVIF image masters |
-| `src/data/` | `site.yaml` (nav, socials, flags), `redirects.json` |
-| `integrations/` | Build hooks (`_redirects`, legacy media) |
-| `scripts/` | Media conversion, skills tooling, one-shot migration |
-| `tests/` | Node test suites and the axe runner |
-| `_tasks/`, `_docs/` | Tickets, decisions, audit, guides |
+| Path                                             | What                                                        |
+| ------------------------------------------------ | ----------------------------------------------------------- |
+| `src/content/`                                   | All content (`pages/`, `articles/`, `software/`, `albums/`) |
+| `src/content.config.ts`                          | The schema: every field and block                           |
+| `src/blocks/`, `src/components/`, `src/layouts/` | Rendering                                                   |
+| `src/assets/media/`                              | AVIF image masters                                          |
+| `src/data/`                                      | `site.yaml` (nav, socials, flags), `redirects.json`         |
+| `integrations/`                                  | Build hooks (`_redirects`, legacy media)                    |
+| `scripts/`                                       | Media conversion, skills tooling, one-shot migration        |
+| `tests/`                                         | Node test suites and the axe runner                         |
+| `_tasks/`, `_docs/`                              | Tickets, decisions, audit, guides                           |
