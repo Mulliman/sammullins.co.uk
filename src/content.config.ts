@@ -252,7 +252,7 @@ const albums = defineCollection({
 });
 
 const redirects = defineCollection({
-  loader: file('./src/data/redirects.yaml'),
+  loader: file('./src/data/redirects.json'),
   schema: z.object({
     to: z.string(),
     status: z.union([z.literal(301), z.literal(302)]).default(301),

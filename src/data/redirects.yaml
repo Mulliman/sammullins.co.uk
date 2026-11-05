@@ -1,6 +1,0 @@
-# Single source of truth for page redirects (ticket 601).
-# Key = old path (with trailing slash). Edited by the `redirect` skill.
-# Legacy media redirects are generated separately from _docs/legacy/media-map.json.
-"/articles/xstatic-introduces-git-and-ftp-support/":
-  to: "/articles/xstatic-adds-git-and-ftp-support/"
-  reason: "Duplicate article merged; kept the internally linked one (ticket 503)"

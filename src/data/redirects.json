@@ -1,0 +1,7 @@
+{
+  "/articles/xstatic-introduces-git-and-ftp-support/": {
+    "to": "/articles/xstatic-adds-git-and-ftp-support/",
+    "status": 301,
+    "reason": "Duplicate article merged; kept the internally linked one (ticket 503)"
+  }
+}

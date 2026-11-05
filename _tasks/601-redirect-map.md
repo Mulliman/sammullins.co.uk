@@ -15,7 +15,7 @@ Retired or renamed URLs must 301 gracefully and never 404 (decisions: *Legacy co
 
 ## Scope
 
-- `src/data/redirects.yaml` (schema-validated): `{ from, to, status: 301|302, reason }`. It's the single source of truth that the `redirect` skill (1003) edits.
+- `src/data/redirects.json` (schema-validated): `{ from, to, status: 301|302, reason }`. It's the single source of truth that the `redirect` skill (1003) edits.
 - A build step generates `dist/_redirects` from:
   - `redirects.yaml`
   - legacy media (403)

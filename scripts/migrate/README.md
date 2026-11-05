@@ -11,6 +11,6 @@ node scripts/migrate/migrate.mjs "<path>/App_Data/xStatic/output/1"
 - `src/content/pages/articles.md` (rebuilt around listing queries)
 - `src/content/pages/archive.md` (new)
 - `src/content/pages/home.md` (title and alt text)
-- `src/content/articles/xstatic-introduces-git-and-ftp-support.md` deleted (merged; see `src/data/redirects.yaml`)
+- `src/content/articles/xstatic-introduces-git-and-ftp-support.md` deleted (merged; see `src/data/redirects.json`)
 
 The report is in `_docs/legacy/migration-report.md`. Delete this folder after launch (ticket 1205).
