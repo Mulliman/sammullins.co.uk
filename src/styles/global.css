@@ -205,7 +205,6 @@
   .prose blockquote { border-left: 4px solid var(--brand-orange); padding-left: var(--space-s); color: var(--color-text-muted); font-style: italic; }
   .prose table { border-collapse: collapse; width: 100%; display: block; overflow-x: auto; }
   .prose th, .prose td { border: 1px solid var(--color-border); padding: var(--space-2xs) var(--space-xs); text-align: left; }
-  .prose pre { padding: var(--space-s); border-radius: var(--radius); overflow-x: auto; background: var(--color-code-bg); }
   .prose .heading-anchor { margin-left: 0.35em; text-decoration: none; opacity: 0.4; font-weight: 400; }
   .prose .heading-anchor:hover, .prose .heading-anchor:focus-visible { opacity: 1; }
 
@@ -213,7 +212,8 @@
   :root { --tok-comment: #5c6670; --tok-keyword: #a3215f; --tok-string: #1f6f3a; --tok-number: #8a4b00; --tok-fn: #2b4fb3; --tok-punct: #444; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --tok-comment: #9aa4ad; --tok-keyword: #ff8ac0; --tok-string: #8fd6a2; --tok-number: #ffbe6b; --tok-fn: #9db8ff; --tok-punct: #c8c8c8; } }
   :root[data-theme='dark'] { --tok-comment: #9aa4ad; --tok-keyword: #ff8ac0; --tok-string: #8fd6a2; --tok-number: #ffbe6b; --tok-fn: #9db8ff; --tok-punct: #c8c8c8; }
-  pre[class*='language-'] { background: var(--color-code-bg); color: var(--color-text); padding: var(--space-s); border-radius: var(--radius); overflow-x: auto; tab-size: 2; line-height: 1.5; }
+  /* Code wraps rather than scrolls: no keyboard-trap scroll regions, no 320px overflow (ticket 802). */
+  pre[class*='language-'], .prose pre { background: var(--color-code-bg); color: var(--color-text); padding: var(--space-s); border-radius: var(--radius); white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; line-height: 1.5; }
   .token.comment, .token.prolog, .token.doctype, .token.cdata { color: var(--tok-comment); font-style: italic; }
   .token.keyword, .token.boolean, .token.important, .token.atrule, .token.selector, .token.tag { color: var(--tok-keyword); }
   .token.string, .token.char, .token.attr-value, .token.regex, .token.inserted { color: var(--tok-string); }

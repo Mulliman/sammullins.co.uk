@@ -36,7 +36,7 @@ const year = new Date().getFullYear();
         <ul class="socials">
           {site.socials.map((s) => (
             <li>
-              <a href={s.href} rel="me noopener" aria-label={`${site.name} on ${s.label}`}>
+              <a href={s.href} rel="me noopener">
                 <span class="socials__label">{s.label}</span>
                 <span class="socials__handle">{s.handle}</span>
               </a>

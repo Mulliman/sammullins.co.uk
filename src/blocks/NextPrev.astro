@@ -34,10 +34,10 @@ const { prev, next } = block;
   .nextprev {
     display: grid;
     gap: var(--space-s);
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 40rem) {
-    .nextprev { grid-template-columns: 1fr 1fr; }
+    .nextprev { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     /* With only a Next link, keep it on the right. */
     .nextprev__tile--next:first-child { grid-column: 2; }
   }
@@ -47,7 +47,9 @@ const { prev, next } = block;
     flex-direction: column;
     gap: var(--space-2xs);
     min-height: 8rem;
-    padding: var(--space-m) var(--space-l);
+    padding: var(--space-m) clamp(var(--space-s), 4vw, var(--space-l));
+    min-width: 0;
+    overflow-wrap: anywhere;
     background: var(--color-bg-muted);
     color: var(--color-text);
     border-radius: var(--radius);
