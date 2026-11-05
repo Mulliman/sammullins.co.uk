@@ -1,7 +1,39 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/** Intro (ticket 302): kicker, heading and a larger lead paragraph. Narrow container. */
+import Section from '../components/Section.astro';
+import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'intro'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'intro'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const { kicker, heading, lead, align, surface } = block;
 ---
-<div data-block="intro" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested} surface={surface} width="narrow">
+  <div class:list={['intro', { 'text-center': align === 'center' }]}>
+    {kicker && <p class="intro__kicker">{kicker}</p>}
+    {heading && <h2 class="intro__heading">{heading}</h2>}
+    {lead && <div class="prose intro__lead" set:html={md(lead)} />}
+  </div>
+</Section>
+
+<style>
+  .intro__kicker {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .intro__heading { margin: 0; }
+  .intro__lead {
+    margin-top: var(--space-s);
+    font-size: var(--step-1);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+  .intro__lead :global(p) { margin: 0; }
+  .intro.text-center .intro__lead { margin-inline: auto; }
+</style>

@@ -1,7 +1,57 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/** Quote (ticket 307): a pull quote in <figure><blockquote cite>, attribution in <figcaption>. */
+import Section from '../components/Section.astro';
+import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'quote'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'quote'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const { text, attribution, source } = block;
+const caption = attribution ?? source;
 ---
-<div data-block="quote" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested} width="narrow">
+  <figure class="quote">
+    <blockquote cite={source}>
+      <div class="quote__text" set:html={md(text)} />
+    </blockquote>
+    {caption && (
+      <figcaption class="quote__caption">
+        {source ? <a href={source}>{caption}</a> : caption}
+      </figcaption>
+    )}
+  </figure>
+</Section>
+
+<style>
+  .quote { margin: 0; }
+  .quote blockquote { margin: 0; }
+
+  /* Large decorative opening mark, set above the text. */
+  .quote blockquote::before {
+    content: '\201C';
+    display: block;
+    height: 0.5em;
+    font-family: var(--font-script);
+    font-size: 4.5em;
+    line-height: 1;
+    color: var(--brand-orange);
+  }
+  .quote__text {
+    font-size: var(--step-2);
+    font-weight: 300;
+    line-height: 1.4;
+  }
+  .quote__text :global(p) { margin: 0; }
+  .quote__text :global(p + p) { margin-top: 0.75em; }
+
+  .quote__caption {
+    margin-top: var(--space-s);
+    padding-left: var(--space-s);
+    border-left: 3px solid var(--brand-orange);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+  }
+  .quote__caption :global(p) { margin: 0; }
+</style>

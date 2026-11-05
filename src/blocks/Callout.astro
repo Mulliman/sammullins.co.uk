@@ -1,7 +1,77 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * Callout (ticket 302): a note with a tone. Tone is conveyed by an icon and a visible text label,
+ * never by colour alone. `legacy` is the archive banner used on archived pages.
+ */
+import Section from '../components/Section.astro';
+import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'callout'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'callout'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const { tone, title, body } = block;
+
+const labels = {
+  note: 'Note',
+  tip: 'Tip',
+  warning: 'Warning',
+  legacy: 'From the archive',
+} as const;
+const label = labels[tone];
 ---
-<div data-block="callout" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested} width="narrow" tight>
+  <div role="note" class:list={['callout', `callout--${tone}`]}>
+    <p class="callout__label">
+      <svg class="callout__icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        {tone === 'note' && (<><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></>)}
+        {tone === 'tip' && (<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z" />)}
+        {tone === 'warning' && (<><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></>)}
+        {tone === 'legacy' && (<><rect x="2" y="3" width="20" height="5" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></>)}
+      </svg>
+      <span>{label}</span>
+    </p>
+    {title && <p class="callout__title">{title}</p>}
+    <div class="callout__body prose" set:html={md(body)} />
+  </div>
+</Section>
+
+<style>
+  .callout {
+    --accent: light-dark(#0b57d0, #8ab4ff);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-left: 6px solid var(--accent);
+    border-radius: var(--radius);
+    padding: var(--space-s) var(--space-m);
+  }
+  .callout--tip { --accent: light-dark(#1f6f3a, #8fd6a2); }
+  .callout--warning { --accent: light-dark(#a4262c, #ff8a80); }
+  .callout--legacy {
+    --accent: var(--brand-orange);
+    background: var(--color-bg-muted);
+    border-style: solid;
+    border-color: var(--color-border);
+    border-left-color: var(--accent);
+  }
+
+  .callout__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    margin: 0 0 var(--space-3xs);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .callout--legacy .callout__label { color: var(--color-link); }
+  .callout__icon { flex: none; }
+
+  .callout__title { margin: 0 0 var(--space-3xs); font-weight: 700; font-size: var(--step-0); }
+  .callout__body { max-width: none; }
+  .callout__body :global(p) { margin: 0; }
+  .callout__body :global(p + p) { margin-top: 0.75em; }
+</style>
