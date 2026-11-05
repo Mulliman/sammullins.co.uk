@@ -1,0 +1,21 @@
+/* TEAM */
+Name: Sam Mullins
+Role: Developer, writer, occasional photographer
+Site: https://www.sammullins.co.uk
+Location: United Kingdom
+Contact: https://www.sammullins.co.uk/cv/
+
+/* THANKS */
+Lato by Lukasz Dziedzic (SIL Open Font License)
+Pacifico by Vernon Adams (SIL Open Font License)
+Everyone who read the old site and sent a kind email about it
+
+/* SITE */
+Built with: Astro, TypeScript, plain CSS, Netlify
+Standards: HTML5, CSS3, WCAG 2.2 AA
+Source: https://github.com/Mulliman/sammullins.co.uk
+Agent notes: https://github.com/Mulliman/sammullins.co.uk/blob/main/AGENTS.md
+
+/* RIDDLE */
+Big bill, no fish required, and I bake every page before anyone asks.
+What am I? Say my name to unlock() and see what changes.
