@@ -124,7 +124,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('logoWall'),
     heading: z.string().optional(),
     logos: z
-      .array(z.object({ name: z.string().min(1), logo: image(), href: z.string().url().optional() }))
+      .array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() }))
       .min(1),
   });
 
@@ -132,7 +132,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('quote'),
     text: z.string(),
     attribution: z.string().optional(),
-    source: z.string().url().optional(),
+    source: z.url().optional(),
   });
 
   const code = z.object({
@@ -269,7 +269,7 @@ const settings = defineCollection({
     tagline: z.string(),
     nav: z.array(link),
     footerLinks: z.array(link),
-    socials: z.array(link.extend({ handle: z.string(), href: z.string().url() })),
+    socials: z.array(link.extend({ handle: z.string(), href: z.url() })),
     footerCards: z.array(z.object({ title: z.string(), body: z.string() })),
     features: z.object({
       viewTransitions: z.boolean().default(false),

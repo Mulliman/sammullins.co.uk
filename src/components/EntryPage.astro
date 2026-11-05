@@ -30,7 +30,7 @@ const isArticle = entry.collection === 'articles';
 const jsonLd = isArticle
   ? {
       '@context': 'https://schema.org',
-      '@type': data.kind === 'note' ? 'SocialMediaPosting' : 'BlogPosting',
+      '@type': 'kind' in data && data.kind === 'note' ? 'SocialMediaPosting' : 'BlogPosting',
       headline: data.title,
       description: data.description,
       datePublished: published?.toISOString(),

@@ -27,7 +27,7 @@ interface Props {
 
 const { src, alt, preset = 'content', priority = false, class: cls, pictureClass } = Astro.props;
 const p = presets[preset];
-const widths = p.widths.filter((w) => w <= src.width);
+const widths: number[] = p.widths.filter((w) => w <= src.width);
 if (widths.length === 0) widths.push(src.width);
 ---
 
