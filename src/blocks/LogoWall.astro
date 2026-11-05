@@ -1,7 +1,78 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * `logoWall` block (ticket 306): client logos on white tiles. Greyscale and faded by
+ * default, full colour on hover or focus. Each logo's alt text is the client name.
+ */
+import Section from '../components/Section.astro';
+import Pic from '../components/Pic.astro';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'logoWall'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'logoWall'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
 ---
-<div data-block="logoWall" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested}>
+  {block.heading && <h2 class="logos__heading">{block.heading}</h2>}
+  <ul class="logos">
+    {block.logos.map((item) => {
+      const pic = <Pic src={item.logo} alt={item.name} preset="logo" />;
+      return (
+        <li class="logos__item">
+          {item.href ? (
+            <a class="logos__link" href={item.href} rel="noopener">{pic}</a>
+          ) : (
+            pic
+          )}
+        </li>
+      );
+    })}
+  </ul>
+</Section>
+
+<style>
+  .logos__heading { margin-bottom: var(--space-m); }
+
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--space-s);
+    list-style: none;
+    padding: 0;
+  }
+
+  /* White tiles keep logos legible in dark mode too. */
+  .logos__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 6rem;
+    padding: var(--space-s);
+    background: #ffffff;
+    border-radius: var(--radius);
+  }
+  .logos__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .logos__item :global(img) {
+    width: auto;
+    max-width: 100%;
+    max-height: 4rem;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.7);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logos__item :global(img) { transition: filter var(--dur) var(--ease); }
+  }
+
+  .logos__item:hover :global(img),
+  .logos__item:focus-within :global(img) {
+    filter: none;
+  }
+</style>

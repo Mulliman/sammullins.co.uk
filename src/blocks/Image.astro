@@ -1,7 +1,58 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * `image` block (ticket 303): one picture with an optional caption.
+ * `width` picks the Pic preset; `full` breaks out of the container to full bleed.
+ */
+import Section from '../components/Section.astro';
+import Pic from '../components/Pic.astro';
+import { mdInline } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'image'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'image'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const { image, width } = block;
+// Full bleed only makes sense at page level; inside a split column it stays in the column.
+const bleed = width === 'full' && !nested;
 ---
-<div data-block="image" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested}>
+  <figure class:list={['image', `image--${width}`, { 'image--bleed': bleed }]}>
+    <div class:list={['image__frame', { 'image__frame--plain': width === 'full' }]}>
+      <Pic src={image.src} alt={image.decorative ? '' : image.alt} preset={width} />
+    </div>
+    {block.caption && <figcaption class="image__caption" set:html={mdInline(block.caption)} />}
+  </figure>
+</Section>
+
+<style>
+  .image { margin: 0; }
+  .image--content { max-width: 52rem; margin-inline: auto; }
+  .image--wide { max-width: 100%; }
+
+  .image__frame {
+    border: 10px solid var(--color-frame);
+    box-shadow: var(--shadow);
+  }
+  .image__frame--plain {
+    border: 0;
+    box-shadow: none;
+  }
+
+  /* Full bleed: centre the figure on the viewport, not the container. */
+  .image--bleed {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+  }
+
+  .image__caption {
+    margin-top: var(--space-xs);
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  /* Stop the full-bleed figure causing sideways scroll on narrow screens. */
+  :global(section:has(> .container > .image--bleed)) { overflow-x: clip; }
+</style>
