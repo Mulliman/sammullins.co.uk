@@ -1,7 +1,126 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * Hero (ticket 301). Full-bleed, so it is not wrapped in Section.
+ * variant: blurred (today's look) | image (framed photo, heading below) | plain (text only).
+ * A variant without an image falls back to plain.
+ */
+import Pic from '../components/Pic.astro';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'hero'>, never>; nested?: boolean }
+
+interface Props { block: BlockOf<'hero'>; nested?: boolean }
 const { block } = Astro.props;
+const { heading, subheading, image, align } = block;
+const variant = image && block.variant !== 'plain' ? block.variant : 'plain';
+const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 ---
-<div data-block="hero" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<section class:list={['hero', `hero--${variant}`, `hero--${align}`]}>
+  {variant === 'blurred' && image && (
+    <div class="hero__backdrop" aria-hidden="true">
+      <Pic src={image.src} alt="" preset="wide" priority />
+    </div>
+  )}
+  <div class="container hero__inner">
+    {variant !== 'plain' && image && (
+      <div class="hero__frame">
+        <Pic src={image.src} alt={framedAlt} preset="wide" priority />
+      </div>
+    )}
+    <div class="hero__text">
+      <h1 class="hero__heading">{heading}</h1>
+      {subheading && <p class="hero__sub">{subheading}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: var(--space-xl);
+  }
+
+  /* Variant surfaces. Text colour is set on the section so the h1 inherits it. */
+  .hero--blurred { background: #000; color: #fff; }
+  .hero--image { background: var(--color-bg-muted); color: var(--color-text); }
+  .hero--plain { background: var(--color-bg-inverse); color: var(--color-text-inverse); }
+
+  .hero__heading { color: inherit; margin: 0; }
+  .hero__sub { margin: var(--space-s) 0 0; font-size: var(--step-1); font-weight: 300; }
+  .hero--blurred .hero__sub { color: #f5f5f5; }
+  .hero--image .hero__sub { color: var(--color-text-muted); }
+  .hero--plain .hero__sub { color: var(--color-text-inverse-muted); }
+
+  .hero__text { padding: var(--space-s); }
+  .hero--center .hero__text { text-align: center; }
+  .hero--left .hero__text { text-align: left; }
+  .hero--image .hero__text { margin-top: var(--space-m); }
+
+  /* Blurred backdrop: the same image, heavily blurred and darkened, behind everything. */
+  .hero__backdrop {
+    position: absolute;
+    inset: -5%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero__backdrop :global(picture) { display: block; width: 100%; height: 100%; }
+  .hero__backdrop :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(14px) brightness(0.35);
+    transform: scale(1.1);
+  }
+
+  /* Framed sharp image: thick white frame and shadow (site identity). */
+  .hero__frame {
+    margin: 0 auto;
+    max-width: 56rem;
+    border: 10px solid var(--color-frame);
+    box-shadow: var(--shadow);
+    background: var(--color-frame);
+  }
+  .hero__frame :global(picture) { display: block; }
+  .hero__frame :global(img) { width: 100%; height: auto; }
+
+  /* Blurred: the text box is a dark translucent panel with a thin white border. */
+  .hero--blurred .hero__text {
+    background: rgb(0 0 0 / 0.75);
+    border: 2px solid #fff;
+    margin-top: var(--space-m);
+    padding: var(--space-m);
+  }
+
+  /* Below 640px: no framed image; the text panel sits on the blurred background. */
+  @media (max-width: 639.98px) {
+    .hero--blurred .hero__frame { display: none; }
+  }
+
+  /* From 640px: the text panel is centred over the framed image. */
+  @media (min-width: 640px) {
+    .hero--blurred .hero__inner { position: relative; }
+    .hero--blurred .hero__text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90%, 40rem);
+      margin: 0;
+    }
+  }
+
+  /* Subtle scroll-linked drift on the backdrop. CSS only, skipped without support or with reduced motion. */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero--blurred .hero__backdrop {
+        animation: hero-drift linear both;
+        animation-timeline: scroll();
+      }
+    }
+  }
+  @keyframes hero-drift {
+    from { transform: translate3d(0, -3%, 0); }
+    to { transform: translate3d(0, 3%, 0); }
+  }
+</style>

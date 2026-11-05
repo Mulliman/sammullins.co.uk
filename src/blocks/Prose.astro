@@ -1,7 +1,38 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * Prose (ticket 302): Markdown from the block, rendered at build time at a readable measure.
+ * h2/h3 get an id and a keyboard-reachable anchor link. Raw HTML in the Markdown is escaped by md().
+ */
+import Section from '../components/Section.astro';
+import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'prose'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'prose'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+
+/** Adds ids and anchor links to h2/h3. Heading text is already escaped by md(). */
+function withHeadingAnchors(html: string): string {
+  const seen = new Map<string, number>();
+  return html.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (_m, level: string, inner: string) => {
+    const text = inner.replace(/<[^>]+>/g, '');
+    const base =
+      text
+        .replace(/&[a-z#0-9]+;/gi, '')
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'section';
+    const n = seen.get(base) ?? 0;
+    seen.set(base, n + 1);
+    const id = n === 0 ? base : `${base}-${n + 1}`;
+    return `<h${level} id="${id}">${inner}<a class="heading-anchor" href="#${id}" aria-label="Link to this heading">#</a></h${level}>`;
+  });
+}
+
+const html = withHeadingAnchors(md(block.markdown));
 ---
-<div data-block="prose" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested} width="narrow">
+  <div class:list={['prose', { 'text-center': block.align === 'center' }]} set:html={html} />
+</Section>
