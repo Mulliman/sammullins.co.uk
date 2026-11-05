@@ -1,7 +1,121 @@
 ---
-// STUB: replaced by the block implementation ticket.
+/**
+ * `embed` block (ticket 309): a click-to-load video facade. Nothing is requested from
+ * YouTube until the reader clicks. Without JS the block is a plain link to the video.
+ * With JS, the click swaps the facade for a youtube-nocookie.com iframe.
+ */
+import Section from '../components/Section.astro';
+import Pic from '../components/Pic.astro';
 import type { BlockOf } from '../lib/content';
-interface Props { block: Omit<BlockOf<'embed'>, never>; nested?: boolean }
-const { block } = Astro.props;
+
+interface Props { block: BlockOf<'embed'>; nested?: boolean }
+const { block, nested = false } = Astro.props;
+const watchUrl = `https://www.youtube.com/watch?v=${block.id}`;
 ---
-<div data-block="embed" data-stub>{JSON.stringify(block).slice(0, 80)}</div>
+
+<Section nested={nested}>
+  <div class="embed" data-embed data-embed-id={block.id} data-embed-title={block.title}>
+    <a class="embed__link" href={watchUrl} aria-label={`Play video: ${block.title}`}>
+      {block.poster ? (
+        <Pic
+          src={block.poster.src}
+          alt={block.poster.decorative ? '' : block.poster.alt}
+          preset="card"
+          class="embed__poster"
+        />
+      ) : (
+        <span class="embed__fallback">{block.title}</span>
+      )}
+      <span class="embed__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+          <path d="M8 5v14l11-7z" fill="currentColor" />
+        </svg>
+      </span>
+    </a>
+  </div>
+</Section>
+
+<script>
+  /** Replaces each facade with a youtube-nocookie iframe on click. Progressive. */
+  const EMBED_BASE = 'https://www.youtube-nocookie.com/embed/';
+
+  document.querySelectorAll<HTMLElement>('[data-embed]').forEach((box) => {
+    if (box.dataset.ready) return;
+    const link = box.querySelector<HTMLAnchorElement>('a.embed__link');
+    if (!link) return;
+
+    link.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `${EMBED_BASE}${encodeURIComponent(box.dataset.embedId ?? '')}?autoplay=1`;
+      iframe.title = box.dataset.embedTitle ?? '';
+      iframe.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      box.replaceChildren(iframe);
+      iframe.focus();
+    });
+
+    box.dataset.ready = '1';
+  });
+</script>
+
+<style>
+  .embed {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: #0d0d0d;
+    color: #f5f5f5;
+  }
+
+  .embed__link {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    text-decoration: none;
+  }
+  .embed__link:focus-visible { outline-offset: -4px; }
+
+  .embed__link :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .embed__fallback {
+    padding: var(--space-m);
+    font-size: var(--step-1);
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .embed__play {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.9);
+    color: #111111;
+    box-shadow: var(--shadow-soft);
+  }
+  .embed__link:hover .embed__play { background: #ffffff; }
+
+  .embed :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
