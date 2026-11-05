@@ -1,0 +1,51 @@
+---
+name: redirect
+description: Rename, move or retire a content page on sammullins.co.uk without breaking its URL. Moves the content file, adds a 301 entry to src/data/redirects.json, updates older entries so there are no chains, runs the build to validate, and opens a PR. Refuses any rename without a redirect. Never merges.
+---
+
+# redirect
+
+URLs come from file paths. Moving a file moves its URL, so every move needs a redirect in `src/data/redirects.json`. The build fails on loops, chains and missing targets. Sam always merges. Never merge, never enable auto-merge.
+
+## Reference
+
+- Redirect entry format and the URL rules: `AGENTS.md` (golden rule 2).
+- Collection schema: `src/content.config.ts`, the `redirects` collection (`to`, `status` 301 or 302, `reason`). Field reference: `_docs/content-model.md`.
+- Build hook that writes `_redirects` and validates: `integrations/site-files.mjs`.
+- Block references to pages: `../_shared/block-catalogue.md` (`cards` `href`, `nextPrev`).
+
+## Preconditions
+
+1. Working tree is clean.
+2. Sam has named the old URL (or source file) and the new URL (or target). For a retirement, he has named the page it should point to. Retirement still needs a `to`: the schema requires one. If there is no sensible target, stop and report.
+3. **Refuse a rename without a redirect.** If Sam asks to move a page and does not want a redirect, stop and say so. Do not move the file.
+4. The new path does not already exist.
+
+## Keys and values
+
+- Key: the old URL path, with a trailing slash, for example `/articles/old-slug/`. The integration also writes the no-slash form.
+- Value: `{ "to": "<new URL with trailing slash>", "status": 301, "reason": "<why, with the ticket or PR if any>" }`.
+- `to` is the final URL, never another redirect key.
+
+## Procedure
+
+1. `git switch -c content/redirect-<short-slug>`.
+2. **Find the old file.** `src/content/<collection>/<path>.md`. The URL is derived from the path (see `_docs/content-model.md`, URL mapping).
+3. **Move the file** with `git mv` so history follows. Update its `title` or `description` only if Sam asked.
+4. **Update internal links.** Search `src/` for the old path (`grep -rn "<old-path>" src/`). Change internal links to the new URL so the site does not depend on the redirect. Do not edit `_docs/legacy/` files.
+5. **Update `src/data/redirects.json`:**
+   a. Add the new entry: old path (with trailing slash) → new URL, `status: 301`, a `reason`.
+   b. Find every existing entry whose `to` equals the old path. Point those at the new URL. This prevents chains.
+   c. Check that the new key is not already a live page and not already a key.
+   d. Keep the file as sorted JSON with two-space indentation, as it is now.
+6. **Validate.** `pnpm check`, then `pnpm build`. The integration throws on a chain, a loop, or a missing target, so a passing build confirms the redirect. Then `pnpm test`, which includes the legacy URL test.
+7. **Verify the old URL resolves.** Read `dist/_redirects` and confirm the old path maps to the new one with status 301.
+8. Commit with `content: rename <old> to <new> (redirect)`, plus the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+9. `git push -u origin content/redirect-<short-slug>` and `gh pr create`. The body lists old URL, new URL, every redirect entry changed, the chains you prevented, the build result, and the footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
+10. Report the PR URL and stop.
+
+## Outputs
+
+- The moved content file, with internal links updated.
+- `src/data/redirects.json` with the new entry and any updated older entries.
+- An open, unmerged PR.

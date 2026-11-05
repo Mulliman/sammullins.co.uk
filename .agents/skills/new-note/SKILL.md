@@ -1,0 +1,43 @@
+---
+name: new-note
+description: Draft a short note (300 to 800 words) for sammullins.co.uk as src/content/articles/<slug>.md with kind: note, in Sam's voice, then open a PR. Use when Sam asks for a note, a short post or a quick write-up. No hero block is required. Never merges.
+---
+
+# new-note
+
+A note is an article with `kind: note`. It lives in the same collection and URL scheme, and appears in the notes feed. Same rules as `new-article`, with the differences below. Sam always merges. Never merge, never enable auto-merge.
+
+## Reference
+
+- Schema and every field: `_docs/content-model.md`.
+- Block fields and examples, generated from the schema: `../_shared/block-catalogue.md`.
+- Voice: `_docs/voice.md` (if missing, say so in the PR body and use the Voice section of `AGENTS.md`).
+
+## Preconditions
+
+1. Working tree is clean.
+2. The input is bullet points, a transcript or chat-history excerpts, and it has one clear point.
+3. `gh auth status` succeeds.
+
+## Differences from `new-article`
+
+- Front matter has `kind: note`. Everything else in the front matter is the same, including `date` (required for articles and notes).
+- Length is 300 to 800 words in the Markdown body. If the material supports more, say so in the PR and suggest `new-article`; do not pad.
+- No `hero` block is required. Start the blocks with `body`, or use a simple `intro` if Sam wants a kicker. `body` is still needed so the Markdown renders.
+- Keep the `cards` block optional. Add it only for related items.
+
+## Procedure
+
+1. Slug from the title, lowercase and hyphenated. Check that `src/content/articles/<slug>.md` does not exist.
+2. `git switch -c content/<slug>`.
+3. Write the file with `kind: note`, `title`, `description` (1 to 200 characters), quoted `date`, `authorship` (`sam-ai` if you drafted the words).
+4. Write the body, 300 to 800 words. Count the words and record the count in the PR body.
+5. `pnpm check && pnpm build && pnpm test`. Fix failures in the content.
+6. Commit only the new file (`content: add note <slug>`), with the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+7. `git push -u origin content/<slug>` and `gh pr create --title "content: add note <slug>"`. The body lists the URL, authorship, word count, gate results, open questions, and the footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
+8. Report the PR URL and stop.
+
+## Outputs
+
+- `src/content/articles/<slug>.md` with `kind: note`.
+- Branch `content/<slug>` pushed, and an open, unmerged PR.
