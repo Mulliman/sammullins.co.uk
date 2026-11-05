@@ -1,0 +1,21 @@
+# Conventional Commits on the PR title (squash merge makes it the commit message). Ticket 005.
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! printf '%s' "$TITLE" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|content|revert)(\([a-z0-9._/-]+\))?!?: .{3,}'; then
+            echo "PR title must follow Conventional Commits, e.g. 'feat(blocks): add hero' or 'content: new note on local models'"; exit 1
+          fi

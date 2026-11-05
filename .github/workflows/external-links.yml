@@ -1,0 +1,34 @@
+# Weekly external link report (ticket 803). Non-blocking; opens or updates one issue. Never commits.
+name: External links
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        id: lychee
+        with:
+          args: --no-progress --exclude-path _docs --exclude-path _tasks 'src/content/**/*.md'
+          output: ./lychee-report.md
+          fail: false
+      - name: Open or update the tracking issue
+        if: steps.lychee.outputs.exit_code != 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list --label link-check --state open --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue edit "$n" --body-file lychee-report.md
+          else gh issue create --title "Broken external links" --label link-check --body-file lychee-report.md; fi

@@ -154,7 +154,7 @@ const leafBlocks = (image: ImageFn) => {
     items: z
       .array(
         z.object({
-          when: z.string(),
+          when: z.coerce.string(),
           title: z.string(),
           org: z.string().optional(),
           kind: z.enum(['role', 'cert', 'milestone', 'education']).default('role'),
