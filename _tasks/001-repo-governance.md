@@ -15,7 +15,9 @@ The repo is public and part of the showcase (decisions: *Repo visibility*, *Repo
 
 ## Scope
 
-- **Sam:** choose a commit identity. Recommended: the GitHub noreply address (`<id>+Mulliman@users.noreply.github.com`), set **repo-locally** (`git config user.email …`).
+- ~~Choose a commit identity.~~ **Done:** repo-local `user.email = git@sammullins.co.uk` (set 2026-11-05).
+  - The domain has no MX records yet, so GitHub can't verify this address. Commits won't link to the GitHub profile until mail is set up (deferred), or until the address is otherwise verified.
+  - Signed commits from a registered SSH signing key still show as **Verified** regardless.
 - **Sam:** enable GitHub "Keep my email addresses private" and "Block command line pushes that expose my email".
 - Create the public GitHub repo `Mulliman/sammullins.co.uk`, push `main`.
 - Branch protection / ruleset on `main`: PR required, required status checks (filled in by 801+), signed commits, linear history, no force-push, no deletion, applies to admins too.
