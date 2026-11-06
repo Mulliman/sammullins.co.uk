@@ -21,7 +21,6 @@ Every content collection is a glob over `.md` files. The entry `id` is the file 
 |---|---|
 | `src/content/pages/home.md` | `/` |
 | `src/content/pages/cv.md` | `/cv/` |
-| `src/content/pages/blocks-demo/text.md` | `/blocks-demo/text/` |
 | `src/content/articles/5-cool-things-i-used-to-build-the-imposter.md` | `/articles/5-cool-things-i-used-to-build-the-imposter/` |
 | `src/content/software/xstatic-for-umbraco.md` | `/software/xstatic-for-umbraco/` |
 | `src/content/software/xstatic-for-umbraco/deploying-to-netlify.md` | `/software/xstatic-for-umbraco/deploying-to-netlify/` |
@@ -503,4 +502,4 @@ Gotchas: no `hero`, `split` or `section` inside a section. An `image` with `back
 
 - `pnpm check` validates types and content against the schema.
 - `pnpm build` validates everything, writes `_redirects`, and fails on broken images, missing alt, chained or looping redirects, and missing redirect targets.
-- The hidden demo pages in `src/content/pages/blocks-demo/` show every variant. Do not link to them from public pages.
+- The unlisted style guide page `/style-guide/components/` shows every block and variant, with its YAML. Its examples are in `src/content/style-guide/components.yaml`, validated by the block schema at build time. Do not link to it from public pages.

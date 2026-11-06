@@ -2,7 +2,7 @@
 id: "1304"
 title: "Style guide: every block and every variant, with its YAML"
 epic: Style guide
-status: todo
+status: review
 priority: p1
 size: L
 owner: agent
@@ -25,7 +25,17 @@ The block schema (`src/content.config.ts`) is the component API: 17 block types,
 
 ## Acceptance criteria
 
-- [ ] Every block type in the schema has a section (test: the schema's block types match the guide's sections).
-- [ ] Every enum option of every block appears at least once (test).
-- [ ] Each example's YAML passes schema validation (test), so the snippets can be pasted into a page.
-- [ ] `/blocks-demo/*` redirect to the guide; the legacy URL test passes.
+- [x] Every block type in the schema has a section (test: the schema's block types match the guide's sections).
+- [x] Every enum option of every block appears at least once (test).
+- [x] Each example's YAML passes schema validation (test), so the snippets can be pasted into a page.
+- [x] `/blocks-demo/*` redirect to the guide; the legacy URL test passes.
+
+## Progress
+
+- Schema parsing moved to `scripts/skills/schema-blocks.mjs` (with `.d.mts` types), shared by the block catalogue and the guide. Stripping comments first fixes a bug where a doc comment above a field hid it: `image.frame` and `image.backdrop` were missing from the catalogue. Surface and align options are now listed in the catalogue too.
+- Examples: `src/content/style-guide/components.yaml`, a collection (`styleGuideExamples`) validated by the real `blockSchema` at build time. Each example's YAML is the text under its `block:` key, shown beside the rendered block with the Code block's copy button.
+- `src/pages/style-guide/components/index.astro`: a section per block type with its summary, fields table (from the schema), and every example. The build fails if a block type has no example or an enum option has none.
+- Removed `src/content/pages/blocks-demo/`; 301s added in `src/data/redirects.json` from `/blocks-demo/text/`, `/media/`, `/lists/` and `/theme-christmas/` to `/style-guide/components/`. The sitemap filter for `/blocks-demo/` is gone, as nothing uses it.
+- `tests/a11y/interactions.test.mjs` now uses the components page. Added `tests/style-guide-components.test.mjs`.
+- Ready flag set for Components in `src/lib/style-guide.ts`.
+- Known gaps: `kind: note` has no published notes, so two examples (cards and listing) render nothing and say so in their titles. The `body` example uses a stand-in, not a page's Markdown. Visual review in a browser was not done.
