@@ -17,7 +17,9 @@ jobs:
   build:
     name: Check, test and build
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # A build with a cold image cache generates ~1,500 image variants (~15 min on a hosted runner).
+    # With the cache below, later builds take about a minute.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -29,6 +31,14 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Astro's generated images (node_modules/.astro). Keyed on the masters and image config, with a
+      # fallback to the latest cache so adding one photo only generates that photo's sizes.
+      - name: Restore generated image cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: node_modules/.astro
+          key: astro-images-${{ hashFiles('src/assets/**', 'astro.config.mjs', 'src/components/Pic.astro', 'pnpm-lock.yaml') }}
+          restore-keys: astro-images-
       - run: pnpm check
       - run: pnpm lint
       - name: Skills catalogue and .claude mirror are up to date
