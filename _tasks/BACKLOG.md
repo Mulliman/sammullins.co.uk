@@ -8,7 +8,7 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 - The whole rebuild (tickets 002 to 1101) is merged into `main`, and so is the typography refresh (204).
 - On 6 November every merged ticket was checked against its acceptance criteria. 31 are now `done`, each with a "Verification" note giving the evidence. The 12 still in `review` say what's left, which falls into three kinds:
-  - **Agent work:** community profile files (1101), and skill dry runs (1002, 1003).
+  - **Agent work:** community profile files (1101) and skill dry runs (1002, 1003).
   - **Needs a deploy preview (701):** 603, 702, 803 and 904.
   - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
 - Auto-merge is now on in the repo settings. Ticket 001 says it should be off, so 001 needs updating (or the setting reverting).
