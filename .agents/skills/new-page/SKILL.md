@@ -29,7 +29,7 @@ A page is a typed list of blocks in front matter, plus an optional Markdown body
 5. **Every image needs alt text** or `decorative: true`. Missing alt fails the build. Image paths are relative to the .md file, so a page at `src/content/pages/a/b.md` uses `../../../assets/media/<folder>/<name>.avif`. Use the `add-images` skill for new images.
 6. **Links.** Internal links are site paths with trailing slashes. Check each target exists under `src/content/` (or is a static route such as `/archive/`).
 7. **Gates.** `pnpm check && pnpm build && pnpm test`. Fix content until they pass.
-8. **Commit** the page (and any media) with `content: add page <path>` and the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+8. **Commit** the page (and any media) with `content: add page <path>` and a `Co-Authored-By:` trailer naming the agent and model that did the work.
 9. **Push and PR.** `git push -u origin content/<slug>`, then `gh pr create --title "content: add page <path>"`. The body lists the URL, the block list in order, authorship, gate results, and open questions, then the footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
 10. Report the PR URL and stop.
 

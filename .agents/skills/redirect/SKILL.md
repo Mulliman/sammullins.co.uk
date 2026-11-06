@@ -40,7 +40,7 @@ URLs come from file paths. Moving a file moves its URL, so every move needs a re
    d. Keep the file as sorted JSON with two-space indentation, as it is now.
 6. **Validate.** `pnpm check`, then `pnpm build`. The integration throws on a chain, a loop, or a missing target, so a passing build confirms the redirect. Then `pnpm test`, which includes the legacy URL test.
 7. **Verify the old URL resolves.** Read `dist/_redirects` and confirm the old path maps to the new one with status 301.
-8. Commit with `content: rename <old> to <new> (redirect)`, plus the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+8. Commit with `content: rename <old> to <new> (redirect)`, with a `Co-Authored-By:` trailer naming the agent and model that did the work.
 9. `git push -u origin content/redirect-<short-slug>` and `gh pr create`. The body lists old URL, new URL, every redirect entry changed, the chains you prevented, the build result, and the footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
 10. Report the PR URL and stop.
 

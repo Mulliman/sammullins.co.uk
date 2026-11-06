@@ -38,7 +38,7 @@ Turns source material into one article file, on its own branch, with a PR for Sa
 7. **Images.** If the article needs images, use the `add-images` skill first, then reference them relative to the .md file (`../../assets/media/<folder>/<name>.avif` from `src/content/articles/`).
 8. **Validate locally.** `pnpm check`. Fix any schema error by changing the file, not the schema.
 9. **Run the gates.** `pnpm check && pnpm build && pnpm test`. The build takes several minutes. If a gate fails, fix the content and rerun. Do not disable a check.
-10. **Commit.** Stage only the files you changed (`git add src/content/articles/<slug>.md` and any new media). Message: `content: add article <slug>`. Body ends with the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+10. **Commit.** Stage only the files you changed (`git add src/content/articles/<slug>.md` and any new media). Message: `content: add article <slug>`. End the body with a `Co-Authored-By:` trailer naming the agent and model that did the work.
 11. **Push and open the PR.** `git push -u origin content/<slug>`, then `gh pr create --title "content: add article <slug>"` with a body containing:
     - the URL the article will have,
     - `authorship` and why,

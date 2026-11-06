@@ -33,7 +33,7 @@ A note is an article with `kind: note`. It lives in the same collection and URL 
 3. Write the file with `kind: note`, `title`, `description` (1 to 200 characters), quoted `date`, `authorship` (`sam-ai` if you drafted the words).
 4. Write the body, 300 to 800 words. Count the words and record the count in the PR body.
 5. `pnpm check && pnpm build && pnpm test`. Fix failures in the content.
-6. Commit only the new file (`content: add note <slug>`), with the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+6. Commit only the new file (`content: add note <slug>`), with a `Co-Authored-By:` trailer naming the agent and model that did the work.
 7. `git push -u origin content/<slug>` and `gh pr create --title "content: add note <slug>"`. The body lists the URL, authorship, word count, gate results, open questions, and the footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
 8. Report the PR URL and stop.
 

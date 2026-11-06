@@ -2,7 +2,7 @@
 
 Source for [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static [Astro](https://astro.build) site where every page is a typed list of blocks in Markdown front matter. It's written largely by AI agents and always reviewed and merged by a human.
 
-> **Licensing:** the **code** is [MIT](LICENSE). The **content** (words, photos, CV, images) is © Sam Mullins, all rights reserved; see [LICENSE-CONTENT.md](LICENSE-CONTENT.md).
+> **Licensing:** the **code** is [MIT](LICENSE), so reuse it freely. The **content** (words, photos, CV, logo and other creative material) is © Sam Mullins, all rights reserved; see [LICENSE-CONTENT.md](LICENSE-CONTENT.md) for exactly what that covers. Forks are welcome: replace the content with your own before publishing.
 
 ## Quick start
 

@@ -31,7 +31,7 @@ Adds images safely: converted, stripped of metadata, placed in a folder, and wit
 4. **Draft alt text for each image.** Describe what is in it and why it is there, in one sentence, without "image of". Mark it `decorative: true` with `alt: ""` only if the image adds nothing to the meaning. Logo wall entries have no `alt` field; the client name is the alt text.
 5. Insert the blocks or front matter (`cover`, `image`, `gallery` items, `cards` items). Paths are relative to the .md file. Example from `src/content/articles/`: `../../assets/media/<folder>/<name>.avif`.
 6. Run `pnpm check && pnpm build && pnpm test`. Missing alt text fails the build, so the build is the check.
-7. Commit the converted masters and the content change: `content: add images for <slug>`, with the trailer `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>`.
+7. Commit the converted masters and the content change: `content: add images for <slug>`, with a `Co-Authored-By:` trailer naming the agent and model that did the work.
 8. `git push -u origin content/<slug>` and `gh pr create`. In the PR body, include a section **Alt text for approval** with one line per image: file name, asset path, and the drafted alt text (or `decorative`). Sam must approve or edit these before merge. End the body with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Do not use `--auto`, do not merge.
 9. Report the PR URL and stop.
 

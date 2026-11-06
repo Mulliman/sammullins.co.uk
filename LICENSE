@@ -2,9 +2,11 @@ MIT License
 
 Copyright (c) 2026 Sam Mullins
 
-This licence covers the CODE in this repository only (components, layouts, styles,
-schemas, scripts, integrations and configuration). It does NOT cover the content:
-see LICENSE-CONTENT.md.
+This licence covers the CODE in this repository only: components, layouts, styles,
+schemas, scripts, tests, integrations, configuration and the docs that explain them.
+It does NOT cover the CONTENT (the writing, photographs, images, CV, logo and other
+creative material that make up the website), which is (c) Sam Mullins, all rights
+reserved. See LICENSE-CONTENT.md for the full list.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
