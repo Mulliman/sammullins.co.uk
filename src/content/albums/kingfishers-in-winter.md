@@ -15,17 +15,20 @@ blocks:
       src: "../../assets/media/wa0mlxmg/header.avif"
       alt: "Kingfishers in winter"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/mfihgfdk/kingfisher-on-a-stick-1.avif"
         alt: "Kingfisher On A Stick 1"
       - src: "../../assets/media/uzhfldyl/king-of-the-river-2.avif"
         alt: "King Of The River 2"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/nvrbtllu/kingfisher-eating-a-fish-1.avif"
       alt: "Kingfisher Eating A Fish 1"
   - type: "image"
+    frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/ff5dehow/kingfisher-in-the-ice.avif"
@@ -33,11 +36,13 @@ blocks:
   - type: "body"
     surface: "inverse"
   - type: "image"
+    frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/rhzn3hzl/22.avif"
       alt: "22"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/0midoeok/kingfisher-playing-with-its-catch-1.avif"
@@ -49,11 +54,12 @@ blocks:
   - type: "cards"
     variant: "text"
     surface: "muted"
-    columns: 1
+    columns: 2
     items:
       - title: "PhotoShare21"
         text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
         href: "/photography/photoshare21/"
+        cta: "View weeks so far"
 ---
 
 ![Kingfisher In Tree 2](../../assets/media/bcyhfcui/kingfisher-in-tree-2.avif)

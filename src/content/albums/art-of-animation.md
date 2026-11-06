@@ -14,6 +14,7 @@ blocks:
       src: "../../assets/media/lu4akmjn/triton-s-head-at-art-of-animation.avif"
       alt: "Art of Animation"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/jpind5pe/cars.avif"
         alt: "Cars"
@@ -56,6 +57,10 @@ blocks:
           src: "../../assets/media/bihjsyrh/fof.avif"
           alt: ""
           decorative: true
+      - title: "PhotoShare21"
+        text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
+        href: "/photography/photoshare21/"
+        cta: "View weeks so far"
       - title: "Week 7: Disney in the Dark"
         href: "/photography/photoshare21/disney-in-the-dark/"
         image:

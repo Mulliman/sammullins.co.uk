@@ -2,6 +2,8 @@
 /**
  * `image` block (ticket 303): one picture with an optional caption.
  * `width` picks the Pic preset; `full` breaks out of the container to full bleed.
+ * `frame` adds the site's thick white photo frame; `backdrop: blurred` puts the photo over a
+ * blurred, darkened copy of itself on a dark band, as the original photo albums did.
  */
 import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
@@ -13,14 +15,22 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { image, width } = block;
+const { image, width, frame, backdrop } = block;
 // Full bleed only makes sense at page level; inside a split column it stays in the column.
 const bleed = width === 'full' && !nested;
+const blurred = backdrop === 'blurred' && !nested;
+const surface = blurred ? 'inverse' : block.surface;
+const framed = frame === 'thick' && width !== 'full';
 ---
 
-<Section nested={nested}>
+<Section nested={nested} surface={surface} class={blurred ? 'image-backdrop' : ''}>
+  {blurred && (
+    <div class="image-backdrop__bg" aria-hidden="true">
+      <Pic src={image.src} alt="" preset="wide" />
+    </div>
+  )}
   <figure class:list={['image', `image--${width}`, { 'image--bleed': bleed }]}>
-    <div class:list={['image__frame', { 'image__frame--plain': width === 'full' }]}>
+    <div class:list={['image__frame', { 'image__frame--thick': framed, 'image__frame--shadow': framed && blurred }]}>
       <Pic src={image.src} alt={image.decorative ? '' : image.alt} preset={width} />
     </div>
     {block.caption && <figcaption class="image__caption" set:html={mdInline(block.caption)} />}
@@ -30,22 +40,51 @@ const bleed = width === 'full' && !nested;
 <style>
   .image {
     margin: 0;
+    position: relative;
   }
   .image--content {
-    max-width: 52rem;
+    max-width: var(--container-narrow);
     margin-inline: auto;
   }
   .image--wide {
     max-width: 100%;
   }
+  .image__frame :global(img) {
+    width: 100%;
+    height: auto;
+  }
 
-  .image__frame {
+  .image__frame--thick {
     border: 10px solid var(--color-frame);
+    background: var(--color-frame);
+  }
+  .image__frame--shadow {
     box-shadow: var(--shadow);
   }
-  .image__frame--plain {
-    border: 0;
-    box-shadow: none;
+
+  /* Blurred backdrop band (the original "uf-blurred-background-image" section). */
+  :global(.image-backdrop) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgb(0 0 0 / 0.5);
+  }
+  .image-backdrop__bg {
+    position: absolute;
+    inset: -5%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .image-backdrop__bg :global(picture) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .image-backdrop__bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(5px) brightness(0.5);
   }
 
   /* Full bleed: centre the figure on the viewport, not the container. */

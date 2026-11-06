@@ -16,6 +16,10 @@ type ImageFn = SchemaContext['image'];
 /* ------------------------------------------------------------------ */
 
 const align = z.enum(['center', 'left']);
+/** Section background, as the original site, with alternating light, grey and dark bands. */
+const surface = z.enum(['default', 'muted', 'inverse']);
+/** A button link (as the original "How it was made" and "View more" buttons). */
+const cta = z.object({ label: z.string().min(1), href: z.string().min(1) });
 
 /** An image with mandatory alt text. `alt: ""` only when explicitly decorative. */
 const imageRef = (image: ImageFn) =>
@@ -66,14 +70,16 @@ const leafBlocks = (image: ImageFn) => {
     kicker: z.string().optional(),
     heading: z.string().optional(),
     lead: z.string().optional(),
+    cta: cta.optional(),
     align: align.default('center'),
-    surface: z.enum(['default', 'muted', 'inverse']).default('muted'),
+    surface: surface.default('muted'),
   });
 
   const prose = z.object({
     type: z.literal('prose'),
     markdown: z.string(),
     align: align.default('left'),
+    surface: surface.default('default'),
   });
 
   const callout = z.object({
@@ -88,11 +94,18 @@ const leafBlocks = (image: ImageFn) => {
     image: img,
     caption: z.string().optional(),
     width: z.enum(['content', 'wide', 'full']).default('content'),
+    /** thick: 10px white frame with shadow (the site photo look); none: bare image. */
+    frame: z.enum(['thick', 'none']).default('thick'),
+    /** blurred: the photo sits over a blurred, darkened copy of itself (as the home hero). */
+    backdrop: z.enum(['none', 'blurred']).default('none'),
+    surface: surface.default('default'),
   });
 
   const gallery = z.object({
     type: z.literal('gallery'),
     heading: z.string().optional(),
+    columns: z.number().int().min(1).max(4).default(3),
+    surface: surface.default('default'),
     images: z.array(img.and(z.object({ caption: z.string().optional() }))).min(1),
   });
 
@@ -101,6 +114,8 @@ const leafBlocks = (image: ImageFn) => {
     text: z.string().optional(),
     image: img.optional(),
     href: z.string().optional(),
+    /** Button label; shown when the card has an href. */
+    cta: z.string().optional(),
   });
 
   const cards = z.object({
@@ -108,7 +123,7 @@ const leafBlocks = (image: ImageFn) => {
     heading: z.string().optional(),
     variant: z.enum(['full', 'image', 'text']).default('full'),
     columns: z.number().int().min(1).max(4).default(3),
-    surface: z.enum(['default', 'muted', 'inverse']).default('default'),
+    surface: surface.default('default'),
     items: z.array(cardItem).optional(),
     query: query.optional(),
   });
@@ -117,12 +132,14 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('listing'),
     heading: z.string().optional(),
     variant: z.enum(['grid', 'list', 'notes']).default('grid'),
+    surface: surface.default('default'),
     query,
   });
 
   const logoWall = z.object({
     type: z.literal('logoWall'),
     heading: z.string().optional(),
+    surface: surface.default('default'),
     logos: z.array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() })).min(1),
   });
 
@@ -149,6 +166,7 @@ const leafBlocks = (image: ImageFn) => {
   const timeline = z.object({
     type: z.literal('timeline'),
     heading: z.string().optional(),
+    surface: surface.default('default'),
     items: z
       .array(
         z.object({
@@ -170,10 +188,10 @@ const leafBlocks = (image: ImageFn) => {
     poster: img.optional(),
   });
 
-  /** Places the file's Markdown body (rendered by Astro, with Shiki) at this position. */
+  /** Places the file Markdown body (rendered by Astro, with Prism) at this position. */
   const body = z.object({
     type: z.literal('body'),
-    surface: z.enum(['default', 'muted', 'inverse']).default('default'),
+    surface: surface.default('default'),
   });
 
   return [

@@ -12,7 +12,8 @@ const presets = {
   content: { widths: [600, 900, 1200, 1600], sizes: '(min-width: 900px) 832px, 100vw' },
   wide: { widths: [800, 1200, 1600, 2000], sizes: '(min-width: 1200px) 1152px, 100vw' },
   full: { widths: [800, 1200, 1600, 2000, 2400], sizes: '100vw' },
-  logo: { widths: [160, 320], sizes: '160px' },
+  half: { widths: [400, 600, 900, 1200], sizes: '(min-width: 1200px) 590px, (min-width: 640px) 48vw, 100vw' },
+  logo: { widths: [240, 480], sizes: '(min-width: 960px) 230px, (min-width: 640px) 18vw, 40vw' },
 } as const;
 
 interface Props {

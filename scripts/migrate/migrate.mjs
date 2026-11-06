@@ -179,7 +179,8 @@ function cardsFrom(section, outFile, url) {
   const items = [];
   for (const card of section.querySelectorAll('.uk-card')) {
     const title = text(card.querySelector('h3, h2, .uk-card-title'));
-    const body = card.querySelector('.uk-card-body');
+    // Text-only cards carry .uk-card-body on the card itself; querySelector only searches descendants.
+    const body = card.classList.contains('uk-card-body') ? card : card.querySelector('.uk-card-body');
     const p = body ? body.querySelectorAll('p').map(text).filter(Boolean).join(' ') : '';
     const img = card.querySelector('img');
     const link = card.querySelector('a.uk-position-cover') || card.querySelector('a[href]');

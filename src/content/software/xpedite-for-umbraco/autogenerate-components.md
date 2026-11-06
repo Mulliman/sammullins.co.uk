@@ -30,6 +30,7 @@ blocks:
   - type: "prose"
     markdown: "All three of these create a similar file structure though. This will include a tsx file for your React component and the types that this component will use. An index.ts file is also create that references this which makes your import statements cleaner when you need to use it. A css file is also created and imported into your component. Finally a tests folder is created with test files that use Jest and React Testing Library."
   - type: "image"
+    frame: "none"
     width: "wide"
     image:
       src: "../../../assets/media/l14oakx4/generated-template-code.avif"

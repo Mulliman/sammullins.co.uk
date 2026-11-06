@@ -11,7 +11,7 @@ blocks:
   - type: "cards"
     variant: "full"
     surface: "default"
-    columns: 1
+    columns: 2
     items:
       - title: "Give it a go!"
         text: "The Imposter is free to play, and doesn't require anything to be installed. All you need is 3 other friends."

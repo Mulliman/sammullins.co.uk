@@ -9,6 +9,8 @@ import { md } from '../lib/markdown';
 
 const site = await getSite();
 const year = new Date().getFullYear();
+// Prefix gradient ids: the header inlines the same SVG, and duplicate ids resolve to the header's copy.
+const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
 ---
 
 <footer class="site-footer surface-inverse">
@@ -27,7 +29,7 @@ const year = new Date().getFullYear();
 
     <div class="footer-cards">
       <div class="footer-card footer-card--logo">
-        <span class="footer-logo" aria-hidden="true" set:html={logo} />
+        <span class="footer-logo" aria-hidden="true" set:html={footerLogo} />
       </div>
       {site.footerCards.map((card) => (
         <div class="footer-card">
@@ -51,7 +53,7 @@ const year = new Date().getFullYear();
     </div>
 
     <p class="copyright">
-      &copy; {site.name} {year}. Words and pictures all rights reserved.
+      &copy; {site.name} {year}. Words and pictures all rights reserved.{' '}
       <a href="https://github.com/Mulliman/sammullins.co.uk">Site source</a> (MIT).
     </p>
   </div>
@@ -73,7 +75,6 @@ const year = new Date().getFullYear();
   .footer-nav a {
     color: var(--color-text-inverse);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
     font-size: var(--step--1);
     text-decoration: none;
   }
@@ -110,10 +111,9 @@ const year = new Date().getFullYear();
     height: auto;
   }
   .footer-card__title {
-    font-size: var(--step-1);
+    font-size: var(--step-2);
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
     color: var(--color-text-inverse);
     margin-bottom: var(--space-xs);
   }

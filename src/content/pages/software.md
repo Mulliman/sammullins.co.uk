@@ -14,7 +14,7 @@ blocks:
   - type: "cards"
     variant: "full"
     surface: "muted"
-    columns: 1
+    columns: 2
     items:
       - title: "Is Baby In A Book"
         text: "Struggling to find that perfect gift for a little one? Find a book with their name in it using Is Baby In A Book!"
@@ -50,10 +50,15 @@ blocks:
     heading: "For everyone"
     surface: "muted"
     align: "center"
+  - type: "image"
+    surface: "muted"
+    frame: "none"
+    image:
+      src: "../../assets/media/gccp2anv/imposter-promo.avif"
+      alt: "The Imposter promotional artwork"
   - type: "prose"
+    surface: "muted"
     markdown: |-
-      ![Imposter Promo](../../assets/media/gccp2anv/imposter-promo.avif)
-
       #### The imposter is a party game designed to be played by 4-7 people. It is based on the Big Potato classic 'The Chameleon' with a few different rules and a more fun scoring system.
 
       Each round, one player is randomly chosen as the imposter, and that player needs to discover the secret word without attracting suspicion from the others.

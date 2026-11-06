@@ -20,12 +20,14 @@ blocks:
     columns: 2
     items:
       - title: "Install xStatic from the Umbraco Gallery"
+        cta: "Our Umbraco"
         href: "https://our.umbraco.com/packages/backoffice-extensions/xstatic/"
         image:
           src: "../../assets/media/hddpv0gy/xstatic1.avif"
           alt: ""
           decorative: true
       - title: "Read more about xStatic"
+        cta: "xStatic for Umbraco"
         href: "/software/xstatic-for-umbraco/"
         image:
           src: "../../assets/media/egdifrhl/banner.avif"

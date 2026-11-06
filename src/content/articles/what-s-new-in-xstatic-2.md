@@ -15,6 +15,7 @@ blocks:
   - type: "body"
     surface: "default"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/io5n4k4g/xstatic-export-types.avif"
         alt: "Xstatic Export Types"
@@ -32,6 +33,7 @@ blocks:
 
       Actions are perfect for final file alterations, generating sitemaps, sending notifications, and hopefully many more examples that I haven't listed here.
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/ikqhqwdt/xstatic-actions.avif"
         alt: "Xstatic Actions"
@@ -43,6 +45,7 @@ blocks:
 
       Now that the packages are separated, a new section has been added to help with working out what components are installed.
   - type: "image"
+    frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/xducz1kz/xstatic-config.avif"

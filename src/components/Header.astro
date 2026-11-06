@@ -9,12 +9,17 @@ import ThemeToggle from './ThemeToggle.astro';
 const site = await getSite();
 const path = Astro.url.pathname;
 // Signature (904): each shape gets pathLength=1 so stroke-dasharray: 1 is the whole outline.
-const logoSvg = logo.replace(/<(path|rect) /g, '<$1 pathLength="1" ');
+// Gradient ids are prefixed so the footer's copy of the logo doesn't reuse these gradients.
+const logoSvg = logo.replace(/<(path|rect) /g, '<$1 pathLength="1" ').replace(/_Linear/g, 'hdr_Linear');
 const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
 
-<header class="site-header surface-inverse">
+<header class="site-header">
   <div class="container site-header__inner">
+    <div class="site-header__start">
+      <ThemeToggle />
+    </div>
+
     <a href="/" class="logo" aria-label={`${site.name}, home`} data-signature>
       <span class="logo__mark" aria-hidden="true" set:html={logoSvg} />
     </a>
@@ -30,8 +35,6 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
         ))}
       </ul>
     </nav>
-
-    <ThemeToggle />
 
     <details class="nav nav--mobile">
       <summary>
@@ -79,49 +82,65 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
 </script>
 
 <style>
+  /* As the original: a light bar, logo centred, nav on the right. The theme toggle takes the empty left slot. */
   .site-header {
-    padding-block: var(--space-s);
+    background: var(--color-bg);
+    padding-block: 10px;
   }
   .site-header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-m);
+    gap: var(--space-s);
+    min-height: 80px;
     position: relative;
+  }
+  .site-header__start {
+    justify-self: start;
   }
   .logo {
     display: block;
-    width: clamp(110px, 18vw, 150px);
-    color: var(--color-text-inverse);
+    height: 80px;
+    aspect-ratio: 4471 / 2309;
+    color: var(--color-heading);
   }
   .logo__mark :global(svg) {
     width: 100%;
     height: auto;
     display: block;
   }
-  .site-header :global(.theme-toggle) {
-    margin-left: auto;
-    color: var(--color-text-inverse);
+  .nav--desktop,
+  .nav--mobile {
+    justify-self: end;
   }
   .nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: var(--space-m);
   }
   .nav a {
-    color: var(--color-text-inverse);
+    display: block;
+    padding: var(--space-2xs) 15px;
+    color: #6b6b6b;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: var(--step--1);
-    padding-block: var(--space-3xs);
-    border-bottom: 2px solid transparent;
+    font-weight: 400;
+    font-size: 0.9167rem;
   }
-  .nav a:hover,
+  .nav a:hover {
+    color: var(--color-heading);
+  }
   .nav a[aria-current='page'] {
-    border-bottom-color: var(--brand-orange);
-    color: #fff;
+    color: var(--color-text-strong);
+    font-weight: 700;
+  }
+  :global(:root[data-theme='dark']) .nav a {
+    color: #b5b5b5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .nav a {
+      color: #b5b5b5;
+    }
   }
 
   .nav--mobile {
@@ -166,9 +185,10 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     right: 0;
     top: 100%;
     z-index: 20;
-    background: var(--color-bg-inverse);
+    background: var(--color-bg);
     padding: var(--space-s) var(--space-m);
-    border: 1px solid #333;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
     min-width: 12rem;
   }
   .nav--mobile ul {
@@ -278,12 +298,17 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     }
   }
 
-  @media (max-width: 40rem) {
+  @media (max-width: 59.99rem) {
     .nav--desktop {
       display: none;
     }
     .nav--mobile {
       display: block;
+    }
+  }
+  @media (max-width: 30rem) {
+    .logo {
+      height: 60px;
     }
   }
 </style>

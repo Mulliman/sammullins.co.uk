@@ -28,15 +28,15 @@ const items = await Promise.all(
 const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image viewer';
 ---
 
-<Section nested={nested}>
+<Section nested={nested} surface={block.surface}>
   <div class="gallery" data-gallery>
     {block.heading && <h2 class="gallery__heading">{block.heading}</h2>}
 
-    <ul class="gallery__grid">
+    <ul class:list={['gallery__grid', `gallery--cols-${block.columns}`]}>
       {items.map(({ img, href }, i) => (
         <li class="gallery__item">
           <a class="gallery__link" href={href} data-caption={img.caption} data-index={i}>
-            <Pic src={img.src} alt={img.decorative ? '' : img.alt} preset="card" />
+            <Pic src={img.src} alt={img.decorative ? '' : img.alt} preset={block.columns <= 2 ? 'half' : 'card'} />
           </a>
         </li>
       ))}
@@ -183,22 +183,44 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
     margin-bottom: var(--space-m);
   }
 
+  /* Masonry columns: 1, 2 from 640px, then the block's column count from 960px. */
   .gallery__grid {
-    columns: 3 16rem;
-    column-gap: var(--space-s);
+    --cols: 3;
+    columns: 1;
+    column-gap: 15px;
     list-style: none;
     padding: 0;
   }
+  .gallery--cols-1 {
+    --cols: 1;
+  }
+  .gallery--cols-2 {
+    --cols: 2;
+  }
+  .gallery--cols-4 {
+    --cols: 4;
+  }
+  @media (min-width: 640px) {
+    .gallery__grid:not(.gallery--cols-1) {
+      columns: 2;
+    }
+  }
+  @media (min-width: 960px) {
+    .gallery__grid {
+      columns: var(--cols);
+    }
+  }
   .gallery__item {
     break-inside: avoid;
-    margin-bottom: var(--space-s);
+    margin-bottom: 15px;
   }
   .gallery__link {
     display: block;
   }
+  /* The original's 5px white photo border. */
   .gallery__link :global(img) {
-    border: 6px solid var(--color-frame);
-    box-shadow: var(--shadow-soft);
+    width: 100%;
+    border: 5px solid var(--color-frame);
   }
 
   /* Lightbox */

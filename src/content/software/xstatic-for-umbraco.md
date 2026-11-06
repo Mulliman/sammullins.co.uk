@@ -34,7 +34,7 @@ blocks:
   - type: "cards"
     variant: "text"
     surface: "default"
-    columns: 1
+    columns: 2
     items:
       - title: "xStatic on Our Umbraco"
         text: "Download or install this package from the official Umbraco package repository."

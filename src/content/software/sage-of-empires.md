@@ -15,7 +15,7 @@ blocks:
   - type: "cards"
     variant: "text"
     surface: "muted"
-    columns: 1
+    columns: 2
     items:
       - title: "Do you play AOE2 DE?"
         text: "If so you can try this free tool at https://sage-of-empires.web.app/. If you have any build orders you wish to contribute, please submit a PR at https://github.com/Mulliman/sage-of-empires."

@@ -17,6 +17,8 @@ const variant = image && block.variant !== 'plain' ? block.variant : 'plain';
 // Ticket 905 prototype B: the blurred backdrop comes into focus as you scroll (flag in site.yaml).
 const sharpen = (await getSite()).features.blurToSharpHero;
 const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
+// A short subheading is a thin uppercase subtitle ("Developer"); a sentence is a normal-case lead.
+const subIsLead = (subheading?.length ?? 0) > 60;
 ---
 
 <section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
@@ -33,7 +35,7 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
     )}
     <div class="hero__text">
       <h1 class="hero__heading">{heading}</h1>
-      {subheading && <p class="hero__sub">{subheading}</p>}
+      {subheading && <p class:list={['hero__sub', { 'hero__sub--lead': subIsLead }]}>{subheading}</p>}
     </div>
   </div>
 </section>
@@ -43,7 +45,13 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-block: var(--space-xl);
+    padding-block: 40px;
+    box-shadow: inset 0 0 20px rgb(0 0 0 / 0.5);
+  }
+  @media (min-width: 960px) {
+    .hero {
+      padding-block: 70px;
+    }
   }
 
   /* Variant surfaces. Text colour is set on the section so the h1 inherits it. */
@@ -64,10 +72,25 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
     color: inherit;
     margin: 0;
   }
+  /* The original's subtitle was a thin uppercase h3. */
   .hero__sub {
-    margin: var(--space-s) 0 0;
-    font-size: var(--step-1);
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
     font-weight: 300;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .hero__sub--lead {
+    max-width: var(--container-narrow);
+    margin: 20px auto 0;
+    font-size: var(--step-1);
+    font-weight: 400;
+    text-transform: none;
+    line-height: 1.5;
+  }
+  .hero__heading + .hero__sub:not(.hero__sub--lead) {
+    margin-top: 0;
   }
   .hero--blurred .hero__sub {
     color: #f5f5f5;
@@ -80,7 +103,11 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
   }
 
   .hero__text {
-    padding: var(--space-s);
+    padding: 30px;
+  }
+  .hero--blurred .hero__text,
+  .hero--blurred .hero__heading {
+    text-shadow: 0 0 10px #000;
   }
   .hero--center .hero__text {
     text-align: center;
@@ -108,14 +135,13 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(14px) brightness(0.35);
-    transform: scale(1.1);
+    filter: blur(5px) brightness(0.25);
+    transform: scale(1.05);
   }
 
   /* Framed sharp image: thick white frame and shadow (site identity). */
   .hero__frame {
     margin: 0 auto;
-    max-width: 56rem;
     border: 10px solid var(--color-frame);
     box-shadow: var(--shadow);
     background: var(--color-frame);
@@ -130,10 +156,11 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 
   /* Blurred: the text box is a dark translucent panel with a thin white border. */
   .hero--blurred .hero__text {
-    background: rgb(0 0 0 / 0.75);
+    background: rgb(0 0 0 / 0.85);
     border: 2px solid #fff;
-    margin-top: var(--space-m);
-    padding: var(--space-m);
+  }
+  .hero--blurred .hero__heading {
+    color: #fff;
   }
 
   /* Below 640px: no framed image; the text panel sits on the blurred background. */
@@ -153,7 +180,8 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(90%, 40rem);
+      width: max-content;
+      max-width: 90%;
       margin: 0;
     }
   }

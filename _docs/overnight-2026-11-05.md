@@ -101,3 +101,19 @@ Tickets: 42 in `review`, 6 in `in-progress`, 9 `todo` (mostly yours: accounts, D
 
 - Agent worktrees remain under `.claude/worktrees/` (git-ignored), with branches `worktree-agent-*`. Everything useful is merged; they can be removed.
 - The first build takes about 5 minutes (≈1,500 image variants); later builds are cached (~20s).
+
+## 6 Nov: fidelity pass against the live site
+
+Sam found the build looked different from the live site and partly broken. A side-by-side browser pass fixed:
+
+- **Typography:** the original's thin headings were UIkit's system font stack (Segoe UI / SF) at weight 100, not Lato Hairline. Headings now use that stack, are centred like the original, and sizes match (h1 42px, h2 32px). Section headings use the original regular-weight black "sam-heading" style.
+- **Header:** back to the light bar with the logo centred and the nav on the right; the theme toggle sits in the empty left slot.
+- **Logo:** "SAM" had no fill at all and the footer copy reused the header's gradient ids, so it was dark on dark. Both fixed; the logo goes light in dark mode.
+- **Client logos:** four per row at the original size. In dark mode they render as light versions (inverted, blended onto the page) instead of white boxes.
+- **Cards:** original UIkit look (white card, image on top, centred thin title, button), 4/2/1 columns with lone cards centred at half width; plain centred text cards.
+- **Lost content restored:** the migration dropped the text of every text-only card (the CV's skills and jobs, xStatic docs index, PhotoShare21 panels). `scripts/migrate/fill-card-text.mjs` refilled it from the legacy HTML, and the CV's education and employment are back to the original cards.
+- **Photo albums:** each photo's section type (blurred backdrop, black band or plain) and gallery column counts restored from the legacy HTML by `scripts/migrate/fill-image-sections.mjs`.
+- **Articles:** empty "Nothing here yet" sections are hidden; the archive is the original 3-column card grid.
+- **Guard:** block Markdown with a relative image now fails the build (one image on /software/ was silently broken).
+
+New block options: `surface` on prose, gallery, logoWall, listing and timeline; `cta` on intro and card items; `columns` on gallery; `frame`, `backdrop` and `surface` on image.

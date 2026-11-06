@@ -36,6 +36,6 @@ function withHeadingAnchors(html: string): string {
 const html = withHeadingAnchors(md(block.markdown));
 ---
 
-<Section nested={nested} width="narrow">
+<Section nested={nested} surface={block.surface} width="narrow">
   <div class:list={['prose', { 'text-center': block.align === 'center' }]} set:html={html} />
 </Section>

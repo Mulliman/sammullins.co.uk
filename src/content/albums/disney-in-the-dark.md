@@ -14,6 +14,7 @@ blocks:
       src: "../../assets/media/jajfv14q/dsc01709.avif"
       alt: "Disney in the Dark"
   - type: "gallery"
+    columns: 3
     images:
       - src: "../../assets/media/k2unodit/castlefireworksred.avif"
         alt: "Castlefireworksred"
@@ -22,22 +23,26 @@ blocks:
       - src: "../../assets/media/n23bbgvr/castlefireworksmulti.avif"
         alt: "Castlefireworksmulti"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/wrahdvzf/dsc01183.avif"
       alt: "DSC01183"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/12tamnef/simba-at-the-festival-of-the-lion-king.avif"
         alt: "Simba At The Festival Of The Lion King"
       - src: "../../assets/media/rtpgkmhs/elephant-from-festival-of-the-lion-king.avif"
         alt: "Elephant From Festival Of The Lion King"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/dcej2uil/dragonfantasmic.avif"
       alt: "Dragonfantasmic"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/xvmbwkux/arieleric.avif"
         alt: "Arieleric"
@@ -48,6 +53,7 @@ blocks:
       - src: "../../assets/media/lyxno45p/littlemermaidfish_1.avif"
         alt: "Littlemermaidfish 1"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/y3hnfbir/mickey-water.avif"
@@ -63,6 +69,10 @@ blocks:
           src: "../../assets/media/zx5lmjpp/aoa.avif"
           alt: ""
           decorative: true
+      - title: "PhotoShare21"
+        text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
+        href: "/photography/photoshare21/"
+        cta: "View weeks so far"
       - title: "04 May 21: Star Wars Day"
         href: "/photography/photoshare21/star-wars-day/"
         image:

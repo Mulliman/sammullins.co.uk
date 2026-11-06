@@ -2,7 +2,7 @@
 /**
  * `listing` block (ticket 305): a collection query shown as a card grid, a list with
  * thumbnails, or a compact notes feed. Hidden and (by default) archived items are excluded
- * by `runQuery`.
+ * by `runQuery`. An empty listing renders nothing, so a page can hold sections that fill up later.
  */
 import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
@@ -21,99 +21,95 @@ const fmt = (d: Date) =>
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
-<Section nested={nested}>
-  {block.heading && <h2 class="listing__heading">{block.heading}</h2>}
+{entries.length > 0 && (
+  <Section nested={nested} surface={block.surface}>
+    {block.heading && <h2 class="listing__heading">{block.heading}</h2>}
 
-  {entries.length === 0 && <p class="listing__empty">Nothing here yet.</p>}
+    {entries.length > 0 && block.variant === 'grid' && (
+      <ul class="listing__grid">
+        {entries.map((e) => (
+          <li class="listing__cell">
+            <Card
+              title={e.data.title}
+              text={e.data.description}
+              image={e.data.cover}
+              href={urlFor(e)}
+              date={e.data.date}
+              variant="full"
+            />
+          </li>
+        ))}
+      </ul>
+    )}
 
-  {entries.length > 0 && block.variant === 'grid' && (
-    <ul class="listing__grid">
-      {entries.map((e) => (
-        <li class="listing__cell">
-          <Card
-            title={e.data.title}
-            text={e.data.description}
-            image={e.data.cover}
-            href={urlFor(e)}
-            date={e.data.date}
-            variant="full"
-          />
-        </li>
-      ))}
-    </ul>
-  )}
-
-  {entries.length > 0 && block.variant === 'list' && (
-    <ul class="listing__list">
-      {entries.map((e) => (
-        <li class="listing__row">
-          {e.data.cover && (
-            <div class="listing__thumb">
-              <Pic
-                src={e.data.cover.src}
-                alt={e.data.cover.decorative ? '' : e.data.cover.alt}
-                preset="thumb"
-                class="listing__img"
-              />
-            </div>
-          )}
-          <div class="listing__info">
-            {e.data.date && (
-              <p class="listing__meta">
-                <time datetime={iso(e.data.date)}>{fmt(e.data.date)}</time>
-              </p>
+    {entries.length > 0 && block.variant === 'list' && (
+      <ul class="listing__list">
+        {entries.map((e) => (
+          <li class="listing__row">
+            {e.data.cover && (
+              <div class="listing__thumb">
+                <Pic
+                  src={e.data.cover.src}
+                  alt={e.data.cover.decorative ? '' : e.data.cover.alt}
+                  preset="thumb"
+                  class="listing__img"
+                />
+              </div>
             )}
-            <h3 class="listing__title">
-              <a class="listing__link" href={urlFor(e)}>
+            <div class="listing__info">
+              {e.data.date && (
+                <p class="listing__meta">
+                  <time datetime={iso(e.data.date)}>{fmt(e.data.date)}</time>
+                </p>
+              )}
+              <h3 class="listing__title">
+                <a class="listing__link" href={urlFor(e)}>
+                  {e.data.title}
+                </a>
+              </h3>
+              <p class="listing__desc">{e.data.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {entries.length > 0 && block.variant === 'notes' && (
+      <ul class="notes">
+        {entries.map((e) => (
+          <li class="note">
+            <p class="note__head">
+              {e.data.date && (
+                <time class="note__date" datetime={iso(e.data.date)}>
+                  {fmt(e.data.date)}
+                </time>
+              )}
+              <a class="note__link" href={urlFor(e)}>
                 {e.data.title}
               </a>
-            </h3>
-            <p class="listing__desc">{e.data.description}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  )}
-
-  {entries.length > 0 && block.variant === 'notes' && (
-    <ul class="notes">
-      {entries.map((e) => (
-        <li class="note">
-          <p class="note__head">
-            {e.data.date && (
-              <time class="note__date" datetime={iso(e.data.date)}>
-                {fmt(e.data.date)}
-              </time>
-            )}
-            <a class="note__link" href={urlFor(e)}>
-              {e.data.title}
-            </a>
-          </p>
-          <p class="note__desc">{e.data.description}</p>
-        </li>
-      ))}
-    </ul>
-  )}
-</Section>
+            </p>
+            <p class="note__desc">{e.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </Section>
+)}
 
 <style>
   .listing__heading {
     text-align: center;
     margin-bottom: var(--space-l);
   }
-  .listing__empty {
-    text-align: center;
-    color: var(--color-text-muted);
-  }
 
-  /* Grid: same ceiling-plus-collapse track rule as the cards block. */
+  /* Grid: as the original articles page. 1 column, 2 from 640px, 3 from 960px, rows centred. */
   .listing__grid {
-    --cols: 3;
-    --gap: var(--space-m);
-    --min: calc((var(--container) - (var(--cols) - 1) * var(--gap)) / var(--cols));
-    display: grid;
+    --cols: 1;
+    --gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
     list-style: none;
     margin: 0;
     padding: 0;
@@ -121,6 +117,17 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .listing__cell {
     display: flex;
     min-width: 0;
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  }
+  @media (min-width: 640px) {
+    .listing__grid {
+      --cols: 2;
+    }
+  }
+  @media (min-width: 960px) {
+    .listing__grid {
+      --cols: 3;
+    }
   }
 
   /* List */
@@ -164,8 +171,10 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     font-weight: 700;
     line-height: 1.3;
     margin: 0;
+    font-family: var(--font-sans);
     text-transform: none;
-    letter-spacing: 0;
+    text-align: left;
+    color: var(--color-text);
   }
   .listing__desc {
     margin: 0;

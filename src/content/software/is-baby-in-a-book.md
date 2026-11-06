@@ -9,6 +9,7 @@ blocks:
   - type: "body"
     surface: "muted"
   - type: "image"
+    surface: "inverse"
     width: "wide"
     image:
       src: "../../assets/media/3gyc45vu/biab-thin-banner.avif"

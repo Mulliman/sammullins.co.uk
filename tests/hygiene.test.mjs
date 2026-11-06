@@ -43,7 +43,7 @@ test('no inline style attributes in output HTML (CSP style-src self)', () => {
 
 test('set:html is only used with sanitised helpers or trusted assets', () => {
   const allowed =
-    /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
+    /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|footerLogo\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
   const offenders = [];
   for (const f of walk(join(ROOT, 'src'), (p) => p.endsWith('.astro'))) {
     for (const line of readFileSync(f, 'utf8').split('\n')) {

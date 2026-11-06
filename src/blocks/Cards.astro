@@ -20,6 +20,7 @@ interface CardData {
   image?: CardImage | undefined;
   href?: string | undefined;
   date?: Date | undefined;
+  cta?: string | undefined;
 }
 
 const items: CardData[] = [
@@ -48,6 +49,7 @@ const items: CardData[] = [
             image={item.image}
             href={item.href}
             date={item.date}
+            cta={item.cta}
             variant={block.variant}
           />
         </li>
@@ -61,33 +63,35 @@ const items: CardData[] = [
     text-align: center;
     margin-bottom: var(--space-l);
   }
-  /* Columns are a ceiling: each track is at least its share of the container width, so the
-     grid holds at most N columns and collapses to fewer (then one) as the width shrinks. */
+  /* As the original UIkit grid: 1 column, 2 from 640px, N from 960px. Rows are centred,
+     so a lone card sits in the middle at its column width. */
   .cards__grid {
-    --cols: 3;
-    --gap: var(--space-m);
-    --min: calc((var(--container) - (var(--cols) - 1) * var(--gap)) / var(--cols));
-    display: grid;
+    --cols: 1;
+    --gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  .cards--cols-1 {
-    --cols: 1;
-  }
-  .cards--cols-2 {
-    --cols: 2;
-  }
-  .cards--cols-3 {
-    --cols: 3;
-  }
-  .cards--cols-4 {
-    --cols: 4;
-  }
   .cards__item {
     display: flex;
     min-width: 0;
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  }
+  @media (min-width: 640px) {
+    .cards__grid:not(.cards--cols-1) {
+      --cols: 2;
+    }
+  }
+  @media (min-width: 960px) {
+    .cards__grid.cards--cols-3 {
+      --cols: 3;
+    }
+    .cards__grid.cards--cols-4 {
+      --cols: 4;
+    }
   }
 </style>

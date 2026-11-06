@@ -17,6 +17,7 @@ blocks:
   - type: "body"
     surface: "default"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/tq1blt2e/the-teeth-and-the-pharaoh.avif"
         alt: "The Teeth And The Pharaoh"
@@ -35,23 +36,27 @@ blocks:
   - type: "prose"
     markdown: "#### Quiet, warm nights and low light pollution meant that hours could just be spent outside watching for shooting stars."
   - type: "image"
+    surface: "inverse"
     width: "wide"
     image:
       src: "../../assets/media/p55muyrk/casa.avif"
       alt: "Casa"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/ro0ha4qh/spanish-pool-overlooking-cassiopeia.avif"
         alt: "Spanish Pool Overlooking Cassiopeia"
       - src: "../../assets/media/vhtg44hw/the-patio-by-night.avif"
         alt: "The Patio By Night"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/ziajwutd/el-biznaguero-malaga.avif"
       alt: "Los picos, piscinas y puertos de españa"
     caption: "Away from the seafront, Malaga and Marbella are cities of culture and history."
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/qzcf5h4e/inside-alcazaba.avif"
         alt: "Inside Alcazaba"
@@ -62,6 +67,7 @@ blocks:
       - src: "../../assets/media/lyngmcgj/malaga-cathedral.avif"
         alt: "Malaga Cathedral"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/afzf4ux4/marbella-street.avif"
@@ -69,12 +75,14 @@ blocks:
   - type: "prose"
     markdown: "#### As you move toward the sea however, the authentic Spain is covered with the veil of tourism, particularly once you reach the poser's pretentious playground of Puerto Banús."
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/yj1pou2l/classic-car-at-puerto-banus.avif"
         alt: "Classic Car At Puerto Banus"
       - src: "../../assets/media/afdjm3vu/boat-in-pueto-banus.avif"
         alt: "Boat In Pueto Banus"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/sn1a04ti/harley-davidson-on-the-sea-wall-of-puerto-banus.avif"
@@ -90,6 +98,10 @@ blocks:
           src: "../../assets/media/ff5dehow/kingfisher-in-the-ice.avif"
           alt: ""
           decorative: true
+      - title: "PhotoShare21"
+        text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
+        href: "/photography/photoshare21/"
+        cta: "View weeks so far"
       - title: "Week 3: Reptiles"
         href: "/photography/photoshare21/reptiles/"
         image:

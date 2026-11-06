@@ -17,6 +17,7 @@ blocks:
   - type: "body"
     surface: "default"
   - type: "image"
+    frame: "none"
     width: "wide"
     image:
       src: "../../../assets/media/gaulvx4z/cms-as-docs.avif"
@@ -35,6 +36,8 @@ blocks:
 
       The example below shows how the test content may look for a simple page which contains a single rich text block.
   - type: "image"
+    surface: "muted"
+    frame: "none"
     width: "wide"
     image:
       src: "../../../assets/media/0gsfwtxf/test-data.avif"
@@ -45,6 +48,8 @@ blocks:
 
       The second test is a prompt to put in your specific assertions and will fail the first time you run it unless you change it.
   - type: "image"
+    surface: "muted"
+    frame: "none"
     width: "wide"
     image:
       src: "../../../assets/media/kvqnfofv/test-functions.avif"

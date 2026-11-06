@@ -21,7 +21,7 @@ const kindLabel = {
 } as const;
 ---
 
-<Section nested={nested}>
+<Section nested={nested} surface={block.surface}>
   {block.heading && <h2 class="timeline__heading">{block.heading}</h2>}
   <ol class="timeline">
     {block.items.map((item) => (

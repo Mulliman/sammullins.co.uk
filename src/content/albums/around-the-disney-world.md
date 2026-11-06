@@ -14,53 +14,62 @@ blocks:
       src: "../../assets/media/4nbhfdo5/thunder-mountain.avif"
       alt: "Around the (Disney) world"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/l3rpnpfl/epcotuk.avif"
         alt: "Epcotuk"
       - src: "../../assets/media/24ilacoj/epcotitalyandball.avif"
         alt: "Epcotitalyandball"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/knmptdoy/epcotmoroccomarket.avif"
       alt: "Around the (Disney) world"
     caption: "Africa"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/bvah5cil/sam03770.avif"
         alt: "SAM03770"
       - src: "../../assets/media/elgisqav/epcotmorocco.avif"
         alt: "Epcotmorocco"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/jtgjuuqw/sam05598.avif"
       alt: "Around the (Disney) world"
     caption: "Asia"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/wy4krgcx/boatsinasia.avif"
         alt: "Boatsinasia"
       - src: "../../assets/media/b5cfluyu/sam05801.avif"
         alt: "Everest"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/mypbo2yd/sam03556.avif"
       alt: "SAM03556"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/xtobgrvx/pandatopiary.avif"
         alt: "Pandatopiary"
       - src: "../../assets/media/igsd130j/epcotchinanight.avif"
         alt: "Epcotchinanight"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/5urj04cs/sam06927.avif"
       alt: "Around the (Disney) world"
     caption: "America"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/leqlhabw/thundermountain.avif"
         alt: "Thundermountain"
@@ -73,6 +82,7 @@ blocks:
       - src: "../../assets/media/20xgankt/dsc01241.avif"
         alt: "DSC01241"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/s2md13te/rockin-hollywood.avif"
@@ -88,6 +98,10 @@ blocks:
           src: "../../assets/media/1yxmfzfb/gecko.avif"
           alt: ""
           decorative: true
+      - title: "PhotoShare21"
+        text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
+        href: "/photography/photoshare21/"
+        cta: "View weeks so far"
       - title: "Week 5: Festival of Fantasy"
         href: "/photography/photoshare21/festival-of-fantasy/"
         image:

@@ -15,6 +15,7 @@ blocks:
       src: "../../assets/media/bwepmrvk/sam05373.avif"
       alt: "Star Wars Day"
   - type: "gallery"
+    columns: 2
     images:
       - src: "../../assets/media/kbsjo4eh/chewbacca.avif"
         alt: "Chewbacca"
@@ -33,6 +34,7 @@ blocks:
       - src: "../../assets/media/mpfe0ju4/dsc05000.avif"
         alt: "DSC05000"
   - type: "image"
+    backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/t5qp3etq/stormtropperindoors.avif"
@@ -44,9 +46,10 @@ blocks:
   - type: "cards"
     variant: "text"
     surface: "muted"
-    columns: 1
+    columns: 2
     items:
       - title: "PhotoShare21"
         text: "My 2021 new year's resolution is to finally share the photos I've taken. The plan is to release a new album each week."
         href: "/photography/photoshare21/"
+        cta: "View weeks so far"
 ---

@@ -46,11 +46,27 @@
     align-items: center;
     gap: var(--space-2xs);
     background: transparent;
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    padding: 0.3rem 0.7rem;
+    border: 0;
+    padding: var(--space-2xs);
+    min-height: 44px;
     cursor: pointer;
-    font-size: var(--step--1);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .theme-toggle:hover {
+    color: var(--color-heading);
+  }
+  /* Small screens: icon only (the label stays for screen readers). */
+  @media (max-width: 39.99rem) {
+    .theme-toggle__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
   }
   html:not(.js) .theme-toggle {
     display: none;

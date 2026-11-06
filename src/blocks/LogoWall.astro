@@ -1,7 +1,7 @@
 ---
 /**
- * `logoWall` block (ticket 306): client logos on white tiles. Greyscale and faded by
- * default, full colour on hover or focus. Each logo's alt text is the client name.
+ * `logoWall` block (ticket 306): client logos on white tiles, four to a row as the original.
+ * Each logo's alt text is the client name.
  */
 import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
@@ -14,7 +14,7 @@ interface Props {
 const { block, nested = false } = Astro.props;
 ---
 
-<Section nested={nested}>
+<Section nested={nested} surface={block.surface}>
   {block.heading && <h2 class="logos__heading">{block.heading}</h2>}
   <ul class="logos">
     {block.logos.map((item) => {
@@ -39,23 +39,28 @@ const { block, nested = false } = Astro.props;
     margin-bottom: var(--space-m);
   }
 
+  /* As the original: 2 per row, 4 from 640px. Logos fill 80% of their tile. */
   .logos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-    gap: var(--space-s);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
     list-style: none;
     padding: 0;
   }
+  @media (min-width: 640px) {
+    .logos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
 
-  /* White tiles keep logos legible in dark mode too. */
+  /* White tiles keep the (white-backed) logos looking intentional in dark mode too. */
   .logos__item {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 6rem;
-    padding: var(--space-s);
+    aspect-ratio: 3 / 2;
+    padding: 10%;
     background: #ffffff;
-    border-radius: var(--radius);
   }
   .logos__link {
     display: flex;
@@ -64,24 +69,31 @@ const { block, nested = false } = Astro.props;
     width: 100%;
     height: 100%;
   }
-
+  .logos__item :global(picture) {
+    display: contents;
+  }
   .logos__item :global(img) {
-    width: auto;
-    max-width: 100%;
-    max-height: 4rem;
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: grayscale(1) opacity(0.7);
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .logos__item :global(img) {
-      transition: filter var(--dur) var(--ease);
+  /* Dark theme: light versions of the logos. The masters are grey on white, so inverting gives
+     light on black, and screen blending drops the black so they sit straight on the page. */
+  :global(:root[data-theme='dark']) .logos__item {
+    background: transparent;
+  }
+  :global(:root[data-theme='dark']) .logos__item :global(img) {
+    filter: invert(1) grayscale(1);
+    mix-blend-mode: screen;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .logos__item {
+      background: transparent;
     }
-  }
-
-  .logos__item:hover :global(img),
-  .logos__item:focus-within :global(img) {
-    filter: none;
+    :global(:root:not([data-theme='light'])) .logos__item :global(img) {
+      filter: invert(1) grayscale(1);
+      mix-blend-mode: screen;
+    }
   }
 </style>

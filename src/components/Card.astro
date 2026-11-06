@@ -14,10 +14,11 @@ interface Props {
   image?: { src: ImageMetadata; alt: string; decorative: boolean } | undefined;
   href?: string | undefined;
   date?: Date | undefined;
+  cta?: string | undefined;
   variant?: 'full' | 'image' | 'text';
 }
 
-const { title, text, image, href, date, variant = 'full' } = Astro.props;
+const { title, text, image, href, date, cta, variant = 'full' } = Astro.props;
 // An image card with no image falls back to the text style.
 const kind = variant === 'image' && !image ? 'text' : variant;
 
@@ -48,6 +49,11 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       </p>
     )}
     {kind !== 'image' && text && <div class="card__text" set:html={md(text)} />}
+    {kind !== 'image' && href && cta && (
+      <p class="card__cta" aria-hidden="true">
+        <span class="button">{cta}</span>
+      </p>
+    )}
   </div>
 </article>
 
@@ -63,13 +69,30 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       transform var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
   }
+  /* Text style: the original's plain UIkit card. No box, centred thin title and text. */
   .card--text {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: var(--space-m);
+    padding: 30px;
+    text-align: center;
   }
+  .card--text .card__title {
+    font-weight: var(--display-weight);
+  }
+  /* Full style: the original UIkit "default" card. White card, image on top, centred body. */
   .card--full {
-    background: transparent;
+    background: var(--color-surface);
+    text-align: center;
+    overflow: hidden;
+  }
+  .card--full .card__body {
+    padding: 30px;
+    flex: 1;
+  }
+  .card--full .card__title {
+    font-weight: var(--display-weight);
+  }
+  /* The original put the date above the title. */
+  .card--full .card__meta {
+    order: -1;
   }
 
   /* Image style: the bar sits on the image. Both share one grid cell, so the title link's
@@ -91,20 +114,20 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     background: rgb(0 0 0 / 0.72);
   }
 
-  /* Full style: thick white photo frame. */
   .card__media {
-    border: 10px solid var(--color-frame);
-    box-shadow: var(--shadow);
-  }
-  .card--image .card__media {
-    border: 0;
-    box-shadow: none;
+    overflow: hidden;
   }
   .card__img {
     width: 100%;
     height: auto;
+  }
+  .card--image .card__img {
     aspect-ratio: 4 / 3;
     object-fit: cover;
+  }
+  .card__media :global(img) {
+    width: 100%;
+    height: auto;
   }
 
   .card__body {
@@ -118,10 +141,13 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
 
   .card__title {
-    font-size: var(--step-1);
-    font-weight: 300;
-    line-height: 1.25;
+    font-size: var(--step-2);
+    line-height: 1.4;
     margin: 0;
+  }
+  .card--image .card__title {
+    font-size: var(--step-1);
+    text-align: left;
   }
   .card--image .card__title {
     color: #fff;
@@ -162,11 +188,20 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     position: relative;
     z-index: 1;
   }
+  .card__cta {
+    margin: var(--space-xs) 0 0;
+  }
 
+  .card:has(.card__link):hover {
+    box-shadow: var(--shadow-soft);
+  }
+  /* UIkit's hover: the image scales up slightly inside its frame. */
   @media (prefers-reduced-motion: no-preference) {
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-soft);
+    .card__media :global(img) {
+      transition: transform var(--dur) var(--ease);
+    }
+    .card:hover .card__media :global(img) {
+      transform: scale(1.03);
     }
   }
   .card:focus-within:has(:focus-visible) {
