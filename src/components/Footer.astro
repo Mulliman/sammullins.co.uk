@@ -85,8 +85,19 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
     display: grid;
     gap: var(--space-s);
     margin-top: var(--space-l);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    /* Always 4 cards: 1 per row, then 2x2, then 4 across. Never auto-fit (it gives a 3/1 split). */
+    grid-template-columns: 1fr;
     text-align: center;
+  }
+  @media (min-width: 640px) {
+    .footer-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 960px) {
+    .footer-cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
   .footer-card {
     background: var(--color-surface-inverse);
