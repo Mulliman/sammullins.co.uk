@@ -1,32 +1,34 @@
 ---
 id: "1307"
-title: "Style guide in CI: visual regression across themes"
+title: "Visual regression in CI: revisit once the redesign settles"
 epic: Style guide
 status: todo
-priority: p1
+priority: p2
 size: M
 owner: agent
-depends_on: ["1302", "1303", "1304", "1305"]
+depends_on: ["205", "206", "310", "312", "314"]
 ---
 
 ## Why
 
-Once the guide shows every variant, it is the best regression target on the site. For 207 a before/after pixel comparison was run by hand; it caught one real change. This makes that automatic.
+A first attempt (6 November 2026) screenshotted every guide page in every mode, page theme and width and compared them in CI. Sam decided to drop it for now:
 
-## Scope
+- The redesign tickets (205, 206, 310, 312, 314) change how things look on purpose, so baselines would need updating on almost every PR.
+- Full-page baselines were 26 MB, and the 58,000px components page drifted by 1 to 2px in height between runs.
+- Windows and the Linux CI runner render fonts differently, so each needs its own baseline set.
+- For a one-person site, the style guide is already the place to check by eye.
 
-- Playwright screenshots of every guide page in light and dark, and in each page theme, at desktop and 390px widths.
-- Baselines committed (small, compressed); a PR that changes pixels fails with a diff image uploaded as a CI artifact. Updating baselines is a deliberate command (`pnpm test:visual --update`), never automatic.
-- axe already runs on every built page, so guide pages are covered. Add the page-theme dimension: run axe on guide pages with each `data-page-theme`.
-- Fonts and animation are locked for stable screenshots: reduced motion, and wait for fonts to load.
+## What was kept
 
-## Acceptance criteria
+- `tests/a11y/page-themes.test.mjs`: axe on every guide page in every page theme, light and dark. It found real low-contrast inline code on dark surfaces, now fixed with a token (`--color-code-bg` on `.surface-inverse` in `themes/default.css`).
+- `pnpm compare:base` and `pnpm compare` (`scripts/compare/compare.mjs`): an on-demand before/after comparison of the guide and key pages, in light and dark. Nothing is committed (`.compare/` is gitignored) and it never fails a build. Use it for changes meant to look identical, or to see what a change touched. It loads every image eagerly and pins sticky elements so repeat runs match; the tall components page can still drift by a pixel, which the report labels.
 
-- [ ] A one-token colour change produces a failing visual test naming the affected guide pages.
-- [ ] Baselines update only through the explicit command.
-- [ ] axe passes on every guide page in every page theme, light and dark.
-- [ ] The visual job takes at most 5 minutes in CI.
+## When to revisit
 
-## Notes
+After the redesign tickets merge. Then consider per-component screenshots (one small image per guide example, photos masked) with Linux baselines generated in CI, rather than full pages.
 
-New dev dependencies need a reason in the PR. Prefer Playwright's built-in screenshot comparison (`playwright` is already a dev dependency) over a new diff library.
+## Acceptance criteria (for the revisit)
+
+- [ ] A one-token colour change fails a visual test naming the affected components.
+- [ ] Baselines update only through an explicit command, and total at most a few MB.
+- [ ] Ten consecutive CI runs on an unchanged commit pass (no flakiness).

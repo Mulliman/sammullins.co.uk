@@ -172,6 +172,7 @@
     --color-border: var(--color-inverse-border);
     --color-surface: var(--color-surface-inverse);
     --color-focus: var(--color-inverse-focus);
+    --color-code-bg: var(--color-surface-inverse); /* inline code stays readable on dark sections */
     --logo-stop-a: #ffffff;
     --logo-stop-b: #cfcfcf;
     --logo-stop-c: #8c8c8c;

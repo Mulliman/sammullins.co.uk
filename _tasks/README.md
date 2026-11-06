@@ -112,7 +112,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1304](1304-style-guide-components.md) | Style guide: every block and every variant, with its YAML | p1 | L | agent | 1301 |
 | [1305](1305-style-guide-elements.md) | Style guide: generic styles and HTML elements | p1 | S | agent | 1301 |
 | [1306](1306-style-guide-page-structures.md) | Style guide: example page structures | p1 | M | pair | 1301, 1304 |
-| [1307](1307-style-guide-ci.md) | Style guide in CI: visual regression across themes | p1 | M | agent | 1302 to 1305 |
+| [1307](1307-style-guide-ci.md) | Visual regression in CI: revisit once the redesign settles | p2 | M | agent | 205, 206, 310, 312, 314 |
 
 ## Suggested order
 

@@ -49,7 +49,7 @@ A living style guide at `/style-guide/`, never linked from the site, modelled on
 | 13d | [1304](1304-style-guide-components.md) Every block and variant, with YAML | agent | Replaces the `blocks-demo` pages (with redirects). |
 | 13e | [1305](1305-style-guide-elements.md) Generic styles and elements | agent | |
 | 13f | [1306](1306-style-guide-page-structures.md) Example page structures | pair | Sam reviews the structures. |
-| 13g | [1307](1307-style-guide-ci.md) Visual regression across themes | agent | Last. |
+| 13g | [1307](1307-style-guide-ci.md) Visual regression in CI | agent | **Deferred** until the redesign settles. Kept: page-theme axe test and `pnpm compare`. |
 
 ## 3. Accounts and infrastructure (Sam, any time before step 5)
 
