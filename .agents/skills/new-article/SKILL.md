@@ -12,6 +12,7 @@ Turns source material into one article file, on its own branch, with a PR for Sa
 - Schema and every field: `_docs/content-model.md` (source of truth: `src/content.config.ts`).
 - Block fields and examples, generated from the schema: `../_shared/block-catalogue.md`.
 - Voice: `_docs/voice.md`. If the file is missing, say so in the PR body and draft from the Voice section of `AGENTS.md`.
+- Example structure: `/style-guide/page-structures/#article` (block order and front matter), with the example file `src/content/articles/page-structure-example-article.md`.
 - Repo rules: `AGENTS.md`.
 
 ## Preconditions

@@ -10,8 +10,12 @@ const line = (e: AnyEntry) => `- [${e.data.title}](${SITE}${urlFor(e)}index.md):
 
 export const GET: APIRoute = async () => {
   const pages = (await getCollection('pages')).filter((p) => !p.data.hidden && !p.data.noindex);
-  const articles = (await getCollection('articles')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  const software = (await getCollection('software')).filter((s) => !s.id.includes('/'));
+  const listable = <T extends { data: { hidden: boolean; noindex: boolean } }>(items: T[]) =>
+    items.filter((e) => !e.data.hidden && !e.data.noindex);
+  const articles = listable(await getCollection('articles')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+  const software = listable(await getCollection('software')).filter((s) => !s.id.includes('/'));
   const current = articles.filter((a) => !a.data.archived);
   const archived = articles.filter((a) => a.data.archived);
 

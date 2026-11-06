@@ -49,7 +49,7 @@ export const styleGuidePages: StyleGuidePage[] = [
     title: 'Page structures',
     href: '/style-guide/page-structures/',
     summary: 'Example page layouts built from the blocks.',
-    ready: false,
+    ready: true,
   },
 ];
 

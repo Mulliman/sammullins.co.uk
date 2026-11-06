@@ -1,0 +1,303 @@
+---
+/**
+ * Style guide: page structures (ticket 1306). One section per page type: when to use it, the typical block
+ * order, the front matter to copy, and real pages of that type.
+ *
+ * The front matter shown is read from the page-structure-example files under src/content at build time,
+ * so the skeleton and the example page cannot drift apart. Each example is loaded through its collection,
+ * so a skeleton that fails the schema fails the build.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { getEntry } from 'astro:content';
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import Blocks from '../../../components/Blocks.astro';
+
+const root = process.cwd();
+
+/** The front matter of a file, exactly as written: the text between the two `---` lines. */
+function frontMatterOf(file: string): string {
+  const source = readFileSync(join(root, file), 'utf8');
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+  if (!match) throw new Error(`style guide: ${file} has no front matter`);
+  return match[1] + '\n';
+}
+
+function must<T>(entry: T | undefined, name: string): T {
+  if (!entry) throw new Error(`style guide: example "${name}" is missing from its collection`);
+  return entry;
+}
+
+// Loading each example through its collection validates it against the schema when the site builds.
+must(await getEntry('articles', 'page-structure-example-article'), 'article');
+must(await getEntry('articles', 'page-structure-example-note'), 'note');
+must(await getEntry('software', 'page-structure-example-product'), 'software product');
+must(await getEntry('software', 'page-structure-example-product/page-structure-example-docs'), 'docs page');
+must(await getEntry('software', 'page-structure-example-product/page-structure-example-docs-2'), 'docs page 2');
+must(await getEntry('albums', 'page-structure-example-album'), 'album');
+must(await getEntry('pages', 'page-structure-example-cv'), 'CV');
+must(await getEntry('pages', 'page-structure-example-index'), 'index');
+must(await getEntry('pages', 'page-structure-example-advent-day'), 'campaign');
+
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Structure {
+  id: string;
+  title: string;
+  use: string;
+  order: string[];
+  /** The example page for this type, rendered by the site build. */
+  example: Link;
+  /** The file to copy the front matter from, if the type is a content file. */
+  skeleton?: { file: string; yaml: string };
+  /** Extra notes shown under the front matter. */
+  note?: string;
+  /** A second example for the type, such as the next page in a series. */
+  secondExample?: Link;
+  /** Real pages of this type. */
+  realPages: Link[];
+  realPagesNote?: string;
+}
+
+const structures: Structure[] = [
+  {
+    id: 'article',
+    title: 'Article',
+    use: 'A dated piece of writing longer than a note: a write-up, a how-to, or one part of a numbered series. The article header (title, date, reading time and series part) and the contents list, built from the ## headings, come from the page, so the blocks start with what follows. A plain hero at the top is replaced by that header.',
+    order: [
+      'Hero (plain, replaced by the article header)',
+      'Body (the Markdown)',
+      'Cards (related articles)',
+      'Intro (Give it a go!)',
+    ],
+    example: { label: 'See it rendered', href: '/articles/page-structure-example-article/' },
+    skeleton: {
+      file: 'src/content/articles/page-structure-example-article.md',
+      yaml: frontMatterOf('src/content/articles/page-structure-example-article.md'),
+    },
+    realPages: [
+      { label: '5 cool things I used to build xStatic', href: '/articles/5-cool-things-i-used-to-build-xstatic/' },
+      { label: "What's New in xStatic 3", href: '/articles/what-s-new-in-xstatic-3/' },
+    ],
+  },
+  {
+    id: 'note',
+    title: 'Note',
+    use: 'A short post of 300 to 800 words, with kind: note. It shows in the notes feed and needs no hero. Start the blocks with the body.',
+    order: ['Body (the Markdown)'],
+    example: { label: 'See it rendered', href: '/articles/page-structure-example-note/' },
+    skeleton: {
+      file: 'src/content/articles/page-structure-example-note.md',
+      yaml: frontMatterOf('src/content/articles/page-structure-example-note.md'),
+    },
+    realPages: [{ label: 'Articles and notes feed', href: '/articles/' }],
+    realPagesNote: 'No note has been published yet, so the link goes to the articles page, where the notes feed is.',
+  },
+  {
+    id: 'software-product',
+    title: 'Software product page',
+    use: 'The page for a piece of software: what it is, what it does, and where to get it. Set status: legacy for a product that is no longer developed. Links to its docs go in a card row.',
+    order: ['Hero (plain)', 'Body (the product description)', 'Cards (links to the docs)', 'Intro (Give it a go!)'],
+    example: { label: 'See it rendered', href: '/software/page-structure-example-product/' },
+    skeleton: {
+      file: 'src/content/software/page-structure-example-product.md',
+      yaml: frontMatterOf('src/content/software/page-structure-example-product.md'),
+    },
+    realPages: [
+      { label: 'The Imposter', href: '/software/the-imposter/' },
+      { label: 'xStatic for Umbraco', href: '/software/xstatic-for-umbraco/' },
+    ],
+  },
+  {
+    id: 'docs-page',
+    title: 'Docs page in a series',
+    use: 'One page of a docs series. Set series to the product slug and order to its position in the series. The previous and next links are added automatically, so do not add a nextPrev block. The second example page below shows the next link.',
+    order: ['Hero (plain)', 'Body (the steps, in Markdown)'],
+    example: {
+      label: 'See it rendered (first page)',
+      href: '/software/page-structure-example-product/page-structure-example-docs/',
+    },
+    skeleton: {
+      file: 'src/content/software/page-structure-example-product/page-structure-example-docs.md',
+      yaml: frontMatterOf('src/content/software/page-structure-example-product/page-structure-example-docs.md'),
+    },
+    note: 'The second page in the series has order: 2 and the same series slug. Its front matter follows the same shape.',
+    secondExample: {
+      label: 'See it rendered (second page, with its previous link)',
+      href: '/software/page-structure-example-product/page-structure-example-docs-2/',
+    },
+    realPages: [
+      {
+        label: 'Building your first static site',
+        href: '/software/xstatic-for-umbraco/building-your-first-static-site/',
+      },
+      { label: 'Deploying to Netlify', href: '/software/xstatic-for-umbraco/deploying-to-netlify/' },
+    ],
+  },
+  {
+    id: 'album',
+    title: 'Photo album',
+    use: 'A photo album. Albums are hidden by default, so they are reached by URL and not listed. Use a blurred hero, a gallery for the set, and single images with captions for the best shots.',
+    order: ['Hero (blurred, with a photo)', 'Gallery', 'Image (with a caption)', 'Cards (links to the project)'],
+    example: { label: 'See it rendered', href: '/photography/photoshare21/page-structure-example-album/' },
+    skeleton: {
+      file: 'src/content/albums/page-structure-example-album.md',
+      yaml: frontMatterOf('src/content/albums/page-structure-example-album.md'),
+    },
+    realPages: [
+      { label: 'Reptiles', href: '/photography/photoshare21/reptiles/' },
+      { label: 'Star Wars Day', href: '/photography/photoshare21/star-wars-day/' },
+    ],
+    realPagesNote: 'Both albums are hidden: true, so they open from the link but are not listed anywhere.',
+  },
+  {
+    id: 'cv',
+    title: 'CV',
+    use: 'The CV: a run of bands, each with a centred heading and a card row. Education and employment use text cards; certificates and milestones can use a timeline.',
+    order: [
+      'Hero (plain)',
+      'Section: intro (heading) and cards (education)',
+      'Section: intro and cards (employment)',
+      'Section: intro and timeline (certificates)',
+    ],
+    example: { label: 'See it rendered', href: '/page-structure-example-cv/' },
+    skeleton: {
+      file: 'src/content/pages/page-structure-example-cv.md',
+      yaml: frontMatterOf('src/content/pages/page-structure-example-cv.md'),
+    },
+    realPages: [{ label: 'CV', href: '/cv/' }],
+  },
+  {
+    id: 'index',
+    title: 'Index or listing page',
+    use: 'A page that lists other content, using listing blocks with a collection query. A listing that matches nothing renders nothing, so check the query when a section is missing.',
+    order: ['Hero (plain)', 'Listing (grid of articles)', 'Listing (notes feed)', 'Listing (archive, on a muted band)'],
+    example: { label: 'See it rendered', href: '/page-structure-example-index/' },
+    skeleton: {
+      file: 'src/content/pages/page-structure-example-index.md',
+      yaml: frontMatterOf('src/content/pages/page-structure-example-index.md'),
+    },
+    realPages: [
+      { label: 'Articles', href: '/articles/' },
+      { label: 'Archive', href: '/archive/' },
+    ],
+  },
+  {
+    id: '404',
+    title: '404 page',
+    use: 'The page for an address that does not exist. It is an Astro page (src/pages/404.astro), not a content file, so there is no front matter to copy. It is built as /404.html and served by Netlify for unknown addresses.',
+    order: [
+      'Large 404 code, decorative and hidden from screen readers',
+      'Heading and a short lede',
+      'Helpful links (home, articles, software, archive)',
+      'Did you mean suggestions, filled in by a script when a close match exists',
+    ],
+    example: { label: 'See it rendered', href: '/404.html' },
+    realPages: [{ label: 'The 404 page', href: '/404.html' }],
+  },
+  {
+    id: 'campaign',
+    title: 'Campaign page (advent calendar day)',
+    use: 'A seasonal or campaign page with its own colours. Set theme to a page theme from src/styles/themes/, here christmas. Light and dark mode still work on top of the theme.',
+    order: [
+      'Hero (blurred, with a photo)',
+      'Intro (lead paragraph)',
+      'Body (the day itself)',
+      'Callout (one practical line)',
+    ],
+    example: { label: 'See it rendered', href: '/page-structure-example-advent-day/' },
+    skeleton: {
+      file: 'src/content/pages/page-structure-example-advent-day.md',
+      yaml: frontMatterOf('src/content/pages/page-structure-example-advent-day.md'),
+    },
+    realPages: [{ label: 'Themes (the christmas theme is shown here)', href: '/style-guide/themes/' }],
+    realPagesNote:
+      'No live advent calendar page exists yet, so the link goes to the themes guide, which shows the christmas theme.',
+  },
+];
+
+const navSections = structures.map((s) => ({ id: s.id, label: s.title }));
+---
+
+<StyleGuideLayout
+  title="Page structures"
+  description="Example page layouts built from the blocks: the block order and front matter for each page type."
+  sections={navSections}
+>
+  <div class="prose">
+    <h1>Page structures</h1>
+    <p>
+      Each page type has a typical block order. Start a new page from the structure for its type: copy the front matter
+      and adjust the blocks. The front matter shown here is read from the example pages at build time, so it matches
+      them exactly.
+    </p>
+    <p>
+      Each example is a real page, hidden and not indexed. Follow <strong>See it rendered</strong> to see the structure
+      in full. The YAML is shown with the same Copy button as the components guide.
+    </p>
+  </div>
+
+  {structures.map((s) => (
+    <section class="ps-section" aria-labelledby={s.id}>
+      <h2 id={s.id}>{s.title}</h2>
+      <p>{s.use}</p>
+
+      <h3>Block order</h3>
+      <ol class="ps-order">
+        {s.order.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+
+      {s.skeleton && (
+        <>
+          <h3>Front matter to copy</h3>
+          <Blocks blocks={[{ type: 'code', lang: 'yaml', filename: s.skeleton.file, code: s.skeleton.yaml }]} nested />
+        </>
+      )}
+      {s.note && <p>{s.note}</p>}
+
+      <h3>Examples</h3>
+      <p>
+        <a href={s.example.href}>{s.example.label}</a>
+        {s.secondExample && (
+          <>
+            {' '}
+            <a href={s.secondExample.href}>{s.secondExample.label}</a>
+          </>
+        )}
+      </p>
+
+      <h3>Real pages of this type</h3>
+      {s.realPagesNote && <p>{s.realPagesNote}</p>}
+      <ul>
+        {s.realPages.map((p) => (
+          <li>
+            <a href={p.href}>{p.label}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</StyleGuideLayout>
+
+<style>
+  .ps-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+    margin-block: var(--space-xl);
+    min-width: 0;
+  }
+  /* Full width of the column, so a long YAML line scrolls inside its code block instead of the page. */
+  .ps-section > :global(*) {
+    width: 100%;
+    min-width: 0;
+  }
+  .ps-order {
+    padding-inline-start: var(--space-m);
+  }
+</style>
