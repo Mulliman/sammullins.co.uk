@@ -235,7 +235,9 @@ for (const name of ORDER) {
     if (f.key === 'type') continue;
     const d = describe(f.expr);
     const required = d.optional || d.dflt !== '' ? 'no' : 'yes';
-    lines.push(`| \`${f.key}\` | ${d.type.replace(/\|/g, '\\|')} | ${required} | ${d.dflt ? `\`${d.dflt}\`` : ''} |`);
+    lines.push(
+      `| \`${f.key}\` | ${d.type.replace(/\\/g, '\\\\').replace(/\|/g, '\\|')} | ${required} | ${d.dflt ? `\`${d.dflt}\`` : ''} |`,
+    );
   }
   lines.push('');
 }

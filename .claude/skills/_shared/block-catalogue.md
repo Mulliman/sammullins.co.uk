@@ -185,7 +185,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `provider` | "youtube" | yes |  |
-| `id` | string.regex(/^[\w-]{6,20}$/) | yes |  |
+| `id` | string.regex(/^[\\w-]{6,20}$/) | yes |  |
 | `title` | string (min 1) | yes |  |
 | `poster` | imageRef | no |  |
 
