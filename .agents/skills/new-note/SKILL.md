@@ -23,7 +23,7 @@ A note is an article with `kind: note`. It lives in the same collection and URL 
 
 - Front matter has `kind: note`. Everything else in the front matter is the same, including `date` (required for articles and notes).
 - Length is 300 to 800 words in the Markdown body. If the material supports more, say so in the PR and suggest `new-article`; do not pad.
-- No `hero` block is required. Start the blocks with `body`, or use a simple `intro` if Sam wants a kicker. `body` is still needed so the Markdown renders.
+- No `hero` block is required. Start the blocks with `body`, or use a simple `intro` if Sam wants a heading and lead. `body` is still needed so the Markdown renders.
 - Keep the `cards` block optional. Add it only for related items.
 
 ## Procedure

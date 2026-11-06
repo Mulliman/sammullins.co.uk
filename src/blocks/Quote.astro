@@ -30,20 +30,26 @@ const caption = attribution ?? source;
     margin: 0;
   }
 
-  /* Large decorative opening mark, set above the text. */
-  .quote blockquote::before {
+  /* A hanging opening mark in the accent colour, outside the text's left edge where there is room. */
+  .quote__text {
+    position: relative;
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--color-heading);
+  }
+  .quote__text::before {
     content: '\201C';
-    display: block;
-    height: 0.5em;
-    font-family: var(--font-script);
-    font-size: 4.5em;
-    line-height: 1;
+    position: absolute;
+    inset-inline-end: calc(100% + 0.1em);
+    top: 0;
     color: var(--brand-orange);
   }
-  .quote__text {
-    font-size: var(--step-2);
-    font-weight: 300;
-    line-height: 1.4;
+  @media (max-width: 899px) {
+    .quote__text::before {
+      position: static;
+    }
   }
   .quote__text :global(p) {
     margin: 0;
@@ -57,7 +63,6 @@ const caption = attribution ?? source;
     padding-left: var(--space-s);
     border-left: 3px solid var(--brand-orange);
     font-size: var(--step--1);
-    letter-spacing: 0.04em;
     color: var(--color-text-muted);
   }
   .quote__caption :global(p) {

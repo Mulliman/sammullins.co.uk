@@ -12,12 +12,11 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { kicker, heading, lead, cta, align, surface } = block;
+const { heading, lead, cta, align, surface } = block;
 ---
 
 <Section nested={nested} surface={surface} width="narrow">
   <div class:list={['intro', `intro--${align}`]}>
-    {kicker && <p class="intro__kicker">{kicker}</p>}
     {heading && <h2 class="intro__heading">{heading}</h2>}
     {lead && <div class="intro__lead" set:html={md(lead)} />}
     {cta && (
@@ -39,25 +38,18 @@ const { kicker, heading, lead, cta, align, surface } = block;
   .intro--left .intro__lead {
     text-align: left;
   }
-  .intro__kicker {
-    margin: 0 0 var(--space-2xs);
-    font-size: var(--step--1);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  /* The original's "sam-heading": regular weight and full black, unlike the thin headings elsewhere. */
   .intro__heading {
-    margin: 0 0 20px;
-    font-weight: 400;
+    margin: 0 0 var(--space-s);
     color: var(--color-text-strong);
   }
   .intro__lead {
-    font-family: var(--font-display);
     font-size: var(--step-1);
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--color-heading);
+  }
+  .intro--center .intro__lead {
+    max-width: 36em;
+    margin-inline: auto;
   }
   .intro__lead :global(p) {
     margin: 0;

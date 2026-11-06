@@ -120,16 +120,15 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     padding: var(--space-2xs) 15px;
     color: #6b6b6b;
     text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 0.9167rem;
+    font-weight: 500;
+    font-size: var(--step-0);
   }
   .nav a:hover {
     color: var(--color-heading);
   }
   .nav a[aria-current='page'] {
     color: var(--color-text-strong);
-    font-weight: 700;
+    font-weight: var(--weight-strong);
   }
   :global(:root[data-theme='dark']) .nav a {
     color: #b5b5b5;
@@ -149,9 +148,8 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     display: flex;
     align-items: center;
     gap: var(--space-2xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     font-size: var(--step--1);
+    font-weight: var(--weight-strong);
     padding: var(--space-2xs);
   }
   .nav--mobile summary::-webkit-details-marker {

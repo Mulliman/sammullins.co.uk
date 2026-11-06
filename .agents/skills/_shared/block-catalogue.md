@@ -43,7 +43,7 @@ limit: positive integer (optional)
 | type | fields |
 |---|---|
 | `hero` | `variant`, `heading`, `subheading`, `image`, `align` |
-| `intro` | `kicker`, `heading`, `lead`, `cta`, `align`, `surface` |
+| `intro` | `heading`, `lead`, `cta`, `align`, `surface` |
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
 | `callout` | `tone`, `title`, `body` |
@@ -74,7 +74,6 @@ limit: positive integer (optional)
 
 | field | type | required | default |
 |---|---|---|---|
-| `kicker` | string | no |  |
 | `heading` | string | no |  |
 | `lead` | string | no |  |
 | `cta` | cta | no |  |

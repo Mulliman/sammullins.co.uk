@@ -67,7 +67,6 @@ const leafBlocks = (image: ImageFn) => {
 
   const intro = z.object({
     type: z.literal('intro'),
-    kicker: z.string().optional(),
     heading: z.string().optional(),
     lead: z.string().optional(),
     cta: cta.optional(),

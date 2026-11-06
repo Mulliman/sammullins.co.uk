@@ -27,18 +27,16 @@ blocks:
     subheading: Text only, on the inverse surface.
     align: center
   - type: intro
-    kicker: Kicker
     heading: Intro heading
     lead: A **lead paragraph** that is larger than body text, with a [link](https://example.com/).
     align: center
     surface: muted
   - type: intro
     heading: Left-aligned intro, default surface
-    lead: Shorter lead with no kicker.
+    lead: Shorter lead, left-aligned.
     align: left
     surface: default
   - type: intro
-    kicker: Inverse
     heading: Intro on the inverse surface
     lead: Light text on a dark section.
     align: left
