@@ -11,6 +11,16 @@ export type Block = CollectionEntry<'pages'>['data']['blocks'][number];
 export type BlockOf<T extends Block['type']> = Extract<Block, { type: T }>;
 export type Query = BlockOf<'listing'>['query'];
 
+/** True if a block of `type` appears anywhere, including inside sections and split columns. */
+export function containsBlock(blocks: readonly Block[], type: Block['type']): boolean {
+  return blocks.some(
+    (b) =>
+      b.type === type ||
+      (b.type === 'section' && containsBlock(b.blocks, type)) ||
+      (b.type === 'split' && b.columns.some((col) => containsBlock(col, type))),
+  );
+}
+
 /** Public URL for an entry. Always has a trailing slash; mirrors the legacy URL structure. */
 export function urlFor(entry: AnyEntry): string {
   switch (entry.collection) {

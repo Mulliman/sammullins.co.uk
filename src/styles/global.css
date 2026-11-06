@@ -326,19 +326,17 @@
       padding-block: 25px;
     }
   }
-  /* An intro followed by a block on the same background reads as one section (as the original,
-     where a heading and its cards shared a section). The next block loses its top padding; a
-     heading-only intro also loses its bottom padding, so the heading sits just above its content. */
-  /* .section--heading-only is set by the intro block (CSS can't nest :has() to detect it). */
-  .section--heading-only.surface-default:has(+ .section.surface-default),
-  .section--heading-only.surface-muted:has(+ .section.surface-muted),
-  .section--heading-only.surface-inverse:has(+ .section.surface-inverse) {
-    padding-bottom: 0;
+  /* `section` block spacing (UIkit's section sizes). */
+  .section.section--spacing-none {
+    padding-block: 0;
   }
-  .section.surface-default:has(> .container--narrow > .intro) + .section.surface-default,
-  .section.surface-muted:has(> .container--narrow > .intro) + .section.surface-muted,
-  .section.surface-inverse:has(> .container--narrow > .intro) + .section.surface-inverse {
-    padding-top: 0;
+  .section.section--spacing-small {
+    padding-block: 15px;
+  }
+  @media (min-width: 960px) {
+    .section.section--spacing-small {
+      padding-block: 25px;
+    }
   }
   .surface-default {
     background: var(--color-bg);

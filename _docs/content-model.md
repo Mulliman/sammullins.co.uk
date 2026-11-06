@@ -123,7 +123,7 @@ The build fails on chains, loops and missing targets. See `integrations/site-fil
 
 ## Blocks
 
-Each page's `blocks` is a list. Each item has a `type` and the fields for that type. Blocks render in order. Sixteen types exist: fifteen leaf blocks and `split`.
+Each page's `blocks` is a list. Each item has a `type` and the fields for that type. Blocks render in order. Seventeen types exist: fifteen leaf blocks, `split` and `section`.
 
 Gotchas that apply to every block:
 
@@ -471,6 +471,32 @@ Gotchas: a `split` cannot contain another `split`. Columns hold only leaf blocks
         lead: "A short lead in the narrow column."
     - - type: prose
         markdown: "The wider column holds the detail."
+```
+
+### section
+
+One full-width band (background and spacing) holding blocks in order: a heading and the cards under it, say. This is how the original site was built, and it keeps a heading close to its content. The child blocks render inside the band, so their own `surface` is ignored.
+
+| Field | Type | Required | Default | Meaning |
+|---|---|---|---|---|
+| `surface` | `default`, `muted` or `inverse` | no | `default` | Background of the band |
+| `spacing` | `none`, `small` or `normal` | no | `normal` | Padding above and below (0, 25px or 70px on desktop) |
+| `blocks` | list of blocks | yes | none | Any leaf block except `hero` |
+
+Gotchas: no `hero`, `split` or `section` inside a section. An `image` with `backdrop: blurred` is a band of its own, so keep it outside.
+
+```yaml
+- type: section
+  surface: muted
+  blocks:
+    - type: intro
+      heading: "Soft skills"
+    - type: cards
+      variant: text
+      columns: 3
+      items:
+        - title: "Public speaking"
+          text: "..."
 ```
 
 ## Checking your work

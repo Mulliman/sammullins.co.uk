@@ -172,6 +172,7 @@ const ORDER = [
   'timeline',
   'embed',
   'split',
+  'section',
 ];
 
 const missing = ORDER.filter((n) => !blocks.has(n));

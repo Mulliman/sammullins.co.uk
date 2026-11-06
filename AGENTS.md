@@ -64,7 +64,7 @@ blocks:
 Markdown body (long-form text, code blocks get Prism highlighting).
 ```
 
-Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: `src/content/pages/blocks-demo/*.md`.
+Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`, `section`. Use a `section` to put a heading and its content in one band (background and spacing), as the original site did. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: `src/content/pages/blocks-demo/*.md`.
 
 Where things go:
 

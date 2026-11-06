@@ -33,29 +33,30 @@ blocks:
           src: "../../assets/media/xffg40lh/imposter-head.avif"
           alt: ""
           decorative: true
-  - type: "intro"
-    heading: "Other articles in the series"
+  - type: "section"
     surface: "muted"
-    align: "center"
-  - type: "cards"
-    variant: "full"
-    surface: "muted"
-    columns: 2
-    items:
-      - title: "5 cool things I used to build PanoCapture and PostCapture"
-        text: "Finishing the series looking at some of the tech behind my open source projects, PanoCapture and PostCapture are photo editing plugins for CaptureOne. These are some tools I found when moving away from my web comfort zone and developing desktop apps."
-        href: "/articles/5-cool-things-i-used-to-build-panocapture-and-postcapture/"
-        image:
-          src: "../../assets/media/uiwmnegi/5-cool-things.avif"
-          alt: ""
-          decorative: true
-      - title: "5 cool things I used to build xStatic"
-        text: "As part of a series looking at some of the tech behind my open source projects, this article outlines my favourite products and services I used for the first time on xStatic."
-        href: "/articles/5-cool-things-i-used-to-build-xstatic/"
-        image:
-          src: "../../assets/media/zapplr3l/5-cool-things-purple.avif"
-          alt: ""
-          decorative: true
+    blocks:
+      - type: "intro"
+        heading: "Other articles in the series"
+        align: "center"
+      - type: "cards"
+        variant: "full"
+        columns: 2
+        items:
+          - title: "5 cool things I used to build PanoCapture and PostCapture"
+            text: "Finishing the series looking at some of the tech behind my open source projects, PanoCapture and PostCapture are photo editing plugins for CaptureOne. These are some tools I found when moving away from my web comfort zone and developing desktop apps."
+            href: "/articles/5-cool-things-i-used-to-build-panocapture-and-postcapture/"
+            image:
+              src: "../../assets/media/uiwmnegi/5-cool-things.avif"
+              alt: ""
+              decorative: true
+          - title: "5 cool things I used to build xStatic"
+            text: "As part of a series looking at some of the tech behind my open source projects, this article outlines my favourite products and services I used for the first time on xStatic."
+            href: "/articles/5-cool-things-i-used-to-build-xstatic/"
+            image:
+              src: "../../assets/media/zapplr3l/5-cool-things-purple.avif"
+              alt: ""
+              decorative: true
 ---
 
 ## 1\. SignalR

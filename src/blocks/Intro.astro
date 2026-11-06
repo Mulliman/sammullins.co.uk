@@ -15,7 +15,7 @@ const { block, nested = false } = Astro.props;
 const { kicker, heading, lead, cta, align, surface } = block;
 ---
 
-<Section nested={nested} surface={surface} width="narrow" class={lead || cta ? '' : 'section--heading-only'}>
+<Section nested={nested} surface={surface} width="narrow">
   <div class:list={['intro', `intro--${align}`]}>
     {kicker && <p class="intro__kicker">{kicker}</p>}
     {heading && <h2 class="intro__heading">{heading}</h2>}
@@ -67,5 +67,12 @@ const { kicker, heading, lead, cta, align, surface } = block;
   }
   .intro__cta {
     margin: var(--space-m) 0 0;
+  }
+  /* No trailing margin: the section (or the gap to the next component) sets the spacing. */
+  .intro > :last-child {
+    margin-bottom: 0;
+  }
+  .intro > :first-child {
+    margin-top: 0;
   }
 </style>

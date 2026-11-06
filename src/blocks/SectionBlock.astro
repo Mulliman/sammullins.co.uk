@@ -1,0 +1,20 @@
+---
+/**
+ * `section` block: one full-width band (surface and spacing) holding components in order.
+ * The children render nested, so they share this band instead of each making their own.
+ */
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import Section from '../components/Section.astro';
+import Blocks from '../components/Blocks.astro';
+import type { BlockOf } from '../lib/content';
+
+interface Props {
+  block: BlockOf<'section'>;
+  Content?: AstroComponentFactory | undefined;
+}
+const { block, Content } = Astro.props;
+---
+
+<Section surface={block.surface} class={`section--spacing-${block.spacing}`}>
+  <Blocks blocks={block.blocks} Content={Content} nested />
+</Section>

@@ -223,7 +223,17 @@ export const blockSchema = (image: ImageFn) => {
     reverseOnMobile: z.boolean().default(false),
     columns: z.tuple([z.array(leaf), z.array(leaf)]),
   });
-  return z.discriminatedUnion('type', [...leaves, split]);
+  // `section` is one full-width band (background and spacing) holding components in order, as the
+  // original site did (a heading and its cards share a section). Children render without their own
+  // band, so their `surface` is ignored. Heroes are full-bleed and splits are bands, so neither nests.
+  const [, ...nestable] = leaves;
+  const section = z.object({
+    type: z.literal('section'),
+    surface: surface.default('default'),
+    spacing: z.enum(['none', 'small', 'normal']).default('normal'),
+    blocks: z.array(z.discriminatedUnion('type', nestable)).min(1),
+  });
+  return z.discriminatedUnion('type', [...leaves, split, section]);
 };
 
 /* ------------------------------------------------------------------ */

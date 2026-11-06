@@ -21,12 +21,13 @@ import Timeline from '../blocks/Timeline.astro';
 import Embed from '../blocks/Embed.astro';
 import Split from '../blocks/Split.astro';
 import BodySection from '../blocks/Body.astro';
+import SectionBlock from '../blocks/SectionBlock.astro';
 
 interface Props {
   blocks: Block[];
   /** Rendered Markdown body component for `body` blocks. */
   Content?: AstroComponentFactory | undefined;
-  /** Nested inside a split column: blocks render without their own section wrapper. */
+  /** Nested inside a section or split column: blocks render without their own section wrapper. */
   nested?: boolean;
 }
 
@@ -71,6 +72,8 @@ function assertNever(x: never): never {
       return <Embed block={block} nested={nested} />;
     case 'split':
       return <Split block={block} Content={Content} />;
+    case 'section':
+      return <SectionBlock block={block} Content={Content} />;
     default:
       return assertNever(block);
   }

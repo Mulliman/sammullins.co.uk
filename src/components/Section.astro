@@ -1,7 +1,8 @@
 ---
 /**
  * Standard block wrapper: a full-width section with a surface colour and a container.
- * When `nested` (inside a split column) it renders only the inner content.
+ * When `nested` (inside a `section` block or a split column) it renders only the inner content,
+ * keeping the narrow text column for narrow blocks.
  */
 interface Props {
   nested?: boolean;
@@ -15,7 +16,7 @@ const { nested = false, surface = 'default', width = 'normal', tight = false, cl
 ---
 
 {nested ? (
-  <div class:list={['nested-block', cls]}>
+  <div class:list={['nested-block', { 'nested-block--narrow': width === 'narrow' }, cls]}>
     <slot />
   </div>
 ) : (
@@ -27,7 +28,20 @@ const { nested = false, surface = 'default', width = 'normal', tight = false, cl
 )}
 
 <style>
+  .nested-block--narrow {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+  }
+  /* Components inside one section: the original's grid margin between stacked items. */
   .nested-block + .nested-block {
     margin-top: var(--space-m);
+  }
+  /* After an intro with body text, leave the original's full section gap before what follows. */
+  .nested-block:has(:global(.intro__lead)) + .nested-block {
+    margin-top: var(--space-xl);
+  }
+  /* A lone button (an intro with only a call to action) gets breathing room above it. */
+  .nested-block + .nested-block:has(:global(.intro__cta)):not(:has(:global(.intro__heading))) {
+    margin-top: var(--space-l);
   }
 </style>

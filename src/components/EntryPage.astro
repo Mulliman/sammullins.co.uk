@@ -10,7 +10,7 @@ import Colophon from './Colophon.astro';
 import AgentView from './AgentView.astro';
 import Callout from '../blocks/Callout.astro';
 import NextPrev from '../blocks/NextPrev.astro';
-import { urlFor, seriesNav, type AnyEntry, type Block } from '../lib/content';
+import { containsBlock, urlFor, seriesNav, type AnyEntry, type Block } from '../lib/content';
 
 interface Props {
   entry: AnyEntry;
@@ -22,10 +22,10 @@ const url = urlFor(entry);
 
 let blocks: Block[] = [...data.blocks];
 const hasBody = (entry.body ?? '').trim().length > 0;
-if (hasBody && !blocks.some((b) => b.type === 'body')) blocks.push({ type: 'body', surface: 'default' });
+if (hasBody && !containsBlock(blocks, 'body')) blocks.push({ type: 'body', surface: 'default' });
 
 const series = entry.collection === 'software' ? await seriesNav(entry) : {};
-const hasSeriesNav = Boolean(series.prev || series.next) && !blocks.some((b) => b.type === 'nextPrev');
+const hasSeriesNav = Boolean(series.prev || series.next) && !containsBlock(blocks, 'nextPrev');
 
 const published = 'date' in data ? data.date : undefined;
 const isArticle = entry.collection === 'articles';

@@ -32,7 +32,7 @@ flowchart LR
   E & F & G --> H[Netlify: static files + security headers]
 ```
 
-- **Content model:** pages, articles (including short notes), software/docs and photo albums, each a list of blocks: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`. Reference: [`_docs/content-model.md`](_docs/content-model.md).
+- **Content model:** pages, articles (including short notes), software/docs and photo albums, each a list of blocks: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`, plus `section` to group blocks into one band. Reference: [`_docs/content-model.md`](_docs/content-model.md).
 - **URLs never break:** file paths mirror URLs; renames need a redirect in `src/data/redirects.json`. CI proves every legacy page and media URL still resolves.
 - **Security:** static output only, a strict per-page CSP, no third-party scripts or fonts, minimal dependencies with a 7-day release-age delay, and SHA-pinned Actions. See [SECURITY.md](SECURITY.md).
 - **Agent view:** every page has a Markdown twin at `<url>index.md`, plus `/llms.txt`.

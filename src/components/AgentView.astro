@@ -113,7 +113,7 @@ const { href } = Astro.props;
     const tpl = document.getElementById('agent-view-panel') as HTMLTemplateElement;
     panel = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
 
-    panel.querySelector('code')!.textContent = text;
+    panel.querySelector('.agent-panel__md code')!.textContent = text;
     const { meta, body } = splitFrontMatter(text);
     const dl = panel.querySelector('.agent-panel__meta')!;
     for (const [k, v] of meta) {

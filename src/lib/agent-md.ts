@@ -2,7 +2,7 @@
  * Agent view (ticket 901): render any entry as clean Markdown, i.e. what an LLM should read.
  */
 import type { ImageMetadata } from 'astro';
-import { runQuery, urlFor, type AnyEntry, type Block } from './content';
+import { containsBlock, runQuery, urlFor, type AnyEntry, type Block } from './content';
 import { lastChanged } from './git';
 
 const SITE = 'https://www.sammullins.co.uk';
@@ -95,14 +95,15 @@ async function blockToMd(b: Block, entry: AnyEntry): Promise<string> {
       );
       return cols.join('\n\n');
     }
+    case 'section':
+      return (await Promise.all(b.blocks.map((x) => blockToMd(x, entry)))).filter((p) => p && p.trim()).join('\n\n');
   }
 }
 
 export async function entryToMarkdown(entry: AnyEntry): Promise<string> {
   const d = entry.data;
   const blocks: Block[] = [...d.blocks];
-  if ((entry.body ?? '').trim() && !blocks.some((b) => b.type === 'body'))
-    blocks.push({ type: 'body', surface: 'default' });
+  if ((entry.body ?? '').trim() && !containsBlock(blocks, 'body')) blocks.push({ type: 'body', surface: 'default' });
   const updated = lastChanged(entry.filePath) ?? d.updated ?? ('date' in d ? d.date : undefined);
   const fm = [
     '---',

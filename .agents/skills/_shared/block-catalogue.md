@@ -6,7 +6,7 @@
 
 # Block catalogue
 
-Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 16 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
+Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 17 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
 
 Field types are as written in the Zod schema. "optional" means the key may be left out. A "default" is what the site uses when the key is left out.
 
@@ -58,6 +58,7 @@ limit: positive integer (optional)
 | `timeline` | `heading`, `surface`, `items` |
 | `embed` | `provider`, `id`, `title`, `poster` |
 | `split` | `ratio`, `reverseOnMobile`, `columns` |
+| `section` | `surface`, `spacing`, `blocks` |
 
 ## `hero`
 
@@ -194,3 +195,11 @@ limit: positive integer (optional)
 | `ratio` | 1:1 \| 1:2 \| 2:1 | no | `'1:1'` |
 | `reverseOnMobile` | boolean | no | `false` |
 | `columns` | z.tuple([list of leaf, list of leaf]) | yes |  |
+
+## `section`
+
+| field | type | required | default |
+|---|---|---|---|
+| `surface` | surface | no | `'default'` |
+| `spacing` | none \| small \| normal | no | `'normal'` |
+| `blocks` | z.array(z.discriminatedUnion('type', nestable)) (min 1) | yes |  |

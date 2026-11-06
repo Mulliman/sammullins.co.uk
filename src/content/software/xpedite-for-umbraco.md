@@ -65,21 +65,22 @@ blocks:
       ```bash
       dotnet new install Umbraco.Templates::15.2.3 --force && dotnet new umbraco --force -n "CMS"  --friendly-name "Administrator" --email "admin@admin.com" --password "1234567890" --development-database-type SQLite && dotnet add "CMS" package XPEDITE.StarterKit && dotnet run --project "CMS"
       ```
-  - type: "intro"
-    heading: "Documentation"
+  - type: "section"
     surface: "default"
-    align: "center"
-  - type: "cards"
-    variant: "text"
-    surface: "default"
-    columns: 2
-    items:
-      - title: "Autogenerate components with XPEDITE"
-        text: "Why start from scratch when XPEDITE can create your Next.js components for you. You choose your Umbraco content types and XPEDITE outputs headless React components that consume the data from the Umbraco Delivery API."
-        href: "/software/xpedite-for-umbraco/autogenerate-components/"
-      - title: "Autogenerate tests with XPEDITE"
-        text: "Creating mock data for unit testing is very tedious, so XPEDITE allows you to create test files with data that comes directly from items you've created in the CMS."
-        href: "/software/xpedite-for-umbraco/autogenerate-tests/"
+    blocks:
+      - type: "intro"
+        heading: "Documentation"
+        align: "center"
+      - type: "cards"
+        variant: "text"
+        columns: 2
+        items:
+          - title: "Autogenerate components with XPEDITE"
+            text: "Why start from scratch when XPEDITE can create your Next.js components for you. You choose your Umbraco content types and XPEDITE outputs headless React components that consume the data from the Umbraco Delivery API."
+            href: "/software/xpedite-for-umbraco/autogenerate-components/"
+          - title: "Autogenerate tests with XPEDITE"
+            text: "Creating mock data for unit testing is very tedious, so XPEDITE allows you to create test files with data that comes directly from items you've created in the CMS."
+            href: "/software/xpedite-for-umbraco/autogenerate-tests/"
 ---
 
 ## Why use XPEDITE?
