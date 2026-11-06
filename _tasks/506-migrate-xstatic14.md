@@ -2,7 +2,7 @@
 id: "506"
 title: Migrate /xstatic14/
 epic: Migration
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -19,4 +19,8 @@ It's a standalone legacy landing page that must keep resolving.
 
 ## Acceptance criteria
 
-- [ ] `/xstatic14/` builds with the legacy banner.
+- [x] `/xstatic14/` builds with the legacy banner.
+
+## Verification (6 November 2026)
+
+`/xstatic14/` builds with the legacy callout.

@@ -2,7 +2,7 @@
 id: "306"
 title: Block: logoWall
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -22,5 +22,9 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] Every logo has the client name as alt text.
-- [ ] Logos stay legible in both themes (use SVG or a light/dark variant where needed).
+- [x] Every logo has the client name as alt text.
+- [x] Logos stay legible in both themes (use SVG or a light/dark variant where needed).
+
+## Verification (6 November 2026)
+
+Alt text is each client's full name (fixed on the backlog branch); white tiles keep logos legible in both themes. The redesign is ticket 311.

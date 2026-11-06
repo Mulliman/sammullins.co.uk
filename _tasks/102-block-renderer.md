@@ -29,6 +29,10 @@ Components can be added to pages in any order, like Umbraco Block List (decision
 
 ## Acceptance criteria
 
-- [ ] A page with blocks in arbitrary order renders them in that order.
-- [ ] Every route emits a canonical URL with a trailing slash.
+- [x] A page with blocks in arbitrary order renders them in that order.
+- [x] Every route emits a canonical URL with a trailing slash.
 - [ ] A missing component mapping fails `pnpm check`.
+
+## Verification (6 November 2026)
+
+Left: prove that a missing component mapping fails `pnpm check` (agent).

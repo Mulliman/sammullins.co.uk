@@ -33,3 +33,7 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 - [ ] Works fully without JS, falling back to plain image links.
 - [ ] Lightbox passes axe and is operable by keyboard alone.
 - [ ] Gallery JS is ≤ 5 KB gzipped, with no dependencies.
+
+## Verification (6 November 2026)
+
+Left: confirm the no-JS fallback (image links), run axe with the lightbox open, and measure the gallery script size (agent).

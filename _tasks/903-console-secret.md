@@ -26,3 +26,7 @@ A fun surprise for developers who open DevTools (decisions: *Delight v1*).
 - [ ] The greeting appears once per page load and doesn't spam.
 - [ ] Unlocking works and persists for the session.
 - [ ] Zero console errors.
+
+## Verification (6 November 2026)
+
+Left: a runtime check in the browser (agent).

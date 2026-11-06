@@ -7,14 +7,17 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 ## Where things stand
 
 - The whole rebuild (tickets 002 to 1101) is merged into `main`, and so is the typography refresh (204).
-- 42 tickets still say `review` with unticked criteria, even though their code is merged. Most criteria are already true; nobody has checked them off.
+- On 6 November every merged ticket was checked against its acceptance criteria. 25 are now `done`, each with a "Verification" note giving the evidence. The 18 still in `review` say what's left, which falls into three kinds:
+  - **Agent work:** schema unit tests (101), proving a missing block mapping fails (102), community profile files (1101), gallery no-JS and axe checks (304), an embed Playwright test (309), printing 200/301 counts (602), a console-secret runtime check (903), and skill dry runs (1002, 1003).
+  - **Needs a deploy preview (701):** 603, 702, 803 and 904.
+  - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
 - Auto-merge is now on in the repo settings. Ticket 001 says it should be off, so 001 needs updating (or the setting reverting).
 
 ## 1. Now (agents can do these without waiting)
 
 | # | Ticket | Who | Why now |
 |---|---|---|---|
-| 1 | **Verify and close merged tickets**: tick each criterion with evidence (a test, command or file), set `done`, and list anything that needs a deploy preview or Sam | agent | The board is unreadable while 42 tickets sit in `review`. |
+| 1 | **Agent leftovers** from the verification above (101, 102, 1101, 304, 309, 602, 903, 1002, 1003) | agent | Small, and closes nine tickets. |
 | 2 | [508](508-copy-refresh.md) Copy refresh: remove the false "built with xStatic" line; draft the bio, footer and CV summary with [placeholders] | pair | It's the only thing on the site that is wrong rather than dated. The draft needs Sam's facts. |
 | 3 | [805](805-ci-html-headers.md) Finish HTML validation and the hygiene tests | agent | A launch gate, with no decisions needed. |
 | 4 | [804](804-ci-lighthouse.md) Lighthouse budgets in CI | agent | Locks in the performance before the redesign adds weight. |

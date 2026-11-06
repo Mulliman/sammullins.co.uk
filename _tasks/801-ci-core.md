@@ -2,7 +2,7 @@
 id: "801"
 title: "CI core: check, lint, build"
 epic: Quality gates
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -24,5 +24,9 @@ Nothing merges to `main` without passing gates (decisions: *Repo quality bar*).
 
 ## Acceptance criteria
 
-- [ ] A PR with a schema error fails CI with a readable message.
-- [ ] A typical run takes ≤ 5 minutes.
+- [x] A PR with a schema error fails CI with a readable message.
+- [x] A typical run takes ≤ 5 minutes.
+
+## Verification (6 November 2026)
+
+`astro check` and Zod name the file and field on schema errors; the CI job takes about 40s before the a11y job.

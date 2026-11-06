@@ -2,7 +2,7 @@
 id: "203"
 title: Layout shell: header, nav, footer, landmarks
 epic: Design system
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -23,7 +23,11 @@ Accessible, JS-optional chrome that replaces UIkit's header and footer.
 
 ## Acceptance criteria
 
-- [ ] Fully keyboard-operable.
-- [ ] axe passes (802).
-- [ ] With JS disabled, the mobile nav still opens and every link is reachable.
-- [ ] Landmarks are unique and labelled.
+- [x] Fully keyboard-operable.
+- [x] axe passes (802).
+- [x] With JS disabled, the mobile nav still opens and every link is reachable.
+- [x] Landmarks are unique and labelled.
+
+## Verification (6 November 2026)
+
+axe (802) passes on every page in both themes; the skip link and focus styles are in place; the mobile nav is a `<details>` element (works without JS); the landmarks are one header, main and footer, plus three navs labelled Main, Main (mobile) and Footer.

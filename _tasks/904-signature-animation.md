@@ -24,6 +24,10 @@ The Pacifico logo drawing itself is the craft moment (decisions: *Delight v1*).
 ## Acceptance criteria
 
 - [ ] No layout shift during the animation.
-- [ ] Reduced motion means no animation.
-- [ ] The logo link keeps an accessible name ("Sam Mullins, home").
+- [x] Reduced motion means no animation.
+- [x] The logo link keeps an accessible name ("Sam Mullins, home").
 - [ ] Sam approves the feel on the preview.
+
+## Verification (6 November 2026)
+
+Left: check for layout shift on the preview, and Sam approves the feel.

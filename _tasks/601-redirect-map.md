@@ -2,7 +2,7 @@
 id: "601"
 title: Redirect map to Netlify _redirects
 epic: URLs & redirects
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -27,5 +27,9 @@ Retired or renamed URLs must 301 gracefully and never 404 (decisions: *Legacy co
 
 ## Acceptance criteria
 
-- [ ] The build fails on a redirect loop, a chain, or a `to` that doesn't exist.
-- [ ] The merged duplicate article (503) redirects correctly.
+- [x] The build fails on a redirect loop, a chain, or a `to` that doesn't exist.
+- [x] The merged duplicate article (503) redirects correctly.
+
+## Verification (6 November 2026)
+
+`integrations/site-files.mjs` throws on chains, loops and missing targets; the duplicate git/ftp article redirects to `xstatic-adds-git-and-ftp-support`.

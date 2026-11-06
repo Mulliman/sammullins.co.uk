@@ -2,7 +2,7 @@
 id: "308"
 title: Blocks: split, timeline
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -22,5 +22,9 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] The schema rejects a split nested inside a split.
-- [ ] The timeline reads in a logical order with styles off.
+- [x] The schema rejects a split nested inside a split.
+- [x] The timeline reads in a logical order with styles off.
+
+## Verification (6 November 2026)
+
+The schema allows only non-split blocks inside `split`; the timeline is an ordered list in DOM order.

@@ -2,7 +2,7 @@
 id: "002"
 title: Toolchain: Node, pnpm, Astro 6, TypeScript
 epic: Foundation
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -28,11 +28,15 @@ Astro 6 is the chosen platform with a hardened, minimal dependency set (decision
 
 ## Acceptance criteria
 
-- [ ] `pnpm install --frozen-lockfile && pnpm build` succeeds on a clean clone.
-- [ ] `package.json` direct dependencies match the allow-list exactly; the PR justifies any dev dependency.
-- [ ] Installing a package with a postinstall script (other than sharp) does not run it.
-- [ ] The lockfile is committed and versions are exact.
+- [x] `pnpm install --frozen-lockfile && pnpm build` succeeds on a clean clone.
+- [x] `package.json` direct dependencies match the allow-list exactly; the PR justifies any dev dependency.
+- [x] Installing a package with a postinstall script (other than sharp) does not run it.
+- [x] The lockfile is committed and versions are exact.
 
 ## Notes
 
 Check the current pnpm docs for the exact key names of `minimumReleaseAge` and `onlyBuiltDependencies` (pnpm 10+).
+
+## Verification (6 November 2026)
+
+CI installs with `--frozen-lockfile` and builds on a clean runner; `.npmrc` has `save-exact`; `pnpm-workspace.yaml` allows install scripts only for sharp and esbuild.

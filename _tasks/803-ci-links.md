@@ -22,5 +22,9 @@ The old content links out heavily (GitHub, our.umbraco.com, NuGet, npm, CaptureO
 
 ## Acceptance criteria
 
-- [ ] A broken internal link fails the PR.
+- [x] A broken internal link fails the PR.
 - [ ] The scheduled external report runs and produces an issue.
+
+## Verification (6 November 2026)
+
+Left: wait for the scheduled external link report to run once.

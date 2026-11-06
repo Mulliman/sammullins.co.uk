@@ -2,7 +2,7 @@
 id: "301"
 title: Block: hero
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -27,6 +27,10 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] LCP image is preloaded and responsive (AVIF/WebP).
-- [ ] No JS shipped.
-- [ ] Heading text remains ≥ 4.5:1 over the image (scrim enforced).
+- [x] LCP image is preloaded and responsive (AVIF/WebP).
+- [x] No JS shipped.
+- [x] Heading text remains ≥ 4.5:1 over the image (scrim enforced).
+
+## Verification (6 November 2026)
+
+The hero image renders with `fetchpriority="high"` and AVIF and WebP srcsets (the modern equivalent of a preload); the hero ships no script; heading text sits on a solid dark panel, not straight on the photo.

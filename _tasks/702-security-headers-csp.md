@@ -38,3 +38,7 @@ The live site sends only HSTS today (audit §1). Target: A+ on securityheaders.c
 - [ ] Mozilla HTTP Observatory ≥ A+.
 - [ ] No CSP violations in the console across the kitchen-sink page and all page types (Playwright check).
 - [ ] Hotlinked `/media/*` images still load from github.com.
+
+## Verification (6 November 2026)
+
+Left: everything here needs a Netlify deploy preview (701).

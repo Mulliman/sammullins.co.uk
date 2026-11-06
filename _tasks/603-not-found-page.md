@@ -22,4 +22,8 @@ Any URL we missed should still land gracefully, and the miss should be visible i
 ## Acceptance criteria
 
 - [ ] Netlify serves it with status 404.
-- [ ] Passes axe.
+- [x] Passes axe.
+
+## Verification (6 November 2026)
+
+Left: confirm Netlify serves it with status 404 on a deploy preview (needs 701).

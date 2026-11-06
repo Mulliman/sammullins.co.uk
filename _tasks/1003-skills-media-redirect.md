@@ -28,3 +28,7 @@ Images and URL changes are where AI edits most often go wrong.
 
 - [ ] Renaming a page via the skill keeps the old URL working (602 passes).
 - [ ] An added image has no EXIF, and its alt text appears in the PR body.
+
+## Verification (6 November 2026)
+
+Left: a dry run of each skill (agent).

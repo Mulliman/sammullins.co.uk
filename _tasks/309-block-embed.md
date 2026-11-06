@@ -24,4 +24,8 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 ## Acceptance criteria
 
 - [ ] Zero requests to Google domains before the click (Playwright test).
-- [ ] The iframe has a `title`.
+- [x] The iframe has a `title`.
+
+## Verification (6 November 2026)
+
+No iframe is in the built HTML before the click. Left: the Playwright test that proves zero requests to Google domains (agent).

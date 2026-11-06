@@ -30,3 +30,7 @@ Agent Skills (`SKILL.md`), in the folder chosen in 004:
 
 - [ ] A dry run of each skill in Claude Code produces a valid PR that passes all CI gates.
 - [ ] The same skills work from at least one non-Claude agent (e.g. Hermes or Codex), with the result noted in `_docs/agent-tooling.md`.
+
+## Verification (6 November 2026)
+
+Left: a dry run of each skill, and one non-Claude agent (agent, then Sam).

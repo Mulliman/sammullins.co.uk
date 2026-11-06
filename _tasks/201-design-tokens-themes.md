@@ -27,7 +27,11 @@ Evolve the current look; add light/dark (decisions: *Visual direction*, *Accessi
 
 ## Acceptance criteria
 
-- [ ] With JS disabled, the system theme still applies.
-- [ ] Without JS the toggle is hidden; it only appears once JS has loaded.
-- [ ] Every token pair used for text passes contrast checks in both themes. A script verifies this in CI.
-- [ ] `_docs/design-tokens.md` lists the tokens.
+- [x] With JS disabled, the system theme still applies.
+- [x] Without JS the toggle is hidden; it only appears once JS has loaded.
+- [x] Every token pair used for text passes contrast checks in both themes. A script verifies this in CI.
+- [x] `_docs/design-tokens.md` lists the tokens.
+
+## Verification (6 November 2026)
+
+Contrast is checked by axe in CI in both themes; `_docs/design-tokens.md` is now generated from `global.css`.

@@ -2,7 +2,7 @@
 id: "403"
 title: Legacy /media/ paths resolve
 epic: Media
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -21,4 +21,8 @@ GitHub READMEs, our.umbraco.com, NuGet and npm listings hotlink `/media/...` ima
 
 ## Acceptance criteria
 
-- [ ] All 306 referenced paths return 200, or a 301 that ends in a 200 (enforced by 602).
+- [x] All 306 referenced paths return 200, or a 301 that ends in a 200 (enforced by 602).
+
+## Verification (6 November 2026)
+
+`pnpm test`: all 306 legacy media paths resolve.

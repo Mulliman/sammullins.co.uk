@@ -44,6 +44,10 @@ Pages are typed block lists, so a malformed AI edit fails the build instead of s
   - [ ] an unknown block `type` fails
   - [ ] a missing image `alt` fails
   - [ ] a missing `authorship` fails
-- [ ] Error messages name the file and field.
-- [ ] Exported TS types (`Block`, `BlockOf<'hero'>`) are used by components.
-- [ ] `_docs/content-model.md` documents every field with one YAML example per block.
+- [x] Error messages name the file and field.
+- [x] Exported TS types (`Block`, `BlockOf<'hero'>`) are used by components.
+- [x] `_docs/content-model.md` documents every field with one YAML example per block.
+
+## Verification (6 November 2026)
+
+Left: there are no schema unit tests yet (agent).

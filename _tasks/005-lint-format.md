@@ -2,7 +2,7 @@
 id: "005"
 title: Lint, format, editorconfig, PR-title check
 epic: Foundation
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -24,3 +24,7 @@ Top-notch repo quality (decisions: *Repo quality bar*).
 
 - [x] `pnpm lint` (ESLint + Prettier) and `pnpm format:check` pass.
 - [x] A PR titled `update stuff` fails the title check; `feat(blocks): add hero` passes.
+
+## Verification (6 November 2026)
+
+No open criteria.

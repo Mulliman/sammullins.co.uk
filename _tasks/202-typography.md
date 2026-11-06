@@ -2,7 +2,7 @@
 id: "202"
 title: Self-hosted typography & thin heading rules
 epic: Design system
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -27,6 +27,10 @@ Thin uppercase Lato headings are the signature and should stay as close as possi
 
 ## Acceptance criteria
 
-- [ ] No requests to `fonts.googleapis.com` or `fonts.gstatic.com`.
-- [ ] Total font payload for a typical page is ≤ 120 KB.
-- [ ] A visual side-by-side with the current home hero heading looks recognisably the same, with Sam's approval in the PR.
+- [x] No requests to `fonts.googleapis.com` or `fonts.gstatic.com`.
+- [x] Total font payload for a typical page is ≤ 120 KB.
+- [x] A visual side-by-side with the current home hero heading looks recognisably the same, with Sam's approval in the PR.
+
+## Verification (6 November 2026)
+
+Superseded by 204: Mona Sans replaced Lato, so the "recognisably the same" side-by-side no longer applies. No Google font hosts (hygiene test); font payload is 81.6 KB.

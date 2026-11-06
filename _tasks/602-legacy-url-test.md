@@ -23,5 +23,9 @@ depends_on: ["601", "801"]
 
 ## Acceptance criteria
 
-- [ ] Deleting any migrated page makes CI fail with that URL named.
+- [x] Deleting any migrated page makes CI fail with that URL named.
 - [ ] Report: counts of 200 vs 301, with zero failures.
+
+## Verification (6 November 2026)
+
+Left: print the counts of 200s and 301s in the test output (agent).

@@ -92,7 +92,7 @@
     --color-surface-inverse: #262626;
     --color-text: #4d4d4d; /* body copy, 8.4:1 on bg (the original used #666) */
     --color-text-muted: #595959; /* 7:1 on bg */
-    --color-heading: #333333; /* thin display headings, as the original */
+    --color-heading: #333333; /* headings */
     --color-text-strong: #000000; /* section headings ("sam-heading") */
     --color-text-inverse: #f5f5f5;
     --color-text-inverse-muted: #c8c8c8;
