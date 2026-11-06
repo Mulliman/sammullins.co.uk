@@ -1,0 +1,130 @@
+---
+/**
+ * Style guide theme switcher (ticket 1303). Mode (light, dark, system) and page theme, one button each.
+ * The script sets data-theme and data-page-theme on <html> and keeps the choice in the URL query
+ * (?theme=christmas&mode=dark), so a view can be shared. Hidden without JS; the static tables on the
+ * themes page do not depend on it.
+ */
+import { pageThemes } from '../styles/themes';
+
+const label = (name: string) => name.charAt(0).toUpperCase() + name.slice(1);
+const modes = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'system', label: 'System' },
+];
+---
+
+<div class="guide-switcher js-only" data-theme-switcher>
+  <div class="guide-switcher__group" role="group" aria-label="Mode">
+    {modes.map((m) => (
+      <button type="button" class="guide-switcher__button" data-mode={m.value} aria-pressed="false">
+        {m.label}
+      </button>
+    ))}
+  </div>
+  <div class="guide-switcher__group" role="group" aria-label="Page theme">
+    {pageThemes.map((name) => (
+      <button type="button" class="guide-switcher__button" data-page-theme-option={name} aria-pressed="false">
+        {label(name)}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  type Mode = 'light' | 'dark' | 'system';
+  const MODES: readonly string[] = ['light', 'dark', 'system'];
+
+  const root = document.documentElement;
+  const switcher = document.querySelector<HTMLElement>('[data-theme-switcher]');
+  const modeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-mode]')];
+  const themeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-page-theme-option]')];
+  const themes = themeButtons.map((b) => b.dataset.pageThemeOption ?? '');
+
+  const currentMode = (): Mode =>
+    root.dataset.theme === 'light' || root.dataset.theme === 'dark' ? root.dataset.theme : 'system';
+  const currentTheme = (): string => root.dataset.pageTheme ?? 'default';
+
+  /** Buttons, the URL and the guide's own links all follow the state on <html>. */
+  function render() {
+    const mode = currentMode();
+    const theme = currentTheme();
+    for (const b of modeButtons) b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+    for (const b of themeButtons) b.setAttribute('aria-pressed', String(b.dataset.pageThemeOption === theme));
+
+    const params = new URLSearchParams(location.search);
+    if (mode === 'system') params.delete('mode');
+    else params.set('mode', mode);
+    if (theme === 'default') params.delete('theme');
+    else params.set('theme', theme);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    history.replaceState(history.state, '', `${location.pathname}${query}${location.hash}`);
+
+    // Keep the choice when moving between guide pages.
+    for (const a of document.querySelectorAll<HTMLAnchorElement>('.guide a[href^="/style-guide/"]')) {
+      a.dataset.base ??= a.getAttribute('href') ?? '';
+      a.setAttribute('href', `${a.dataset.base}${query}`);
+    }
+  }
+
+  function setMode(mode: Mode) {
+    if (mode === 'system') delete root.dataset.theme;
+    else root.dataset.theme = mode;
+  }
+
+  function setTheme(theme: string) {
+    if (theme === 'default') delete root.dataset.pageTheme;
+    else root.dataset.pageTheme = theme;
+  }
+
+  // Read the view from the URL on load.
+  const params = new URLSearchParams(location.search);
+  const urlMode = params.get('mode');
+  if (urlMode !== null && MODES.includes(urlMode)) setMode(urlMode as Mode);
+  const urlTheme = params.get('theme');
+  if (urlTheme !== null && themes.includes(urlTheme)) setTheme(urlTheme);
+
+  for (const b of modeButtons) {
+    b.addEventListener('click', () => setMode((b.dataset.mode ?? 'system') as Mode));
+  }
+  for (const b of themeButtons) {
+    b.addEventListener('click', () => setTheme(b.dataset.pageThemeOption ?? 'default'));
+  }
+
+  // The header's own dark mode toggle also changes <html>, so the buttons and URL follow it.
+  new MutationObserver(render).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-page-theme'] });
+  if (switcher) render();
+</script>
+
+<style>
+  .guide-switcher {
+    display: grid;
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-m);
+  }
+  .guide-switcher__group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+  }
+  .guide-switcher__button {
+    min-height: 44px;
+    padding: var(--space-3xs) var(--space-2xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .guide-switcher__button:hover {
+    color: var(--color-heading);
+  }
+  .guide-switcher__button[aria-pressed='true'] {
+    background: var(--color-bg-inverse);
+    border-color: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+  }
+</style>

@@ -31,7 +31,7 @@ export const styleGuidePages: StyleGuidePage[] = [
     title: 'Themes',
     href: '/style-guide/themes/',
     summary: 'The light and dark themes, and the page themes.',
-    ready: false,
+    ready: true,
   },
   {
     title: 'Elements',
