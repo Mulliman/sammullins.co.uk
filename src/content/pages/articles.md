@@ -21,7 +21,7 @@ blocks:
       limit: 20
   - type: "listing"
     heading: "From the archive"
-    variant: "grid"
+    variant: "list"
     surface: "muted"
     query:
       from: "articles"
