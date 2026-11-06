@@ -9,3 +9,5 @@ _docs/
 _tasks/
 .claude/
 .agents/skills/_shared/block-catalogue.md
+.desk/
+.agent-tasks/

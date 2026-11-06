@@ -15,7 +15,7 @@ export const INLINE_STYLE = /<(?!svg|path|g|stop|linearGradient)[a-z][\w-]*\s[^>
 
 /** `set:html` is allowed only with sanitising helpers or trusted build-time assets. */
 export const SET_HTML_ALLOWED =
-  /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|footerLogo\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
+  /set:html=\{(md\(|mdInline\(|codeFigure\(|logo\}|logoSvg\}|footerLogo\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
 
 /** Lines in an .astro file that use set:html without an allowed helper. */
 export const unsafeSetHtml = (source) =>

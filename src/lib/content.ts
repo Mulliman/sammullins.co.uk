@@ -16,7 +16,7 @@ export function containsBlock(blocks: readonly Block[], type: Block['type']): bo
   return blocks.some(
     (b) =>
       b.type === type ||
-      (b.type === 'section' && containsBlock(b.blocks, type)) ||
+      ((b.type === 'section' || b.type === 'disclosure') && containsBlock(b.blocks as Block[], type)) ||
       (b.type === 'split' && b.columns.some((col) => containsBlock(col, type))),
   );
 }

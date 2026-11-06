@@ -792,3 +792,77 @@ section-normal-inverse:
         heading: Inverse band
         lead: Light text on a dark band, with normal spacing.
         align: left
+
+prose-table-and-code:
+  title: Table and fenced code in Markdown
+  block:
+    type: prose
+    align: left
+    markdown: |
+      Fenced code in block Markdown gets the same figure and Copy button as the `code` block.
+
+      ```bash
+      pnpm build
+      ```
+
+      On a phone, each table row stacks into label and value pairs.
+
+      | Ticket | Question | Recommendation |
+      | --- | --- | --- |
+      | 003 | Every page loads three small scripts. | Accept as site-wide by design. |
+      | 507 | Archived docs are listed under their product. | Accept. |
+
+steps-with-code:
+  title: Steps with commands
+  block:
+    type: steps
+    heading: Publish a branch
+    items:
+      - text: Check what is uncommitted, and commit it or leave it.
+        code:
+          lang: bash
+          code: git status --short
+      - text: Push the branch and open a pull request against **main**.
+        code:
+          lang: bash
+          filename: terminal
+          code: |-
+            git push -u origin my-branch
+            gh pr create --base main --fill
+      - text: Review the Files tab on GitHub, then squash and merge.
+
+disclosure-todo:
+  title: Closed, with badges
+  block:
+    type: disclosure
+    summary: Create the Netlify site so pull requests get previews
+    status: todo
+    badges:
+      - label: Account
+        tone: warning
+      - label: Ticket 701
+        tone: neutral
+      - label: PC
+        tone: note
+      - label: Unblocks launch
+        tone: tip
+    blocks:
+      - type: prose
+        markdown: A new site linked to the repo. The old site stays live until cutover.
+      - type: callout
+        tone: tip
+        title: Recommendation
+        body: Let Netlify build from the repo. It is the simplest option.
+
+disclosure-done:
+  title: Done, open
+  block:
+    type: disclosure
+    summary: Fix the repo settings that contradict ticket 001
+    status: done
+    open: true
+    badges:
+      - label: Ticket 001
+    blocks:
+      - type: prose
+        markdown: Closed on 6 November. The remaining criteria were dropped by choice.

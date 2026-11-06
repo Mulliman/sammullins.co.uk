@@ -60,7 +60,9 @@ const ORDER = [
   'nextPrev',
   'timeline',
   'embed',
+  'steps',
   'split',
+  'disclosure',
   'section',
 ];
 

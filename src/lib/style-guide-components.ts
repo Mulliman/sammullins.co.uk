@@ -52,6 +52,16 @@ export const BLOCK_GUIDE: Record<Block['type'], { title: string; summary: string
     title: 'Section',
     summary: 'One band (surface and spacing) holding several blocks in order.',
   },
+  steps: {
+    title: 'Steps',
+    summary:
+      'A numbered list of steps. Each step is Markdown, with an optional command or snippet that has a Copy button.',
+  },
+  disclosure: {
+    title: 'Disclosure',
+    summary:
+      'A row that is closed by default and opens to show its blocks, with optional badges and a done state. Works without JS.',
+  },
 };
 
 /** The guide entry for a block type. Throws for a type with no description. */

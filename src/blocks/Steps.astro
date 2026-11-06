@@ -1,0 +1,89 @@
+---
+/**
+ * Steps (ticket 1005): a numbered list where each step is Markdown, optionally followed by a
+ * command or snippet. The snippet is a real `code` block, so it keeps its filename and Copy button.
+ */
+import Section from '../components/Section.astro';
+import Code from './Code.astro';
+import { md } from '../lib/markdown';
+import type { BlockOf } from '../lib/content';
+
+interface Props {
+  block: BlockOf<'steps'>;
+  nested?: boolean;
+}
+const { block, nested = false } = Astro.props;
+---
+
+<Section nested={nested} width="narrow">
+  <div class="steps">
+    {block.heading && <h2 class="steps__heading">{block.heading}</h2>}
+    <ol class="steps__list">
+      {block.items.map((item) => (
+        <li class="steps__item">
+          <div class="steps__text prose" set:html={md(item.text)} />
+          {item.code && <Code block={{ type: 'code', ...item.code }} nested />}
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>
+
+<style>
+  .steps__heading {
+    margin: 0 0 var(--space-s);
+  }
+  .steps__list {
+    counter-reset: step;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    /* minmax(0, 1fr): a long command scrolls inside its code block instead of widening the page. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+  .steps__item {
+    counter-increment: step;
+    position: relative;
+    min-width: 0;
+    padding-left: calc(2rem + var(--space-s));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2xs);
+  }
+  /* The number: a ringed figure, so the order reads at a glance. */
+  .steps__item::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    font-weight: var(--weight-strong);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-heading);
+    border: 2px solid var(--brand-orange);
+    border-radius: 50%;
+  }
+  .steps__text {
+    max-width: none;
+    padding-top: 0.2rem;
+  }
+  .steps__text :global(p) {
+    margin: 0;
+  }
+  .steps__text :global(p + p) {
+    margin-top: 0.6em;
+  }
+  /* The code block sits under its step, not as a separately spaced section. */
+  /* No auto margins here: on a grid item they turn off stretching, and the block would size to its
+     longest code line instead of its column. */
+  .steps__item :global(.nested-block) {
+    margin: 0;
+    max-width: none;
+    min-width: 0;
+  }
+</style>

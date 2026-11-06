@@ -22,6 +22,8 @@ import Embed from '../blocks/Embed.astro';
 import Split from '../blocks/Split.astro';
 import BodySection, { type TocItem } from '../blocks/Body.astro';
 import SectionBlock from '../blocks/SectionBlock.astro';
+import Steps from '../blocks/Steps.astro';
+import Disclosure from '../blocks/Disclosure.astro';
 
 interface Props {
   blocks: Block[];
@@ -74,6 +76,10 @@ function assertNever(x: never): never {
       return <Embed block={block} nested={nested} />;
     case 'split':
       return <Split block={block} Content={Content} />;
+    case 'steps':
+      return <Steps block={block} nested={nested} />;
+    case 'disclosure':
+      return <Disclosure block={block} nested={nested} />;
     case 'section':
       return <SectionBlock block={block} Content={Content} />;
     default:

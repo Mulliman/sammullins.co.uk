@@ -123,14 +123,14 @@ The build fails on chains, loops and missing targets. See `integrations/site-fil
 
 ## Blocks
 
-Each page's `blocks` is a list. Each item has a `type` and the fields for that type. Blocks render in order. Seventeen types exist: fifteen leaf blocks, `split` and `section`.
+Each page's `blocks` is a list. Each item has a `type` and the fields for that type. Blocks render in order. Nineteen types exist: sixteen leaf blocks, `split`, `disclosure` and `section`.
 
 Gotchas that apply to every block:
 
 - **Quote numbers and dates that YAML would turn into numbers.** Write `when: "2021"`, not `when: 2021`. Timeline `when` is coerced to a string, but an unquoted `2015 to 2018` is fine while `2021` is read as a number, so always quote it.
 - **Image paths are relative to the .md file.** See above.
 - **`alt` is required** unless `decorative: true`. Logo wall logos have no `alt` field; the client `name` is used as the alt text.
-- **Strings inside blocks are Markdown** (escaped, not rendered as HTML) for `intro.lead`, `prose.markdown`, `callout.body`, card `text`, timeline `body`. Raw HTML is escaped. No `<script>`, no `style` attributes.
+- **Strings inside blocks are Markdown** (escaped, not rendered as HTML) for `intro.lead`, `prose.markdown`, `callout.body`, card `text`, timeline `body`, step `text`, disclosure `summary` (one line). Raw HTML is escaped. Fenced code in block Markdown renders as the same figure as the `code` block, with a Copy button. Tables in block Markdown stack into label and value pairs on a phone. No `<script>`, no `style` attributes.
 - **The `body` block positions the file's Markdown body.** Put it where the long text should go. If a page has a Markdown body but no `body` block, the body is appended after the blocks. If the body is empty, no body block is needed.
 - **Archived pages** show their first `hero` block at the top, above the archive banner.
 - **`split` cannot nest `split`.** Its columns hold only leaf blocks.
@@ -367,7 +367,7 @@ A pull quote, with an optional attribution and source.
 
 ### `code`
 
-A code sample with syntax highlighting. Long lines scroll inside the block.
+A code sample with a language label and a Copy button (shown once JS has loaded). Long lines scroll inside the block. Fenced code in block Markdown and in `steps` renders the same way.
 
 | Field | Type | Required | Default | Meaning |
 |---|---|---|---|---|
@@ -381,6 +381,28 @@ A code sample with syntax highlighting. Long lines scroll inside the block.
   filename: "install.sh"
   code: |
     pnpm install --frozen-lockfile
+```
+
+### `steps`
+
+A numbered list of steps. Each step is Markdown, optionally followed by a command or snippet, which renders as a `code` block with a Copy button. Use it for how-tos and setup instructions.
+
+| Field | Type | Required | Default | Meaning |
+|---|---|---|---|---|
+| `heading` | string | no | none | Heading above the list |
+| `items` | list | yes | none | The steps, at least one |
+| `items[].text` | string (Markdown) | yes | none | What to do |
+| `items[].code` | `{ lang, code, filename }` | no | none | A command or snippet for this step. `lang` defaults to `text` |
+
+```yaml
+- type: steps
+  heading: "Install it"
+  items:
+    - text: "Install the dependencies."
+      code:
+        lang: bash
+        code: "pnpm install --frozen-lockfile"
+    - text: "Start the dev server and open **localhost:4321**."
 ```
 
 ### `nextPrev`
@@ -472,6 +494,32 @@ Gotchas: a `split` cannot contain another `split`. Columns hold only leaf blocks
         markdown: "The wider column holds the detail."
 ```
 
+### `disclosure`
+
+A row that is closed by default and opens to show its blocks: a native `<details>`, so it works with the keyboard and without JS. Use it for long how-tos, FAQs and checklists, where the reader takes one item at a time.
+
+| Field | Type | Required | Default | Meaning |
+|---|---|---|---|---|
+| `summary` | string (one line of Markdown) | yes | none | The row's title |
+| `badges` | list of `{ label, tone }` | no | none | Short labels after the title. `tone` is `neutral` (default), `note`, `tip` or `warning`; it colours the edge only, so the label must say what it means |
+| `status` | `todo` or `done` | no | `todo` | `done` strikes the title and adds a "Done" badge |
+| `open` | boolean | no | `false` | Start open |
+| `blocks` | list of blocks | yes | none | Any leaf block except `hero` |
+
+Gotchas: no `hero`, `split`, `section` or `disclosure` inside a disclosure. A disclosure can sit inside a `section`, which is the usual place for a list of them.
+
+```yaml
+- type: disclosure
+  summary: "Create the Netlify site"
+  badges:
+    - label: "Ticket 701"
+    - label: "Unblocks launch"
+      tone: tip
+  blocks:
+    - type: prose
+      markdown: "A new site linked to the repo."
+```
+
 ### section
 
 One full-width band (background and spacing) holding blocks in order: a heading and the cards under it, say. This is how the original site was built, and it keeps a heading close to its content. The child blocks render inside the band, so their own `surface` is ignored.
@@ -480,7 +528,7 @@ One full-width band (background and spacing) holding blocks in order: a heading 
 |---|---|---|---|---|
 | `surface` | `default`, `muted` or `inverse` | no | `default` | Background of the band |
 | `spacing` | `none`, `small` or `normal` | no | `normal` | Padding above and below (0, 25px or 70px on desktop) |
-| `blocks` | list of blocks | yes | none | Any leaf block except `hero` |
+| `blocks` | list of blocks | yes | none | Any leaf block except `hero`, or a `disclosure` |
 
 Gotchas: no `hero`, `split` or `section` inside a section. An `image` with `backdrop: blurred` is a band of its own, so keep it outside.
 

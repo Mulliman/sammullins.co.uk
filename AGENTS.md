@@ -67,7 +67,7 @@ blocks:
 Markdown body (long-form text, code blocks get Prism highlighting).
 ```
 
-Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`, `section`. Use a `section` to put a heading and its content in one band (background and spacing), as the original site did. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: the unlisted [components page](/style-guide/components/), with examples in `src/content/style-guide/components.yaml`.
+Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `steps`, `split`, `disclosure`, `section`. Use `steps` for numbered instructions with commands (each gets a Copy button) and `disclosure` for rows that open on click. Use a `section` to put a heading and its content in one band (background and spacing), as the original site did. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: the unlisted [components page](/style-guide/components/), with examples in `src/content/style-guide/components.yaml`.
 
 Where things go:
 

@@ -520,3 +520,117 @@
     stop-color: var(--logo-stop-c);
   }
 }
+
+/* The code figure (tickets 307, 1005): shared by the `code` block, `steps` and fenced code in block
+   Markdown (src/lib/markdown.ts codeFigure). Global rather than scoped because Markdown output can't
+   carry Astro's scoped attribute. After the prose rules on purpose: `.code pre` beats `.prose pre`. */
+@layer utilities {
+  .code {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .code__filename {
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: var(--space-3xs) var(--space-s);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-bottom: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .code__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding: var(--space-3xs) var(--space-s);
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .code__filename + .code__bar {
+    border-radius: 0;
+  }
+  .code__lang {
+    font-family: var(--font-mono);
+    text-transform: lowercase;
+  }
+  .code__copy {
+    padding: var(--space-3xs) var(--space-xs);
+    font-size: var(--step--1);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .code__copy:hover {
+    border-color: var(--color-text-muted);
+  }
+  .code pre {
+    margin: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: var(--space-s);
+    border: 1px solid var(--color-border);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--color-code-bg);
+    color: var(--color-text);
+    white-space: pre;
+    line-height: 1.5;
+  }
+  .code pre code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: none;
+    padding: 0;
+  }
+  .prose .code {
+    margin-block: 0.75em;
+  }
+
+  /* Tables in block Markdown (ticket 1005): on a phone each row becomes a card, each value under its
+     column name (from the cell's data-label), so nothing scrolls sideways and values get the full width. */
+  @media (max-width: 40rem) {
+    .prose table.table-stack,
+    .table-stack tbody,
+    .table-stack tr,
+    .table-stack td {
+      display: block;
+      width: 100%;
+    }
+    .table-stack thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .table-stack tr {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-2xs) var(--space-xs);
+    }
+    .table-stack tr + tr {
+      margin-top: var(--space-xs);
+    }
+    .prose .table-stack td {
+      border: 0;
+      padding: var(--space-3xs) 0;
+    }
+    .table-stack td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: var(--step--1);
+      font-weight: var(--weight-strong);
+      color: var(--color-text-muted);
+    }
+  }
+}

@@ -1,0 +1,38 @@
+---
+/**
+ * Copy buttons for every code figure on the page (tickets 307, 1005): `code` blocks, `steps` and
+ * fenced code in block Markdown. Progressive enhancement: the buttons are .js-only, and "Copied"
+ * is announced through the figure's aria-live region. Loaded once, by BaseLayout.
+ */
+---
+
+<script>
+  const announce = (figure: HTMLElement, message: string) => {
+    const status = figure.querySelector<HTMLElement>('[data-copy-status]');
+    if (!status) return;
+    status.textContent = '';
+    // Re-set on the next frame so repeated copies are announced again.
+    requestAnimationFrame(() => {
+      status.textContent = message;
+    });
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-code]').forEach((figure) => {
+    const button = figure.querySelector<HTMLButtonElement>('[data-copy]');
+    const text = figure.querySelector('pre code')?.textContent ?? '';
+    if (!button) return;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        announce(figure, 'Copied');
+        button.textContent = 'Copied';
+      } catch {
+        announce(figure, 'Copy failed: select the code instead');
+        button.textContent = 'Copy failed';
+      }
+      setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 2000);
+    });
+  });
+</script>

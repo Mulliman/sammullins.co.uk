@@ -19,7 +19,10 @@ export default defineConfig({
     sitemap({
       // Style guide example pages (ticket 1306) are hidden and noindex; keep them out of the sitemap too.
       filter: (page) =>
-        !page.includes('/secret/') && !page.includes('/style-guide/') && !page.includes('/page-structure-example'),
+        !page.includes('/secret/') &&
+        !page.includes('/style-guide/') &&
+        !page.includes('/page-structure-example') &&
+        !page.includes('/pm-desk/'),
     }),
   ],
   image: {

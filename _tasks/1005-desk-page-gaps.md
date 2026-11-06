@@ -2,7 +2,7 @@
 id: "1005"
 title: "Blocks the PM desk page needed and the site lacks"
 epic: Blocks
-status: todo
+status: review
 priority: p2
 size: M
 owner: agent
@@ -11,24 +11,31 @@ depends_on: ["1004"]
 
 ## Why
 
-The PM desk page (ticket 1004) is built only from the site's own blocks, so that anything it can't express shows where the component set is thin. The first build on 6 November found these. Each is a general need (long how-to articles and software docs would use them too), not a desk-page special.
+The PM desk page (ticket 1004) is built only from the site's own blocks, so that anything it can't express shows where the component set is thin. The first build on 6 November found six gaps. Each is a general need (long how-to articles and software docs use them too), not a desk-page special.
 
 ## Scope
 
-Gaps found, in the order they hurt:
+Sam asked for all six (6 November).
 
-1. **Disclosure block.** A `details`/`summary` component that is closed by default, keyboard-accessible, and works without JS. The desk page wants one closed row per item; software docs could use it for FAQs.
-2. **Badge or tag.** Small labels for a kind, ticket ids and "phone / PC". Today these are a bold line of prose.
-3. **Done state.** A way to mark a component or item as done (struck title, a quiet "Done" label) without Markdown strikethrough plus a separate callout.
-4. **Copy button on code.** Commands in `code` blocks and prose fences have to be selected by hand. (Overlaps the code-block headers left over in 313.)
-5. **Steps with commands.** A numbered step list whose steps can hold a `code` block. Today steps are a Markdown list with indented fences, which loses the `code` block's filename header.
-6. **Compact table on phones.** Wide `.prose` tables scroll sideways; a stacked layout below a breakpoint would read better.
+1. **Disclosure block.** `disclosure`: a native `<details>`, closed by default, keyboard-accessible, no JS. Holds the same blocks a section does, and can sit inside a section.
+2. **Badge.** A shared `badge` (`label`, `tone`: neutral, note, tip, warning), shown on a disclosure's summary. The tone colours the edge; the label carries the meaning.
+3. **Done state.** `disclosure.status: done` strikes the summary and adds a "Done" badge, so the state is in words too.
+4. **Copy button on code.** The `code` block already had one. Its markup is now one shared figure (`codeFigure` in `src/lib/markdown.ts`), its styles are in `global.css` and its script is `CopyCode.astro` on every page, so fenced code in block Markdown and in `steps` gets the same figure and Copy button.
+5. **Steps with commands.** `steps`: a numbered list whose steps are Markdown with an optional `code` (lang, code, filename).
+6. **Tables on phones.** Tables in block Markdown carry each cell's column name (`data-label`); below 40rem each row becomes a card, values under their labels.
 
 ## Acceptance criteria
 
-- [ ] Sam picks which of the six to build (and in what order); the rest are struck from this ticket.
-- [ ] Each one built is a block in `src/content.config.ts`, rendered in `Blocks.astro`, shown with its YAML on the style guide's components page, and passes axe.
-- [ ] The next desk page uses the new blocks, and this list is updated with anything new the page runs into.
+- [x] Sam picks which of the six to build: all six.
+- [x] Each is in `src/content.config.ts`, rendered by `Blocks.astro` (or the shared Markdown renderer), shown with its YAML on the style guide's components page, and passes axe (`tests/a11y`, 12 of 12).
+- [x] `tests/blocks-1005.test.mjs` checks the rendered behaviour: closed and open disclosures, a worded done state, every badge tone, steps with code and Copy, fenced code as a figure, table labels, unique code-region names.
+- [x] The next desk page uses the new blocks, and lists anything new it runs into (none on 6 November).
+
+## Verification (6 November 2026)
+
+70 of 70 tests, 12 of 12 accessibility tests, ESLint, Prettier and `astro check` clean. The desk page was checked at 375px and 1280px with every row open: no horizontal scroll. Checking it found and fixed three layout bugs before release: a long badge widened the page (badges now wrap); a long command widened a step (grid track and auto margins); a stacked table row put labels beside values, leaving the value 161px wide (labels now sit above).
+
+Not covered: body Markdown (articles) still renders fences and tables through Astro's own pipeline, so they don't get the shared figure or the phone table layout. Code-block headers for article bodies are ticket 313's leftover.
 
 ## Notes
 

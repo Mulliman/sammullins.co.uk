@@ -9,7 +9,16 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', '.claude/', 'public/', 'scripts/migrate/'],
+    ignores: [
+      'dist/',
+      '.astro/',
+      'node_modules/',
+      '.claude/',
+      'public/',
+      'scripts/migrate/',
+      '.desk/',
+      '.agent-tasks/',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
