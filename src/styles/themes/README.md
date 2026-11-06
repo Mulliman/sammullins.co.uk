@@ -25,8 +25,9 @@ theme: christmas
 1. Copy `christmas.css` to `<name>.css` and change the values. Scope everything to
    `:root[data-page-theme='<name>']`.
 2. Set every token you change in light **and** in both dark blocks, or the light value leaks into dark mode.
-3. Import it in `src/layouts/BaseLayout.astro`, and add `<name>` to `pageThemes` in `index.ts`.
+3. Add `<name>` to `pageThemes` in `index.ts`. `BaseLayout.astro` loads every `.css` file in this folder, so there is nothing to import.
 4. Check contrast: `pnpm test:a11y` runs axe on every page in both themes.
+5. Check it in the style guide at /style-guide/themes/: the theme gets a switcher button, a token diff against default, and a contrast table, with failures flagged.
 
 ## Adding a colour to a component
 

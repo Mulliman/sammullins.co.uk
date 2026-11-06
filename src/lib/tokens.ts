@@ -8,6 +8,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pageThemes } from '../styles/themes';
 
 const THEME_FILE = 'src/styles/themes/default.css';
 const GLOBAL_FILE = 'src/styles/global.css';
@@ -299,4 +300,148 @@ export function tokenCss(): string {
     for (const t of scale(category)) rules.push(`.${prefix}-${t.slug} { ${prop}: var(${t.name}); }`);
   }
   return `/* Generated at build time from src/styles/themes/default.css and src/styles/global.css (ticket 1302). */\n${rules.join('\n')}\n`;
+}
+
+/* ---- Page themes (ticket 1303) ---- */
+
+/** The page theme file for `name`, read as text. Every page theme lives in src/styles/themes/<name>.css. */
+function themeCss(name: string): string {
+  return read(`src/styles/themes/${name}.css`);
+}
+
+/** Colour tokens of default.css, light and dark, keyed by token name. */
+function defaultColours(): Map<string, { light: string; dark: string }> {
+  return new Map(allColourTokens().map((t) => [t.name, { light: t.light, dark: t.dark }]));
+}
+
+/**
+ * The declarations a page theme sets: `:root[data-page-theme='<name>']` for light and
+ * `:root[data-page-theme='<name>'][data-theme='dark']` for dark. Default has no such block, so it sets nothing.
+ */
+function themeOverrides(name: string): { light: Map<string, string>; dark: Map<string, string> } {
+  const css = themeCss(name);
+  const light = declarations(firstBlock(css, new RegExp(`:root\\[data-page-theme='${name}'\\]\\s*\\{`))).map(
+    (d) => [d.name, d.value] as const,
+  );
+  const dark = declarations(
+    firstBlock(css, new RegExp(`:root\\[data-page-theme='${name}'\\]\\[data-theme='dark'\\]\\s*\\{`)),
+  ).map((d) => [d.name, d.value] as const);
+  return { light: new Map(light), dark: new Map(dark) };
+}
+
+export interface ThemeTokenDiff {
+  name: string;
+  slug: string;
+  defaultLight: string;
+  themeLight: string;
+  /** False when the theme's light block does not set the token. */
+  themeLightSet: boolean;
+  defaultDark: string;
+  /** The dark value that applies under the theme. */
+  themeDark: string;
+  /** False when the theme's dark block does not set the token. */
+  themeDarkSet: boolean;
+}
+
+/**
+ * Every colour token a page theme overrides, against default, in light and dark. Empty for default.
+ * When the theme's dark block does not set a token, the theme's light value applies in dark mode:
+ * the theme block comes later than default's dark block with equal specificity. That is why
+ * README.md asks for every token to be set in both blocks.
+ */
+export function pageThemeDiff(name: string): ThemeTokenDiff[] {
+  const base = defaultColours();
+  const { light, dark } = themeOverrides(name);
+  const names = [...new Set([...light.keys(), ...dark.keys()])];
+  return names.map((token) => {
+    const d = base.get(token);
+    if (!d) throw new Error(`src/styles/themes/${name}.css sets ${token}, which is not a colour token in default.css`);
+    const themeLight = light.get(token);
+    const themeDark = dark.get(token);
+    return {
+      name: token,
+      slug: slugOf(token),
+      defaultLight: d.light,
+      themeLight: themeLight ?? d.light,
+      themeLightSet: themeLight !== undefined,
+      defaultDark: d.dark,
+      themeDark: themeDark ?? themeLight ?? d.dark,
+      themeDarkSet: themeDark !== undefined,
+    };
+  });
+}
+
+/** Every colour token with the value it takes under a page theme, light and dark. */
+function themeColours(name: string): Map<string, { light: string; dark: string }> {
+  const diff = new Map(pageThemeDiff(name).map((t) => [t.name, t]));
+  return new Map(
+    [...defaultColours()].map(([token, d]) => {
+      const t = diff.get(token);
+      return [token, t ? { light: t.themeLight, dark: t.themeDark } : d] as const;
+    }),
+  );
+}
+
+/**
+ * The text pairs checked per theme. The inverse pairs use the inverse text tokens, because that is
+ * what .surface-inverse sets on the footer and dark sections (the plain text tokens never sit there).
+ */
+const CONTRAST_PAIRS: [text: string, background: string][] = [
+  ['--color-text', '--color-bg'],
+  ['--color-text', '--color-bg-muted'],
+  ['--color-text-muted', '--color-bg'],
+  ['--color-text-muted', '--color-bg-muted'],
+  ['--color-link', '--color-bg'],
+  ['--color-link', '--color-bg-muted'],
+  ['--color-text-inverse', '--color-bg-inverse'],
+  ['--color-text-inverse-muted', '--color-bg-inverse'],
+  ['--color-link-inverse', '--color-bg-inverse'],
+];
+
+export interface ContrastRow {
+  text: string;
+  background: string;
+  light: number;
+  dark: number;
+  lightPasses: boolean;
+  darkPasses: boolean;
+}
+
+/** Contrast of each text pair under a page theme (default included), light and dark. */
+export function pageThemeContrast(name: string): ContrastRow[] {
+  const colours = themeColours(name);
+  return CONTRAST_PAIRS.map(([text, background]) => {
+    const fg = colours.get(text);
+    const bg = colours.get(background);
+    if (!fg || !bg) throw new Error(`Contrast pair ${text} on ${background} is not in default.css`);
+    const light = contrastRatio(fg.light, bg.light);
+    const dark = contrastRatio(fg.dark, bg.dark);
+    if (light === undefined || dark === undefined) {
+      throw new Error(`Contrast pair ${text} on ${background} needs hex values`);
+    }
+    return {
+      text,
+      background,
+      light,
+      dark,
+      lightPasses: light >= TEXT_CONTRAST_MIN,
+      darkPasses: dark >= TEXT_CONTRAST_MIN,
+    };
+  });
+}
+
+/**
+ * Static swatch classes for the themes page: `.tsw-<theme>-l-<token>` and `.tsw-<theme>-d-<token>`,
+ * each with the literal value that theme takes in light or dark. Served at /style-guide/themes/swatches.css.
+ * The values come from the theme files; the page only uses classes, so no inline styles are needed.
+ */
+export function themeSwatchCss(): string {
+  const rules: string[] = [];
+  for (const theme of pageThemes) {
+    for (const [token, v] of themeColours(theme)) {
+      rules.push(`.tsw-${theme}-l-${slugOf(token)} { background-color: ${v.light}; }`);
+      rules.push(`.tsw-${theme}-d-${slugOf(token)} { background-color: ${v.dark}; }`);
+    }
+  }
+  return `/* Generated at build time from src/styles/themes/*.css (ticket 1303). */\n${rules.join('\n')}\n`;
 }

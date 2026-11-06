@@ -4,6 +4,7 @@
  * guide pages, an on-page section list, and previous/next links between guide pages.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StyleGuideThemeSwitcher from './StyleGuideThemeSwitcher.astro';
 import { readyStyleGuidePages, styleGuideNeighbours } from '../lib/style-guide';
 
 interface Props {
@@ -22,6 +23,7 @@ const { prev, next } = styleGuideNeighbours(path);
 <BaseLayout title={title} description={description} noindex={true}>
   <div class="container guide">
     <aside class="guide__aside">
+      <StyleGuideThemeSwitcher />
       <nav aria-label="Style guide pages">
         <ul>
           {pages.map((p) => (

@@ -4,7 +4,8 @@
  */
 import '../styles/themes/default.css';
 import '../styles/global.css';
-import '../styles/themes/christmas.css';
+// Every page theme in the folder (christmas, and any added later, ticket 1303). Terminal is also loaded by ConsoleSecret.
+import.meta.glob('../styles/themes/*.css', { eager: true });
 import { themeColor } from '../styles/themes/meta';
 import type { PageTheme } from '../styles/themes';
 import Header from '../components/Header.astro';
