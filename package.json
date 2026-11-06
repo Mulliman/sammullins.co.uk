@@ -20,6 +20,7 @@
     "compare": "node scripts/compare/compare.mjs",
     "media:convert": "node scripts/media/convert.mjs",
     "skills:sync": "node scripts/skills/sync.mjs",
+    "tasks:status": "node scripts/tasks/status.mjs",
     "skills:catalogue": "node scripts/skills/block-catalogue.mjs",
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint . --fix && prettier --write .",

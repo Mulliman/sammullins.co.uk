@@ -103,7 +103,7 @@ Where things go:
 
 ## Skills
 
-Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-tooling.md` for how each tool discovers them): `new-article`, `new-note`, `new-page`, `add-images`, `redirect`.
+Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-tooling.md` for how each tool discovers them): `new-article`, `new-note`, `new-page`, `add-images`, `redirect`, and `pm-pass` (what needs Sam, as a desk page; backed by `pnpm tasks:status`).
 
 ## Tickets
 
