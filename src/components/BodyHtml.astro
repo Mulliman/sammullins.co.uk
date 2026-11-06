@@ -1,0 +1,12 @@
+---
+/**
+ * Renders the page's Markdown body (its slot) through enhanceBodyHtml (tickets 313, 1005), so code
+ * in an article gets the same figure and Copy button as the `code` block, and tables stack on a
+ * phone. The HTML comes from Astro's own Markdown renderer, so it is trusted build output.
+ */
+import { enhanceBodyHtml } from '../lib/markdown';
+
+const bodyHtml = enhanceBodyHtml(await Astro.slots.render('default'));
+---
+
+<Fragment set:html={bodyHtml} />

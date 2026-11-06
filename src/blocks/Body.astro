@@ -6,6 +6,7 @@
  */
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Section from '../components/Section.astro';
+import BodyHtml from '../components/BodyHtml.astro';
 import type { BlockOf } from '../lib/content';
 
 export interface TocItem {
@@ -26,7 +27,9 @@ const withToc = !nested && toc.length >= 3;
 {Content && !withToc && (
   <Section surface={block.surface} width="narrow" nested={nested}>
     <div class="prose">
-      <Content />
+      <BodyHtml>
+        <Content />
+      </BodyHtml>
     </div>
   </Section>
 )}
@@ -44,7 +47,9 @@ const withToc = !nested && toc.length >= 3;
         </ol>
       </details>
       <div class="prose">
-        <Content />
+        <BodyHtml>
+          <Content />
+        </BodyHtml>
       </div>
       <nav class="toc" aria-label="In this article">
         <p class="toc__title" aria-hidden="true">
@@ -65,6 +70,8 @@ const withToc = !nested && toc.length >= 3;
 <style>
   .with-toc {
     display: grid;
+    /* One shrinkable column on narrow screens: a long code line scrolls inside its figure instead of widening the page. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
   }
   .toc,

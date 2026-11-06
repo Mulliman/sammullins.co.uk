@@ -68,3 +68,15 @@ test('code regions have unique names (html-validate unique-landmark)', () => {
     `duplicate labels: ${labels.filter((l, i) => labels.indexOf(l) !== i)}`,
   );
 });
+
+test('article body code gets the shared figure, keeping its Prism tokens (ticket 313)', () => {
+  const article = readFileSync(join(DIST, 'articles', '5-cool-things-i-used-to-build-xstatic', 'index.html'), 'utf8');
+  const figures = [...article.matchAll(/<figure class="code" data-code>([\s\S]*?)<\/figure>/g)].map((m) => m[1]);
+  assert.ok(figures.length >= 2, 'the csharp samples are figures');
+  for (const f of figures) {
+    assert.match(f, /data-copy[^>]*>Copy</);
+    assert.match(f, /<pre class="language-\w+" tabindex="0" role="region" aria-label="Code \(\w+\), /);
+    assert.match(f, /<span class="token /, 'Prism highlighting survives');
+  }
+  assert.doesNotMatch(article, /<pre class="language-[^"]*" data-language/, 'no bare Prism pre is left');
+});

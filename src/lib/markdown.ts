@@ -26,20 +26,69 @@ export function codeFigure({
 }) {
   const safeLang = lang.replace(/[^a-z0-9-]/gi, '') || 'text';
   const cls = `language-${safeLang}`;
+  return figureShell(safeLang, code, filename, `<code class="${cls}">${escapeHtml(code)}</code>`, `class="${cls}"`);
+}
+
+/**
+ * The figure around a <pre>. `codeHtml` is the pre's inner HTML (escaped text, or Prism's token spans
+ * for the page body); `code` is the plain text, used for the region's name.
+ */
+function figureShell(lang: string, code: string, filename: string | undefined, codeHtml: string, preAttrs: string) {
   // Each scrollable region needs a unique name (html-validate unique-landmark), so name it after its
   // first line as well as its language or filename.
   const first = code.trim().split('\n')[0]!.trim();
   const gist = first.length > 48 ? `${first.slice(0, 47)}…` : first;
-  const label = `${filename ? `Code: ${filename}` : `Code (${safeLang})`}${gist ? `, ${gist}` : ''}`;
+  const label = `${filename ? `Code: ${filename}` : `Code (${lang})`}${gist ? `, ${gist}` : ''}`;
   return (
     `<figure class="code" data-code>` +
     (filename ? `<figcaption class="code__filename">${escapeHtml(filename)}</figcaption>` : '') +
-    `<div class="code__bar"><span class="code__lang">${safeLang}</span>` +
+    `<div class="code__bar"><span class="code__lang">${lang}</span>` +
     `<button type="button" class="code__copy js-only" data-copy>Copy</button></div>` +
-    `<pre class="${cls}" tabindex="0" role="region" aria-label="${escapeHtml(label)}"><code class="${cls}">${escapeHtml(code)}</code></pre>` +
+    `<pre ${preAttrs} tabindex="0" role="region" aria-label="${escapeHtml(label)}">${codeHtml}</pre>` +
     `<p class="visually-hidden" aria-live="polite" data-copy-status></p>` +
     `</figure>`
   );
+}
+
+const unescapeHtml = (s: string) =>
+  s
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;|&#34;/g, '"')
+    .replace(/&#39;|&#x27;/g, "'")
+    .replace(/&amp;/g, '&');
+const textOf = (html: string) => unescapeHtml(html.replace(/<[^>]+>/g, ''));
+
+/** Adds the stacking class and each cell's column name to tables in rendered HTML (ticket 1005). */
+function stackTables(html: string): string {
+  return html.replace(/<table(\s[^>]*)?>([\s\S]*?)<\/table>/g, (whole, attrs = '', inner: string) => {
+    if (/table-stack/.test(attrs)) return whole;
+    const head = inner.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? '';
+    const labels = [...head.matchAll(/<th\b[^>]*>([\s\S]*?)<\/th>/g)].map((m) => textOf(m[1]!).trim());
+    if (!labels.length) return whole;
+    const body = inner.replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/g, (row) => {
+      if (/<th\b/.test(row)) return row;
+      let i = 0;
+      return row.replace(/<td\b([^>]*)>/g, (_m, a: string) => {
+        const label = labels[i++];
+        return label ? `<td${a} data-label="${escapeHtml(label)}">` : `<td${a}>`;
+      });
+    });
+    return `<table class="table-stack"${attrs}>${body}</table>`;
+  });
+}
+
+/**
+ * The page's Markdown body, rendered by Astro (tickets 313, 1005): each Prism-highlighted <pre>
+ * becomes the shared code figure (bar, Copy button, named scroll region) with its tokens kept, and
+ * tables stack on a phone, the same as code and tables in block Markdown.
+ */
+export function enhanceBodyHtml(html: string): string {
+  const withFigures = html.replace(
+    /<pre class="language-([\w-]+)"[^>]*>([\s\S]*?)<\/pre>/g,
+    (_m, lang: string, inner: string) => figureShell(lang, textOf(inner), undefined, inner, `class="language-${lang}"`),
+  );
+  return stackTables(withFigures);
 }
 
 /** Plain text of a header cell, for the `data-label` a stacked row shows beside each value. */
