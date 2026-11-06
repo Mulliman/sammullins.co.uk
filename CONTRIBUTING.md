@@ -7,3 +7,5 @@ Thanks for looking! This is a personal website, so:
 - **Code PRs** by discussion first, please: open an issue describing the change.
 
 The repo is built largely with AI agents working from tickets in `_tasks/`. If you're curious how, start with `AGENTS.md`.
+
+Please follow the [code of conduct](CODE_OF_CONDUCT.md).
