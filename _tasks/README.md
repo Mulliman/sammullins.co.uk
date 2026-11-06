@@ -48,6 +48,9 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [201](201-design-tokens-themes.md) | Design tokens, light/dark themes & toggle | p0 | M | agent | 003 |
 | [202](202-typography.md) | Self-hosted typography & thin heading rules | p0 | S | agent | 201 |
 | [203](203-layout-shell.md) | Layout shell: header, nav, footer, landmarks | p0 | M | agent | 103, 202 |
+| [204](204-typography-refresh.md) | Typography refresh (Mona Sans, fluid scale, no eyebrows) | p0 | M | agent | 202 |
+| [205](205-colour-surfaces.md) | Colour, surface and spacing refresh | p0 | M | pair | 204 |
+| [206](206-header-footer.md) | Header, nav and footer refresh | p1 | M | agent | 205 |
 | [301](301-block-hero.md) | Block: hero | p0 | M | agent | 102, 402 |
 | [302](302-blocks-text.md) | Blocks: intro, prose, callout | p0 | S | agent | 102 |
 | [303](303-block-image.md) | Block: image | p0 | S | agent | 402 |
@@ -57,6 +60,12 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [307](307-blocks-quote-code.md) | Blocks: quote, code | p0 | S | agent | 102 |
 | [308](308-blocks-split-timeline.md) | Blocks: split, timeline | p0 | M | agent | 102 |
 | [309](309-block-embed.md) | Block: embed (click-to-load facade) | p1 | S | agent | 303 |
+| [310](310-hero-portrait.md) | Hero: "live portrait" variant | p0 | M | pair | 205 |
+| [311](311-logowall-strip.md) | Logo wall: compact strip with transparent logos | p1 | S | agent | 205 |
+| [312](312-home-sections.md) | Home: builds grid, writing list and photo strip | p0 | L | agent | 205, 310 |
+| [313](313-article-template.md) | Article template: meta, contents and code blocks | p0 | M | agent | 204 |
+| [314](314-cv-template.md) | CV: newest first, compact timeline | p0 | M | pair | 205 |
+| [315](315-index-pages.md) | Articles and Software index pages | p1 | M | agent | 313 |
 | [401](401-media-conversion.md) | Convert originals to AVIF masters + media map | p0 | M | agent | 002 |
 | [402](402-picture-component.md) | Responsive `<Picture>` component | p0 | S | agent | 401 |
 | [403](403-legacy-media-paths.md) | Legacy `/media/…` paths resolve | p0 | S | agent | 401, 601 |
@@ -67,6 +76,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [505](505-migrate-photography.md) | Migrate photography (hidden) | p0 | M | agent | 501, 304 |
 | [506](506-migrate-xstatic14.md) | Migrate /xstatic14/ | p0 | S | agent | 501 |
 | [507](507-archive-index.md) | Archive index page | p0 | S | agent | 305, 503, 504 |
+| [508](508-copy-refresh.md) | Copy refresh: bio, footer, CV summary, software page | p0 | S | pair | – |
 | [601](601-redirect-map.md) | Redirect map → Netlify `_redirects` | p0 | S | agent | 003 |
 | [602](602-legacy-url-test.md) | CI test: every legacy URL & media path resolves | p0 | M | agent | 601, 801 |
 | [603](603-not-found-page.md) | Helpful 404 page | p1 | S | agent | 203 |
@@ -96,6 +106,8 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1205](1205-decommission.md) | Decommission old site & folders | p2 | S | sam | 1204 + 30 days |
 
 ## Suggested order
+
+> The build is merged. For what is left, and in what order, see **[BACKLOG.md](BACKLOG.md)**. The original order is below for history.
 
 1. **Foundation:** 001 → 002 → 003, 004, 005, 801, 701
 2. **Model & shell:** 101 → 102, 103 · 201 → 202 → 203 · 401 → 402 · 601
