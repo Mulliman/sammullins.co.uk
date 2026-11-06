@@ -21,6 +21,8 @@ const labels = {
   legacy: 'From the archive',
 } as const;
 const label = labels[tone];
+// Tone label and title share one line ("Tip: Title"), so nothing is stacked above the title.
+const showTitle = Boolean(title) && title !== label;
 ---
 
 <Section nested={nested} width="narrow" tight>
@@ -63,9 +65,11 @@ const label = labels[tone];
           </>
         )}
       </svg>
-      <span>{label}</span>
+      <span>
+        <span class="callout__tone">{showTitle ? `${label}: ` : label}</span>
+        {showTitle && <span class="callout__title">{title}</span>}
+      </span>
     </p>
-    {title && <p class="callout__title">{title}</p>}
     <div class="callout__body prose" set:html={md(body)} />
   </div>
 </Section>
@@ -99,24 +103,20 @@ const label = labels[tone];
     align-items: center;
     gap: var(--space-2xs);
     margin: 0 0 var(--space-3xs);
-    font-size: var(--step--1);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: var(--weight-strong);
+    color: var(--color-heading);
+  }
+  .callout__icon,
+  .callout__tone {
     color: var(--accent);
   }
-  .callout--legacy .callout__label {
+  .callout--legacy :is(.callout__icon, .callout__tone) {
     color: var(--color-link);
   }
   .callout__icon {
     flex: none;
   }
 
-  .callout__title {
-    margin: 0 0 var(--space-3xs);
-    font-weight: 700;
-    font-size: var(--step-0);
-  }
   .callout__body {
     max-width: none;
   }

@@ -158,11 +158,10 @@ Big heading at the top of a page.
 
 ### `intro`
 
-A short introduction block: optional kicker, heading and lead paragraph.
+A short introduction block: an optional heading and lead paragraph. There is no kicker or eyebrow label above the heading, by design (ticket 204).
 
 | Field | Type | Required | Default | Meaning |
 |---|---|---|---|---|
-| `kicker` | string | no | none | Small label above the heading |
 | `heading` | string | no | none | Section heading |
 | `lead` | Markdown string | no | none | Larger lead paragraph |
 | `align` | `center` or `left` | no | `center` | Text alignment |

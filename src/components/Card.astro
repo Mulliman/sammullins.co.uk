@@ -74,9 +74,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     padding: 30px;
     text-align: center;
   }
-  .card--text .card__title {
-    font-weight: var(--display-weight);
-  }
   /* Full style: the original UIkit "default" card. White card, image on top, centred body. */
   .card--full {
     background: var(--color-surface);
@@ -86,13 +83,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .card--full .card__body {
     padding: 30px;
     flex: 1;
-  }
-  .card--full .card__title {
-    font-weight: var(--display-weight);
-  }
-  /* The original put the date above the title. */
-  .card--full .card__meta {
-    order: -1;
   }
 
   /* Image style: the bar sits on the image. Both share one grid cell, so the title link's
@@ -142,7 +132,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 
   .card__title {
     font-size: var(--step-2);
-    line-height: 1.4;
+    line-height: 1.2;
     margin: 0;
   }
   .card--image .card__title {

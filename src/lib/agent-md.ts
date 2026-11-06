@@ -32,7 +32,7 @@ async function blockToMd(b: Block, entry: AnyEntry): Promise<string> {
     case 'hero':
       return [`# ${b.heading}`, b.subheading].filter(Boolean).join('\n\n');
     case 'intro':
-      return [b.kicker && `_${b.kicker}_`, b.heading && `## ${b.heading}`, b.lead].filter(Boolean).join('\n\n');
+      return [b.heading && `## ${b.heading}`, b.lead].filter(Boolean).join('\n\n');
     case 'prose':
       return b.markdown;
     case 'body':
