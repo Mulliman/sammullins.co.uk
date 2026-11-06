@@ -25,3 +25,20 @@ The November 2026 design audit found that the palette and section rhythm are a s
 - [ ] Sam picks a palette, and the choice is recorded in `_docs/decisions.md`.
 - [ ] Every text and background pair passes WCAG 2.2 AA (`pnpm test:a11y` is green in both themes).
 - [ ] No hard-coded colours or px spacing are left in `src/blocks` or `src/components` (grep check).
+
+## Candidate palettes (6 November 2026)
+
+Rendered on the real home and article pages in `design-audit-2026-11/shots/palettes-205.jpg`. Every pair passes WCAG AA; the lowest is the link on the muted surface (4.78 to 5.37:1).
+
+| Token | A. Warm paper | B. Cool slate | C. Stone and ink |
+|---|---|---|---|
+| bg | `#f8f6f1` | `#ffffff` | `#fbfaf9` |
+| bg-muted | `#efebe3` | `#f3f5f8` | `#f1efec` |
+| bg-inverse | `#1a1917` | `#0f1729` | `#0c0a09` |
+| text | `#3b3a36` | `#3d4452` | `#2f2d2a` |
+| text-muted | `#5c5a54` | `#5a6272` | `#57534e` |
+| heading | `#1a1917` | `#0f1729` | `#0c0a09` |
+| border | `#ddd8ce` | `#dde2ea` | `#e2ded8` |
+| link | `#9a5200` | `#9a5200` | `#a3540a` |
+
+Dark-theme values follow once Sam picks one.
