@@ -33,7 +33,7 @@ Markdown bodies render plain HTML styled by `global.css` (`.prose`), not by bloc
 
 ## Acceptance criteria
 
-- [ ] The page's Markdown goes through the same renderer as articles (shared helper, not a copy). Not met as written: the Markdown is imported with Astro's `.md` import, which uses the same Markdown config as articles (Prism), but there is no shared helper. Articles use `render()`. Needs a decision.
+- [x] The page's Markdown goes through the same renderer as articles. Met through the pipeline rather than a helper: the guide imports `.md` files, and Astro renders those with the same `markdown` config in `astro.config.mjs` (Prism, no extra plugins) as content entries. A shared helper would add nothing (reviewed 6 November 2026).
 - [x] Every Prism token class used on the site appears in a code sample. Enforced by `tests/style-guide-elements.test.mjs`. `symbol` is the exception: no grammar the site uses emits it.
 - [x] Focus states are visible in the guide, for example with a "show focus" demo.
 
@@ -52,3 +52,7 @@ Markdown bodies render plain HTML styled by `global.css` (`.prose`), not by bloc
 - Visited link colour is described, not demonstrated.
 - The skip link and theme toggle are described on the page, not demonstrated (they are in the layout on every page).
 - Images with captions: Markdown has no caption element, so the caption is a plain italic paragraph.
+
+## Found while building
+
+- A plain `<button>` with no class fails dark-mode contrast: the reset in `global.css` makes buttons inherit text colour but leaves the browser's default button background. No page uses one today; worth a base style for `button` in a later ticket.
