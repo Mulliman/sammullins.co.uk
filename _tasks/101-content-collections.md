@@ -2,7 +2,7 @@
 id: "101"
 title: Content collections & Zod schemas
 epic: Content model
-status: review
+status: done
 priority: p0
 size: L
 owner: agent
@@ -39,15 +39,15 @@ Pages are typed block lists, so a malformed AI edit fails the build instead of s
 
 ## Acceptance criteria
 
-- [ ] Schema unit tests cover:
-  - [ ] a valid page passes
-  - [ ] an unknown block `type` fails
-  - [ ] a missing image `alt` fails
-  - [ ] a missing `authorship` fails
+- [x] Schema unit tests cover:
+  - [x] a valid page passes
+  - [x] an unknown block `type` fails
+  - [x] a missing image `alt` fails
+  - [x] a missing `authorship` fails
 - [x] Error messages name the file and field.
 - [x] Exported TS types (`Block`, `BlockOf<'hero'>`) are used by components.
 - [x] `_docs/content-model.md` documents every field with one YAML example per block.
 
 ## Verification (6 November 2026)
 
-Left: there are no schema unit tests yet (agent).
+`tests/schema.test.mjs` covers a valid page, an unknown block type, a missing alt and a missing authorship by running `astro sync` on a throwaway page; each failure names the file, and the alt failure names `blocks.0.image.alt`.

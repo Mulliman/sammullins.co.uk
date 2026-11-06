@@ -2,7 +2,7 @@
 id: "602"
 title: "CI test: every legacy URL & media path resolves"
 epic: URLs & redirects
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -24,8 +24,8 @@ depends_on: ["601", "801"]
 ## Acceptance criteria
 
 - [x] Deleting any migrated page makes CI fail with that URL named.
-- [ ] Report: counts of 200 vs 301, with zero failures.
+- [x] Report: counts of 200 vs 301, with zero failures.
 
 ## Verification (6 November 2026)
 
-Left: print the counts of 200s and 301s in the test output (agent).
+The legacy URL test now reports counts: pages 49 × 200, 1 × 301, 0 broken; media 1 × 200, 305 × 301, 0 broken.

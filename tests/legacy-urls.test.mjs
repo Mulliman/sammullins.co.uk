@@ -13,11 +13,17 @@ const lines = (f) =>
 
 test('dist exists (run pnpm build first)', () => assert.ok(existsSync(DIST), 'dist/ missing'));
 
-test('all 50 legacy page URLs resolve', () => {
+/** "N served directly (200), N redirected (301), N broken" for the test report. */
+const summary = (results) => {
+  const n = (s) => results.filter(([, r]) => r.status === s).length;
+  return `${n(200)} served directly (200), ${n(301)} redirected (301), ${n(404)} broken`;
+};
+
+test('all 50 legacy page URLs resolve', (t) => {
   const map = redirects();
-  const failures = lines('_docs/legacy/urls.txt')
-    .map((u) => [u, resolve(u, map)])
-    .filter(([, r]) => r.status === 404);
+  const results = lines('_docs/legacy/urls.txt').map((u) => [u, resolve(u, map)]);
+  t.diagnostic(`legacy pages: ${summary(results)}`);
+  const failures = results.filter(([, r]) => r.status === 404);
   assert.deepEqual(
     failures.map(([u]) => u),
     [],
@@ -37,8 +43,10 @@ test('legacy page URLs without trailing slash are handled', () => {
   assert.deepEqual(failures, []);
 });
 
-test('all 306 referenced legacy media paths resolve', () => {
+test('all 306 referenced legacy media paths resolve', (t) => {
   const map = redirects();
-  const failures = lines('_docs/legacy/media-referenced.txt').filter((p) => resolve(p, map).status === 404);
+  const results = lines('_docs/legacy/media-referenced.txt').map((p) => [p, resolve(p, map)]);
+  t.diagnostic(`legacy media: ${summary(results)}`);
+  const failures = results.filter(([, r]) => r.status === 404).map(([p]) => p);
   assert.deepEqual(failures, [], `Broken media paths (${failures.length}):\n${failures.slice(0, 20).join('\n')}`);
 });

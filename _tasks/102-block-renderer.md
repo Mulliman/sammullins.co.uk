@@ -2,7 +2,7 @@
 id: "102"
 title: Block renderer & page routing
 epic: Content model
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -31,8 +31,8 @@ Components can be added to pages in any order, like Umbraco Block List (decision
 
 - [x] A page with blocks in arbitrary order renders them in that order.
 - [x] Every route emits a canonical URL with a trailing slash.
-- [ ] A missing component mapping fails `pnpm check`.
+- [x] A missing component mapping fails `pnpm check`.
 
 ## Verification (6 November 2026)
 
-Left: prove that a missing component mapping fails `pnpm check` (agent).
+Checked by removing the `quote` case from `Blocks.astro`: `astro check` fails with ts(2345) at the exhaustive `assertNever`.
