@@ -8,9 +8,8 @@ import ThemeToggle from './ThemeToggle.astro';
 
 const site = await getSite();
 const path = Astro.url.pathname;
-// Signature (904): each shape gets pathLength=1 so stroke-dasharray: 1 is the whole outline.
 // Gradient ids are prefixed so the footer's copy of the logo doesn't reuse these gradients.
-const logoSvg = logo.replace(/<(path|rect) /g, '<$1 pathLength="1" ').replace(/_Linear/g, 'hdr_Linear');
+const logoSvg = logo.replace(/_Linear/g, 'hdr_Linear');
 const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
 
@@ -66,18 +65,16 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     }
   });
 
-  // Signature (904): the first page view of a session draws the logo once. Skipped under reduced motion.
-  const logoLink = document.querySelector<HTMLElement>('[data-signature]');
-  let firstView: boolean;
-  try {
-    firstView = sessionStorage.getItem('sm-signature') === null;
-    if (firstView) sessionStorage.setItem('sm-signature', '1');
-  } catch {
-    firstView = false;
-  }
-  if (logoLink && firstView && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    logoLink.classList.add('is-drawing');
-    window.setTimeout(() => logoLink.classList.remove('is-drawing'), 2000);
+  // Signature (904): the head script adds .sig-intro before first paint on the first page view of a
+  // session (so the logo never shows, hides, then animates). Mark the session and tidy up afterwards.
+  const root = document.documentElement;
+  if (root.classList.contains('sig-intro')) {
+    try {
+      sessionStorage.setItem('sm-signature', '1');
+    } catch {
+      // Storage blocked: the intro may replay on the next page, which is harmless.
+    }
+    window.setTimeout(() => root.classList.remove('sig-intro'), 1500);
   }
 </script>
 
@@ -196,105 +193,90 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     gap: var(--space-s);
   }
 
-  /* Signature (904). Strokes are invisible at rest, so the static logo is unchanged and nothing shifts.
-     Animation only runs when motion is allowed. Stroke width is in SVG units (viewBox is 4471 wide). */
+  /* Signature (904). The logo SVG has two groups: the name (MULLINS, then SAM) and the icon's 7 blocks.
+     Only opacity and position animate, every animation ends exactly at the resting logo (no
+     forwards fill), so nothing snaps or flickers when it finishes. Skipped under reduced motion. */
   .logo__mark :global(path),
   .logo__mark :global(rect) {
-    stroke: currentColor;
-    stroke-width: 36;
-    stroke-linejoin: round;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0;
-    stroke-opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .logo.is-drawing :global(path),
-    .logo.is-drawing :global(rect) {
-      animation: sig-draw 0.9s var(--ease) both;
+    /* First view of a session: the icon's blocks settle into place in turn, then the name fades in. */
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > *) {
+      animation: sig-settle 520ms var(--ease) backwards;
     }
-    /* Stagger: each shape starts 20ms after the previous one (about 1.2s in total). */
-    .logo.is-drawing :global(g > :nth-child(2)) {
-      animation-delay: 20ms;
+    :global(.sig-intro) .logo :global(svg > g:first-of-type > *) {
+      animation: sig-fade 500ms ease-out 420ms backwards;
     }
-    .logo.is-drawing :global(g > :nth-child(3)) {
-      animation-delay: 40ms;
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(2)) {
+      animation-delay: 50ms;
     }
-    .logo.is-drawing :global(g > :nth-child(4)) {
-      animation-delay: 60ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(5)) {
-      animation-delay: 80ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(6)) {
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(3)) {
       animation-delay: 100ms;
     }
-    .logo.is-drawing :global(g > :nth-child(7)) {
-      animation-delay: 120ms;
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(4)) {
+      animation-delay: 150ms;
     }
-    .logo.is-drawing :global(g > :nth-child(8)) {
-      animation-delay: 140ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(9)) {
-      animation-delay: 160ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(10)) {
-      animation-delay: 180ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(11)) {
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(5)) {
       animation-delay: 200ms;
     }
-    .logo.is-drawing :global(g > :nth-child(12)) {
-      animation-delay: 220ms;
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(6)) {
+      animation-delay: 250ms;
     }
-    .logo.is-drawing :global(g > :nth-child(13)) {
-      animation-delay: 240ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(14)) {
-      animation-delay: 260ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(15)) {
-      animation-delay: 280ms;
-    }
-    .logo.is-drawing :global(g > :nth-child(16)) {
+    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(7)) {
       animation-delay: 300ms;
     }
-    .logo.is-drawing :global(g > :nth-child(17)) {
-      animation-delay: 320ms;
-    }
 
-    /* Hover and keyboard focus: a quick re-trace in the orange accent, then it fades back. */
-    .logo:is(:hover, :focus-visible) :global(path),
-    .logo:is(:hover, :focus-visible) :global(rect) {
-      stroke: var(--brand-orange);
-      animation: sig-trace 0.8s var(--ease) both;
+    /* Hover and keyboard focus: a small ripple runs across the icon's blocks. */
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > *) {
+      animation: sig-ripple 420ms ease-in-out;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(2)) {
+      animation-delay: 35ms;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(3)) {
+      animation-delay: 70ms;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(4)) {
+      animation-delay: 105ms;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(5)) {
+      animation-delay: 140ms;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(6)) {
+      animation-delay: 175ms;
+    }
+    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(7)) {
+      animation-delay: 210ms;
     }
   }
 
-  @keyframes sig-draw {
-    0% {
-      stroke-dashoffset: 1;
-      stroke-opacity: 1;
-      fill-opacity: 0;
-    }
-    65% {
-      stroke-dashoffset: 0;
-      stroke-opacity: 1;
-      fill-opacity: 0;
-    }
-    100% {
-      stroke-dashoffset: 0;
-      stroke-opacity: 0;
-      fill-opacity: 1;
-    }
-  }
-  @keyframes sig-trace {
+  @keyframes sig-settle {
     from {
-      stroke-dashoffset: 1;
-      stroke-opacity: 0.6;
+      opacity: 0;
+      transform: translateY(-18%);
     }
     to {
-      stroke-dashoffset: 0;
-      stroke-opacity: 0;
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes sig-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes sig-ripple {
+    0%,
+    100% {
+      transform: none;
+    }
+    45% {
+      transform: translateY(-7%);
     }
   }
 

@@ -107,6 +107,14 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
         } catch {
           // Storage blocked: fall back to the system theme.
         }
+        // Logo intro (904) on the first page of a session, decided before paint so it can't flash.
+        try {
+          if (!sessionStorage.getItem('sm-signature') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            d.classList.add('sig-intro');
+          }
+        } catch {
+          // Storage blocked: skip the intro.
+        }
       })();
     </script>
   </head>
