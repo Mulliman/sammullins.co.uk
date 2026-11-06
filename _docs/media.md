@@ -20,4 +20,4 @@ node scripts/media/check-map.mjs                                            # ev
 
 - Pages use `<Pic>`, which generates responsive AVIF + WebP (no JPEG) at build time.
 - Legacy URLs: at build, `integrations/site-files.mjs` copies each master to a **stable** path `/media/<id>/<name>.avif` and adds a 301 from the old original and every crop URL (`--300x0` etc.) to it. External hotlinks (GitHub READMEs, our.umbraco.com, NuGet) keep working. `/media/*` sends `Cross-Origin-Resource-Policy: cross-origin`.
-- **Exception:** `/media/nabbcnxd/umbracofolio_0-1-0.zip` (16 MB, the UmbracoFolio package download) is kept byte-for-byte in `public/media/`. *Decision for Sam: keep it, or point the UmbracoFolio page at a GitHub release / our.umbraco.com and redirect.*
+- **Exception:** `/media/nabbcnxd/umbracofolio_0-1-0.zip` (the 16 MB UmbracoFolio package) was retired on 6 Nov 2026 because UmbracoFolio is legacy. Its URL 301s to `/software/umbracofolio/` via `src/data/redirects.json`.

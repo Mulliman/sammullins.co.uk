@@ -81,7 +81,7 @@ Tickets: 42 in `review`, 6 in `in-progress`, 9 `todo` (mostly yours: accounts, D
 7. **Footer copy** ("What do I do?") is still the old Umbraco/Sitecore text; the content series will replace it. The "Free stuff!" card now points to the UmbracoFolio page and GitHub.
 8. **Home page:** I changed its title to "Sam Mullins" and the hero alt text to "Photo of Sam Mullins". The photography teaser is still on the home page (small); remove it if you want photography fully hidden.
 9. **Client logo names** were guessed from filenames: AHL, RCS, RNLI, WYSO, Mace, **Channel 4** (from `c4`), Clarion, CG, haart, FAB, HS, IV. Fix any that are wrong in `src/content/pages/home.md`.
-10. **The UmbracoFolio zip** (16 MB) is kept byte-for-byte at `/media/nabbcnxd/umbracofolio_0-1-0.zip`. Consider pointing to a GitHub release instead.
+10. **The UmbracoFolio zip:** ~~kept byte-for-byte~~ **Resolved 6 Nov:** Sam confirmed UmbracoFolio is legacy. The zip is deleted, its URL 301s to the archived `/software/umbracofolio/` page, the download card is gone, the footer "Free stuff!" card now points to GitHub and the archive, and the CV's "For Developers" card points to xStatic.
 11. **Photo alt text** comes from the old filenames ("Gecko Profile"). That's acceptable, but real descriptions would be better (ticket 505).
 12. **GoatCounter:** CSP already allows `https://sammullins.goatcounter.com` (I guessed your site code). Analytics stay off until you set `analytics.goatcounter` and vendor `public/js/count.js`.
 13. **YouTube:** the voice agent couldn't reach the @sam_mullins channel (Google consent wall). The voice guide is from your written content only.

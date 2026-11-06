@@ -3,5 +3,10 @@
     "to": "/articles/xstatic-adds-git-and-ftp-support/",
     "status": 301,
     "reason": "Duplicate article merged; kept the internally linked one (ticket 503)"
+  },
+  "/media/nabbcnxd/umbracofolio_0-1-0.zip": {
+    "to": "/software/umbracofolio/",
+    "status": 301,
+    "reason": "UmbracoFolio is legacy; the 16 MB package download was retired, so the old link lands on its archived page"
   }
 }

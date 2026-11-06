@@ -82,7 +82,7 @@ blocks:
     columns: 3
     items:
       - title: "For Developers"
-        href: "/software/umbracofolio/"
+        href: "/software/xstatic-for-umbraco/"
       - title: "For Photographers"
         href: "/software/postcapture/"
       - title: "For Everyone"
