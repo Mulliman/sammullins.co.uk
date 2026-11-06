@@ -102,6 +102,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1003](1003-skills-media-redirect.md) | Skills: add-images, redirect | p0 | S | agent | 004, 401, 601 |
 | [1101](1101-docs.md) | README, ARCHITECTURE, SECURITY, CONTRIBUTING, licences | p0 | M | agent | 001 |
 | [1004](1004-skill-pm-pass.md) | Skill: pm-pass (what needs Sam, as a desk page) | p1 | M | agent | 004 |
+| [1005](1005-desk-page-gaps.md) | Blocks the PM desk page needed and the site lacks | p2 | M | agent | 1004 |
 | [1201](1201-launch-content-gate.md) | Launch content gate (new content series) | p0 | – | sam | 1002 |
 | [1202](1202-bluesky-domain-handle.md) | Bluesky domain handle | p2 | S | pair | 701 |
 | [1203](1203-prelaunch-review.md) | Pre-launch review on preview | p0 | S | sam | all p0 |

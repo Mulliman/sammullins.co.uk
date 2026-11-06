@@ -163,7 +163,7 @@ try {
     return { ...p, ticket: m && byId.has(m[1]) ? m[1] : null };
   });
 } catch {
-  prs = null;
+  // gh unavailable, offline or signed out: PR facts stay unknown (null), never "none".
 }
 
 // --- Derive --------------------------------------------------------------------------------------

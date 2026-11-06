@@ -47,7 +47,7 @@ You do not do the work in the tickets. If an item is agent work, say which ticke
 
 The format Sam confirmed on Surrounded by Stories (2026-08-13: "this HTML page worked exactly as I wanted"). Treat it as settled.
 
-1. **One collapsed `<details>` per item.** Sam does one thing at a time.
+1. **One item per thing to do, collapsed if the site has a block for it.** Sam does one thing at a time. (It doesn't yet: see ticket 1005 and "Building it" below.)
 2. **Every item assumes total memory loss.** Say what the thing _is_ (the ticket, what it touches, why it exists) before saying what to do.
 3. **Steps are numbered, in execution order, with real commands.** Not "review the PR" but `gh pr create --base main --head 207-colour-tokens --fill` or the github.com URL. **Every command names its checkout**: the main checkout is `C:\Development\Websites\sammullins.co.uk\sammullins.co.uk` and there are agent worktrees, so write `git -C <path>` or the full path, never a bare `cd`.
 4. **Group items into phases and say why the phases come in that order**, so Sam knows he can stop after phase one. The usual order: _clear the review queue_ (work already done, waiting on him) → _unblock the critical path_ (accounts, DNS, the launch content gate) → _decisions only you can make_ → _housekeeping_ (branch tidy-ups, as a proposal).
@@ -59,12 +59,25 @@ The format Sam confirmed on Surrounded by Stories (2026-08-13: "this HTML page w
 
 Aim for 3 to 8 items. Every item is something only Sam can do; if delegable agent work keeps reaching the page, that is a ranking mistake, not an item.
 
-### Building it
+The SbS version of this contract (`sbs-tasks/PM.md`, job 8) is where it came from; read it for the reasoning behind each rule.
 
-- Load the `artifact-design` skill first, as the Artifact tool requires. Write the HTML in the scratchpad directory, publish with the `Artifact` tool (icon: `checklist`), and republish the same file path to update it.
-- Use the site's own look, so the page feels like part of the project: the colour values from `src/styles/themes/default.css` (light and dark), the orange accent `--brand-orange` for item stripes only, and `font-family: 'Mona Sans', system-ui, -apple-system, 'Segoe UI', sans-serif` (the font is not bundled, so the fallback will usually show; that is fine). Encode an item's kind as a coloured left stripe using the callout tones (`--color-note`, `--color-tip`, `--color-warning`) so the page can be scanned before it is read.
-- No eyebrows (labels above titles): Sam has rejected them. Tags go after the title or in a row under it.
-- Before publishing, check that every `<details>` closes. The page is built by repeated edits, and an unclosed element swallows the rest of the page silently.
+### Building it: dogfood the site, never style it
+
+**The desk page is made only of the site's own blocks and rendered by the site's own build. You write no CSS, no HTML and no `style` attributes for it, ever.** This is how Sam sees where the site has gaps: anything the blocks can't express shows up on the page as a gap rather than being hidden by a one-off style. Hand-writing CSS that copies the token values is a lookalike, not a use of the site, and it drifts the moment a token changes. That mistake was made on the first pass (6 November 2026) and corrected the same night.
+
+1. Write the desk as `.desk/desk.json` (git-ignored: it describes Sam's own to-dos, and the repo is public): `{ id, title, description, blocks }`. `blocks` are ordinary site blocks, validated by the real schema in `src/content.config.ts`, so an invented block or field fails the build. Read `.agents/skills/_shared/block-catalogue.md` and the style guide's components page for what exists. Generate the JSON with a small script in the scratchpad if writing Markdown inside JSON by hand gets awkward.
+2. Use the **sections > components** technique, as the site does: every part of the page is a `section` band holding components in order, and surfaces alternate (`default`, `muted`) so the parts separate visually without any styling of your own. The shape that works:
+   - a `hero` (`variant: plain`, left-aligned): the page name and the one-line state of things;
+   - a `section` with the intro `prose` and one `callout` (`tone: warning`) per correction;
+   - one `section` per phase: an `intro` (the phase heading and why it comes in that order), then for each item a `prose` (an `###` heading with the item number, a bold meta line of kind, tickets and where, then what the thing is), a `callout` (`tone: tip`, title "Recommendation"), and a `prose` with the numbered steps and their commands as fenced code;
+   - a `section` (`muted`) listing the gaps this page ran into;
+   - a `section` (`surface: inverse`) for what changed on disk.
+3. Build it: `pnpm pm:desk` (`node scripts/pm/desk.mjs [desk.json] [out.html]`). It runs the real `astro build` with the `pm-desk` route switched on, then folds the result into one file (compiled CSS inlined, fonts as data URIs, site links pointed at the live site). It writes `.desk/desk.html` for publishing and `.desk/desk.preview.html` for a local look.
+4. Load the `artifact-design` skill, as the Artifact tool requires, but take only its page contract from it: this page's design is the site's. Publish `.desk/desk.html` with the `Artifact` tool (icon: `checklist`). Republish the same file path to update it in place.
+
+**When a block can't do what the contract above asks** (collapsing an item, a tag, a done state), do the nearest thing the blocks allow, and **add the gap to ticket 1005** (or a new ticket once 1005 is closed). Then list it in the page's gaps section. Never paper over a gap with CSS. Until 1005 lands, items are not collapsible, tags are a bold meta line, and a done item gets a struck `###` heading plus a `tip` callout titled "Done" with what happened.
+
+No eyebrows (labels above titles): Sam has rejected them.
 
 ## How to talk to Sam
 
@@ -80,5 +93,6 @@ Aim for 3 to 8 items. Every item is something only Sam can do; if delegable agen
 - Every finding on the page was confirmed by hand, not copied from the script.
 - No ticket moved to `done` without a Verification note.
 - Anything destructive is a proposal, not an action.
-- The desk page is published, every item has a recommendation, and the footer matches what is on disk.
+- The desk page is published, built by `pnpm pm:desk` from site blocks only, every item has a recommendation, and the footer matches what is on disk.
+- Every gap the page ran into is in ticket 1005 (or its successor) and in the page's gaps section.
 - Ideas raised along the way that are out of scope are new tickets (or one line each in `BACKLOG.md`), not silent scope creep.
