@@ -30,6 +30,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
         {entries.map((e) => (
           <li class="listing__cell">
             <Card
+              headingLevel={block.heading || nested ? 3 : 2}
               title={e.data.title}
               text={e.data.description}
               image={e.data.cover}

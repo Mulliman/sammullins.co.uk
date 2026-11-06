@@ -44,6 +44,7 @@ const items: CardData[] = [
       {items.map((item) => (
         <li class="cards__item">
           <Card
+            headingLevel={block.heading || nested ? 3 : 2}
             title={item.title}
             text={item.text}
             image={item.image}

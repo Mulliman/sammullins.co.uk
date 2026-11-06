@@ -18,7 +18,7 @@ blocks:
     surface: "default"
 ---
 
-### Configuring a static site step by step
+## Configuring a static site step by step
 
 1.  First install Umbraco from NuGet and ensure that it is all set up. xStatic can only be installed once Umbraco is running correctly.
 2.  Install the xStatic package to your Umbraco solution by installing the NuGet package "xStatic".

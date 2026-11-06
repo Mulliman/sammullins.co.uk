@@ -110,4 +110,4 @@ blocks:
           decorative: true
 ---
 
-#### In July 2019 I travelled to Andalucia, expecting to be surrounded by Union Flag shorts, Estrella and Stag Dos. Staying 30mins inland I instead found a stunning landscape where mountain lakes were a blissful alternative to packed beaches.
+## In July 2019 I travelled to Andalucia, expecting to be surrounded by Union Flag shorts, Estrella and Stag Dos. Staying 30mins inland I instead found a stunning landscape where mountain lakes were a blissful alternative to packed beaches.

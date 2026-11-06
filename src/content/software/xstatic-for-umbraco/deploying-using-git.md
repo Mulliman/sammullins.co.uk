@@ -18,7 +18,7 @@ blocks:
     surface: "default"
 ---
 
-### Current limitations
+## Current limitations
 
 -   xStatic was built on the assumption that the static site would be hosted at the root of the domain, whereas by default GitHub Pages sites are not. If not using a custom domain/subdomain you may need to write your own transformer to prepend local URLs with your repo name. You could also look at [running Umbraco in a local virtual directory of the same name.](https://guozspace.wordpress.com/2016/02/26/move-umbraco-7-x-from-root-website-to-virtual-directory/)
 -   If you make changes to the remote Git repository after configuring and running an xStatic Git deploy these changes will not be auto pulled and merged. In order to push future changes you'll need to manually perform this process in the repo created in the App\_Data folder.
@@ -27,7 +27,7 @@ blocks:
 -   You need to be running in 64 bit mode for the Git functionality to work. If you are using IIS Express, navigate to "Visual Studio – Tools – Options – Projects and Solutions – Web Projects" and   
     Select "Use the 64 bit version of IIS Express for web sites and projects"
 
-### Configuring a Git deployment step by step
+## Configuring a Git deployment step by step
 
 1.  Create a repository on your remote. The example here is using GitHub.
 2.  If you are using Github pages you'll need to add a single file to the master/main branch in order to set up GitHub Pages in the settings section of your repository.
