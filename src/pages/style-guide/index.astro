@@ -34,7 +34,9 @@ const guideSections = styleGuidePages.filter((p) => p.href !== '/style-guide/');
     <ul>
       {guideSections.map((p) => (
         <li>
-          {p.ready ? <a href={p.href}>{p.title}</a> : <span>{p.title}</span>} {p.summary}
+          <strong>{p.ready ? <a href={p.href}>{p.title}</a> : p.title}</strong>
+          {p.ready ? ': ' : ' (coming soon): '}
+          {p.summary}
         </li>
       ))}
     </ul>
