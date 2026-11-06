@@ -25,7 +25,7 @@ export const styleGuidePages: StyleGuidePage[] = [
     title: 'Foundations',
     href: '/style-guide/foundations/',
     summary: 'Colour, type, space, radius, shadow and motion tokens.',
-    ready: false,
+    ready: true,
   },
   {
     title: 'Themes',
