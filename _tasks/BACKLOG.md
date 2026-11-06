@@ -15,13 +15,13 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 ## 1. Now (agents can do these without waiting)
 
-| # | Ticket | Who | Why now |
+| # | Ticket | Who | Status (6 Nov, end of day) |
 |---|---|---|---|
-| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | Small, and closes three tickets. |
-| 2 | [508](508-copy-refresh.md) Copy refresh: remove the false "built with xStatic" line; draft the bio, footer and CV summary with [placeholders] | pair | It's the only thing on the site that is wrong rather than dated. The draft needs Sam's facts. |
-| 3 | [805](805-ci-html-headers.md) Finish HTML validation and the hygiene tests | agent | A launch gate, with no decisions needed. |
-| 4 | [804](804-ci-lighthouse.md) Lighthouse budgets in CI | agent | Locks in the performance before the redesign adds weight. |
-| 5 | [313](313-article-template.md) Article template | agent | Builds on the new type. Needs no palette choice, so it can go ahead of 205. |
+| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | Not started. |
+| 2 | [508](508-copy-refresh.md) Copy refresh: remove the false "built with xStatic" line; draft the bio, footer and CV summary with [placeholders] | pair | **Drafted.** Sam reviews the wording and fills `[the tools I use]`. |
+| 3 | [805](805-ci-html-headers.md) Finish HTML validation and the hygiene tests | agent | **In review.** html-validate, rule self-tests and an EXIF check are in; the preview header check waits for 701. |
+| 4 | [804](804-ci-lighthouse.md) Lighthouse budgets in CI | agent | **In review.** The CI job and budgets are in; the first CI run confirms the Performance score. |
+| 5 | [313](313-article-template.md) Article template | agent | **In review.** Header, contents list and series parts are in; the code-block headers are left. |
 
 ## 2. Design (each starts with one decision from Sam)
 
