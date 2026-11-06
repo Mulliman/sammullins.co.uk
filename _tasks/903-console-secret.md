@@ -2,7 +2,7 @@
 id: "903"
 title: Console secret
 epic: Delight
-status: review
+status: done
 priority: p1
 size: S
 owner: pair
@@ -23,10 +23,10 @@ A fun surprise for developers who open DevTools (decisions: *Delight v1*).
 
 ## Acceptance criteria
 
-- [ ] The greeting appears once per page load and doesn't spam.
-- [ ] Unlocking works and persists for the session.
-- [ ] Zero console errors.
+- [x] The greeting appears once per page load and doesn't spam.
+- [x] Unlocking works and persists for the session.
+- [x] Zero console errors.
 
 ## Verification (6 November 2026)
 
-Left: a runtime check in the browser (agent).
+`tests/a11y/interactions.test.mjs`: one greeting per page load, no console errors, and `unlock('pelican')` turns terminal mode on and keeps it across pages for the session.
