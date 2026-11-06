@@ -2,7 +2,7 @@
 id: "1302"
 title: "Style guide: foundations generated from the tokens"
 epic: Style guide
-status: todo
+status: review
 priority: p1
 size: M
 owner: agent
@@ -22,7 +22,14 @@ The foundations page has to stay true without anyone maintaining it. Since 207, 
 
 ## Acceptance criteria
 
-- [ ] Adding a new `--color-*` token to `default.css` makes it appear on the page with no other change (test).
-- [ ] No value on the page is typed by hand: they all come from the parsed CSS.
-- [ ] Each text-colour pairing shows its contrast ratio, and anything under 4.5:1 is flagged on the page.
-- [ ] `_docs/design-tokens.md` links to the page; the generated Markdown table can stay for agents.
+- [x] Adding a new `--color-*` token to `default.css` makes it appear on the page with no other change (test).
+- [x] No value on the page is typed by hand: they all come from the parsed CSS.
+- [x] Each text-colour pairing shows its contrast ratio, and anything under 4.5:1 is flagged on the page.
+- [x] `_docs/design-tokens.md` links to the page; the generated Markdown table can stay for agents.
+
+## Progress
+
+- `src/lib/tokens.ts` parses `default.css` (colour groups, light and dark values, notes, shadows) and `global.css` (type, weight, leading, tracking, space, radius, measure, container, duration, ease, font) at build time. It also has the WCAG contrast helper.
+- `src/pages/style-guide/foundations/index.astro` renders every token. Ready in `src/lib/style-guide.ts`.
+- Swatches and samples use classes from `src/pages/style-guide/foundations/tokens.css.ts`, which emits one `var()` rule per token. Inline styles are banned by the CSP and `set:html` is limited by the hygiene test, so a linked stylesheet is the compliant route.
+- `tests/style-guide-foundations.test.mjs` checks that every `--color-*` token in `default.css` appears on the built page.

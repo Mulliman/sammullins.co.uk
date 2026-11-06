@@ -1,6 +1,6 @@
 # Design tokens
 
-Generated from `src/styles/themes/default.css`, the only place colours are defined (ticket 207). Typography, spacing and motion tokens are in `src/styles/global.css`. Page themes such as `christmas.css` override some of these; see `src/styles/themes/README.md`.
+Generated from `src/styles/themes/default.css`, the only place colours are defined (ticket 207). Typography, spacing and motion tokens are in `src/styles/global.css`. Page themes such as `christmas.css` override some of these; see `src/styles/themes/README.md`. The style guide shows every token, read from these files at build time: [/style-guide/foundations/](/style-guide/foundations/).
 
 ## Brand
 
