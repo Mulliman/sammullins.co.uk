@@ -12,6 +12,7 @@ A note is an article with `kind: note`. It lives in the same collection and URL 
 - Schema and every field: `_docs/content-model.md`.
 - Block fields and examples, generated from the schema: `../_shared/block-catalogue.md`.
 - Voice: `_docs/voice.md` (if missing, say so in the PR body and use the Voice section of `AGENTS.md`).
+- Example structure: `/style-guide/page-structures/#note` (block order and front matter), with the example file `src/content/articles/page-structure-example-note.md`.
 
 ## Preconditions
 
