@@ -11,7 +11,7 @@ What's left between today and launch, in the order to do it. It replaces the "Su
   - **Agent work:** community profile files (1101) and skill dry runs (1002, 1003).
   - **Needs a deploy preview (701):** 603, 702, 803 and 904.
   - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
-- Auto-merge is now on in the repo settings. Ticket 001 says it should be off, so 001 needs updating (or the setting reverting).
+- Repo governance (001) is closed. Sam dropped the auto-merge, squash-only, signed-commit and gmail-in-history criteria; the PR requirement and secret scanning are on.
 
 ## 1. Now (agents can do these without waiting)
 
@@ -55,7 +55,7 @@ A living style guide at `/style-guide/`, never linked from the site, modelled on
 
 | # | Ticket | Who | What |
 |---|---|---|---|
-| 14 | [001](001-repo-governance.md) Repo governance | Sam | Signed commits, secret scanning, the gmail check, and the auto-merge decision. |
+| 14 | [001](001-repo-governance.md) Repo governance | Sam | **Done** (6 Nov). Sam dropped signed commits, squash-only, auto-merge off and the gmail history check. |
 | 15 | [701](701-netlify-config.md) Netlify site | pair | Create the site so PRs get deploy previews. This unblocks the header checks in 702 and 805. |
 | 16 | [703](703-goatcounter.md) GoatCounter | pair | Create the account and code. |
 | 17 | [704](704-search-console.md) Search Console | Sam | Verify by DNS; save a baseline export. |
