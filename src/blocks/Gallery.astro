@@ -50,7 +50,13 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
         </button>
       </div>
       <figure class="lightbox__figure">
-        <img class="lightbox__img" alt="" decoding="async" />
+        <!-- A 1px transparent placeholder: the script sets the real src when the lightbox opens. -->
+        <img
+          class="lightbox__img"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          alt=""
+          decoding="async"
+        />
         <figcaption class="lightbox__caption" hidden></figcaption>
       </figure>
       <div class="lightbox__nav">

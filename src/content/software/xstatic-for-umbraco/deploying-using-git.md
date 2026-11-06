@@ -33,7 +33,7 @@ blocks:
 2.  If you are using Github pages you'll need to add a single file to the master/main branch in order to set up GitHub Pages in the settings section of your repository.
 3.  Configure your custom hostname immediately after creating the repo. xStatic does not pull and merge any changes as part of the deployment process, so any changes made once xStatic has started deployments will need to be pulled and merged manually.
 4.  Create a personal access token in GitHub to use for authentication.
-5.  If you want any additional files, for example a gitignore file or a readme document in the repo, you will need to add this to the web.config of your project so that the clean up task doesn't delete them. Comma separate folder/file names in the app setting xStatic.DoNotDeletePaths. E.g. <add key="xStatic.DoNotDeletePaths" value=".git,CNAME,Readme.md" />
+5.  If you want any additional files, for example a gitignore file or a readme document in the repo, you will need to add this to the web.config of your project so that the clean up task doesn't delete them. Comma separate folder/file names in the app setting xStatic.DoNotDeletePaths. E.g. `<add key="xStatic.DoNotDeletePaths" value=".git,CNAME,Readme.md" />`
 6.  Within the xStatic section of Umbraco, open your site configuration in edit mode by selecting from the tree or using the edit button on the dashboard.
 7.  In the Deployment Target field, select Git and fill in the fields with the details of your remote repo. Press Save.
 8.  Return to the xStatic dashboard, and press the deploy button. If the deploy button isn't showing, make sure you have built the site before.

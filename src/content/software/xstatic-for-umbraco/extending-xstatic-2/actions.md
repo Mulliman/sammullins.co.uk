@@ -37,7 +37,7 @@ These are then passed in as a dictionary to your RunAction method.
 All created post generations are automatically found by xStatic so you don't need to do any further configuration.  
 However, if you have a custom constructor for your action then you need to register the class on startup.
 
-E.g. services.AddTransient<Netlify404Action>();
+E.g. `services.AddTransient<Netlify404Action>();`
 
 ## Configure within xStatic dashboard
 

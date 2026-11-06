@@ -1,0 +1,9 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "valid-id": ["error", { "relaxed": true }],
+    "long-title": "off",
+    "no-trailing-whitespace": "off",
+    "prefer-native-element": ["error", { "exclude": ["region"] }]
+  }
+}

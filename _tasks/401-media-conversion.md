@@ -31,4 +31,4 @@ The site references 132 MB of legacy media (368 MB counting unused crops). It sh
 
 ## Verification (6 November 2026)
 
-203 masters, 35 MB, 0 with EXIF (checked with sharp; not yet in CI). Left: Sam's spot check of 5 images.
+203 masters, 35 MB, 0 with EXIF; the hygiene test now enforces this in CI (805). Left: Sam's spot check of 5 images.

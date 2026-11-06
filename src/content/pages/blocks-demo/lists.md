@@ -92,10 +92,6 @@ blocks:
       title: Next part
       href: /
 
-  - type: nextPrev
-    next:
-      title: Only a next link
-      href: /
 
   - type: timeline
     heading: Timeline
