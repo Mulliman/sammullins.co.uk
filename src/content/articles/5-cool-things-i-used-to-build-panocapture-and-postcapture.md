@@ -2,6 +2,8 @@
 title: "5 cool things I used to build PanoCapture and PostCapture"
 description: "Finishing the series looking at some of the tech behind my open source projects, PanoCapture and PostCapture are photo editing plugins for CaptureOne. These are some tools I found when moving away…"
 date: "2021-04-07"
+series: "5-cool-things"
+order: 3
 cover:
   src: "../../assets/media/uiwmnegi/5-cool-things.avif"
   alt: "5 cool things I used to build PanoCapture and PostCapture"

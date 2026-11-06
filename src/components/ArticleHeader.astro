@@ -1,0 +1,83 @@
+---
+/**
+ * Article header (ticket 313): title, description, then a meta row below the title
+ * (date, reading time and series part). Nothing sits above the title.
+ */
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  minutes: number;
+  part?: { part: number; total: number } | undefined;
+  /** Archived articles get the archive note here, aligned with the article. */
+  archived?: boolean;
+}
+const { title, description, date, minutes, part, archived = false } = Astro.props;
+const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<header class="article-head">
+  <div class="container">
+    <h1 class="article-head__title">{title}</h1>
+    <p class="article-head__lead">{description}</p>
+    <ul class="article-head__meta">
+      <li>
+        <time datetime={date.toISOString().slice(0, 10)}>{fmt}</time>
+      </li>
+      <li>{minutes} min read</li>
+      {part && (
+        <li>
+          Part {part.part} of {part.total}
+        </li>
+      )}
+    </ul>
+    {archived && (
+      <p class="article-head__archived" role="note">
+        <strong>From the archive.</strong> This is from an earlier chapter of my work and may be out of date. See the{' '}
+        <a href="/archive/">archive</a> for more like it, or the <a href="/">home page</a> for what I'm doing now.
+      </p>
+    )}
+  </div>
+</header>
+
+<style>
+  .article-head {
+    padding-block: clamp(2.5rem, 2rem + 4vw, 6rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .article-head__title {
+    max-width: 22ch;
+    font-size: var(--step-6);
+  }
+  .article-head__lead {
+    max-width: 40em;
+    margin-top: var(--space-s);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+  .article-head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+    margin-top: var(--space-m);
+    padding: 0;
+    list-style: none;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .article-head__archived {
+    max-width: var(--measure);
+    margin-top: var(--space-m);
+    padding: var(--space-xs) var(--space-s);
+    border-left: 4px solid var(--brand-orange);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--color-bg-muted);
+    font-size: var(--step--1);
+  }
+  .article-head__archived strong {
+    color: var(--color-heading);
+  }
+</style>

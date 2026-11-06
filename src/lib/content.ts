@@ -89,3 +89,21 @@ export async function getSite() {
   if (!s) throw new Error('src/data/site.yaml is missing the `site` entry');
   return s.data;
 }
+
+/** Position of an article in its numbered series ("Part 2 of 3"), or undefined if it has none. */
+export async function articleSeriesPart(entry: CollectionEntry<'articles'>) {
+  const { series, order } = entry.data;
+  if (!series || !order) return undefined;
+  const total = (await getCollection('articles')).filter((e) => e.data.series === series).length;
+  return { part: order, total };
+}
+
+/** Whole minutes to read Markdown at about 220 words a minute; code blocks and link URLs don't count. */
+export function readingMinutes(markdown: string): number {
+  const prose = markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/\]\([^)]*\)/g, ']')
+    .replace(/<[^>]+>/g, ' ');
+  const words = prose.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
+  return Math.max(1, Math.round(words / 220));
+}

@@ -270,6 +270,9 @@ const articles = defineCollection({
     base(image).extend({
       date: z.coerce.date(),
       kind: z.enum(['article', 'note']).default('article'),
+      /** Numbered series this article belongs to, e.g. `5-cool-things`; `order` is its part number. */
+      series: z.string().optional(),
+      order: z.number().int().positive().optional(),
     }),
 });
 
