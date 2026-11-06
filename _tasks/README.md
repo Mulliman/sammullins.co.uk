@@ -49,8 +49,9 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [202](202-typography.md) | Self-hosted typography & thin heading rules | p0 | S | agent | 201 |
 | [203](203-layout-shell.md) | Layout shell: header, nav, footer, landmarks | p0 | M | agent | 103, 202 |
 | [204](204-typography-refresh.md) | Typography refresh (Mona Sans, fluid scale, no eyebrows) | p0 | M | agent | 202 |
-| [205](205-colour-surfaces.md) | Colour, surface and spacing refresh | p0 | M | pair | 204 |
+| [205](205-colour-surfaces.md) | Spacing scale and section rhythm | p0 | M | agent | 207 |
 | [206](206-header-footer.md) | Header, nav and footer refresh | p1 | M | agent | 205 |
+| [207](207-colour-tokens.md) | Centralise colours in a theme, ban literals, add page themes | p0 | M | agent | 204 |
 | [301](301-block-hero.md) | Block: hero | p0 | M | agent | 102, 402 |
 | [302](302-blocks-text.md) | Blocks: intro, prose, callout | p0 | S | agent | 102 |
 | [303](303-block-image.md) | Block: image | p0 | S | agent | 402 |

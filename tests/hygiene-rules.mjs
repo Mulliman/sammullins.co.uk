@@ -36,3 +36,32 @@ export const hasCspMeta = (html) => /http-equiv="content-security-policy"/i.test
 
 /** sharp metadata → does the image carry EXIF (which may include GPS)? */
 export const hasExif = (metadata) => Boolean(metadata.exif && metadata.exif.length > 0);
+
+/* ------------------------------------------------------------------ */
+/* Colours (ticket 207): literals only in src/styles/themes/           */
+/* ------------------------------------------------------------------ */
+
+/** Files allowed to contain colour literals: the theme folder. */
+export const COLOUR_ALLOWED = /^src\/styles\/themes\//;
+
+const NAMED =
+  'white|black|red|green|blue|yellow|orange|purple|pink|gr[ae]y|silver|navy|maroon|teal|olive|lime|aqua|fuchsia|gold|brown|beige|ivory|crimson|coral|salmon|tomato|indigo|violet|cyan|magenta|turquoise|khaki|lavender';
+const COLOUR_PATTERNS = [
+  // #rgb, #rgba, #rrggbb, #rrggbbaa (not URL fragments such as href="#top" or url(#gradient))
+  /(?<![\w&/#-]|href="|url\()#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3,4})(?![\w-])/i,
+  // colour functions
+  /\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/i,
+  // named colours in a CSS declaration or an SVG/HTML attribute
+  new RegExp(
+    String.raw`(?:color|background(?:-color)?|border(?:-[a-z]+)*|outline(?:-color)?|fill|stroke|box-shadow|text-shadow|accent-color|caret-color)\s*[:=]\s*["']?[^;{}"'\n]*\b(?:${NAMED})\b`,
+    'i',
+  ),
+];
+
+/** Lines of `source` that contain a colour literal. */
+export const colourLiterals = (source) =>
+  source
+    .split('\n')
+    .map((line, i) => ({ line: i + 1, text: line.trim() }))
+    // Custom property names ("--brand-orange") aren't colours; fallbacks such as var(--x, #fff) still are.
+    .filter(({ text }) => COLOUR_PATTERNS.some((re) => re.test(text.replace(/--[\w-]+/g, ''))));

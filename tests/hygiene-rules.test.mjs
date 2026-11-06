@@ -97,3 +97,33 @@ test('html-validate rule rejects broken markup', () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('colour rule', async () => {
+  const { colourLiterals, COLOUR_ALLOWED } = await import('./hygiene-rules.mjs');
+  for (const bad of [
+    'color: #fff;',
+    'background: #1c1c1c;',
+    'border: 1px solid #333333aa;',
+    'background: rgb(0 0 0 / 0.5);',
+    'color: hsl(10 50% 50%);',
+    'color: oklch(70% 0.1 200);',
+    'color: white;',
+    'border-left: 2px solid black;',
+    '<rect fill="white" />',
+    "console.log('%chi', 'color:#da7d03')",
+  ])
+    assert.equal(colourLiterals(bad).length, 1, bad);
+  for (const ok of [
+    'color: var(--color-text);',
+    'background: transparent;',
+    'fill: currentColor;',
+    'white-space: nowrap;',
+    '<a href="#add">',
+    'fill="url(#_Linear1)"',
+    '<a href={`#${h.slug}`}>',
+    'border-left: 4px solid var(--brand-orange);',
+  ])
+    assert.deepEqual(colourLiterals(ok), [], ok);
+  assert.ok(COLOUR_ALLOWED.test('src/styles/themes/christmas.css'));
+  assert.ok(!COLOUR_ALLOWED.test('src/blocks/Hero.astro'));
+});

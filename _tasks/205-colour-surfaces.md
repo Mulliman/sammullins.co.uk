@@ -1,44 +1,25 @@
 ---
 id: "205"
-title: Colour, surface and spacing refresh
+title: Spacing scale and section rhythm
 epic: Design system
 status: todo
 priority: p0
 size: M
-owner: pair
-depends_on: ["204"]
+owner: agent
+depends_on: ["207"]
 ---
 
 ## Why
 
-The November 2026 design audit found that the palette and section rhythm are a straight copy of the 2021 UIkit theme: flat grey bands, a #4d4d4d body colour and 4px corners everywhere. With the new type (204) in, the colours and spacing are the next thing that dates the site.
+On 6 November 2026 Sam decided to keep the original colours, so this is no longer a palette change. Centralising the colours and adding page themes moved to 207. What's left is spacing: sections still use UIkit's fixed 40px and 70px padding, and full-width grey bands dominate the home page.
 
 ## Scope
 
-- Propose two or three palettes as tokens (ink, paper, accent, accent-ink, muted, border) for light and dark, keeping the brand orange. Show them on the home page and an article, and let Sam pick.
-- Add a fluid spacing scale to match the type scale (utopia.fyi space pairs), replacing the fixed UIkit 40/70px section padding.
-- Use fewer full-width grey bands: separate sections with spacing and hairlines.
-- Radius and shadow tokens: one small and one large radius, and one soft shadow.
+- A fluid spacing scale to match the type scale (utopia.fyi space pairs), replacing the fixed section padding.
+- Fewer full-width grey bands: separate sections with spacing and hairlines.
+- Radius and shadow tokens: one small radius, one large, and one soft shadow.
 
 ## Acceptance criteria
 
-- [ ] Sam picks a palette, and the choice is recorded in `_docs/decisions.md`.
-- [ ] Every text and background pair passes WCAG 2.2 AA (`pnpm test:a11y` is green in both themes).
-- [ ] No hard-coded colours or px spacing are left in `src/blocks` or `src/components` (grep check).
-
-## Candidate palettes (6 November 2026)
-
-Rendered on the real home and article pages in `design-audit-2026-11/shots/palettes-205.jpg`. Every pair passes WCAG AA; the lowest is the link on the muted surface (4.78 to 5.37:1).
-
-| Token | A. Warm paper | B. Cool slate | C. Stone and ink |
-|---|---|---|---|
-| bg | `#f8f6f1` | `#ffffff` | `#fbfaf9` |
-| bg-muted | `#efebe3` | `#f3f5f8` | `#f1efec` |
-| bg-inverse | `#1a1917` | `#0f1729` | `#0c0a09` |
-| text | `#3b3a36` | `#3d4452` | `#2f2d2a` |
-| text-muted | `#5c5a54` | `#5a6272` | `#57534e` |
-| heading | `#1a1917` | `#0f1729` | `#0c0a09` |
-| border | `#ddd8ce` | `#dde2ea` | `#e2ded8` |
-| link | `#9a5200` | `#9a5200` | `#a3540a` |
-
-Dark-theme values follow once Sam picks one.
+- [ ] No fixed px spacing is left in `src/blocks` or `src/components` (grep check).
+- [ ] `pnpm test:a11y` is green in both themes.

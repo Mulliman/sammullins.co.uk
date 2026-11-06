@@ -8,6 +8,7 @@
 import { defineCollection, type SchemaContext } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { pageThemes } from './styles/themes';
 
 type ImageFn = SchemaContext['image'];
 
@@ -252,6 +253,8 @@ const base = (image: ImageFn) =>
     archived: z.boolean().default(false),
     hidden: z.boolean().default(false),
     noindex: z.boolean().default(false),
+    /** Page theme (ticket 207): colours from src/styles/themes/<theme>.css, e.g. `christmas`. */
+    theme: z.enum(pageThemes).default('default'),
     blocks: z.array(blockSchema(image)).default([]),
   });
 

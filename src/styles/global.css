@@ -79,31 +79,6 @@
   }
 
   :root {
-    color-scheme: light dark;
-
-    /* Brand */
-    --brand-orange: #da7d03; /* original accent, decorative use only */
-
-    /* Light theme (default) */
-    --color-bg: #ffffff;
-    --color-bg-muted: #f2f2f2;
-    --color-bg-inverse: #1c1c1c;
-    --color-surface: #ffffff;
-    --color-surface-inverse: #262626;
-    --color-text: #4d4d4d; /* body copy, 8.4:1 on bg (the original used #666) */
-    --color-text-muted: #595959; /* 7:1 on bg */
-    --color-heading: #333333; /* headings */
-    --color-text-strong: #000000; /* section headings ("sam-heading") */
-    --color-text-inverse: #f5f5f5;
-    --color-text-inverse-muted: #c8c8c8;
-    --color-link: #9a5200; /* 6.0:1 on #fff, 5.5:1 on muted */
-    --color-link-hover: #6e3a00;
-    --color-link-inverse: #f2a43c; /* 8.4:1 on inverse */
-    --color-border: #d6d6d6;
-    --color-focus: #0b57d0;
-    --color-frame: #ffffff; /* the thick white photo frame */
-    --color-code-bg: #f6f6f6;
-
     /* Type. One family does everything; weight and size carry the hierarchy. */
     --font-sans: 'Mona Sans', 'Mona Sans fallback', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     --font-display: var(--font-sans);
@@ -142,58 +117,12 @@
     --container: 1200px;
     --container-narrow: 800px; /* the original's 2/3-width text column */
     --radius: 4px;
-    --shadow: 0 0 20px rgb(0 0 0 / 0.5);
-    --shadow-soft: 0 14px 25px rgb(0 0 0 / 0.16); /* UIkit card hover */
 
     /* Motion */
     --dur-fast: 150ms;
     --dur: 300ms;
     --dur-slow: 1200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
-  :root[data-theme='dark'] {
-    color-scheme: dark;
-  }
-  :root[data-theme='light'] {
-    color-scheme: light;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-      --color-bg: #121212;
-      --color-bg-muted: #1b1b1b;
-      --color-bg-inverse: #000000;
-      --color-surface: #1f1f1f;
-      --color-surface-inverse: #262626;
-      --color-text: #cfcfcf;
-      --color-text-muted: #b5b5b5;
-      --color-heading: #ededed;
-      --color-text-strong: #ffffff;
-      --color-link: #f2a43c;
-      --color-link-hover: #ffc477;
-      --color-border: #333333;
-      --color-focus: #8ab4ff;
-      --color-frame: #f0f0f0;
-      --color-code-bg: #1a1a1a;
-    }
-  }
-  :root[data-theme='dark'] {
-    --color-bg: #121212;
-    --color-bg-muted: #1b1b1b;
-    --color-bg-inverse: #000000;
-    --color-surface: #1f1f1f;
-    --color-surface-inverse: #262626;
-    --color-text: #cfcfcf;
-    --color-text-muted: #b5b5b5;
-    --color-heading: #ededed;
-    --color-text-strong: #ffffff;
-    --color-link: #f2a43c;
-    --color-link-hover: #ffc477;
-    --color-border: #333333;
-    --color-focus: #8ab4ff;
-    --color-frame: #f0f0f0;
-    --color-code-bg: #1a1a1a;
   }
 }
 
@@ -311,7 +240,7 @@
 
   ::selection {
     background: var(--brand-orange);
-    color: #000;
+    color: var(--color-on-brand);
   }
 }
 
@@ -361,18 +290,10 @@
     --color-surface: var(--color-bg);
     color: var(--color-text);
   }
+  /* The token remapping for inverse surfaces lives in themes/default.css. */
   .surface-inverse {
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
-    --color-text: var(--color-text-inverse-muted);
-    --color-text-muted: var(--color-text-inverse-muted);
-    --color-heading: #ffffff;
-    --color-text-strong: #ffffff;
-    --color-link: var(--color-link-inverse);
-    --color-link-hover: #ffc477;
-    --color-border: #3a3a3a;
-    --color-surface: var(--color-surface-inverse);
-    --color-focus: #8ab4ff;
   }
 
   .skip-link {
@@ -426,13 +347,13 @@
     text-decoration: none;
   }
   .surface-inverse .button {
-    background: #ffffff;
-    border-color: #ffffff;
-    color: #222222;
+    background: var(--color-button-inverse-bg);
+    border-color: var(--color-button-inverse-bg);
+    color: var(--color-button-inverse-fg);
   }
   .surface-inverse .button:hover {
-    background: #e6e6e6;
-    color: #222222;
+    background: var(--color-button-inverse-bg-hover);
+    color: var(--color-button-inverse-fg);
   }
   .text-left {
     text-align: left;
@@ -519,33 +440,6 @@
     opacity: 1;
   }
 
-  /* Prism tokens (class-based, CSP-safe). Light/dark via tokens. */
-  :root {
-    --tok-comment: #5c6670;
-    --tok-keyword: #a3215f;
-    --tok-string: #1f6f3a;
-    --tok-number: #8a4b00;
-    --tok-fn: #2b4fb3;
-    --tok-punct: #444;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-      --tok-comment: #9aa4ad;
-      --tok-keyword: #ff8ac0;
-      --tok-string: #8fd6a2;
-      --tok-number: #ffbe6b;
-      --tok-fn: #9db8ff;
-      --tok-punct: #c8c8c8;
-    }
-  }
-  :root[data-theme='dark'] {
-    --tok-comment: #9aa4ad;
-    --tok-keyword: #ff8ac0;
-    --tok-string: #8fd6a2;
-    --tok-number: #ffbe6b;
-    --tok-fn: #9db8ff;
-    --tok-punct: #c8c8c8;
-  }
   /* Code wraps rather than scrolls: no keyboard-trap scroll regions, no 320px overflow (ticket 802). */
   pre[class*='language-'],
   .prose pre {
@@ -610,39 +504,19 @@
   }
 }
 
-/* Logo gradients are drawn dark-on-light; invert them on dark surfaces (footer) and in the dark theme. */
+/* The logo's gradient stops take their colours from the theme (--logo-stop-a/b/c), which flips
+   them for dark mode and inverse surfaces. "SAM" follows --color-text-strong; "MULLINS" follows currentColor. */
 @layer utilities {
-  /* "SAM" in the logo: black on light, white on dark. "MULLINS" follows currentColor. */
   .logo-strong {
     fill: var(--color-text-strong);
   }
-  .surface-inverse stop[stop-color='#000'] {
-    stop-color: #fff;
+  .logo-stop-a {
+    stop-color: var(--logo-stop-a);
   }
-  .surface-inverse stop[stop-color='#3c3c3c'] {
-    stop-color: #cfcfcf;
+  .logo-stop-b {
+    stop-color: var(--logo-stop-b);
   }
-  .surface-inverse stop[stop-color='#808080'] {
-    stop-color: #8c8c8c;
-  }
-  :root[data-theme='dark'] stop[stop-color='#000'] {
-    stop-color: #fff;
-  }
-  :root[data-theme='dark'] stop[stop-color='#3c3c3c'] {
-    stop-color: #cfcfcf;
-  }
-  :root[data-theme='dark'] stop[stop-color='#808080'] {
-    stop-color: #8c8c8c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) stop[stop-color='#000'] {
-      stop-color: #fff;
-    }
-    :root:not([data-theme='light']) stop[stop-color='#3c3c3c'] {
-      stop-color: #cfcfcf;
-    }
-    :root:not([data-theme='light']) stop[stop-color='#808080'] {
-      stop-color: #8c8c8c;
-    }
+  .logo-stop-c {
+    stop-color: var(--logo-stop-c);
   }
 }

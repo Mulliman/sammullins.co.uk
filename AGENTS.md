@@ -14,6 +14,7 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 4. **Authorship is honest.** Every entry has `authorship: sam` (Sam wrote the words) or `sam-ai` (Sam + AI). If you drafted the words, it's `sam-ai`. Sam changes it if he rewrites.
 5. **Accessibility and security are not optional.** Alt text on every meaningful image. No inline `style=""` attributes or inline scripts in components (strict CSP). No third-party scripts, fonts or embeds that load before user action.
 6. **No new dependencies without a reason** stated in the PR. Direct deps are deliberately tiny (supply-chain hardening; see `pnpm-workspace.yaml`).
+7. **No hard-coded colours.** Every colour value lives in `src/styles/themes/`; everything else uses tokens (`var(--color-…)`). A test fails the build on a colour literal anywhere else. For a campaign or season, add a page theme there and set `theme:` in the page's front matter (see `src/styles/themes/README.md`).
 
 ## Commands
 
@@ -52,6 +53,7 @@ authorship: sam-ai # sam | sam-ai
 kind: note # articles only: article | note
 archived: false # true = dated; shows the archive banner, listed on /archive/
 hidden: false # true = never listed anywhere (still reachable by URL)
+theme: default # page theme from src/styles/themes/ (default | christmas)
 cover: { src: ../../assets/media/x/y.avif, alt: 'Describe the image' }
 blocks:
   - type: hero

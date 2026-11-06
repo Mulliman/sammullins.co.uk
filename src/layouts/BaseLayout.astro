@@ -2,7 +2,11 @@
 /**
  * Base layout (tickets 102, 203): head, meta, landmarks, theme bootstrapping.
  */
+import '../styles/themes/default.css';
 import '../styles/global.css';
+import '../styles/themes/christmas.css';
+import { themeColor } from '../styles/themes/meta';
+import type { PageTheme } from '../styles/themes';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ConsoleSecret from '../components/ConsoleSecret.astro';
@@ -22,6 +26,8 @@ interface Props {
   /** Path of the Markdown twin for agent view (ticket 901). */
   markdownHref?: string | undefined;
   jsonLd?: Record<string, unknown> | undefined;
+  /** Page theme from front matter (ticket 207). */
+  theme?: PageTheme;
 }
 
 const {
@@ -35,6 +41,7 @@ const {
   noindex = false,
   markdownHref,
   jsonLd,
+  theme = 'default',
 } = Astro.props;
 
 const site = await getSite();
@@ -52,7 +59,7 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
 ---
 
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-page-theme={theme === 'default' ? undefined : theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,7 +68,7 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#1c1c1c" />
+    <meta name="theme-color" content={themeColor} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="preload" href="/fonts/mona-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />

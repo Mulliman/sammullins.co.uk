@@ -49,6 +49,7 @@ Shared fields come from one base schema. Each collection adds its own.
 | `archived` | boolean | no | `false` | `true` shows the archive banner, lists the page under `/archive/`, and hides it from default queries |
 | `hidden` | boolean | no | `false` | `true` is never listed anywhere. Still reachable by URL |
 | `noindex` | boolean | no | `false` | `true` adds `noindex` to the page |
+| `theme` | `default` or `christmas` | no | `default` | Page theme: colours from `src/styles/themes/<theme>.css`, on top of light and dark mode |
 | `blocks` | list of blocks | no | `[]` | The page body, in order. See "Blocks" |
 
 ### Collection-specific fields

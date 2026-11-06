@@ -27,7 +27,8 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 | # | Ticket | Who | Sam decides |
 |---|---|---|---|
-| 6 | [205](205-colour-surfaces.md) Colour, surfaces and spacing | pair | Which of two or three palettes. |
+| 6 | [207](207-colour-tokens.md) Colours centralised in a theme, literals banned, page themes (christmas) | agent | **In review.** Original colours kept, as decided. |
+| 6a | [205](205-colour-surfaces.md) Spacing scale and section rhythm | agent | Nothing: the colours stay as they are. |
 | 7 | [310](310-hero-portrait.md) Hero: "live portrait" | pair | Approve option A; shoot a new photo or 6 to 8 second clip (shot list in the audit). |
 | 8 | [312](312-home-sections.md) Home: builds grid, writing list and photo strip | agent | Which builds to feature. |
 | 9 | [311](311-logowall-strip.md) Logo wall strip | agent | Nothing (the full client names are already fixed). |

@@ -96,3 +96,18 @@ test('built HTML passes html-validate', () => {
   });
   assert.equal(r.status, 0, `${r.stdout}\n${r.stderr}`);
 });
+
+test('no colour literals outside src/styles/themes (use theme tokens)', async () => {
+  const { COLOUR_ALLOWED, colourLiterals } = await import('./hygiene-rules.mjs');
+  const files = walk(join(ROOT, 'src'), (p) => /\.(astro|css|ts|tsx|js|mjs)$/.test(p)).filter(
+    (f) => !COLOUR_ALLOWED.test(rel(f)),
+  );
+  const offenders = files.flatMap((f) =>
+    colourLiterals(read(f)).map(({ line, text }) => `${rel(f)}:${line}: ${text.slice(0, 100)}`),
+  );
+  assert.deepEqual(
+    offenders,
+    [],
+    'Colours belong in src/styles/themes/ (see its README). Use a token such as var(--color-text).',
+  );
+});

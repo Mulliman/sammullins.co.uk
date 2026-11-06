@@ -1,0 +1,76 @@
+/*
+ * Page theme: christmas (for the advent calendar). A page opts in with `theme: christmas` in its front
+ * matter, which sets data-page-theme="christmas" on <html>. Light and dark both apply as usual.
+ *
+ * Starter colours: evergreen, cranberry and gold, all WCAG AA (body text 11.7:1 light, 13.2:1 dark;
+ * the weakest pair, gold links on evergreen, is 7.5:1). Adjust freely, but keep every token you set
+ * in light also set in BOTH dark blocks, or the light value leaks into dark mode.
+ */
+@layer tokens {
+  :root[data-page-theme='christmas'] {
+    --brand-orange: #b3122e; /* the accent: cranberry */
+    --color-bg: #fffdf8;
+    --color-bg-muted: #f3efe4;
+    --color-bg-inverse: #0f3b2a;
+    --color-surface: #fffdf8;
+    --color-surface-inverse: #164a35;
+    --color-text: #2e3a33;
+    --color-text-muted: #4a5a50;
+    --color-heading: #0f3b2a;
+    --color-text-strong: #0b2c1f;
+    --color-nav: #4a5a50;
+    --color-link: #a4122b;
+    --color-link-hover: #7a0d20;
+    --color-link-inverse: #f2c14e;
+    --color-inverse-link-hover: #f7d77f;
+    --color-inverse-border: #24453a;
+    --color-inverse-rule: #24453a;
+    --color-border: #e0d8c4;
+    --color-code-bg: #f3efe4;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-page-theme='christmas']:not([data-theme='light']) {
+      --brand-orange: #e04a5f;
+      --color-bg: #0b1f17;
+      --color-bg-muted: #10291f;
+      --color-bg-inverse: #06140e;
+      --color-surface: #12301f;
+      --color-surface-inverse: #12301f;
+      --color-text: #d9e4dc;
+      --color-text-muted: #b3c4b8;
+      --color-heading: #f4efe2;
+      --color-text-strong: #ffffff;
+      --color-nav: #b3c4b8;
+      --color-link: #f2c14e;
+      --color-link-hover: #f7d77f;
+      --color-link-inverse: #f2c14e;
+      --color-inverse-link-hover: #f7d77f;
+      --color-inverse-border: #24453a;
+      --color-inverse-rule: #24453a;
+      --color-border: #24453a;
+      --color-code-bg: #10291f;
+    }
+  }
+  :root[data-page-theme='christmas'][data-theme='dark'] {
+    --brand-orange: #e04a5f;
+    --color-bg: #0b1f17;
+    --color-bg-muted: #10291f;
+    --color-bg-inverse: #06140e;
+    --color-surface: #12301f;
+    --color-surface-inverse: #12301f;
+    --color-text: #d9e4dc;
+    --color-text-muted: #b3c4b8;
+    --color-heading: #f4efe2;
+    --color-text-strong: #ffffff;
+    --color-nav: #b3c4b8;
+    --color-link: #f2c14e;
+    --color-link-hover: #f7d77f;
+    --color-link-inverse: #f2c14e;
+    --color-inverse-link-hover: #f7d77f;
+    --color-inverse-border: #24453a;
+    --color-inverse-rule: #24453a;
+    --color-border: #24453a;
+    --color-code-bg: #10291f;
+  }
+}

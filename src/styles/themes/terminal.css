@@ -1,6 +1,6 @@
 /*
  * Hidden "terminal green" theme (ticket 903). Set by window.unlock() in ConsoleSecret.astro.
- * Deliberately unlayered so it beats the layered tokens in global.css without extra specificity tricks.
+ * Deliberately unlayered so it beats the layered tokens in default.css without extra specificity tricks.
  */
 :root[data-secret='terminal'] {
   color-scheme: dark;
@@ -15,6 +15,7 @@
   --color-text-muted: #2fc063;
   --color-text-inverse: #39ff7a;
   --color-text-inverse-muted: #2fc063;
+  --color-nav: #2fc063;
   --color-link: #7dffa8;
   --color-link-hover: #c4ffd9;
   --color-link-inverse: #7dffa8;

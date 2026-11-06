@@ -1,0 +1,179 @@
+/*
+ * The site theme (ticket 207): every colour value on the site lives in this folder, and nowhere else.
+ * Components use the semantic tokens below (var(--color-…)); a test fails if a colour literal
+ * appears anywhere in src/ outside src/styles/themes/. See README.md in this folder.
+ *
+ * Values are the original site's, unchanged. Light is the default; dark comes from the system
+ * preference or the toggle (data-theme on <html>). Docs: _docs/design-tokens.md
+ */
+@layer reset, tokens, base, layout, blocks, utilities;
+
+@layer tokens {
+  :root {
+    color-scheme: light dark;
+
+    /* Brand */
+    --brand-orange: #da7d03; /* original accent, decorative use only */
+    --color-on-brand: #000000; /* text on the orange (selection, pressed toggles) */
+
+    /* Page and text */
+    --color-bg: #ffffff;
+    --color-bg-muted: #f2f2f2;
+    --color-bg-inverse: #1c1c1c;
+    --color-surface: #ffffff;
+    --color-surface-inverse: #262626;
+    --color-text: #4d4d4d; /* body copy, 8.4:1 on bg (the original used #666) */
+    --color-text-muted: #595959; /* 7:1 on bg */
+    --color-heading: #333333;
+    --color-text-strong: #000000; /* section headings ("sam-heading") */
+    --color-text-inverse: #f5f5f5;
+    --color-text-inverse-muted: #c8c8c8;
+    --color-nav: #6b6b6b;
+    --color-link: #9a5200; /* 6.0:1 on #fff, 5.5:1 on muted */
+    --color-link-hover: #6e3a00;
+    --color-link-inverse: #f2a43c; /* 8.4:1 on inverse */
+    --color-border: #d6d6d6;
+    --color-focus: #0b57d0;
+    --color-frame: #ffffff; /* the thick white photo frame */
+    --color-code-bg: #f6f6f6;
+
+    /* Inverse surfaces (footer, dark sections) */
+    --color-inverse-heading: #ffffff;
+    --color-inverse-link-hover: #ffc477;
+    --color-inverse-border: #3a3a3a;
+    --color-inverse-rule: #333333; /* the line under the colophon */
+    --color-inverse-focus: #8ab4ff;
+    --color-button-inverse-bg: #ffffff;
+    --color-button-inverse-bg-hover: #e6e6e6;
+    --color-button-inverse-fg: #222222;
+
+    /* Callout tones */
+    --color-note: #0b57d0;
+    --color-tip: #1f6f3a;
+    --color-warning: #a4262c;
+
+    /* On photos and video: the same in both themes, because the media is the background */
+    --color-media-bg: #000000;
+    --color-embed-bg: #0d0d0d;
+    --color-on-media: #ffffff;
+    --color-on-media-soft: #f5f5f5;
+    --color-on-media-muted: #c8c8c8;
+    --color-media-scrim: rgb(0 0 0 / 0.85); /* the blurred hero's text panel */
+    --color-media-scrim-soft: rgb(0 0 0 / 0.72); /* image card caption bar */
+    --color-media-backdrop: rgb(0 0 0 / 0.92); /* the lightbox */
+    --color-media-control: rgb(255 255 255 / 0.1);
+    --color-media-control-hover: rgb(255 255 255 / 0.2);
+    --color-media-control-border: rgb(255 255 255 / 0.4);
+    --color-media-focus: #8ab4ff;
+    --color-play: rgb(255 255 255 / 0.9);
+    --color-play-hover: #ffffff;
+    --color-on-play: #111111;
+    --color-logo-tile: #ffffff; /* client logos are drawn on white */
+
+    /* Logo gradient stops (the mark in the header and footer) */
+    --logo-stop-a: #000000;
+    --logo-stop-b: #3c3c3c;
+    --logo-stop-c: #808080;
+
+    /* Shadows */
+    --shadow: 0 0 20px rgb(0 0 0 / 0.5);
+    --shadow-soft: 0 14px 25px rgb(0 0 0 / 0.16); /* UIkit card hover */
+    --shadow-inset: inset 0 0 20px rgb(0 0 0 / 0.5);
+    --text-shadow-media: 0 0 10px #000000;
+
+    /* Code highlighting (Prism) */
+    --tok-comment: #5c6670;
+    --tok-keyword: #a3215f;
+    --tok-string: #1f6f3a;
+    --tok-number: #8a4b00;
+    --tok-fn: #2b4fb3;
+    --tok-punct: #444444;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  /* Dark values, for the system preference and for the toggle. Keep the two blocks identical. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --color-bg: #121212;
+      --color-bg-muted: #1b1b1b;
+      --color-bg-inverse: #000000;
+      --color-surface: #1f1f1f;
+      --color-surface-inverse: #262626;
+      --color-text: #cfcfcf;
+      --color-text-muted: #b5b5b5;
+      --color-heading: #ededed;
+      --color-text-strong: #ffffff;
+      --color-nav: #b5b5b5;
+      --color-link: #f2a43c;
+      --color-link-hover: #ffc477;
+      --color-border: #333333;
+      --color-focus: #8ab4ff;
+      --color-frame: #f0f0f0;
+      --color-code-bg: #1a1a1a;
+      --color-note: #8ab4ff;
+      --color-tip: #8fd6a2;
+      --color-warning: #ff8a80;
+      --logo-stop-a: #ffffff;
+      --logo-stop-b: #cfcfcf;
+      --logo-stop-c: #8c8c8c;
+      --tok-comment: #9aa4ad;
+      --tok-keyword: #ff8ac0;
+      --tok-string: #8fd6a2;
+      --tok-number: #ffbe6b;
+      --tok-fn: #9db8ff;
+      --tok-punct: #c8c8c8;
+    }
+  }
+  :root[data-theme='dark'] {
+    --color-bg: #121212;
+    --color-bg-muted: #1b1b1b;
+    --color-bg-inverse: #000000;
+    --color-surface: #1f1f1f;
+    --color-surface-inverse: #262626;
+    --color-text: #cfcfcf;
+    --color-text-muted: #b5b5b5;
+    --color-heading: #ededed;
+    --color-text-strong: #ffffff;
+    --color-nav: #b5b5b5;
+    --color-link: #f2a43c;
+    --color-link-hover: #ffc477;
+    --color-border: #333333;
+    --color-focus: #8ab4ff;
+    --color-frame: #f0f0f0;
+    --color-code-bg: #1a1a1a;
+    --color-note: #8ab4ff;
+    --color-tip: #8fd6a2;
+    --color-warning: #ff8a80;
+    --logo-stop-a: #ffffff;
+    --logo-stop-b: #cfcfcf;
+    --logo-stop-c: #8c8c8c;
+    --tok-comment: #9aa4ad;
+    --tok-keyword: #ff8ac0;
+    --tok-string: #8fd6a2;
+    --tok-number: #ffbe6b;
+    --tok-fn: #9db8ff;
+    --tok-punct: #c8c8c8;
+  }
+
+  /* Inverse surfaces (the footer, dark sections): remap the semantic tokens for everything inside. */
+  .surface-inverse {
+    --color-text: var(--color-text-inverse-muted);
+    --color-text-muted: var(--color-text-inverse-muted);
+    --color-heading: var(--color-inverse-heading);
+    --color-text-strong: var(--color-inverse-heading);
+    --color-link: var(--color-link-inverse);
+    --color-link-hover: var(--color-inverse-link-hover);
+    --color-border: var(--color-inverse-border);
+    --color-surface: var(--color-surface-inverse);
+    --color-focus: var(--color-inverse-focus);
+    --logo-stop-a: #ffffff;
+    --logo-stop-b: #cfcfcf;
+    --logo-stop-c: #8c8c8c;
+  }
+}
