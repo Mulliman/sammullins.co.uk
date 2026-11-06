@@ -1,0 +1,172 @@
+---
+/**
+ * Style guide: components (ticket 1304). Every block type, every variant and enum option, rendered by the
+ * real block components, with the YAML that produces each example beside it.
+ *
+ * The examples are in src/content/style-guide/components.yaml and are validated by the block schema when
+ * the site builds. The fields and enum options come from the schema text (scripts/skills/schema-blocks.mjs),
+ * the same parse as the block catalogue. The build fails if a block type has no example or an enum option
+ * has none.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { getCollection } from 'astro:content';
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import Blocks from '../../../components/Blocks.astro';
+import StyleGuideSampleBody from '../../../components/StyleGuideSampleBody.astro';
+import { guideFor, snippetsFrom } from '../../../lib/style-guide-components';
+import { parseSchema, describeField, enumOptions } from '../../../../scripts/skills/schema-blocks.mjs';
+
+const root = process.cwd();
+const schema = parseSchema(readFileSync(join(root, 'src/content.config.ts'), 'utf8'));
+const snippets = snippetsFrom(readFileSync(join(root, 'src/content/style-guide/components.yaml'), 'utf8'));
+const entries = await getCollection('styleGuideExamples');
+const byId = new Map(entries.map((e) => [e.id, e]));
+
+if (byId.size !== snippets.size) {
+  throw new Error(`style guide: ${byId.size} examples in the collection but ${snippets.size} in components.yaml`);
+}
+
+const sections = [...schema.blocks.keys()].map((type) => {
+  const guide = guideFor(type);
+  const examples = [...snippets.keys()].flatMap((id) => {
+    const entry = byId.get(id);
+    if (!entry) throw new Error(`style guide: example "${id}" is missing from the collection`);
+    return entry.data.block.type === type ? [{ id, entry }] : [];
+  });
+  if (examples.length === 0) throw new Error(`style guide: no example for block type "${type}"`);
+
+  // Every enum option of this block must appear in at least one example.
+  for (const { key, values } of enumOptions(schema.blocks.get(type)!, schema.shared)) {
+    for (const value of values) {
+      const shown = examples.some(({ entry }) => JSON.stringify(entry.data.block).includes(`"${key}":"${value}"`));
+      if (!shown) throw new Error(`style guide: no ${type} example uses ${key}: ${value}`);
+    }
+  }
+
+  const fields = (schema.blocks.get(type) ?? [])
+    .filter((f) => f.key !== 'type')
+    .map((f) => ({ key: f.key, ...describeField(f.expr, schema.shared) }));
+
+  return {
+    type,
+    id: `block-${type}`,
+    guide,
+    fields,
+    examples: examples.map(({ id, entry }) => ({
+      id,
+      title: entry.data.title,
+      block: entry.data.block,
+      yaml: snippets.get(id)!,
+    })),
+  };
+});
+
+const navSections = sections.map((s) => ({ id: s.id, label: s.guide.title }));
+---
+
+<StyleGuideLayout
+  title="Components"
+  description="Every block and variant in the content schema, rendered with the YAML that produces it."
+  sections={navSections}
+>
+  <div class="prose">
+    <h1>Components</h1>
+    <p>
+      Every block in the content schema, with each variant and option. Each example is rendered by the real block
+      component, with the YAML that produces it beside it. Copy the YAML into a page's <code>blocks</code> list.
+    </p>
+    <p>
+      The <code>body</code> block shows a page's Markdown, so here it shows a stand-in. Image paths in the YAML are
+      relative to the page file, as they are for a real page in <code>src/content/pages/</code>.
+    </p>
+  </div>
+
+  {sections.map((s) => (
+    <section class="sg-block" aria-labelledby={s.id}>
+      <h2 id={s.id}>{s.guide.title}</h2>
+      <p>{s.guide.summary}</p>
+
+      <div class="sg-table">
+        <table class="sg-fields">
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">Type</th>
+              <th scope="col">Required</th>
+              <th scope="col">Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            {s.fields.map((f) => (
+              <tr>
+                <th scope="row">
+                  <code>{f.key}</code>
+                </th>
+                <td>
+                  <code>{f.type}</code>
+                </td>
+                <td>{f.optional || f.dflt ? 'No' : 'Yes'}</td>
+                <td>{f.dflt ? <code>{f.dflt}</code> : ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {s.examples.map((ex) => (
+        <div class="sg-example">
+          <h3>{ex.title}</h3>
+          <div class="sg-preview">
+            <Blocks blocks={[ex.block]} Content={StyleGuideSampleBody} />
+          </div>
+          <Blocks blocks={[{ type: 'code', lang: 'yaml', filename: `${ex.id}.yaml`, code: ex.yaml }]} nested />
+        </div>
+      ))}
+    </section>
+  ))}
+</StyleGuideLayout>
+
+<style>
+  .sg-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+    margin-block: var(--space-xl);
+    min-width: 0;
+  }
+  .sg-example > :global(*) {
+    width: 100%;
+    min-width: 0;
+  }
+  .sg-example {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+    min-width: 0;
+  }
+  .sg-table {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .sg-preview {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .sg-fields {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+  .sg-fields th,
+  .sg-fields td {
+    padding: var(--space-3xs) var(--space-xs);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sg-fields code {
+    overflow-wrap: anywhere;
+  }
+</style>

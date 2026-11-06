@@ -1,0 +1,794 @@
+# Style guide examples (ticket 1304), shown at /style-guide/components/.
+#
+# Each top-level key is one example. `title` is its heading on the page. Everything under `block:` is
+# the YAML shown beside the rendered example, so write it the way a page author would. It is validated
+# against the block schema in src/content.config.ts when the site builds.
+#
+# Image paths are relative to this file. It sits at the same depth as the pages in src/content/pages/,
+# so a snippet pastes into a page unchanged.
+#
+# Every enum option of every block appears in at least one example.
+
+hero-blurred-center:
+  title: Blurred hero, centred
+  block:
+    type: hero
+    variant: blurred
+    heading: Blurred hero
+    subheading: The same photo, blurred behind a framed sharp copy.
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: A portrait of a person on a beach
+    align: center
+
+hero-blurred-left:
+  title: Blurred hero, left aligned
+  block:
+    type: hero
+    variant: blurred
+    heading: Blurred hero, left aligned
+    subheading: Developer
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: A portrait of a person on a beach
+    align: left
+
+hero-image-center:
+  title: Image hero, centred
+  block:
+    type: hero
+    variant: image
+    heading: Image hero
+    subheading: Framed photo with the heading below it.
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: A portrait of a person on a beach
+    align: center
+
+hero-image-left:
+  title: Image hero, left aligned
+  block:
+    type: hero
+    variant: image
+    heading: Image hero, left aligned
+    subheading: Framed photo with the heading below it.
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: A portrait of a person on a beach
+    align: left
+
+hero-plain-center:
+  title: Plain hero, centred
+  block:
+    type: hero
+    variant: plain
+    heading: Plain hero
+    subheading: Text only, with no photo.
+    align: center
+
+hero-plain-left:
+  title: Plain hero, left aligned
+  block:
+    type: hero
+    variant: plain
+    heading: Plain hero, left aligned
+    subheading: Text only, with no photo.
+    align: left
+
+intro-default-left:
+  title: Default surface, left aligned
+  block:
+    type: intro
+    heading: Left aligned on the default surface
+    lead: "A **lead paragraph** that is larger than body text, with a [link](https://example.com/)."
+    align: left
+    surface: default
+
+intro-muted-center:
+  title: Muted surface, centred, with a button
+  block:
+    type: intro
+    heading: Centred on the muted surface
+    lead: A short lead, centred, with a button under it.
+    cta:
+      label: Read the CV
+      href: /cv/
+    align: center
+    surface: muted
+
+intro-inverse-left:
+  title: Inverse surface, left aligned
+  block:
+    type: intro
+    heading: Inverse surface
+    lead: Light text on a dark section.
+    align: left
+    surface: inverse
+
+prose-default-left:
+  title: Default surface, left aligned
+  block:
+    type: prose
+    align: left
+    surface: default
+    markdown: |
+      ## A prose heading
+
+      Prose is rendered at build time at a readable measure. Raw HTML like <em>this</em> is escaped, not rendered.
+
+      - A list item
+      - Another list item with a [link](https://example.com/)
+
+prose-muted-center:
+  title: Muted surface, centred
+  block:
+    type: prose
+    align: center
+    surface: muted
+    markdown: A centred paragraph, for short statements.
+
+prose-inverse-left:
+  title: Inverse surface, left aligned
+  block:
+    type: prose
+    align: left
+    surface: inverse
+    markdown: "Prose on the inverse surface, with some `inline code` in it."
+
+body-default:
+  title: Default surface
+  block:
+    type: body
+    surface: default
+
+body-muted:
+  title: Muted surface
+  block:
+    type: body
+    surface: muted
+
+body-inverse:
+  title: Inverse surface
+  block:
+    type: body
+    surface: inverse
+
+callout-note:
+  title: Note
+  block:
+    type: callout
+    tone: note
+    title: Note title
+    body: A note with a **title** and a body paragraph.
+
+callout-tip:
+  title: Tip, with no title
+  block:
+    type: callout
+    tone: tip
+    body: A tip with no title.
+
+callout-warning:
+  title: Warning
+  block:
+    type: callout
+    tone: warning
+    title: Careful
+    body: A warning. The label and icon say so, not just the colour.
+
+callout-legacy:
+  title: Legacy, the archive banner
+  block:
+    type: callout
+    tone: legacy
+    title: From the archive
+    body: This page is from an earlier chapter of my work and may be out of date.
+
+image-content-thick:
+  title: Content width, thick frame, caption
+  block:
+    type: image
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: Demo photo, a beach portrait
+    caption: Content width with a *caption*.
+    width: content
+    frame: thick
+    backdrop: none
+    surface: default
+
+image-wide-none-muted:
+  title: Wide, no frame, muted surface
+  block:
+    type: image
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: Demo photo, a beach portrait
+    caption: Wide width, with no frame.
+    width: wide
+    frame: none
+    backdrop: none
+    surface: muted
+
+image-full-none:
+  title: Full width, no frame
+  block:
+    type: image
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: Demo photo, a beach portrait
+    caption: Full bleed, breaking out of the container.
+    width: full
+    frame: none
+    backdrop: none
+    surface: default
+
+image-blurred-backdrop:
+  title: Blurred backdrop, thick frame
+  block:
+    type: image
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: Demo photo, a beach portrait
+    caption: The photo sits over a blurred copy of itself.
+    width: content
+    frame: thick
+    backdrop: blurred
+    surface: default
+
+image-decorative-inverse:
+  title: Decorative, inverse surface
+  block:
+    type: image
+    image:
+      src: ../../assets/demo/demo.jpg
+      alt: ""
+      decorative: true
+    width: content
+    frame: none
+    surface: inverse
+
+gallery-one-column:
+  title: One column, default surface
+  block:
+    type: gallery
+    heading: One column
+    columns: 1
+    surface: default
+    images:
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image one
+        caption: First image, a beach portrait.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image two
+        caption: Second image.
+
+gallery-two-columns:
+  title: Two columns, muted surface
+  block:
+    type: gallery
+    heading: Two columns
+    columns: 2
+    surface: muted
+    images:
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image one
+        caption: First image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image two
+        caption: Second image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image three
+        caption: Third image.
+
+gallery-three-columns:
+  title: Three columns, inverse surface
+  block:
+    type: gallery
+    heading: Three columns
+    columns: 3
+    surface: inverse
+    images:
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image one
+        caption: First image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image two
+        caption: Second image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image three
+        caption: Third image.
+
+gallery-four-columns:
+  title: Four columns, default surface
+  block:
+    type: gallery
+    heading: Four columns
+    columns: 4
+    surface: default
+    images:
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image one
+        caption: First image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image two
+        caption: Second image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image three
+        caption: Third image.
+      - src: ../../assets/demo/demo.jpg
+        alt: Demo gallery image four
+        caption: Fourth image.
+
+cards-full-manual:
+  title: Full cards, written by hand
+  block:
+    type: cards
+    heading: Full cards, written by hand
+    variant: full
+    columns: 3
+    surface: default
+    items:
+      - title: Beach portrait
+        text: A **manual** card with an image, text and a link.
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: A portrait on a beach at dusk
+        href: /
+        cta: Read more
+      - title: Client logo
+        text: Plain text under the frame.
+        image:
+          src: ../../assets/demo/logo.jpg
+          alt: A client logo
+        href: /
+      - title: No link yet
+        text: A card without an href shows the title only.
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: ""
+          decorative: true
+
+cards-image-manual:
+  title: Image cards, muted surface
+  block:
+    type: cards
+    heading: Image cards
+    variant: image
+    columns: 2
+    surface: muted
+    items:
+      - title: Title on a dark bar
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: A portrait on a beach at dusk
+        href: /
+      - title: Second image card
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: A portrait on a beach at dusk
+        href: /
+
+cards-text-manual:
+  title: Text cards, inverse surface
+  block:
+    type: cards
+    heading: Text cards
+    variant: text
+    columns: 4
+    surface: inverse
+    items:
+      - title: Four columns
+        text: Text-only cards collapse to fewer columns as the width shrinks.
+        href: /
+      - title: Second
+        text: Each card is one link.
+        href: /
+      - title: Third
+        text: Markdown works *here* too.
+      - title: Fourth
+        text: A card with no link.
+
+cards-query-articles:
+  title: Articles from a query, including archived
+  block:
+    type: cards
+    heading: Articles from a query
+    variant: full
+    columns: 3
+    surface: default
+    query:
+      from: articles
+      kind: article
+      archived: include
+      sort: date-desc
+      limit: 3
+
+cards-query-archived:
+  title: Archived articles only, sorted by title
+  block:
+    type: cards
+    heading: Archived articles
+    variant: text
+    columns: 2
+    surface: default
+    query:
+      from: articles
+      archived: only
+      sort: title
+      limit: 2
+
+cards-query-albums:
+  title: Albums, sorted by date ascending
+  block:
+    type: cards
+    heading: Albums
+    variant: text
+    columns: 3
+    surface: default
+    query:
+      from: albums
+      archived: exclude
+      sort: date-asc
+      limit: 3
+
+cards-query-software-active:
+  title: Active software, in order
+  block:
+    type: cards
+    heading: Active software
+    variant: text
+    columns: 3
+    surface: default
+    query:
+      from: software
+      status: active
+      archived: exclude
+      sort: order
+      limit: 3
+
+cards-query-software-legacy:
+  title: Legacy software, sorted by title
+  block:
+    type: cards
+    heading: Legacy software
+    variant: text
+    columns: 3
+    surface: default
+    query:
+      from: software
+      status: legacy
+      archived: exclude
+      sort: title
+
+cards-query-note:
+  title: Notes from a query (kind note, empty until a note is published)
+  block:
+    type: cards
+    heading: Notes
+    variant: text
+    columns: 3
+    surface: default
+    query:
+      from: articles
+      kind: note
+      archived: include
+      sort: date-desc
+
+listing-grid-articles:
+  title: Grid of articles, including archived
+  block:
+    type: listing
+    heading: Grid of articles
+    variant: grid
+    surface: default
+    query:
+      from: articles
+      archived: include
+      sort: date-asc
+
+listing-list-software:
+  title: List of active software, muted surface
+  block:
+    type: listing
+    heading: Active software
+    variant: list
+    surface: muted
+    query:
+      from: software
+      status: active
+      sort: order
+      limit: 4
+
+listing-notes-archived:
+  title: Notes feed of archived articles, inverse surface
+  block:
+    type: listing
+    heading: Archived notes
+    variant: notes
+    surface: inverse
+    query:
+      from: articles
+      archived: only
+      sort: date-desc
+
+listing-notes-note:
+  title: Notes feed, kind note (empty until a note is published)
+  block:
+    type: listing
+    heading: Notes
+    variant: notes
+    surface: default
+    query:
+      from: articles
+      kind: note
+      archived: include
+      sort: title
+
+listing-grid-albums:
+  title: Grid of albums
+  block:
+    type: listing
+    heading: Albums
+    variant: grid
+    surface: default
+    query:
+      from: albums
+      archived: exclude
+      sort: title
+
+listing-list-legacy:
+  title: List of legacy software
+  block:
+    type: listing
+    heading: Legacy software
+    variant: list
+    surface: default
+    query:
+      from: software
+      status: legacy
+      archived: exclude
+      sort: title
+
+logo-wall-default:
+  title: Logos, default surface
+  block:
+    type: logoWall
+    heading: People I have worked with
+    surface: default
+    logos:
+      - name: Client One
+        logo: ../../assets/demo/logo.jpg
+        href: https://example.com/
+      - name: Client Two
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Three
+        logo: ../../assets/demo/logo.jpg
+
+logo-wall-muted:
+  title: Logos, muted surface
+  block:
+    type: logoWall
+    heading: Clients on the muted surface
+    surface: muted
+    logos:
+      - name: Client One
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Two
+        logo: ../../assets/demo/logo.jpg
+
+logo-wall-inverse:
+  title: Logos, inverse surface
+  block:
+    type: logoWall
+    heading: Clients on the inverse surface
+    surface: inverse
+    logos:
+      - name: Client One
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Two
+        logo: ../../assets/demo/logo.jpg
+
+quote-with-attribution:
+  title: Quote, with attribution and source
+  block:
+    type: quote
+    text: Good design is as little design as possible.
+    attribution: Dieter Rams
+    source: https://www.vitsoe.com/
+
+quote-plain:
+  title: Quote, with no attribution or source
+  block:
+    type: quote
+    text: A quote without attribution or source.
+
+code-with-filename:
+  title: Code with a filename
+  block:
+    type: code
+    lang: js
+    filename: example.js
+    code: |
+      const greet = (name) => `Hello, ${name}!`;
+      console.log(greet('world'));
+
+code-plain:
+  title: Code with no filename
+  block:
+    type: code
+    lang: text
+    code: |
+      A plain block of text, shown as it is written.
+
+next-prev-both:
+  title: Previous and next
+  block:
+    type: nextPrev
+    prev:
+      title: Previous part
+      href: /
+    next:
+      title: Next part
+      href: /cv/
+
+timeline-default:
+  title: Timeline, every kind, default surface
+  block:
+    type: timeline
+    heading: Timeline
+    surface: default
+    items:
+      - when: "2019 to present"
+        title: Senior developer
+        org: Example Studio
+        kind: role
+        body: Leads the **front-end** work on client sites.
+      - when: "2021"
+        title: Accessibility certification
+        org: Example Institute
+        kind: cert
+        body: Passed the practitioner exam.
+      - when: "March 2022"
+        title: First major launch
+        kind: milestone
+        body: Shipped the first product to production.
+      - when: "2015 to 2018"
+        title: BSc Computing
+        org: Example University
+        kind: education
+
+timeline-muted:
+  title: Timeline, muted surface
+  block:
+    type: timeline
+    heading: Muted timeline
+    surface: muted
+    items:
+      - when: "2019 to present"
+        title: Senior developer
+        org: Example Studio
+        kind: role
+      - when: "2021"
+        title: Accessibility certification
+        kind: cert
+
+timeline-inverse:
+  title: Timeline, inverse surface
+  block:
+    type: timeline
+    heading: Inverse timeline
+    surface: inverse
+    items:
+      - when: "2015 to 2018"
+        title: BSc Computing
+        org: Example University
+        kind: education
+      - when: "March 2022"
+        title: First major launch
+        kind: milestone
+
+embed-plain:
+  title: Video, no poster
+  block:
+    type: embed
+    provider: youtube
+    id: dQw4w9WgXcQ
+    title: Example video
+
+embed-poster:
+  title: Video, with a poster
+  block:
+    type: embed
+    provider: youtube
+    id: dQw4w9WgXcQ
+    title: Example video with a poster
+    poster:
+      src: ../../assets/demo/demo.jpg
+      alt: Poster frame, a beach portrait
+
+split-1-1:
+  title: Ratio 1:1
+  block:
+    type: split
+    ratio: "1:1"
+    reverseOnMobile: false
+    columns:
+      - - type: prose
+          align: left
+          markdown: A paragraph in the left column.
+      - - type: image
+          image:
+            src: ../../assets/demo/demo.jpg
+            alt: Demo photo, a beach portrait
+          width: content
+
+split-1-2:
+  title: Ratio 1:2
+  block:
+    type: split
+    ratio: "1:2"
+    reverseOnMobile: false
+    columns:
+      - - type: callout
+          tone: tip
+          title: Narrow column
+          body: The left column is a third of the width.
+      - - type: quote
+          text: The right column is two thirds of the width.
+
+split-2-1:
+  title: Ratio 2:1, reversed on mobile
+  block:
+    type: split
+    ratio: "2:1"
+    reverseOnMobile: true
+    columns:
+      - - type: prose
+          align: left
+          markdown: The wide column comes first on a desktop, and second on a phone.
+      - - type: image
+          image:
+            src: ../../assets/demo/demo.jpg
+            alt: Demo photo, a beach portrait
+          width: content
+
+section-none-default:
+  title: No spacing, default surface
+  block:
+    type: section
+    spacing: none
+    surface: default
+    blocks:
+      - type: intro
+        heading: Inside a section
+        lead: The children share one band.
+        align: left
+      - type: callout
+        tone: note
+        body: A callout in the same band.
+
+section-small-muted:
+  title: Small spacing, muted surface
+  block:
+    type: section
+    spacing: small
+    surface: muted
+    blocks:
+      - type: prose
+        align: left
+        markdown: A paragraph in a muted band with small spacing.
+      - type: quote
+        text: A quote in the same band.
+
+section-normal-inverse:
+  title: Normal spacing, inverse surface
+  block:
+    type: section
+    spacing: normal
+    surface: inverse
+    blocks:
+      - type: intro
+        heading: Inverse band
+        lead: Light text on a dark band, with normal spacing.
+        align: left

@@ -304,6 +304,15 @@ const redirects = defineCollection({
   }),
 });
 
+/**
+ * The style guide's components examples (ticket 1304). Each entry's `block` is validated by the real block
+ * schema at build time, so an example that would not pass on a page fails the build.
+ */
+const styleGuideExamples = defineCollection({
+  loader: file('./src/content/style-guide/components.yaml'),
+  schema: ({ image }) => z.object({ title: z.string().min(1), block: blockSchema(image) }),
+});
+
 const link = z.object({ label: z.string(), href: z.string() });
 
 const settings = defineCollection({
@@ -330,4 +339,4 @@ const settings = defineCollection({
   }),
 });
 
-export const collections = { pages, articles, software, albums, redirects, settings };
+export const collections = { pages, articles, software, albums, redirects, settings, styleGuideExamples };

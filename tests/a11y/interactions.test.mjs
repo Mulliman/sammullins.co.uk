@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { serve } from './server.mjs';
 
-const DEMO = '/blocks-demo/media/';
+const DEMO = '/style-guide/components/';
 let browser, srv;
 before(async () => {
   srv = await serve();

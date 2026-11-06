@@ -17,8 +17,7 @@ export default defineConfig({
   integrations: [
     siteFiles(),
     sitemap({
-      filter: (page) =>
-        !page.includes('/blocks-demo/') && !page.includes('/secret/') && !page.includes('/style-guide/'),
+      filter: (page) => !page.includes('/secret/') && !page.includes('/style-guide/'),
     }),
   ],
   image: {

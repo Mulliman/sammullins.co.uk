@@ -48,7 +48,7 @@ limit: positive integer (optional)
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
 | `callout` | `tone`, `title`, `body` |
-| `image` | `image`, `caption`, `width`, `surface` |
+| `image` | `image`, `caption`, `width`, `frame`, `backdrop`, `surface` |
 | `gallery` | `heading`, `columns`, `surface`, `images` |
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
@@ -79,7 +79,7 @@ limit: positive integer (optional)
 | `lead` | string | no |  |
 | `cta` | cta | no |  |
 | `align` | center \| left | no | `'center'` |
-| `surface` | surface | no | `'muted'` |
+| `surface` | default \| muted \| inverse | no | `'muted'` |
 
 ## `prose`
 
@@ -87,13 +87,13 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `markdown` | string | yes |  |
 | `align` | center \| left | no | `'left'` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `body`
 
 | field | type | required | default |
 |---|---|---|---|
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `callout`
 
@@ -110,7 +110,9 @@ limit: positive integer (optional)
 | `image` | imageRef | yes |  |
 | `caption` | string | no |  |
 | `width` | content \| wide \| full | no | `'content'` |
-| `surface` | surface | no | `'default'` |
+| `frame` | thick \| none | no | `'thick'` |
+| `backdrop` | none \| blurred | no | `'none'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `gallery`
 
@@ -118,7 +120,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `columns` | number (min 1) (max 4) | no | `3` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `images` | z.array(imageRef and (z.object({ caption: string }))) (min 1) | no |  |
 
 ## `cards`
@@ -128,7 +130,7 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | full \| image \| text | no | `'full'` |
 | `columns` | number (min 1) (max 4) | no | `3` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | list of cardItem | no |  |
 | `query` | query | no |  |
 
@@ -138,14 +140,14 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | grid \| list \| notes | no | `'grid'` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `logoWall`
 
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
 
 ## `quote`
@@ -176,7 +178,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | z .array(z.object({ when: string (coerced), title: string, org: string, kind: role \| cert \| milestone \| education, body: string, }),)  (min 1) | no | `'role'` |
 
 ## `embed`
@@ -200,6 +202,6 @@ limit: positive integer (optional)
 
 | field | type | required | default |
 |---|---|---|---|
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `spacing` | none \| small \| normal | no | `'normal'` |
 | `blocks` | z.array(z.discriminatedUnion('type', nestable)) (min 1) | yes |  |

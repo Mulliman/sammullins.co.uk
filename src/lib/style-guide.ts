@@ -43,7 +43,7 @@ export const styleGuidePages: StyleGuidePage[] = [
     title: 'Components',
     href: '/style-guide/components/',
     summary: 'Every block and variant, with the YAML that produces it.',
-    ready: false,
+    ready: true,
   },
   {
     title: 'Page structures',
