@@ -56,7 +56,9 @@ test('every page has a CSP meta tag and a Markdown twin', () => {
   for (const f of html()) {
     if (f.endsWith('404.html')) continue;
     if (!hasCspMeta(read(f))) missing.push(`${rel(f)}: no CSP`);
-    if (f.endsWith('index.html')) {
+    // Guide pages (src/pages/style-guide/) are .astro routes, not content, so they have no Markdown twin.
+    // They are unlisted (ticket 1301); the CSP check above still applies to them.
+    if (f.endsWith('index.html') && !rel(f).startsWith('dist/style-guide/')) {
       try {
         readFileSync(f.replace(/index\.html$/, 'index.md'));
       } catch {

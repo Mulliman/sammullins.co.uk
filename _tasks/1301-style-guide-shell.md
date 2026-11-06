@@ -2,7 +2,7 @@
 id: "1301"
 title: "Style guide: unlisted section, shell and navigation"
 epic: Style guide
-status: todo
+status: review
 priority: p1
 size: M
 owner: agent
@@ -27,10 +27,20 @@ Sam keeps a style guide, component library and example page structures on every 
 
 ## Acceptance criteria
 
-- [ ] `/style-guide/` and every page under it render with a `noindex` robots meta.
-- [ ] No built page outside `/style-guide/` links to it (test).
-- [ ] The sitemap and `llms.txt` contain no `/style-guide/` URL (test).
-- [ ] The guide passes axe and the 320px check like every other page.
+- [x] `/style-guide/` and every page under it render with a `noindex` robots meta.
+- [x] No built page outside `/style-guide/` links to it (test).
+- [x] The sitemap and `llms.txt` contain no `/style-guide/` URL (test).
+- [x] The guide passes axe and the 320px check like every other page.
+
+## Progress
+
+- Added `src/lib/style-guide.ts` (ordered page list, `ready` flag, prev/next helper).
+- Added `src/components/StyleGuideLayout.astro` (BaseLayout with `noindex`, side nav, on-page sections, previous/next).
+- Added `src/pages/style-guide/index.astro` (overview; the only page marked ready).
+- Sitemap filter excludes `/style-guide/` (`astro.config.mjs`).
+- Hygiene test exempts `dist/style-guide/` from the Markdown twin check and keeps the CSP check (`tests/hygiene.test.mjs`).
+- Added `tests/style-guide.test.mjs` (noindex, no links, sitemap, llms.txt).
+- Decision recorded in `_docs/decisions.md`.
 
 ## Out of scope
 

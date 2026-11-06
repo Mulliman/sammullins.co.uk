@@ -1,0 +1,152 @@
+---
+/**
+ * Layout for the unlisted style guide (ticket 1301). Wraps BaseLayout with noindex, a side nav of
+ * guide pages, an on-page section list, and previous/next links between guide pages.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readyStyleGuidePages, styleGuideNeighbours } from '../lib/style-guide';
+
+interface Props {
+  title: string;
+  description: string;
+  /** On-page sections (heading ids) shown in the side nav. */
+  sections?: { id: string; label: string }[];
+}
+
+const { title, description, sections = [] } = Astro.props;
+const path = Astro.url.pathname;
+const pages = readyStyleGuidePages();
+const { prev, next } = styleGuideNeighbours(path);
+---
+
+<BaseLayout title={title} description={description} noindex={true}>
+  <div class="container guide">
+    <aside class="guide__aside">
+      <nav aria-label="Style guide pages">
+        <ul>
+          {pages.map((p) => (
+            <li>
+              <a href={p.href} aria-current={p.href === path ? 'page' : undefined}>
+                {p.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {sections.length > 0 && (
+        <nav aria-label="On this page" class="guide__sections">
+          <ul>
+            {sections.map((s) => (
+              <li>
+                <a href={`#${s.id}`}>{s.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </aside>
+
+    <div class="guide__content">
+      <slot />
+
+      {(prev || next) && (
+        <nav aria-label="Style guide, previous and next" class="guide__pager">
+          {prev ? (
+            <a href={prev.href} class="guide__pager-link guide__pager-link--prev">
+              <span class="guide__pager-dir">Previous</span>
+              <span>{prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <a href={next.href} class="guide__pager-link guide__pager-link--next">
+              <span class="guide__pager-dir">Next</span>
+              <span>{next.title}</span>
+            </a>
+          )}
+        </nav>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .guide {
+    display: grid;
+    gap: var(--space-l);
+    padding-block: var(--space-l);
+  }
+  @media (min-width: 960px) {
+    .guide {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      align-items: start;
+      gap: var(--space-xl);
+    }
+    .guide__aside {
+      position: sticky;
+      top: var(--space-m);
+    }
+  }
+  .guide__content {
+    min-width: 0;
+  }
+
+  .guide__aside ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3xs);
+  }
+  .guide__aside nav + nav {
+    margin-top: var(--space-m);
+  }
+  .guide__aside a {
+    display: block;
+    padding: var(--space-3xs) var(--space-2xs);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .guide__aside a:hover {
+    color: var(--color-heading);
+    background: var(--color-bg-muted);
+  }
+  .guide__aside a[aria-current='page'] {
+    color: var(--color-text-strong);
+    background: var(--color-bg-muted);
+    font-weight: var(--weight-strong);
+  }
+  .guide__sections a {
+    font-size: var(--step--1);
+  }
+
+  .guide__pager {
+    display: grid;
+    gap: var(--space-s);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+  }
+  @media (min-width: 640px) {
+    .guide__pager {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .guide__pager-link {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-s);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--color-heading);
+  }
+  .guide__pager-link--next {
+    text-align: right;
+  }
+  .guide__pager-dir {
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+  }
+</style>

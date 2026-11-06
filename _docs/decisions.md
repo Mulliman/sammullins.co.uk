@@ -46,6 +46,8 @@ Rebuild sammullins.co.uk as a **fresh, public, top-quality Astro 6 repo**. SamMu
 
 - **Launch & cutover**: target **November 2026**, launching *with* the new content (not migration-only). The new repo deploys to a separate Netlify site on `*.netlify.app`; CI proves legacy URLs, media paths and headers; Sam reviews on desktop and phone; then the custom domains move from the old Netlify site to the new one. Rollback means moving the domains back. The old site is kept for about 30 days. Afterwards: submit the sitemap and watch the Search Console and GoatCounter 404s.
 
+- **Style guide (ticket 1301)**: the guide pages are hand-written `.astro` routes under `src/pages/style-guide/`. This is a deliberate exception to "content is not code", because the guide renders code (tokens, schema and blocks), not prose. It is unlisted: `noindex`, not linked from anywhere, left out of the sitemap and `llms.txt`, and not disallowed in `robots.txt`, since that would advertise the URL.
+
 ## Open branches
 
 None blocking. Items for build time:

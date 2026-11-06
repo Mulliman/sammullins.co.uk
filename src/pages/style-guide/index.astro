@@ -1,0 +1,42 @@
+---
+/**
+ * Style guide overview (ticket 1301). Unlisted on purpose: noindex, not linked, not in the sitemap or llms.txt.
+ */
+import StyleGuideLayout from '../../components/StyleGuideLayout.astro';
+import { styleGuidePages } from '../../lib/style-guide';
+
+const sections = [
+  { id: 'about', label: 'About this guide' },
+  { id: 'sections', label: 'Sections' },
+];
+const guideSections = styleGuidePages.filter((p) => p.href !== '/style-guide/');
+---
+
+<StyleGuideLayout
+  title="Style guide"
+  description="The living style guide for this site, generated from the real tokens, schema and blocks."
+  sections={sections}
+>
+  <div class="prose">
+    <h1>Style guide</h1>
+
+    <h2 id="about">About this guide</h2>
+    <p>
+      This is the site's living style guide. It is built from the real tokens, the content schema and the blocks, so it
+      shows what ships rather than a copy of it. Nothing on these pages is typed in by hand.
+    </p>
+    <p>
+      The guide is unlisted on purpose. It is not linked from the site, it is marked noindex, and it is left out of the
+      sitemap and <code>llms.txt</code>.
+    </p>
+
+    <h2 id="sections">Sections</h2>
+    <ul>
+      {guideSections.map((p) => (
+        <li>
+          {p.ready ? <a href={p.href}>{p.title}</a> : <span>{p.title}</span>} {p.summary}
+        </li>
+      ))}
+    </ul>
+  </div>
+</StyleGuideLayout>
