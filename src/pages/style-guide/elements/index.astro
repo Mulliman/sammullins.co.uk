@@ -1,0 +1,131 @@
+---
+/**
+ * Style guide: elements (ticket 1305). The bare HTML the Markdown bodies render, and the generic styles
+ * in global.css (.prose, .button, focus, selection, utilities). The Markdown goes through Astro's own
+ * pipeline, the same one that renders article bodies, so it matches them exactly.
+ */
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import Prose from '../../../blocks/Prose.astro';
+import { Content as TextContent } from '../../../style-guide/elements.md';
+import { Content as CodeContent } from '../../../style-guide/elements-code.md';
+
+const sections = [
+  { id: 'text', label: 'Text' },
+  { id: 'code', label: 'Code' },
+  { id: 'interaction', label: 'Interaction states' },
+  { id: 'utilities', label: 'Utilities' },
+];
+
+const anchorSample = {
+  type: 'prose' as const,
+  markdown:
+    '## Heading anchors\n\nThe h2 and h3 headings in a prose block get an id and an anchor link.\n\n### A level 3 anchor\n\nTab to the hash link at the end of a heading to see the focus ring.',
+  align: 'left' as const,
+  surface: 'default' as const,
+};
+---
+
+<StyleGuideLayout
+  title="Style guide: elements"
+  description="Headings, text, links, lists, tables, code, focus and utility classes, rendered through the same pipeline as articles."
+  sections={sections}
+>
+  <h1>Elements</h1>
+  <p>
+    The bare HTML that Markdown bodies render, and the generic styles that go with it. A regression here is usually a
+    heading margin, a table border or a code token colour, so the samples below are the first things to look at after a
+    change to <code>global.css</code>.
+  </p>
+
+  <h2 id="text">Text</h2>
+  <div class="prose">
+    <TextContent />
+  </div>
+  <Prose block={anchorSample} nested={true} />
+
+  <h2 id="code">Code</h2>
+  <div class="prose">
+    <CodeContent />
+  </div>
+
+  <h2 id="interaction">Interaction states</h2>
+  <p>
+    Links are underlined and change colour on hover. A visited link keeps the same colour, so the link text has to say
+    where it goes.
+  </p>
+  <p>
+    <a href="/articles/">A default link to the articles list</a>. Hover over it to see the colour and the thicker
+    underline.
+  </p>
+  <p>
+    The <code>.button</code> class is the outlined default. Hover over it to see the border change.
+  </p>
+  <p>
+    <a class="button" href="/articles/">
+      Default button
+    </a>
+  </p>
+  <div class="surface-inverse">
+    <p>On an inverse surface the same class is filled, so it still reads as a button.</p>
+    <p>
+      <a class="button" href="/articles/">
+        Inverse button
+      </a>
+    </p>
+  </div>
+
+  <h3>Show focus</h3>
+  <p>
+    Tab through the four controls below. Each one should show the focus ring, offset from its edge so it stays clear of
+    the text.
+  </p>
+  <p>
+    <a href="/articles/">First link</a> <a href="/style-guide/">Second link</a>
+    <button type="button" class="button">
+      A button
+    </button>
+    <a class="button" href="/style-guide/elements/">
+      A button link
+    </a>
+  </p>
+  <p>
+    The skip link is the first thing you reach on every page. Press Tab once from the top of this page to see it, then
+    press Enter to jump past the header. The theme toggle sits in the header and shows its label once scripts have run.
+  </p>
+  <h3>Selection</h3>
+  <p>
+    Select any of the text on this page to see the selection colour. It uses the brand orange with the on-brand text
+    colour, so it stays readable in both themes.
+  </p>
+
+  <h2 id="utilities">Utilities</h2>
+  <p>
+    Three utility classes are used in the site and in this guide. They are defined in the utilities layer of
+    <code>global.css</code>.
+  </p>
+  <h3>
+    <code>.visually-hidden</code>
+  </h3>
+  <p>
+    Hides content visually but keeps it for screen readers. Use it for extra words that a link needs when its text on
+    its own is not enough.
+  </p>
+  <p>
+    <a href="/articles/">
+      Read more<span class="visually-hidden"> about the articles</span>
+    </a>
+  </p>
+  <h3>
+    <code>.text-center</code>
+  </h3>
+  <p>Centres a block of text. Most blocks are left-aligned, so use this only where the layout is symmetrical.</p>
+  <p class="text-center">This paragraph is centred.</p>
+  <h3>
+    <code>.js-only</code>
+  </h3>
+  <p>
+    Shown only when JavaScript runs. Content that needs a script, such as the theme toggle label, uses it so it does not
+    appear in a no-JavaScript view.
+  </p>
+  <p class="js-only">This line appears only when JavaScript has run.</p>
+</StyleGuideLayout>
