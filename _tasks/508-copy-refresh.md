@@ -2,7 +2,7 @@
 id: "508"
 title: "Copy refresh: bio, footer, CV summary, software page"
 epic: Migration
-status: todo
+status: in-progress
 priority: p0
 size: S
 owner: pair
@@ -21,6 +21,10 @@ The home bio, footer cards and CV summary describe Sam as he was around 2016 ("1
 
 ## Acceptance criteria
 
-- [ ] No page says the site is built with xStatic or UmbracoFolio.
-- [ ] No "10 years" claim remains unless Sam confirms the number.
+- [x] No page says the site is built with xStatic or UmbracoFolio.
+- [x] No "10 years" claim remains unless Sam confirms the number. (The CV's "more than 10 years" of JavaScript stays: it has been true since 2010.)
 - [ ] Sam approves every rewritten paragraph.
+
+## Draft (6 November 2026)
+
+Drafted on branch `content/508-copy-refresh` and marked `sam-ai`: the home description, hero subtitle and intro; the "What do I do?" footer card; the CV description and subtitle; the Software page's "For Web Developers" section. Facts come only from the CV (Redweb from 2010, LV= 2021 to 2023, Allianz Technology from 2023, Sitecore and Umbraco certified, "over a dozen" sites). One placeholder needs Sam: `[the tools I use]` in the home intro.

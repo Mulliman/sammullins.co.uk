@@ -1,12 +1,12 @@
 ---
 title: "CV"
-description: "Proven C# and JavaScript/TypeScript web developer with over 10 years of commercial agency experience. Sitecore and Umbraco certified with over a dozen examples of building, onboarding, or…"
-authorship: "sam"
+description: "Sitecore Team Lead at Allianz Technology. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, with over a dozen production websites built, onboarded or supported."
+authorship: "sam-ai"
 blocks:
   - type: "hero"
     variant: "plain"
     heading: "CV"
-    subheading: "Proven C# and JavaScript/TypeScript web developer with over 10 years of commercial agency experience. Sitecore and Umbraco certified with over a dozen examples of building, onboarding, or supporting production websites."
+    subheading: "Sitecore Team Lead at Allianz Technology. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, with over a dozen production websites built, onboarded or supported."
   - type: "section"
     surface: "default"
     blocks:
@@ -116,7 +116,7 @@ blocks:
               I have presented on multiple occasions to crowds of roughly 100 people and recently have remotely delivered demonstrations to crowds over video conferencing.
           - title: "Written communication"
             text: |-
-              I have strong written English skills, shown over the years in technical  specifications, proposals, and articles on the company blog.
+              I have strong written English skills, shown over the years in technical  specifications, proposals, and articles on the company blog.
   - type: "section"
     surface: "default"
     blocks:

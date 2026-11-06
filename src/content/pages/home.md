@@ -1,15 +1,15 @@
 ---
 title: "Sam Mullins"
-description: "Sam Mullins is a certified Umbraco and Sitecore web developer living in Bournemouth with 10 years of commercial ASP.Net and JS experience."
+description: "Sam Mullins is a web developer and Sitecore team lead in Bournemouth. He has built for the web since 2010, and lately spends a lot of his time on AI-assisted development."
 cover:
   src: "../../assets/media/mrnjubw5/combination-mark-small.avif"
   alt: "Sam Mullins logo"
-authorship: "sam"
+authorship: "sam-ai"
 blocks:
   - type: "hero"
     variant: "blurred"
     heading: "Sam Mullins"
-    subheading: "Developer"
+    subheading: "Developer and Sitecore team lead"
     image:
       src: "../../assets/media/ekzoyg0n/mebeach.avif"
       alt: "Photo of Sam Mullins"
@@ -17,9 +17,11 @@ blocks:
     heading: "I'm Sam and I like to create things"
     surface: "muted"
     lead: |-
-      I'm a certified Umbraco and Sitecore web developer living in Bournemouth with 10 years of commercial ASP.Net experience. I've built website functionality for many national and international charities and businesses.
+      I've been building websites since 2010, starting as a student developer at Redweb. Today I lead a team of Sitecore developers at Allianz Technology. Most of that time has been spent with Sitecore and Umbraco (I'm certified in both), building for national charities and businesses.
 
-      I enjoy photography, and as well as taking pictures I've also developed third party plugins for the image processor [CaptureOne](https://www.captureone.com/).
+      Lately I spend a lot of my own time on AI-assisted development, working out where coding agents such as [the tools I use] genuinely help and where they shouldn't be trusted. This site is one of those experiments: it was rebuilt with Astro and Claude Code, and every page says whether I wrote it or wrote it with AI.
+
+      Away from the keyboard I take photos, and I've written plugins for the image editor [CaptureOne](https://www.captureone.com/).
   - type: "section"
     surface: "default"
     blocks:
