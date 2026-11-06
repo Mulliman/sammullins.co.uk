@@ -37,7 +37,7 @@ export const styleGuidePages: StyleGuidePage[] = [
     title: 'Elements',
     href: '/style-guide/elements/',
     summary: 'Headings, text, links, lists, tables, code and the other bare HTML elements.',
-    ready: false,
+    ready: true,
   },
   {
     title: 'Components',
