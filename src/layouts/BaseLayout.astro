@@ -99,12 +99,14 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     <script is:inline>
       // Theme + JS flag before first paint (no flash of the wrong theme). Hashed by Astro's CSP.
       (function () {
-        var d = document.documentElement;
+        const d = document.documentElement;
         d.classList.add('js');
         try {
-          var t = localStorage.getItem('theme');
+          const t = localStorage.getItem('theme');
           if (t === 'dark' || t === 'light') d.dataset.theme = t;
-        } catch (e) {}
+        } catch {
+          // Storage blocked: fall back to the system theme.
+        }
       })();
     </script>
   </head>

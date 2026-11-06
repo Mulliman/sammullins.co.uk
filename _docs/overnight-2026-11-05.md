@@ -75,7 +75,7 @@ Tickets: 42 in `review`, 6 in `in-progress`, 9 `todo` (mostly yours: accounts, D
 1. **Astro 7, not 6.** Astro 7 is current; I used 7.4.4, the newest release older than 7 days.
 2. **Prism instead of Shiki** for code highlighting: Shiki's inline styles break the strict CSP. The `code` *block* is unhighlighted (body Markdown code is highlighted).
 3. **Code blocks wrap instead of scrolling** (simplest way to pass WCAG keyboard-scroll and 320px checks).
-4. **ESLint not added yet.** `eslint-plugin-astro` needs Node ≥ 24.16; this machine has 24.13.1. Prettier and `astro check` are in place. Upgrade Node, then finish ticket 005.
+4. **ESLint:** added on 6 Nov once Node was upgraded (ESLint 10, eslint-plugin-astro with its jsx-a11y strict preset, typescript-eslint). `jsx-a11y` declares a peer range up to ESLint 9 but works on 10. Engines now require Node >= 24.16.
 5. **Lighthouse CI (804) not done**, and **HTML validation (805)** not done; the hygiene and header parts are.
 6. **Software index page** kept its curated audience-based layout from the old site (rather than "current vs earlier"), since there's no current AI software entry yet.
 7. **Footer copy** ("What do I do?") is still the old Umbraco/Sitecore text; the content series will replace it. The "Free stuff!" card now points to the UmbracoFolio page and GitHub.

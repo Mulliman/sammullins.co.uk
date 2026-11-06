@@ -138,7 +138,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `logos` | z .array(z.object({ name: string (min 1), logo: image(), href: string.url() }))  (min 1) | no |  |
+| `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
 
 ## `quote`
 
@@ -146,7 +146,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `text` | string | yes |  |
 | `attribution` | string | no |  |
-| `source` | string.url() | no |  |
+| `source` | url | no |  |
 
 ## `code`
 

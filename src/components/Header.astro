@@ -65,7 +65,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
 
   // Signature (904): the first page view of a session draws the logo once. Skipped under reduced motion.
   const logoLink = document.querySelector<HTMLElement>('[data-signature]');
-  let firstView = false;
+  let firstView: boolean;
   try {
     firstView = sessionStorage.getItem('sm-signature') === null;
     if (firstView) sessionStorage.setItem('sm-signature', '1');

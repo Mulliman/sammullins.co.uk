@@ -26,4 +26,4 @@ Short version. The reasoning is in [`_docs/decisions.md`](_docs/decisions.md) an
 
 ## Quality gates (CI)
 
-`astro check` · Prettier · the skills catalogue and mirror are up to date · build (schema + redirect validation) · unit tests (50 legacy URLs, 306 media paths, hygiene: no gmail/GA/Google Fonts/UIkit/inline styles, CSP on every page, Markdown twin for every page, alt on every image) · lychee internal links · axe WCAG 2.2 AA on every page in light and dark plus 320px overflow · CodeQL · Scorecard · PR-title convention.
+`astro check` · ESLint (eslint-plugin-astro with jsx-a11y strict, typescript-eslint) · Prettier · the skills catalogue and mirror are up to date · build (schema + redirect validation) · unit tests (50 legacy URLs, 306 media paths, hygiene: no gmail/GA/Google Fonts/UIkit/inline styles, CSP on every page, Markdown twin for every page, alt on every image) · lychee internal links · axe WCAG 2.2 AA on every page in light and dark plus 320px overflow · CodeQL · Scorecard · PR-title convention.

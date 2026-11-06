@@ -1,12 +1,13 @@
 ---
 /** `split` block (ticket 308): two columns of nested blocks. */
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Section from '../components/Section.astro';
 import Blocks from '../components/Blocks.astro';
 import type { Block } from '../lib/content';
 type SplitBlock = Extract<Block, { type: 'split' }>;
 interface Props {
   block: SplitBlock;
-  Content?: any;
+  Content?: AstroComponentFactory | undefined;
 }
 const { block, Content } = Astro.props;
 const [a, b] = block.columns;

@@ -1,10 +1,11 @@
 ---
-/** `body` block: the entry's Markdown body, rendered by Astro (Shiki highlighting, heading ids). */
+/** `body` block: the entry's Markdown body, rendered by Astro (Prism highlighting, heading ids). */
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Section from '../components/Section.astro';
 import type { BlockOf } from '../lib/content';
 interface Props {
   block: BlockOf<'body'>;
-  Content?: any;
+  Content?: AstroComponentFactory | undefined;
   nested?: boolean;
 }
 const { block, Content, nested = false } = Astro.props;

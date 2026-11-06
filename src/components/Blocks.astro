@@ -3,6 +3,7 @@
  * Block renderer (ticket 102): renders a page's blocks in order.
  * Adding a block type to the schema without adding it here is a type error (exhaustive switch).
  */
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { Block } from '../lib/content';
 import Hero from '../blocks/Hero.astro';
 import Intro from '../blocks/Intro.astro';
@@ -24,7 +25,7 @@ import BodySection from '../blocks/Body.astro';
 interface Props {
   blocks: Block[];
   /** Rendered Markdown body component for `body` blocks. */
-  Content?: any;
+  Content?: AstroComponentFactory | undefined;
   /** Nested inside a split column: blocks render without their own section wrapper. */
   nested?: boolean;
 }

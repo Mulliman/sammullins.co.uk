@@ -7,7 +7,7 @@
 //   node scripts/skills/sync.mjs           # write the copy (and remove stale generated skills)
 //   node scripts/skills/sync.mjs --check   # exit 1 if the copy differs from the source (CI)
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 

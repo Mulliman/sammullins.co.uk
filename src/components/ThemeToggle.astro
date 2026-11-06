@@ -32,7 +32,9 @@
     root.dataset.theme = next;
     try {
       localStorage.setItem('theme', next);
-    } catch {}
+    } catch {
+      // Storage blocked (private mode): the theme still applies for this page.
+    }
     sync();
   });
   sync();

@@ -29,13 +29,15 @@ const { href } = Astro.props;
           <button type="button" data-agent-copy>
             Copy
           </button>
-          <a data-agent-raw>Open raw</a>
+          <a data-agent-raw href={href}>
+            Open raw
+          </a>
           <button type="button" data-agent-close>
             Back to human view
           </button>
         </div>
       </div>
-      <pre class="agent-panel__md" tabindex="0"><code></code></pre>
+      <pre class="agent-panel__md" tabindex="-1"><code></code></pre>
       <p class="agent-panel__status visually-hidden" aria-live="polite"></p>
     </div>
   </section>
@@ -61,7 +63,9 @@ const { href } = Astro.props;
       try {
         await navigator.clipboard.writeText(text);
         panel!.querySelector('.agent-panel__status')!.textContent = 'Copied to clipboard';
-      } catch {}
+      } catch {
+        // Clipboard blocked: the text is still on screen to copy by hand.
+      }
     });
     main.querySelectorAll<HTMLElement>(':scope > *').forEach((el) => (el.hidden = true));
     main.prepend(panel);

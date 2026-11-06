@@ -12,10 +12,11 @@ pnpm install --frozen-lockfile
 pnpm dev            # http://localhost:4321
 pnpm build          # static site in dist/ (first build ~5 min while images are generated, then cached)
 pnpm test           # legacy URLs, hygiene and twin checks (run after build)
+pnpm lint           # ESLint (Astro, jsx-a11y, TypeScript) + Prettier
 pnpm test:a11y      # axe WCAG 2.2 AA on every page, light + dark, 320px overflow
 ```
 
-Requires Node 24 (see `.nvmrc`) and pnpm 10.
+Requires Node 24.16 or newer on the 24 line (see `.nvmrc`) and pnpm 10.
 
 ## How it works
 

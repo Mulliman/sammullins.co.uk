@@ -17,13 +17,14 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 
 ## Commands
 
-| Command                          | What                                                            |
-| -------------------------------- | --------------------------------------------------------------- |
-| `pnpm install --frozen-lockfile` | Install (new package versions must be ≥ 7 days old)             |
-| `pnpm dev`                       | Dev server on http://localhost:4321                             |
-| `pnpm build`                     | Static build to `dist/`: validates content, writes `_redirects` |
-| `pnpm check`                     | Type and content check (`astro check`)                          |
-| `pnpm test`                      | Unit tests, legacy URL test, hygiene checks                     |
+| Command                          | What                                                                                 |
+| -------------------------------- | ------------------------------------------------------------------------------------ |
+| `pnpm install --frozen-lockfile` | Install (new package versions must be ≥ 7 days old)                                  |
+| `pnpm dev`                       | Dev server on http://localhost:4321                                                  |
+| `pnpm build`                     | Static build to `dist/`: validates content, writes `_redirects`                      |
+| `pnpm check`                     | Type and content check (`astro check`)                                               |
+| `pnpm test`                      | Unit tests, legacy URL test, hygiene checks                                          |
+| `pnpm lint`                      | ESLint (Astro, jsx-a11y, TypeScript) and Prettier; `pnpm lint:fix` fixes what it can |
 
 ## Repo map
 
