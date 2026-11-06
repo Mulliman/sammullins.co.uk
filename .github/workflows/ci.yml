@@ -5,6 +5,10 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Weekly run on main: GitHub evicts caches unused for 7 days, and this keeps the image cache warm
+  # (and re-runs the dependency audit) during quiet weeks. Free on a public repo.
+  schedule:
+    - cron: '17 5 * * 1'
 
 permissions:
   contents: read
