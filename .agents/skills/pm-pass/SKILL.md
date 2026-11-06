@@ -46,7 +46,7 @@ You do not do the work in the tickets. If an item is agent work, say which ticke
 
 The format Sam confirmed on Surrounded by Stories (2026-08-13: "this HTML page worked exactly as I wanted"). Treat it as settled.
 
-1. **One item per thing to do, collapsed if the site has a block for it.** Sam does one thing at a time. (It doesn't yet: see ticket 1005 and "Building it" below.)
+1. **One closed `disclosure` per item.** Sam does one thing at a time.
 2. **Every item assumes total memory loss.** Say what the thing _is_ (the ticket, what it touches, why it exists) before saying what to do.
 3. **Steps are numbered, in execution order, with real commands.** Not "review the PR" but `gh pr create --base main --head 207-colour-tokens --fill` or the github.com URL. **Every command names its checkout**: the main checkout is `C:\Development\Websites\sammullins.co.uk\sammullins.co.uk` and there are agent worktrees, so write `git -C <path>` or the full path, never a bare `cd`.
 4. **Group items into phases and say why the phases come in that order**, so Sam knows he can stop after phase one. The usual order: _clear the review queue_ (work already done, waiting on him) → _unblock the critical path_ (accounts, DNS, the launch content gate) → _decisions only you can make_ → _housekeeping_ (branch tidy-ups, as a proposal).
@@ -54,7 +54,7 @@ The format Sam confirmed on Surrounded by Stories (2026-08-13: "this HTML page w
 6. **Corrections get their own prominent block at the top**, never folded quietly into a paragraph: if an earlier page, `BACKLOG.md` or a ticket said something that turned out to be wrong, say so, and say what misled you.
 7. **Tag each item** with its kind (review, decision, account, content, housekeeping), its ticket ids, and where it can be done: `phone` (a decision, a GitHub review in the browser), `pc` (commands, a dev server) or `either`.
 8. **A footer saying exactly what changed on disk**: branches created, files edited, what is committed, what is uncommitted, what PR is open, and what was deliberately left for Sam.
-9. **Update the same page in place** as items get done: mark them done (struck title, a "Done" tag, a one-line note of what happened), never delete them. Republish to the same URL.
+9. **Update the same page in place** as items get done: set the item's `status: done` and add a line saying what happened; never delete it. Republish to the same URL.
 
 Aim for 3 to 8 items. Every item is something only Sam can do; if delegable agent work keeps reaching the page, that is a ranking mistake, not an item.
 
@@ -68,13 +68,15 @@ The SbS version of this contract (`sbs-tasks/PM.md`, job 8) is where it came fro
 2. Use the **sections > components** technique, as the site does: every part of the page is a `section` band holding components in order, and surfaces alternate (`default`, `muted`) so the parts separate visually without any styling of your own. The shape that works:
    - a `hero` (`variant: plain`, left-aligned): the page name and the one-line state of things;
    - a `section` with the intro `prose` and one `callout` (`tone: warning`) per correction;
-   - one `section` per phase: an `intro` (the phase heading and why it comes in that order), then for each item a `prose` (an `###` heading with the item number, a bold meta line of kind, tickets and where, then what the thing is), a `callout` (`tone: tip`, title "Recommendation"), and a `prose` with the numbered steps and their commands as fenced code;
+   - one `section` per phase: an `intro` (the phase heading and why it comes in that order), then one `disclosure` per item. Its `summary` is the item number and title. Its `badges` are the kind (tone: review `tip`, account `warning`, content and decision `note`, housekeeping `neutral`), one badge for all its tickets ("Tickets 207, 313"), and where it can be done. Inside it go a `prose` saying what the thing is, a `callout` (`tone: tip`, title "Recommendation"), and a `steps` block whose steps carry their commands as `code`, so each gets a Copy button. Tables go in `prose`; they stack on a phone;
    - a `section` (`muted`) listing the gaps this page ran into;
    - a `section` (`surface: inverse`) for what changed on disk.
 3. Build it: `pnpm pm:desk` (`node scripts/pm/desk.mjs [desk.json] [out.html]`). It runs the real `astro build` with the `pm-desk` route switched on, then folds the result into one file (compiled CSS inlined, fonts as data URIs, site links pointed at the live site). It writes `.desk/desk.html` for publishing and `.desk/desk.preview.html` for a local look.
 4. Load the `artifact-design` skill, as the Artifact tool requires, but take only its page contract from it: this page's design is the site's. Publish `.desk/desk.html` with the `Artifact` tool (icon: `checklist`). Republish the same file path to update it in place.
 
-**When a block can't do what the contract above asks** (collapsing an item, a tag, a done state), do the nearest thing the blocks allow, and **add the gap to ticket 1005** (or a new ticket once 1005 is closed). Then list it in the page's gaps section. Never paper over a gap with CSS. Until 1005 lands, items are not collapsible, tags are a bold meta line, and a done item gets a struck `###` heading plus a `tip` callout titled "Done" with what happened.
+**When a block can't do what the contract above asks** (collapsing an item, a tag, a done state), do the nearest thing the blocks allow, and **write the gap up as a new ticket** in the Blocks epic (1005 is the model: what was missing, why it's a general need, what the page did instead). Then list it in the page's gaps section. Never paper over a gap with CSS. Before calling something a gap, check it on the built page: on 6 November two "gaps" drafted from memory turned out to be wrong.
+
+Check the built page at phone width (375px) and desktop with every `disclosure` open, and confirm `document.documentElement.scrollWidth` is no wider than the window. Long commands and long badges are the usual causes of sideways scrolling.
 
 No eyebrows (labels above titles): Sam has rejected them.
 
