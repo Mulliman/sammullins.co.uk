@@ -15,7 +15,7 @@ const { block, nested = false } = Astro.props;
 const { kicker, heading, lead, cta, align, surface } = block;
 ---
 
-<Section nested={nested} surface={surface} width="narrow">
+<Section nested={nested} surface={surface} width="narrow" class={lead || cta ? '' : 'section--heading-only'}>
   <div class:list={['intro', `intro--${align}`]}>
     {kicker && <p class="intro__kicker">{kicker}</p>}
     {heading && <h2 class="intro__heading">{heading}</h2>}
