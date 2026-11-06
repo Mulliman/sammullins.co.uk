@@ -4,7 +4,7 @@ This repo builds a **static website**: plain HTML, CSS, a little first-party Jav
 
 ## Reporting a vulnerability
 
-Use **GitHub private vulnerability reporting** (Security → Report a vulnerability) on this repository. Please don't open a public issue.
+Use **GitHub private vulnerability reporting**: [report a vulnerability](https://github.com/Mulliman/sammullins.co.uk/security/advisories/new) (or Security → Report a vulnerability on this repository). Please don't open a public issue.
 
 In scope: anything that lets someone run script on www.sammullins.co.uk, bypass the Content Security Policy, tamper with the build or supply chain (dependencies, GitHub Actions), or leak personal data.
 
