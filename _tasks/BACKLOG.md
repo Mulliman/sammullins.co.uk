@@ -1,4 +1,4 @@
-# Backlog, in order (6 November 2026)
+# Backlog, in order (7 November 2026)
 
 What's left between today and launch, in the order to do it. It replaces the "Suggested order" in [README.md](README.md) now that the build is merged and the design audit (`design-audit-2026-11/`, outside the repo) is done.
 
@@ -11,28 +11,36 @@ What's left between today and launch, in the order to do it. It replaces the "Su
   - **Agent work:** community profile files (1101) and skill dry runs (1002, 1003).
   - **Needs a deploy preview (701):** 603, 702, 803 and 904.
   - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
-- Repo governance (001) is closed. Sam dropped the auto-merge, squash-only, signed-commit and gmail-in-history criteria; the PR requirement and secret scanning are on.
+- Repo governance (001) is closed. Sam dropped the auto-merge, squash-only, signed-commit and gmail-in-history criteria; the PR requirement and secret scanning are on. Design tokens (201) is closed: every criterion was already met.
+- **Not on `main` yet (7 November).** Nothing below has been pushed. It is a stack of local branches, each built on the one before, so they merge in this order:
+  1. `style-guide`: the style guide (1301 to 1307), colour tokens (207), the article template (313), Lighthouse and HTML validation in CI (804, 805) and the copy draft (508).
+  2. `1004-pm-pass-skill`: the PM pass skill and `pnpm tasks:status` (1004), and the six blocks it needed (1005: `disclosure`, badges, a done state, `steps`, one shared code figure with a Copy button, tables that stack on a phone).
+  3. `313-code-headers`: article code gets the shared code figure; article tables stack on a phone (313's leftover).
+  4. `205-spacing-rhythm`: the fluid spacing scale and section rhythm (205).
+  5. `206-header-footer`: the compact sticky header and one-line footer (206).
+  6. `pm/2026-11-07`: this tidy-up (001 and 201 closed, this file).
+- Separately, `1101-community-files` (off `style-guide`) adds the code of conduct and issue and PR templates.
 
 ## 1. Now (agents can do these without waiting)
 
-| # | Ticket | Who | Status (6 Nov, end of day) |
+| # | Ticket | Who | Status (7 Nov, morning) |
 |---|---|---|---|
-| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | Not started. |
+| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | **1101 done on its branch** (community files). The skill dry runs (1002, 1003) are not started. |
 | 2 | [508](508-copy-refresh.md) Copy refresh: remove the false "built with xStatic" line; draft the bio, footer and CV summary with [placeholders] | pair | **Drafted.** Sam reviews the wording and fills `[the tools I use]`. |
 | 3 | [805](805-ci-html-headers.md) Finish HTML validation and the hygiene tests | agent | **In review.** html-validate, rule self-tests and an EXIF check are in; the preview header check waits for 701. |
 | 4 | [804](804-ci-lighthouse.md) Lighthouse budgets in CI | agent | **In review.** The CI job and budgets are in; the first CI run confirms the Performance score. |
-| 5 | [313](313-article-template.md) Article template | agent | **In review.** Header, contents list and series parts are in; the code-block headers are left. |
+| 5 | [313](313-article-template.md) Article template | agent | **In review.** Header, contents list, series parts and code-block headers are in. Left: whether to highlight the current section (needs a small script; Sam decides). |
 
 ## 2. Design (each starts with one decision from Sam)
 
 | # | Ticket | Who | Sam decides |
 |---|---|---|---|
 | 6 | [207](207-colour-tokens.md) Colours centralised in a theme, literals banned, page themes (christmas) | agent | **In review.** Original colours kept, as decided. |
-| 6a | [205](205-colour-surfaces.md) Spacing scale and section rhythm | agent | Nothing: the colours stay as they are. |
+| 6a | [205](205-colour-surfaces.md) Spacing scale and section rhythm | agent | **In review.** Whether the extra space on wide screens is right (pages are 4% to 11% taller at 1280px). |
 | 7 | [310](310-hero-portrait.md) Hero: "live portrait" | pair | Approve option A; shoot a new photo or 6 to 8 second clip (shot list in the audit). |
 | 8 | [312](312-home-sections.md) Home: builds grid, writing list and photo strip | agent | Which builds to feature. |
 | 9 | [311](311-logowall-strip.md) Logo wall strip | agent | Nothing (the full client names are already fixed). |
-| 10 | [206](206-header-footer.md) Header and footer | agent | Nothing. |
+| 10 | [206](206-header-footer.md) Header and footer | agent | **In review.** Whether the footer wants a real sign-off sentence (it uses the name and tagline for now). |
 | 11 | [314](314-cv-template.md) CV: newest first | pair | Approve the wording. |
 | 12 | [315](315-index-pages.md) Articles and Software index pages | agent | Nothing. |
 | 13 | [905](905-prototypes-motion.md) View Transitions and blur-to-sharp | pair | Ship or drop each. The audit recommends shipping View Transitions and dropping blur-to-sharp, which 310 replaces. |
