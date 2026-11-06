@@ -103,20 +103,28 @@
     --tracking-display: -0.025em;
     --tracking-heading: -0.015em;
 
-    /* Space & shape */
-    --space-3xs: 0.25rem;
-    --space-2xs: 0.5rem;
-    --space-xs: 0.75rem;
-    --space-s: 1rem;
-    --space-m: 1.5rem;
-    --space-l: 2.5rem;
-    --space-xl: 4rem;
-    --space-2xl: 6rem;
+    /* Space (ticket 205): a fluid scale that matches the type scale (utopia.fyi), from 360px to 1280px
+       wide. Each step grows by the body-text ratio (16px to 18px, 1.125x). The pairs (s-m, m-l, l-xl)
+       grow by one step, for space that should open up more on wide screens, such as section padding. */
+    --space-3xs: clamp(0.25rem, 0.2378rem + 0.0543vw, 0.2813rem);
+    --space-2xs: clamp(0.5rem, 0.4755rem + 0.1087vw, 0.5625rem);
+    --space-xs: clamp(0.75rem, 0.7133rem + 0.163vw, 0.8438rem);
+    --space-s: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+    --space-m: clamp(1.5rem, 1.4266rem + 0.3261vw, 1.6875rem);
+    --space-l: clamp(2.5rem, 2.3777rem + 0.5435vw, 2.8125rem);
+    --space-xl: clamp(4rem, 3.8043rem + 0.8696vw, 4.5rem);
+    --space-2xl: clamp(6rem, 5.7065rem + 1.3043vw, 6.75rem);
+    --space-s-m: clamp(1rem, 0.731rem + 1.1957vw, 1.6875rem);
+    --space-m-l: clamp(1.5rem, 0.9864rem + 2.2826vw, 2.8125rem);
+    /* Section padding: the original 40px on phones to about 70px on desktop, now without the jump at 960px. */
+    --space-l-xl: clamp(2.5rem, 1.7174rem + 3.4783vw, 4.5rem);
     --gutter: clamp(1rem, 4vw, 2.5rem);
     --measure: 68ch; /* about 75 characters of Mona Sans */
     --container: 1200px;
     --container-narrow: 800px; /* the original's 2/3-width text column */
+    /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
+    --radius-l: 12px;
 
     /* Motion */
     --dur-fast: 150ms;
@@ -254,32 +262,25 @@
     margin-inline: auto;
   }
 
-  /* UIkit section rhythm: 40px, 70px from 960px. */
+  /* Section rhythm (ticket 205): the original UIkit sizes (40px to 70px, and 15px to 25px for tight
+     sections), now fluid instead of jumping at 960px. */
   .section {
-    padding-block: 40px;
+    padding-block: var(--space-l-xl);
   }
   .section--tight {
-    padding-block: 15px;
+    padding-block: var(--space-s-m);
   }
-  @media (min-width: 960px) {
-    .section {
-      padding-block: 70px;
-    }
-    .section--tight {
-      padding-block: 25px;
-    }
-  }
-  /* `section` block spacing (UIkit's section sizes). */
+  /* `section` block spacing. */
   .section.section--spacing-none {
     padding-block: 0;
   }
   .section.section--spacing-small {
-    padding-block: 15px;
+    padding-block: var(--space-s-m);
   }
-  @media (min-width: 960px) {
-    .section.section--spacing-small {
-      padding-block: 25px;
-    }
+  /* Two plain bands in a row are split by a hairline rather than a grey band (ticket 205), so a page
+     can use fewer full-width grey bands. Muted and inverse bands still separate themselves. */
+  .section.surface-default + .section.surface-default {
+    border-top: 1px solid var(--color-border);
   }
   .surface-default {
     background: var(--color-bg);

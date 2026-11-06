@@ -45,13 +45,8 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-block: 40px;
+    padding-block: var(--space-l-xl);
     box-shadow: var(--shadow-inset);
-  }
-  @media (min-width: 960px) {
-    .hero {
-      padding-block: 70px;
-    }
   }
 
   /* Variant surfaces. Text colour is set on the section so the h1 inherits it. */
@@ -107,7 +102,7 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   }
 
   .hero__text {
-    padding: 30px;
+    padding: var(--space-m-l);
   }
   .hero--blurred .hero__text,
   .hero--blurred .hero__heading {

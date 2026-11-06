@@ -113,3 +113,12 @@ test('no colour literals outside src/styles/themes (use theme tokens)', async ()
     'Colours belong in src/styles/themes/ (see its README). Use a token such as var(--color-text).',
   );
 });
+
+test('no fixed px spacing in blocks or components (use the --space-* tokens)', async () => {
+  const { fixedSpacing } = await import('./hygiene-rules.mjs');
+  const files = ['blocks', 'components'].flatMap((d) => walk(join(ROOT, 'src', d), (p) => p.endsWith('.astro')));
+  const offenders = files.flatMap((f) =>
+    fixedSpacing(read(f)).map(({ line, text }) => `${rel(f)}:${line}: ${text.trim()}`),
+  );
+  assert.deepEqual(offenders, [], 'Spacing uses the fluid tokens in src/styles/global.css, e.g. var(--space-s).');
+});

@@ -127,3 +127,14 @@ test('colour rule', async () => {
   assert.ok(COLOUR_ALLOWED.test('src/styles/themes/christmas.css'));
   assert.ok(!COLOUR_ALLOWED.test('src/blocks/Hero.astro'));
 });
+
+test('fixed spacing rule', async () => {
+  const { fixedSpacing } = await import('./hygiene-rules.mjs');
+  assert.equal(fixedSpacing('  padding: 30px;').length, 1);
+  assert.equal(fixedSpacing('  --gap: 15px;').length, 1);
+  assert.equal(fixedSpacing('  margin: 0 auto 12.5px;').length, 1);
+  assert.equal(fixedSpacing('  padding: var(--space-s);').length, 0);
+  assert.equal(fixedSpacing('  border: 10px solid var(--color-frame);').length, 0, 'borders are not spacing');
+  assert.equal(fixedSpacing('  left: calc(0.5rem - 1px);').length, 0, 'hairline nudges are allowed');
+  assert.equal(fixedSpacing('  top: -0.375rem;').length, 0);
+});

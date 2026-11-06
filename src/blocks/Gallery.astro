@@ -193,7 +193,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
   .gallery__grid {
     --cols: 3;
     columns: 1;
-    column-gap: 15px;
+    column-gap: var(--space-s);
     list-style: none;
     padding: 0;
   }
@@ -218,7 +218,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
   }
   .gallery__item {
     break-inside: avoid;
-    margin-bottom: 15px;
+    margin-bottom: var(--space-s);
   }
   .gallery__link {
     display: block;

@@ -65,3 +65,17 @@ export const colourLiterals = (source) =>
     .map((line, i) => ({ line: i + 1, text: line.trim() }))
     // Custom property names ("--brand-orange") aren't colours; fallbacks such as var(--x, #fff) still are.
     .filter(({ text }) => COLOUR_PATTERNS.some((re) => re.test(text.replace(/--[\w-]+/g, ''))));
+
+/**
+ * Fixed px spacing (ticket 205): padding, margin, gap or an offset of 3px or more. Spacing uses the
+ * fluid --space-* tokens in global.css. 1px and 2px are hairline geometry (borders, nudges), not spacing.
+ */
+const FIXED_SPACING =
+  /^\s*(?:padding|margin|gap|row-gap|column-gap|inset|top|bottom|left|right|--gap|padding-[a-z-]+|margin-[a-z-]+|inset-[a-z-]+)\s*:[^;]*?(?<![\w.-])(?:[3-9]|[1-9]\d+)(?:\.\d+)?px/;
+
+/** Lines of `source` that set spacing in fixed px. */
+export const fixedSpacing = (source) =>
+  source
+    .split('\n')
+    .map((text, i) => ({ line: i + 1, text }))
+    .filter(({ text }) => FIXED_SPACING.test(text));

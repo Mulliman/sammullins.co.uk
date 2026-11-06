@@ -74,7 +74,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   /* Text style: the original's plain UIkit card. No box, centred thin title and text. */
   .card--text {
-    padding: 30px;
+    padding: var(--space-m-l);
     text-align: center;
   }
   /* Full style: the original UIkit "default" card. White card, image on top, centred body. */
@@ -84,7 +84,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     overflow: hidden;
   }
   .card--full .card__body {
-    padding: 30px;
+    padding: var(--space-m-l);
     flex: 1;
   }
 
