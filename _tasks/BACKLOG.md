@@ -37,6 +37,20 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 | 12 | [315](315-index-pages.md) Articles and Software index pages | agent | Nothing. |
 | 13 | [905](905-prototypes-motion.md) View Transitions and blur-to-sharp | pair | Ship or drop each. The audit recommends shipping View Transitions and dropping blur-to-sharp, which 310 replaces. |
 
+## 2b. Style guide (unlisted, agents can do it alone)
+
+A living style guide at `/style-guide/`, never linked from the site, modelled on the Surrounded by Stories guide (`code/apps/guide`). It renders from the real tokens, schema and blocks, so it can't drift, and becomes the regression target for every theme.
+
+| # | Ticket | Who | Notes |
+|---|---|---|---|
+| 13a | [1301](1301-style-guide-shell.md) Shell, unlisted section, navigation | agent | First. Needs 207. |
+| 13b | [1302](1302-style-guide-foundations.md) Foundations from the tokens | agent | 1302 to 1305 can run in parallel. |
+| 13c | [1303](1303-style-guide-themes.md) Themes: light, dark and page themes | agent | Check the advent calendar theme here. |
+| 13d | [1304](1304-style-guide-components.md) Every block and variant, with YAML | agent | Replaces the `blocks-demo` pages (with redirects). |
+| 13e | [1305](1305-style-guide-elements.md) Generic styles and elements | agent | |
+| 13f | [1306](1306-style-guide-page-structures.md) Example page structures | pair | Sam reviews the structures. |
+| 13g | [1307](1307-style-guide-ci.md) Visual regression across themes | agent | Last. |
+
 ## 3. Accounts and infrastructure (Sam, any time before step 5)
 
 | # | Ticket | Who | What |

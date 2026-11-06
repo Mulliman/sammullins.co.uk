@@ -32,6 +32,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | 10xx | AI authoring | Voice guide and Agent Skills |
 | 11xx | Docs | README, architecture, licence notices |
 | 12xx | Launch | Content gate, review, cutover, decommission |
+| 13xx | Style guide | Unlisted living style guide: foundations, themes, components, elements, page structures |
 
 ## Ticket index
 
@@ -105,6 +106,13 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1203](1203-prelaunch-review.md) | Pre-launch review on preview | p0 | S | sam | all p0 |
 | [1204](1204-cutover.md) | Domain cutover & post-launch monitoring | p0 | S | pair | 1203 |
 | [1205](1205-decommission.md) | Decommission old site & folders | p2 | S | sam | 1204 + 30 days |
+| [1301](1301-style-guide-shell.md) | Style guide: unlisted section, shell and navigation | p1 | M | agent | 207 |
+| [1302](1302-style-guide-foundations.md) | Style guide: foundations generated from the tokens | p1 | M | agent | 1301 |
+| [1303](1303-style-guide-themes.md) | Style guide: themes, light and dark, page themes | p1 | S | agent | 1301, 1302 |
+| [1304](1304-style-guide-components.md) | Style guide: every block and every variant, with its YAML | p1 | L | agent | 1301 |
+| [1305](1305-style-guide-elements.md) | Style guide: generic styles and HTML elements | p1 | S | agent | 1301 |
+| [1306](1306-style-guide-page-structures.md) | Style guide: example page structures | p1 | M | pair | 1301, 1304 |
+| [1307](1307-style-guide-ci.md) | Style guide in CI: visual regression across themes | p1 | M | agent | 1302 to 1305 |
 
 ## Suggested order
 
