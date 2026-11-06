@@ -130,7 +130,9 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     <a class="skip-link" href="#content">
       Skip to content
     </a>
-    <Header />
+    <Header>
+      <slot name="header-actions" slot="actions" />
+    </Header>
     <main id="content" tabindex="-1">
       <slot />
     </main>
