@@ -12,14 +12,7 @@ What's left between today and launch, in the order to do it. It replaces the "Su
   - **Needs a deploy preview (701):** 603, 702, 803 and 904.
   - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
 - Repo governance (001) is closed. Sam dropped the auto-merge, squash-only, signed-commit and gmail-in-history criteria; the PR requirement and secret scanning are on. Design tokens (201) is closed: every criterion was already met.
-- **Not on `main` yet (7 November).** Nothing below has been pushed. It is a stack of local branches, each built on the one before, so they merge in this order:
-  1. `style-guide`: the style guide (1301 to 1307), colour tokens (207), the article template (313), Lighthouse and HTML validation in CI (804, 805) and the copy draft (508).
-  2. `1004-pm-pass-skill`: the PM pass skill and `pnpm tasks:status` (1004), and the six blocks it needed (1005: `disclosure`, badges, a done state, `steps`, one shared code figure with a Copy button, tables that stack on a phone).
-  3. `313-code-headers`: article code gets the shared code figure; article tables stack on a phone (313's leftover).
-  4. `205-spacing-rhythm`: the fluid spacing scale and section rhythm (205).
-  5. `206-header-footer`: the compact sticky header and one-line footer (206).
-  6. `pm/2026-11-07`: this tidy-up (001 and 201 closed, this file).
-- Separately, `1101-community-files` (off `style-guide`) adds the code of conduct and issue and PR templates.
+- **Merged on 7 November.** PR #6 brought the style guide (1301 to 1307), colour tokens (207), the article template (313), CI checks (804, 805), the copy draft (508), the PM pass and its blocks (1004, 1005) and the spacing scale (205) into `main`; PR #7 added the type and spacing tuning (208). The header and footer (206) and the code of conduct and templates (1101) follow in their own PRs.
 
 ## 1. Now (agents can do these without waiting)
 
