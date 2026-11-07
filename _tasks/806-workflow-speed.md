@@ -33,11 +33,11 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 
 - [x] `pnpm verify` passes on this branch and fails at the first failing gate.
 - [x] AGENTS.md states the PR title format and the branch rules.
-- [ ] The accessibility job restores Chromium from the cache on a second run.
+- [ ] The accessibility job restores Chromium from the cache on a second run. (Saved as `playwright-Linux-1.64.1` on 7 November; the first hit comes on the next run.)
 - [ ] The first Netlify deploy logs "Saved node_modules/.astro", and the second logs "Restored". (Needs 701.)
 - [x] `CHANGELOG.md` exists and AGENTS.md points to it.
 - [x] Merged tickets with no open criteria are `done`; the rest say what is left.
-- [ ] "Lighthouse budgets" is a required check in the `Main` ruleset. (Sam: repo settings, see Left for Sam.)
+- [x] "Lighthouse budgets" is a required check in the `Main` ruleset (Sam, 7 November 2026).
 
 ## Left for Sam
 
