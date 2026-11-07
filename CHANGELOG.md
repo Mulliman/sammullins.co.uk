@@ -10,6 +10,7 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 - A changelog (this file).
 - A Netlify build plugin that keeps generated images between deploys, so a deploy isn't a cold 15-minute image build (ticket 806).
 - Branch and PR rules for agents in `AGENTS.md`: one ticket per PR cut from `main`, draft PRs early, rebase instead of merge-forward, Conventional Commits titles (ticket 806).
+- Netlify builds that aren't production on `www.sammullins.co.uk` (the `*.netlify.app` site before cutover, deploy previews, branch deploys) send `X-Robots-Tag: noindex, nofollow` on every path, so search engines stay off them (ticket 701).
 
 - A glossary of tools and terms at the end of the README.
 

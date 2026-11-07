@@ -2,10 +2,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import siteFiles from './integrations/site-files.mjs';
+import noindexUntilLive from './integrations/noindex-until-live.mjs';
+
+const site = 'https://www.sammullins.co.uk';
 
 // Ticket 003: static, URL-identical output (trailing slash, directory format).
 export default defineConfig({
-  site: 'https://www.sammullins.co.uk',
+  site,
   output: 'static',
   trailingSlash: 'always',
   build: {
@@ -16,6 +19,8 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [
     siteFiles(),
+    // Ticket 701: no indexing on *.netlify.app or deploy previews until the domain moves over (1204).
+    noindexUntilLive({ liveUrl: site }),
     sitemap({
       // Style guide example pages (ticket 1306) are hidden and noindex; keep them out of the sitemap too.
       filter: (page) =>
