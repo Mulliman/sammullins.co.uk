@@ -77,11 +77,12 @@ const dropTags = (source, tag, unwanted) =>
     .split(tag)
     .filter((part) => !unwanted.test(part))
     .join('');
-html = dropTags(html, /(<script\b[^>]*><\/script>)/, /^<script\b[^>]*\bsrc="/);
+// Case-insensitive, with any body and any closing-tag form (`</script >`), so no variant slips through.
+html = dropTags(html, /(<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>)/i, /^<script\b[^>]*\bsrc\s*=/i);
 html = dropTags(
   html,
-  /(<link\b[^>]*>)/,
-  /^<link\b[^>]*rel="(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)"/,
+  /(<link\b[^>]*>)/i,
+  /^<link\b[^>]*\brel\s*=\s*["']?(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)\b/i,
 );
 
 // 4. Local images (the header signature, icons).
