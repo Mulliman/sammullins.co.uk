@@ -36,12 +36,13 @@ const { nested = false, surface = 'default', width = 'normal', tight = false, cl
   .nested-block + .nested-block {
     margin-top: var(--space-m);
   }
-  /* After an intro with body text, leave the original's full section gap before what follows. */
+  /* After an intro with body text, one tier up from the component gap (ticket 208): close enough that
+     the intro reads as the heading of what follows, never as far as the next section. */
   .nested-block:has(:global(.intro__lead)) + .nested-block {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-m-l);
   }
   /* A lone button (an intro with only a call to action) gets breathing room above it. */
   .nested-block + .nested-block:has(:global(.intro__cta)):not(:has(:global(.intro__heading))) {
-    margin-top: var(--space-l);
+    margin-top: var(--space-m-l);
   }
 </style>

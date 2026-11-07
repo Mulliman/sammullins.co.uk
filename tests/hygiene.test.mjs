@@ -122,3 +122,18 @@ test('no fixed px spacing in blocks or components (use the --space-* tokens)', a
   );
   assert.deepEqual(offenders, [], 'Spacing uses the fluid tokens in src/styles/global.css, e.g. var(--space-s).');
 });
+
+test('no literal font sizes or line heights outside global.css (use --step-* and --leading-*)', async () => {
+  const { typeLiterals } = await import('./hygiene-rules.mjs');
+  const files = ['blocks', 'components', 'layouts', 'pages'].flatMap((d) =>
+    walk(join(ROOT, 'src', d), (p) => p.endsWith('.astro')),
+  );
+  const offenders = files.flatMap((f) =>
+    typeLiterals(read(f)).map(({ line, text }) => `${rel(f)}:${line}: ${text.trim()}`),
+  );
+  assert.deepEqual(
+    offenders,
+    [],
+    'Type uses the scale in src/styles/global.css, e.g. var(--step-0) and var(--leading-body).',
+  );
+});
