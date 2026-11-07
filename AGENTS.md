@@ -8,7 +8,7 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 
 ## Golden rules
 
-1. **Sam merges. Nothing is automatic.** Work on a branch, open a PR, and stop. Never merge, push to `main`, enable auto-merge or schedule publishing, unless Sam explicitly tells you to in the moment.
+1. **Sam merges. Nothing is automatic.** Work on a branch, open a PR, and stop. Never merge, push to `main`, enable auto-merge or schedule publishing, unless Sam explicitly tells you to in the moment. In Claude Code, `.claude/settings.json` backs this up: `gh pr merge` is on the `ask` list, so every merge needs Sam's approval when it runs, and pushing to `main` is denied.
 2. **Never break a URL.** URLs come from file paths. To rename or remove a page, add a redirect in `src/data/redirects.json` (use the `redirect` skill). `pnpm build` fails on broken or chained redirects.
 3. **Content is not code.** Pages live in `src/content/**` as `.md` files. Don't hand-write `.astro` pages for content; compose blocks.
 4. **Authorship is honest.** Every entry has `authorship: sam` (Sam wrote the words) or `sam-ai` (Sam + AI). If you drafted the words, it's `sam-ai`. Sam changes it if he rewrites.

@@ -41,5 +41,5 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 
 ## Done by Sam (7 November 2026)
 
-- **Permission allowlist:** `.claude/settings.json` in the main checkout lets Claude Code run read-only `pnpm`, `git` and `gh` commands without asking, and denies merging. It isn't committed yet, so worktrees and other clones won't get it until it is.
+- **Permission allowlist:** `.claude/settings.json` lets Claude Code run read-only `pnpm`, `git` and `gh` commands without asking. `gh pr merge` is on the `ask` list (Sam wants merging possible, but only with his say-so each time), and pushing to `main` is denied. Committed in this PR so worktrees and clones get it.
 - **Lighthouse required:** "Lighthouse budgets" is in the `Main` ruleset's required checks, so ticket 804 is done.
