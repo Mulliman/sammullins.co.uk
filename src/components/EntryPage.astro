@@ -116,6 +116,6 @@ const archiveBlock = {
     />
   </div>
   {hasSeriesNav && <NextPrev block={{ type: 'nextPrev', ...series }} />}
-  <AgentView href={`${url}index.md`} slot="colophon" />
+  <AgentView href={`${url}index.md`} slot="header-actions" />
   <Colophon entry={entry} slot="colophon" />
 </BaseLayout>

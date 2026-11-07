@@ -1,4 +1,4 @@
-# Backlog, in order (6 November 2026)
+# Backlog, in order (7 November 2026)
 
 What's left between today and launch, in the order to do it. It replaces the "Suggested order" in [README.md](README.md) now that the build is merged and the design audit (`design-audit-2026-11/`, outside the repo) is done.
 
@@ -11,28 +11,29 @@ What's left between today and launch, in the order to do it. It replaces the "Su
   - **Agent work:** community profile files (1101) and skill dry runs (1002, 1003).
   - **Needs a deploy preview (701):** 603, 702, 803 and 904.
   - **Sam decides:** site-wide scripts against "zero JS" (003), an image spot check (401), generic photo alt text (505), and archived docs listed under their product (507).
-- Auto-merge is now on in the repo settings. Ticket 001 says it should be off, so 001 needs updating (or the setting reverting).
+- Repo governance (001) is closed. Sam dropped the auto-merge, squash-only, signed-commit and gmail-in-history criteria; the PR requirement and secret scanning are on. Design tokens (201) is closed: every criterion was already met.
+- **Merged on 7 November.** PR #6 brought the style guide (1301 to 1307), colour tokens (207), the article template (313), CI checks (804, 805), the copy draft (508), the PM pass and its blocks (1004, 1005) and the spacing scale (205) into `main`; PR #7 added the type and spacing tuning (208). The header and footer (206) and the code of conduct and templates (1101) follow in their own PRs.
 
 ## 1. Now (agents can do these without waiting)
 
-| # | Ticket | Who | Status (6 Nov, end of day) |
+| # | Ticket | Who | Status (7 Nov, morning) |
 |---|---|---|---|
-| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | Not started. |
+| 1 | **Agent leftovers** from the verification above (1101, 1002, 1003) | agent | **1101 done on its branch** (community files). The skill dry runs (1002, 1003) are not started. |
 | 2 | [508](508-copy-refresh.md) Copy refresh: remove the false "built with xStatic" line; draft the bio, footer and CV summary with [placeholders] | pair | **Drafted.** Sam reviews the wording and fills `[the tools I use]`. |
 | 3 | [805](805-ci-html-headers.md) Finish HTML validation and the hygiene tests | agent | **In review.** html-validate, rule self-tests and an EXIF check are in; the preview header check waits for 701. |
 | 4 | [804](804-ci-lighthouse.md) Lighthouse budgets in CI | agent | **In review.** The CI job and budgets are in; the first CI run confirms the Performance score. |
-| 5 | [313](313-article-template.md) Article template | agent | **In review.** Header, contents list and series parts are in; the code-block headers are left. |
+| 5 | [313](313-article-template.md) Article template | agent | **In review.** Header, contents list, series parts and code-block headers are in. Left: whether to highlight the current section (needs a small script; Sam decides). |
 
 ## 2. Design (each starts with one decision from Sam)
 
 | # | Ticket | Who | Sam decides |
 |---|---|---|---|
 | 6 | [207](207-colour-tokens.md) Colours centralised in a theme, literals banned, page themes (christmas) | agent | **In review.** Original colours kept, as decided. |
-| 6a | [205](205-colour-surfaces.md) Spacing scale and section rhythm | agent | Nothing: the colours stay as they are. |
+| 6a | [205](205-colour-surfaces.md) Spacing scale and section rhythm | agent | **In review.** Whether the extra space on wide screens is right (pages are 4% to 11% taller at 1280px). |
 | 7 | [310](310-hero-portrait.md) Hero: "live portrait" | pair | Approve option A; shoot a new photo or 6 to 8 second clip (shot list in the audit). |
 | 8 | [312](312-home-sections.md) Home: builds grid, writing list and photo strip | agent | Which builds to feature. |
 | 9 | [311](311-logowall-strip.md) Logo wall strip | agent | Nothing (the full client names are already fixed). |
-| 10 | [206](206-header-footer.md) Header and footer | agent | Nothing. |
+| 10 | [206](206-header-footer.md) Header and footer | agent | **In review.** Whether the footer wants a real sign-off sentence (it uses the name and tagline for now). |
 | 11 | [314](314-cv-template.md) CV: newest first | pair | Approve the wording. |
 | 12 | [315](315-index-pages.md) Articles and Software index pages | agent | Nothing. |
 | 13 | [905](905-prototypes-motion.md) View Transitions and blur-to-sharp | pair | Ship or drop each. The audit recommends shipping View Transitions and dropping blur-to-sharp, which 310 replaces. |
@@ -55,7 +56,7 @@ A living style guide at `/style-guide/`, never linked from the site, modelled on
 
 | # | Ticket | Who | What |
 |---|---|---|---|
-| 14 | [001](001-repo-governance.md) Repo governance | Sam | Signed commits, secret scanning, the gmail check, and the auto-merge decision. |
+| 14 | [001](001-repo-governance.md) Repo governance | Sam | **Done** (6 Nov). Sam dropped signed commits, squash-only, auto-merge off and the gmail history check. |
 | 15 | [701](701-netlify-config.md) Netlify site | pair | Create the site so PRs get deploy previews. This unblocks the header checks in 702 and 805. |
 | 16 | [703](703-goatcounter.md) GoatCounter | pair | Create the account and code. |
 | 17 | [704](704-search-console.md) Search Console | Sam | Verify by DNS; save a baseline export. |

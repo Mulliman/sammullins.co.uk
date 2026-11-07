@@ -11,11 +11,11 @@ const { href } = Astro.props;
 ---
 
 <div class="agent-view">
-  <a class="no-js-only" href={href}>
-    View this page as Markdown (what an agent sees)
+  <a class="no-js-only" href={href} aria-label="View this page as Markdown (what an agent sees)">
+    Markdown
   </a>
   <button type="button" class="agent-view__toggle js-only" data-agent-toggle data-href={href} aria-pressed="false">
-    <span aria-hidden="true">⌘</span> Agent view
+    <span aria-hidden="true">⌘</span> <span class="agent-view__label">Agent view</span>
   </button>
 </div>
 
@@ -167,22 +167,38 @@ const { href } = Astro.props;
 </script>
 
 <style>
+  /* In the header (ticket 206). */
   .agent-view {
-    text-align: center;
-    margin-bottom: var(--space-s);
     font-size: var(--step--1);
   }
   .agent-view a {
-    color: var(--color-link-inverse);
+    color: var(--color-link);
   }
   .agent-view__toggle {
     font-family: var(--font-mono);
+    font-size: var(--step--1);
+    white-space: nowrap;
     background: transparent;
-    color: var(--color-text-inverse);
+    color: var(--color-text);
     border: 1px dashed var(--brand-orange);
     border-radius: var(--radius);
     padding: var(--space-3xs) var(--space-xs);
     cursor: pointer;
+  }
+  /* Small phones: the icon only, so the header fits at 320px; the label stays for screen readers. */
+  @media (max-width: 30rem) {
+    .agent-view__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .agent-view__toggle {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
   }
   .agent-view__toggle[aria-pressed='true'] {
     background: var(--brand-orange);

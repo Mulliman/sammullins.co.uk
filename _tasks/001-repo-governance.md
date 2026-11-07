@@ -2,7 +2,7 @@
 id: "001"
 title: GitHub repo, identity & governance
 epic: Foundation
-status: todo
+status: done
 priority: p0
 size: M
 owner: pair
@@ -29,11 +29,11 @@ The repo is public and part of the showcase (decisions: *Repo visibility*, *Repo
 
 ## Acceptance criteria
 
-- [ ] `git log --format='%ae' | sort -u` shows no gmail address.
-- [ ] A direct push to `main` is rejected.
-- [ ] An unsigned commit can't be merged.
-- [ ] Auto-merge is off in repo settings.
-- [ ] Secret scanning and push protection are on.
+- [x] ~~`git log --format='%ae' | sort -u` shows no gmail address.~~ Dropped by Sam, 6 November 2026 (see Final disposition).
+- [x] A direct push to `main` is rejected.
+- [x] ~~An unsigned commit can't be merged.~~ Dropped by Sam, 6 November 2026.
+- [x] ~~Auto-merge is off in repo settings.~~ Dropped by Sam, 6 November 2026.
+- [x] Secret scanning and push protection are on.
 
 ## Out of scope
 
@@ -42,3 +42,16 @@ Licence and docs content (1101). CI checks themselves (8xx).
 ## Notes
 
 Commit the existing `_tasks/` and `_docs/` only after the identity is set. Nothing has been committed yet.
+
+## Final disposition (6 November 2026)
+
+Closed. Checked against the live GitHub settings on 6 November:
+
+- **Met.** The `Main` ruleset is active on the default branch with no bypass actors. It requires a pull request and status checks and code scanning, and it blocks deletion and force-pushes, so a direct push to `main` is rejected. Secret scanning and push protection are on, and so are Dependabot security updates.
+- **Dropped by Sam** ("I'm not too fussed about any of these"):
+  - Auto-merge is allowed in repo settings. Agents still never enable it (AGENTS.md rule 1), so nothing merges unless Sam does it.
+  - Merge commits and rebase merging are allowed, not squash only.
+  - Signed commits are not required on `main`.
+  - 3 commits on `main` carry the gmail address. They are GitHub's merge commits for PRs #1 to #3, made in the browser while "Keep my email addresses private" was off. History is not rewritten. The gmail address is still kept out of the site's content and the repo's files (decisions: *Contact*).
+
+`_docs/decisions.md` (*Repo quality bar*, *Contact*, *AI authoring workflow*) is amended to match.

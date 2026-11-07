@@ -1,11 +1,10 @@
 ---
 /**
- * Site footer (ticket 203): nav, the card grid from the original site, socials (rel="me"),
- * archive/photography links and the colophon slot.
+ * Site footer (tickets 203, 206): one sign-off line, the nav, socials (rel="me"), the colophon slot
+ * and the copyright. The bio cards are gone (ticket 206): that copy lives on the home page (508).
  */
 import logo from '../assets/brand/logo.svg?raw';
 import { getSite } from '../lib/content';
-import { md } from '../lib/markdown';
 
 const site = await getSite();
 const year = new Date().getFullYear();
@@ -14,8 +13,13 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
 ---
 
 <footer class="site-footer surface-inverse">
-  <div class="container">
-    <slot name="colophon" />
+  <div class="container site-footer__inner">
+    <p class="signoff">
+      <span class="footer-logo" aria-hidden="true" set:html={footerLogo} />
+      <span>
+        {site.name} · {site.tagline}
+      </span>
+    </p>
 
     <nav aria-label="Footer" class="footer-nav">
       <ul>
@@ -27,30 +31,18 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
       </ul>
     </nav>
 
-    <div class="footer-cards">
-      <div class="footer-card footer-card--logo">
-        <span class="footer-logo" aria-hidden="true" set:html={footerLogo} />
-      </div>
-      {site.footerCards.map((card) => (
-        <div class="footer-card">
-          <h2 class="footer-card__title">{card.title}</h2>
-          <Fragment set:html={md(card.body)} />
-        </div>
+    <ul class="socials" aria-label="Find me">
+      {site.socials.map((s) => (
+        <li>
+          <a href={s.href} rel="me noopener">
+            <span class="socials__label">{s.label}</span>
+            <span class="socials__handle">{s.handle}</span>
+          </a>
+        </li>
       ))}
-      <div class="footer-card">
-        <h2 class="footer-card__title">Find me</h2>
-        <ul class="socials">
-          {site.socials.map((s) => (
-            <li>
-              <a href={s.href} rel="me noopener">
-                <span class="socials__label">{s.label}</span>
-                <span class="socials__handle">{s.handle}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </ul>
+
+    <slot name="colophon" />
 
     <p class="copyright">
       &copy; {site.name} {year}. Words and pictures all rights reserved.{' '}
@@ -61,16 +53,40 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
 
 <style>
   .site-footer {
-    padding-block: var(--space-l) var(--space-m);
+    padding-block: var(--space-l-xl) var(--space-m);
     margin-top: auto;
   }
-  .footer-nav ul {
+  .site-footer__inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-m);
+    text-align: center;
+  }
+  .signoff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+    color: var(--color-text-inverse);
+    font-weight: var(--weight-strong);
+  }
+  .footer-logo {
+    width: 6rem;
+    display: block;
+    color: var(--color-text-inverse);
+  }
+  .footer-logo :global(svg) {
+    width: 100%;
+    height: auto;
+  }
+  .footer-nav ul,
+  .socials {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-s) var(--space-m);
+    gap: var(--space-2xs) var(--space-m);
   }
   .footer-nav a {
     color: var(--color-text-inverse);
@@ -81,61 +97,12 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
   .footer-nav a:hover {
     text-decoration: underline;
   }
-  .footer-cards {
-    display: grid;
-    gap: var(--space-s);
-    margin-top: var(--space-l);
-    /* Always 4 cards: 1 per row, then 2x2, then 4 across. Never auto-fit (it gives a 3/1 split). */
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  @media (min-width: 640px) {
-    .footer-cards {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (min-width: 960px) {
-    .footer-cards {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  .footer-card {
-    background: var(--color-surface-inverse);
-    padding: var(--space-m);
-    color: var(--color-text-inverse-muted);
+  .socials {
     font-size: var(--step--1);
   }
-  .footer-card :global(p + p) {
-    margin-top: 0.75em;
-  }
-  .footer-card--logo {
-    display: grid;
-    place-items: center;
-    color: var(--color-text-inverse);
-  }
-  .footer-logo {
-    width: 140px;
-    display: block;
-  }
-  .footer-logo :global(svg) {
-    width: 100%;
-    height: auto;
-  }
-  .footer-card__title {
-    font-size: var(--step-1);
-    color: var(--color-text-inverse);
-    margin-bottom: var(--space-xs);
-  }
-  .socials {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-2xs);
-  }
   .socials a {
-    display: flex;
-    justify-content: center;
-    gap: 0.5em;
+    display: inline-flex;
+    gap: 0.4em;
     text-decoration: none;
   }
   .socials__label {
@@ -148,8 +115,6 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
     text-decoration: underline;
   }
   .copyright {
-    text-align: center;
-    margin-top: var(--space-m);
     font-size: var(--step--1);
     color: var(--color-text-inverse-muted);
   }

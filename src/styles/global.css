@@ -134,6 +134,9 @@
     /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
     --radius-l: 12px;
+    /* The sticky header's height (ticket 206): 72px at most on desktop, 64px on a phone. Anchors and
+       sticky columns offset by it. */
+    --header-h: 4.5rem;
 
     /* Motion */
     --dur-fast: 150ms;
@@ -141,11 +144,16 @@
     --dur-slow: 1200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   }
+  @media (max-width: 30rem) {
+    :root {
+      --header-h: 4rem;
+    }
+  }
 }
 
 @layer base {
   html {
-    scroll-padding-top: var(--space-l);
+    scroll-padding-top: calc(var(--header-h) + var(--space-s));
   }
   body {
     background: var(--color-bg);
