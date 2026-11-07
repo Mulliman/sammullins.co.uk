@@ -2,7 +2,7 @@
 id: "702"
 title: Security headers & strict CSP
 epic: Hosting & security
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -34,11 +34,22 @@ The live site sends only HSTS today (audit §1). Target: A+ on securityheaders.c
 
 ## Acceptance criteria
 
-- [ ] securityheaders.com grade A+ on the preview.
-- [ ] Mozilla HTTP Observatory ≥ A+.
+- [x] securityheaders.com grade A+ on the preview.
+- [x] Mozilla HTTP Observatory ≥ A+.
 - [x] No CSP violations in the console across the kitchen-sink page and all page types (Playwright check).
-- [ ] Hotlinked `/media/*` images still load from github.com.
+- [x] Hotlinked `/media/*` images still load from github.com.
 
 ## Verification (6 November 2026)
 
 CSP: the axe test fails on any CSP console message on every page in both themes. Left: the header grades and hotlinked media need a Netlify deploy preview (701).
+
+## Verification (7 November 2026, PM pass)
+
+Checked against `https://sammullinscouk.netlify.app` (production build of `main`, 6bd5e8c):
+
+- securityheaders.com: **A+**.
+- Mozilla HTTP Observatory API: **A+**, score 145, 12 of 12 tests passed.
+- Hotlinks: `/media/03taqad3/xstatic-packages--1200x0.png` (from `_docs/legacy/media-referenced.txt`) returns 301 to `/media/03taqad3/xstatic-packages.avif`, which returns 200 `image/avif`, both with `Cross-Origin-Resource-Policy: cross-origin`. GitHub serves README images through its camo proxy, so CORP is the only header that could block them, and it doesn't. This was checked from the headers, not by viewing a GitHub README.
+- `/_astro/*` sends `public,max-age=31536000,immutable`; HTML sends `max-age=0,must-revalidate`.
+- The CSP's `default-src` and `script-src` hashes are in a `<meta>` tag (Astro's CSP support). The header carries only the directives a meta tag can't (`frame-ancestors` and so on).
+- One difference from the scope: HSTS is `max-age=31536000` (1 year), not the 2 years the scope asks for. One year is enough for preload, so it was left alone. Raise it in `netlify.toml` if Sam wants the scope exactly.

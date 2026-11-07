@@ -6,7 +6,7 @@ status: todo
 priority: p0
 size: M
 owner: pair
-depends_on: ["205"]
+depends_on: ["205", "508"]
 ---
 
 ## Why

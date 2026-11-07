@@ -2,7 +2,7 @@
 id: "315"
 title: Articles and Software index pages
 epic: Content model
-status: todo
+status: ready
 priority: p1
 size: M
 owner: agent

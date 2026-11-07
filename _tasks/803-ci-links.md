@@ -28,3 +28,8 @@ The old content links out heavily (GitHub, our.umbraco.com, NuGet, npm, CaptureO
 ## Verification (6 November 2026)
 
 Left: wait for the scheduled external link report to run once.
+
+## PM note (7 November 2026)
+
+- `external-links.yml` has never run (`gh run list --workflow external-links.yml` is empty). The first scheduled run is Monday 9 November at 06:17 UTC. It also has `workflow_dispatch`, so it can be run by hand.
+- **Bug:** the workflow creates its issue with `--label link-check`, and the repo has no such label (`gh label list --search link-check` is empty). `gh issue create` fails on a missing label, so the first run would fail at the last step. Fix: `gh label create link-check` once, or add `gh label create link-check --force` to the workflow step.

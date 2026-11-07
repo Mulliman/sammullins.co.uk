@@ -2,7 +2,7 @@
 id: "311"
 title: "Logo wall: compact strip with transparent logos"
 epic: Blocks
-status: todo
+status: ready
 priority: p1
 size: S
 owner: agent
