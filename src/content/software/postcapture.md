@@ -3,7 +3,7 @@ title: "PostCapture"
 description: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
 cover:
   src: "../../assets/media/irbdcjra/postcapture.avif"
-  alt: "PostCapture"
+  alt: "The PostCapture logo in orange on black"
 authorship: "sam"
 blocks:
   - type: "body"

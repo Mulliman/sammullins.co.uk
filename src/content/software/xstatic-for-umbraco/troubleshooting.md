@@ -3,7 +3,7 @@ title: "Troubleshooting"
 description: "xStatic should work out of the box, but if it doesn't, this is the place to check first."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Troubleshooting"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

@@ -2,7 +2,7 @@
 id: "003"
 title: Astro config for static, URL-identical output
 epic: Foundation
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -26,8 +26,12 @@ Every legacy URL must keep working byte-for-byte (decisions: *Legacy content*; a
 - [ ] A sample page at `src/content/pages/test.md` builds to `dist/test/index.html`.
 - [x] `/test` (without the slash) is not emitted as a separate file.
 - [x] `dist/sitemap-index.xml` exists with absolute `https://www.` URLs.
-- [ ] Zero JS is shipped for a page with no interactive blocks.
+- [x] ~~Zero JS is shipped for a page with no interactive blocks.~~ Dropped by Sam, 7 November 2026 (see Final disposition).
 
 ## Verification (6 November 2026)
 
 Not met: "zero JS on pages without interactive blocks". Every page ships the theme toggle, agent view and console secret scripts (small, and loaded as modules). Sam: accept this as site-wide by design, or make them load on demand.
+
+## Final disposition (7 November 2026)
+
+Closed. Sam: the site will have JS components, and that's fine. The site-wide scripts (theme toggle, agent view, console secret, Copy on code) stay as small same-origin modules that the CSP allows. The "zero JS" criterion is dropped.

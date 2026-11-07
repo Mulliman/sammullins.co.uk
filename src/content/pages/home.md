@@ -12,7 +12,7 @@ blocks:
     subheading: "Developer and Sitecore team lead"
     image:
       src: "../../assets/media/ekzoyg0n/mebeach.avif"
-      alt: "Photo of Sam Mullins"
+      alt: "Sam walking along a ridge against a cloudy sky, with a rucksack and a camera in hand"
   - type: "intro"
     heading: "I'm Sam and I like to create things"
     surface: "muted"
@@ -114,9 +114,9 @@ blocks:
         columns: 2
         images:
           - src: "../../assets/media/kwqkfhvg/king-of-the-river-1.avif"
-            alt: "King Of The River 1"
+            alt: "A kingfisher perched on a mossy branch, looking to the right"
           - src: "../../assets/media/ff5dehow/kingfisher-in-the-ice.avif"
-            alt: "Kingfisher In The Ice"
+            alt: "A kingfisher perched among frost-covered branches"
       - type: "intro"
         cta:
           label: "View more of my photography"

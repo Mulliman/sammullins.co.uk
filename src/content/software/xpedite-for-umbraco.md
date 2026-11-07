@@ -3,7 +3,7 @@ title: "XPEDITE for Umbraco"
 description: "Create Umbraco headless websites FAST! XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components."
 cover:
   src: "../../assets/media/gaajlr4q/banner.avif"
-  alt: "XPEDITE for Umbraco"
+  alt: "The XPEDITE logo on a dark teal background"
 authorship: "sam"
 status: "legacy"
 archived: true

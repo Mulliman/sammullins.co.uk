@@ -3,7 +3,7 @@ title: "Building your first static site"
 description: "Setting up xStatic is easy, and following these steps you can configure your first static site within minutes."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Building your first static site"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

@@ -3,7 +3,7 @@ title: "xStatic for Umbraco"
 description: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
 cover:
   src: "../../assets/media/egdifrhl/banner.avif"
-  alt: "xStatic for Umbraco"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

@@ -3,7 +3,7 @@ title: "Reptiles"
 description: "A cold blooded collection of geckos, chameleons, iguanas... and snakes."
 cover:
   src: "../../assets/media/1yxmfzfb/gecko.avif"
-  alt: "Reptiles"
+  alt: "A crested gecko clinging to a mossy branch, looking down at the camera"
 authorship: "sam"
 hidden: true
 blocks:
@@ -13,73 +13,73 @@ blocks:
     subheading: "Week 3"
     image:
       src: "../../assets/media/1eqkg5ev/bearded-dragon.avif"
-      alt: "Reptiles"
+      alt: "A close-up of a bearded dragon's head, lit against a black background"
   - type: "gallery"
     columns: 2
     images:
       - src: "../../assets/media/dm0pxrfl/gecko-profile.avif"
-        alt: "Gecko Profile"
+        alt: "A crested gecko in profile on a mossy branch, against a green background"
       - src: "../../assets/media/5lbfzxjg/gecko-profile-wet-1.avif"
-        alt: "Gecko Profile Wet 1"
+        alt: "A crested gecko in profile, facing left, against a green background"
   - type: "image"
     backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/1yxmfzfb/gecko.avif"
-      alt: "Gecko"
+      alt: "A crested gecko clinging to a mossy branch, looking down at the camera"
   - type: "gallery"
     columns: 2
     images:
       - src: "../../assets/media/1qojwqad/big-beardy-face.avif"
-        alt: "Big Beardy Face"
+        alt: "A bearded dragon looking at the camera, its spiky beard in sharp focus"
       - src: "../../assets/media/ybhbqn4n/beardy-face.avif"
-        alt: "Beardy Face"
+        alt: "A very close view of a bearded dragon's face and spiky beard"
   - type: "image"
     surface: "inverse"
     frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/3clgtquc/beardy-reflection.avif"
-      alt: "Beardy Reflection"
+      alt: "A bearded dragon on a black mirror surface, reflected beneath it"
   - type: "gallery"
     columns: 2
     images:
       - src: "../../assets/media/ebfbeqov/suspicious-beardy.avif"
-        alt: "Suspicious Beardy"
+        alt: "A bearded dragon on a reflective black surface, eyeing the camera"
       - src: "../../assets/media/ppajg3jw/beardy.avif"
-        alt: "Beardy"
+        alt: "A bearded dragon with its tail stretched out behind it, on a black reflective surface"
   - type: "image"
     backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/zeuf2z0x/chameleon.avif"
-      alt: "Chameleon"
+      alt: "A chameleon in shades of green and blue, perched on a branch"
   - type: "image"
     frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/b1vi1iyg/iguana.avif"
-      alt: "Iguana"
+      alt: "A grey water dragon lizard resting on a wooden log"
   - type: "image"
     surface: "inverse"
     width: "wide"
     image:
       src: "../../assets/media/qhslx5tx/snake-under-itself.avif"
-      alt: "Snake Under Itself"
+      alt: "A royal python with its head peeking out from under its own coils"
   - type: "image"
     surface: "inverse"
     frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/cyjpbvnm/royal-python.avif"
-      alt: "Royal Python"
+      alt: "A royal python coiled up on a black reflective surface"
   - type: "image"
     surface: "inverse"
     frame: "none"
     width: "wide"
     image:
       src: "../../assets/media/luvciwrs/snake-4.avif"
-      alt: "Snake 4"
+      alt: "A royal python curled into loops, its head resting at the front"
   - type: "cards"
     variant: "image"
     columns: 3

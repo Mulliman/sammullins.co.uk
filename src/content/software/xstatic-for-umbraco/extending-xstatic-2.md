@@ -3,7 +3,7 @@ title: "Extending xStatic v2+"
 description: "You can extend xStatic even more with the version 2 upgrade and this is the place to find out how."
 cover:
   src: "../../../assets/media/nsipcjdg/banner.avif"
-  alt: "Extending xStatic v2+"
+  alt: "The xStatic logo above the words xStatic v3"
 authorship: "sam"
 status: "legacy"
 archived: true

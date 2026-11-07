@@ -3,7 +3,7 @@ title: "PanoCapture"
 description: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
 cover:
   src: "../../assets/media/tolji2b5/panocapture.avif"
-  alt: "PanoCapture"
+  alt: "The PanoCapture logo in blue on black"
 authorship: "sam"
 blocks:
   - type: "body"

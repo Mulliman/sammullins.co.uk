@@ -6,7 +6,7 @@ series: "5-cool-things"
 order: 1
 cover:
   src: "../../assets/media/zapplr3l/5-cool-things-purple.avif"
-  alt: "5 cool things I used to build xStatic"
+  alt: "Banner on purple: The 5 cool things series"
 authorship: "sam"
 archived: true
 blocks:

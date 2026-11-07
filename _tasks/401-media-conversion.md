@@ -2,7 +2,7 @@
 id: "401"
 title: Convert originals to AVIF masters + media map
 epic: Media
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -27,8 +27,12 @@ The site references 132 MB of legacy media (368 MB counting unused crops). It sh
 - [x] All 306 paths in `_docs/legacy/media-referenced.txt` map to a new asset.
 - [x] Repo media total is ≤ 45 MB.
 - [x] No GPS or other EXIF in any committed image (checked in CI).
-- [ ] Spot check of 5 images side by side, approved by Sam.
+- [x] ~~Spot check of 5 images side by side, approved by Sam.~~ Dropped by Sam, 7 November 2026 (see Final disposition).
 
 ## Verification (6 November 2026)
 
 203 masters, 35 MB, 0 with EXIF; the hygiene test now enforces this in CI (805). Left: Sam's spot check of 5 images.
+
+## Final disposition (7 November 2026)
+
+Closed. Sam accepted an agent check instead of a side-by-side spot check. During the 505 alt text pass, 162 of the converted images were viewed (as contact-sheet previews, not full size) with no visible artefacts. If a photo looks soft or banded on the live site, reconvert that one from the original with `scripts/media/convert.ts`.

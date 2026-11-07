@@ -6,7 +6,7 @@ series: "5-cool-things"
 order: 3
 cover:
   src: "../../assets/media/uiwmnegi/5-cool-things.avif"
-  alt: "5 cool things I used to build PanoCapture and PostCapture"
+  alt: "Banner on green: The 5 cool things series"
 authorship: "sam"
 archived: true
 blocks:

@@ -3,7 +3,7 @@ title: "The Imposter"
 description: "The imposter is a party game for 4-7 people played on each individual's mobile phone. Each round one player is randomly chosen as the imposter, and that player needs to discover the secret word…"
 cover:
   src: "../../assets/media/xwceuizg/imposter.avif"
-  alt: "The Imposter"
+  alt: "The Imposter logo on a green background"
 authorship: "sam"
 blocks:
   - type: "body"

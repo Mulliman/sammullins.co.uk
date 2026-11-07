@@ -3,7 +3,7 @@ title: "Disney in the Dark"
 description: "A variety of pictures from the darker moments of Disney World, indoor rides and night-time shows."
 cover:
   src: "../../assets/media/5twbhpuk/dragon-in-fantasmic.avif"
-  alt: "Disney in the Dark"
+  alt: "The Maleficent dragon in Fantasmic, breathing green fire through smoke"
 authorship: "sam"
 hidden: true
 blocks:
@@ -12,52 +12,52 @@ blocks:
     heading: "Disney in the Dark"
     image:
       src: "../../assets/media/jajfv14q/dsc01709.avif"
-      alt: "Disney in the Dark"
+      alt: "Streaks of blue light projected onto falling water in a night-time show"
   - type: "gallery"
     columns: 3
     images:
       - src: "../../assets/media/k2unodit/castlefireworksred.avif"
-        alt: "Castlefireworksred"
+        alt: "White fireworks bursting over Cinderella Castle, which is lit with colourful projections"
       - src: "../../assets/media/aujjadfl/castlefireworksgreen3.avif"
-        alt: "Castlefireworksgreen3"
+        alt: "Green and pink fireworks surrounding Cinderella Castle at night"
       - src: "../../assets/media/n23bbgvr/castlefireworksmulti.avif"
-        alt: "Castlefireworksmulti"
+        alt: "Silver fireworks over Cinderella Castle, which is lit with colourful projections"
   - type: "image"
     backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/wrahdvzf/dsc01183.avif"
-      alt: "DSC01183"
+      alt: "A pirate lounging on a throne among piles of treasure on Pirates of the Caribbean"
   - type: "gallery"
     columns: 2
     images:
       - src: "../../assets/media/12tamnef/simba-at-the-festival-of-the-lion-king.avif"
-        alt: "Simba At The Festival Of The Lion King"
+        alt: "Adult Simba lit by a spotlight in Festival of the Lion King"
       - src: "../../assets/media/rtpgkmhs/elephant-from-festival-of-the-lion-king.avif"
-        alt: "Elephant From Festival Of The Lion King"
+        alt: "An elephant puppet with curled tusks in Festival of the Lion King"
   - type: "image"
     backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/dcej2uil/dragonfantasmic.avif"
-      alt: "Dragonfantasmic"
+      alt: "The Maleficent dragon in Fantasmic, lit green through smoke"
   - type: "gallery"
     columns: 2
     images:
       - src: "../../assets/media/xvmbwkux/arieleric.avif"
-        alt: "Arieleric"
+        alt: "Ariel and Eric in a rowing boat in a dark lagoon, with Sebastian nearby, on The Little Mermaid ride"
       - src: "../../assets/media/jive1k3d/dsc02585.avif"
-        alt: "DSC02585"
+        alt: "Ursula glowing purple beside her crystal ball on The Little Mermaid ride"
       - src: "../../assets/media/astfptis/eels.avif"
-        alt: "Eels"
+        alt: "Flotsam and Jetsam the eels peering out of the dark on The Little Mermaid ride"
       - src: "../../assets/media/lyxno45p/littlemermaidfish_1.avif"
-        alt: "Littlemermaidfish 1"
+        alt: "A green fish wearing a red hat on The Little Mermaid ride"
   - type: "image"
     backdrop: "blurred"
     width: "wide"
     image:
       src: "../../assets/media/y3hnfbir/mickey-water.avif"
-      alt: "Mickey Water"
+      alt: "Mickey in his sorcerer's robe on a rock in Fantasmic, with spray lit up gold beside him"
   - type: "cards"
     variant: "image"
     columns: 3
