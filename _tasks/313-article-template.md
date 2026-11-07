@@ -2,7 +2,7 @@
 id: "313"
 title: "Article template: meta, contents and code blocks"
 epic: Content model
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -23,7 +23,7 @@ Articles open with a full-width dark hero, and nothing near the title shows the 
 ## Acceptance criteria
 
 - [x] Reading time is computed at build time from the body.
-- [ ] Table of contents links match the heading anchors, and the current section is highlighted without JS where possible.
+- [x] Table of contents links match the heading anchors. ~~The current section is highlighted without JS where possible.~~ Highlighting dropped by Sam, 7 November 2026 (see Final disposition).
 - [x] Article body lines are 60 to 75 characters long at 1280px.
 
 ## Progress (6 November 2026)
@@ -35,3 +35,7 @@ Articles open with a full-width dark hero, and nothing near the title shows the 
   - Highlighting the current section needs JS (an IntersectionObserver). Not done; Sam to decide whether it's worth the script.
   - ~~Code-block headers (file name and copy button) for Markdown code.~~ **Done 6 November (overnight).** Article code renders as the shared code figure from ticket 1005 (language bar, Copy button, a named scroll region), with Prism's highlighting kept, and article tables stack on a phone. It is a string pass over the rendered body (`BodyHtml.astro`, `enhanceBodyHtml` in `src/lib/markdown.ts`) rather than a rehype step: Astro 7's default Markdown processor (Sätteri) only takes plugins through `@astrojs/markdown-satteri` as a direct dependency, and adding one wasn't worth it for this. Markdown fences have no file name, so body code shows the language only. The article grid now has one shrinkable column on narrow screens, which the 320px check needed once code scrolled instead of wrapping.
   - Series navigation is already in each article's content ("Other articles in the series"), so it isn't generated.
+
+## Final disposition (7 November 2026)
+
+Closed. Sam: skip highlighting the current section in the contents list. The list works without it (each entry jumps to its section), and it would add a scroll-watching script to every article. Can come back as a new ticket if wanted.
