@@ -71,16 +71,18 @@ html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g, (tag) => {
 
 // 3. Scripts and head links the single file can't use (the CSP allows no other origin, and the
 // site's module chunks import each other). The page works without JS: theme follows the system.
-// Repeat until nothing changes, so a tag split around another can't survive a single pass.
-for (let prev; prev !== html;) {
-  prev = html;
-  html = html
-    .replace(/<script\b[^>]*\bsrc="[^"]*"[^>]*><\/script>/g, '')
-    .replace(
-      /<link\b[^>]*rel="(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)"[^>]*>/g,
-      '',
-    );
-}
+// This is our own build output, not untrusted HTML: split out each tag and drop the ones we can't use.
+const dropTags = (source, tag, unwanted) =>
+  source
+    .split(tag)
+    .filter((part) => !unwanted.test(part))
+    .join('');
+html = dropTags(html, /(<script\b[^>]*><\/script>)/, /^<script\b[^>]*\bsrc="/);
+html = dropTags(
+  html,
+  /(<link\b[^>]*>)/,
+  /^<link\b[^>]*rel="(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)"/,
+);
 
 // 4. Local images (the header signature, icons).
 html = html.replace(/(<img\b[^>]*\bsrc=")(\/[^"]+)"/g, (m, pre, p) => {
