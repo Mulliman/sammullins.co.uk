@@ -39,7 +39,7 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 - [x] Merged tickets with no open criteria are `done`; the rest say what is left.
 - [x] "Lighthouse budgets" is a required check in the `Main` ruleset (Sam, 7 November 2026).
 
-## Left for Sam
+## Done by Sam (7 November 2026)
 
-- **A permission allowlist for Claude Code.** Claude may not edit its own permission settings. Run the `fewer-permission-prompts` skill, or add read-only `pnpm`, `git` and `gh` commands to `.claude/settings.json` yourself.
-- **Make "Lighthouse budgets" required.** GitHub, Settings, Rules, Rulesets, `Main`, Require status checks to pass, Add checks, "Lighthouse budgets". Claude may not change repo rulesets. Ticket 804 closes once this is done.
+- **Permission allowlist:** `.claude/settings.json` in the main checkout lets Claude Code run read-only `pnpm`, `git` and `gh` commands without asking, and denies merging. It isn't committed yet, so worktrees and other clones won't get it until it is.
+- **Lighthouse required:** "Lighthouse budgets" is in the `Main` ruleset's required checks, so ticket 804 is done.
