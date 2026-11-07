@@ -11,10 +11,17 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 - A Netlify build plugin that keeps generated images between deploys, so a deploy isn't a cold 15-minute image build (ticket 806).
 - Branch and PR rules for agents in `AGENTS.md`: one ticket per PR cut from `main`, draft PRs early, rebase instead of merge-forward, Conventional Commits titles (ticket 806).
 
+- A glossary of tools and terms at the end of the README.
+
 ### Changed
 
+- Docs-only PRs (root Markdown, `_tasks/`, `_docs/` outside `_docs/legacy/`, issue and PR templates) skip the build, accessibility, link and Lighthouse jobs; only Prettier runs.
 - CI caches Playwright's Chromium for the accessibility job (ticket 806).
 - Netlify unshallows the clone before building, so "last changed" dates are right (ticket 806).
+
+### Removed
+
+- `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`.
 
 ## 7 November 2026
 
