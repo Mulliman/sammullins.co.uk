@@ -2,7 +2,7 @@
 id: "1305"
 title: "Style guide: generic styles and HTML elements"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: S
 owner: agent
