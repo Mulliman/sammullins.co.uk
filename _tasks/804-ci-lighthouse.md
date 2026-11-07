@@ -2,7 +2,7 @@
 id: "804"
 title: "CI: Lighthouse budgets"
 epic: Quality gates
-status: done
+status: review
 priority: p1
 size: S
 owner: agent
@@ -24,7 +24,7 @@ Performance is part of the craft (decisions: *Repo quality bar*).
 
 ## Acceptance criteria
 
-- [x] Budgets enforced on PRs. ("Lighthouse budgets" added to the `Main` ruleset's required checks on 7 November 2026, ticket 806.)
+- [ ] Budgets enforced on PRs. (Left: Sam adds "Lighthouse budgets" to the `Main` ruleset's required checks; ticket 806.)
 - [x] A regression of more than 5 points fails. (The score floors enforce it; see Progress.)
 
 ## Progress (6 November 2026)

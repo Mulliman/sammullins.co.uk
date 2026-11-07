@@ -37,8 +37,9 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 - [ ] The first Netlify deploy logs "Saved node_modules/.astro", and the second logs "Restored". (Needs 701.)
 - [x] `CHANGELOG.md` exists and AGENTS.md points to it.
 - [x] Merged tickets with no open criteria are `done`; the rest say what is left.
-- [x] "Lighthouse budgets" is a required check in the `Main` ruleset.
+- [ ] "Lighthouse budgets" is a required check in the `Main` ruleset. (Sam: repo settings, see Left for Sam.)
 
 ## Left for Sam
 
 - **A permission allowlist for Claude Code.** Claude may not edit its own permission settings. Run the `fewer-permission-prompts` skill, or add read-only `pnpm`, `git` and `gh` commands to `.claude/settings.json` yourself.
+- **Make "Lighthouse budgets" required.** GitHub, Settings, Rules, Rulesets, `Main`, Require status checks to pass, Add checks, "Lighthouse budgets". Claude may not change repo rulesets. Ticket 804 closes once this is done.
