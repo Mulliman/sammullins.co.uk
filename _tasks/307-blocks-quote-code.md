@@ -2,7 +2,7 @@
 id: "307"
 title: Blocks: quote, code
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -25,6 +25,10 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] No highlighting JS shipped.
-- [ ] The copy button exists only when JS runs.
-- [ ] Code blocks scroll horizontally inside themselves; the page never scrolls sideways at 320px.
+- [x] No highlighting JS shipped.
+- [x] The copy button exists only when JS runs.
+- [x] Code blocks scroll horizontally inside themselves; the page never scrolls sideways at 320px.
+
+## Verification (6 November 2026)
+
+Prism runs at build time with no client JS; the copy button is `.js-only`; code wraps instead of scrolling (a recorded decision), and the a11y test checks for no sideways scroll at 320px.

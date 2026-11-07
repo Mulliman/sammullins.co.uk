@@ -2,7 +2,7 @@
 id: "503"
 title: Migrate articles (+ merge duplicate)
 epic: Migration
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -22,6 +22,10 @@ Keep all articles, with dated ones in the Archive (decisions: *Legacy content*).
 
 ## Acceptance criteria
 
-- [ ] 8 article pages plus 1 redirect.
-- [ ] Each archived article shows the legacy banner.
-- [ ] Zero broken internal links.
+- [x] 8 article pages plus 1 redirect.
+- [x] Each archived article shows the legacy banner.
+- [x] Zero broken internal links.
+
+## Verification (6 November 2026)
+
+8 article pages plus the git/ftp redirect; all 8 show the archive banner; lychee (803) finds no broken internal links.

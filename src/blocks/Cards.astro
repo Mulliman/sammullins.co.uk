@@ -44,6 +44,7 @@ const items: CardData[] = [
       {items.map((item) => (
         <li class="cards__item">
           <Card
+            headingLevel={block.heading || nested ? 3 : 2}
             title={item.title}
             text={item.text}
             image={item.image}
@@ -67,7 +68,7 @@ const items: CardData[] = [
      so a lone card sits in the middle at its column width. */
   .cards__grid {
     --cols: 1;
-    --gap: 15px;
+    --gap: var(--space-s);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

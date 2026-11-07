@@ -2,7 +2,7 @@
 id: "004"
 title: AGENTS.md and Agent Skills scaffold
 epic: Foundation
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -23,11 +23,15 @@ Use vendor-neutral agent standards wherever possible (decisions: *Agent standard
 
 ## Acceptance criteria
 
-- [ ] AGENTS.md is under ~300 lines and links out for detail.
-- [ ] CLAUDE.md contains only the import.
-- [ ] `_docs/agent-tooling.md` records the skill-location decision with sources and the date checked.
-- [ ] A fresh Claude Code session in the repo picks up AGENTS.md rules (spot check: it knows the merge rule).
+- [x] AGENTS.md is under ~300 lines and links out for detail.
+- [x] CLAUDE.md contains only the import.
+- [x] `_docs/agent-tooling.md` records the skill-location decision with sources and the date checked.
+- [x] A fresh Claude Code session in the repo picks up AGENTS.md rules (spot check: it knows the merge rule).
 
 ## Out of scope
 
 Skill contents (1002, 1003). Voice guide (1001).
+
+## Verification (6 November 2026)
+
+AGENTS.md is 107 lines; CLAUDE.md is `@AGENTS.md`; `_docs/agent-tooling.md` is dated 2026-11-05 with sources; this Claude Code session loaded AGENTS.md and followed the merge rule.

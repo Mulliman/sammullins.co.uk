@@ -8,6 +8,7 @@
 import { defineCollection, type SchemaContext } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { pageThemes } from './styles/themes';
 
 type ImageFn = SchemaContext['image'];
 
@@ -35,6 +36,12 @@ const imageRef = (image: ImageFn) =>
     });
 
 const collectionName = z.enum(['articles', 'software', 'albums']);
+
+/** A short label (ticket 1005), e.g. a kind, a ticket id or "phone". The tone colours its edge; the text carries the meaning. */
+const badge = z.object({
+  label: z.string().min(1),
+  tone: z.enum(['neutral', 'note', 'tip', 'warning']).default('neutral'),
+});
 
 /** Query used by `cards` and `listing` to pull items from a collection. */
 const query = z.object({
@@ -187,6 +194,22 @@ const leafBlocks = (image: ImageFn) => {
     poster: img.optional(),
   });
 
+  /** Numbered steps (ticket 1005). Each step is Markdown, optionally followed by a command or snippet with a Copy button. */
+  const steps = z.object({
+    type: z.literal('steps'),
+    heading: z.string().optional(),
+    items: z
+      .array(
+        z.object({
+          text: z.string().min(1),
+          code: z
+            .object({ lang: z.string().default('text'), code: z.string().min(1), filename: z.string().optional() })
+            .optional(),
+        }),
+      )
+      .min(1),
+  });
+
   /** Places the file Markdown body (rendered by Astro, with Prism) at this position. */
   const body = z.object({
     type: z.literal('body'),
@@ -209,6 +232,7 @@ const leafBlocks = (image: ImageFn) => {
     nextPrev,
     timeline,
     embed,
+    steps,
   ] as const;
 };
 
@@ -226,13 +250,24 @@ export const blockSchema = (image: ImageFn) => {
   // original site did (a heading and its cards share a section). Children render without their own
   // band, so their `surface` is ignored. Heroes are full-bleed and splits are bands, so neither nests.
   const [, ...nestable] = leaves;
+  // `disclosure` (ticket 1005) is a closed-by-default row (<details>) that opens to show its blocks.
+  // It needs no JS. `status: done` strikes the summary and adds a "Done" badge. It holds the same
+  // blocks a section does (not sections, splits or other disclosures), and can sit inside a section.
+  const disclosure = z.object({
+    type: z.literal('disclosure'),
+    summary: z.string().min(1),
+    badges: z.array(badge).optional(),
+    status: z.enum(['todo', 'done']).default('todo'),
+    open: z.boolean().default(false),
+    blocks: z.array(z.discriminatedUnion('type', nestable)).min(1),
+  });
   const section = z.object({
     type: z.literal('section'),
     surface: surface.default('default'),
     spacing: z.enum(['none', 'small', 'normal']).default('normal'),
-    blocks: z.array(z.discriminatedUnion('type', nestable)).min(1),
+    blocks: z.array(z.discriminatedUnion('type', [...nestable, disclosure])).min(1),
   });
-  return z.discriminatedUnion('type', [...leaves, split, section]);
+  return z.discriminatedUnion('type', [...leaves, split, disclosure, section]);
 };
 
 /* ------------------------------------------------------------------ */
@@ -252,6 +287,8 @@ const base = (image: ImageFn) =>
     archived: z.boolean().default(false),
     hidden: z.boolean().default(false),
     noindex: z.boolean().default(false),
+    /** Page theme (ticket 207): colours from src/styles/themes/<theme>.css, e.g. `christmas`. */
+    theme: z.enum(pageThemes).default('default'),
     blocks: z.array(blockSchema(image)).default([]),
   });
 
@@ -270,6 +307,9 @@ const articles = defineCollection({
     base(image).extend({
       date: z.coerce.date(),
       kind: z.enum(['article', 'note']).default('article'),
+      /** Numbered series this article belongs to, e.g. `5-cool-things`; `order` is its part number. */
+      series: z.string().optional(),
+      order: z.number().int().positive().optional(),
     }),
 });
 
@@ -298,6 +338,15 @@ const redirects = defineCollection({
   }),
 });
 
+/**
+ * The style guide's components examples (ticket 1304). Each entry's `block` is validated by the real block
+ * schema at build time, so an example that would not pass on a page fails the build.
+ */
+const styleGuideExamples = defineCollection({
+  loader: file('./src/content/style-guide/components.yaml'),
+  schema: ({ image }) => z.object({ title: z.string().min(1), block: blockSchema(image) }),
+});
+
 const link = z.object({ label: z.string(), href: z.string() });
 
 const settings = defineCollection({
@@ -324,4 +373,4 @@ const settings = defineCollection({
   }),
 });
 
-export const collections = { pages, articles, software, albums, redirects, settings };
+export const collections = { pages, articles, software, albums, redirects, settings, styleGuideExamples };

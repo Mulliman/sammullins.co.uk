@@ -18,7 +18,7 @@ blocks:
     surface: "default"
 ---
 
-### Configuring an FTP deployment step by step
+## Configuring an FTP deployment step by step
 
 1.  Within the xStatic section of Umbraco, open your site configuration in edit mode by selecting from the tree or using the edit button on the dashboard.
 2.  In the Deployment Target field, select FTP and fill in the fields with the details of your FTP server. For the hostname don't include the scheme, for example you only need to specify 'ftp.mywebsite.com'. If you don't specify a port number, 21 is used. Press Save.

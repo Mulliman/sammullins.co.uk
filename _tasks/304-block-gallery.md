@@ -2,7 +2,7 @@
 id: "304"
 title: Block: gallery with dialog lightbox
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -30,6 +30,10 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] Works fully without JS, falling back to plain image links.
-- [ ] Lightbox passes axe and is operable by keyboard alone.
-- [ ] Gallery JS is ≤ 5 KB gzipped, with no dependencies.
+- [x] Works fully without JS, falling back to plain image links.
+- [x] Lightbox passes axe and is operable by keyboard alone.
+- [x] Gallery JS is ≤ 5 KB gzipped, with no dependencies.
+
+## Verification (6 November 2026)
+
+`tests/a11y/interactions.test.mjs`: without JS every thumbnail links to a full-size image that returns 200; the lightbox opens with Enter, moves with the arrow keys, closes with Escape, returns focus and passes axe while open; the gallery script is under 5 KB gzipped.

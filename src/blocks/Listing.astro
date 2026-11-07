@@ -30,6 +30,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
         {entries.map((e) => (
           <li class="listing__cell">
             <Card
+              headingLevel={block.heading || nested ? 3 : 2}
               title={e.data.title}
               text={e.data.description}
               image={e.data.cover}
@@ -105,7 +106,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   /* Grid: as the original articles page. 1 column, 2 from 640px, 3 from 960px, rows centred. */
   .listing__grid {
     --cols: 1;
-    --gap: 15px;
+    --gap: var(--space-s);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

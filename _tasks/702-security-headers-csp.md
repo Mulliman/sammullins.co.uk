@@ -36,5 +36,9 @@ The live site sends only HSTS today (audit §1). Target: A+ on securityheaders.c
 
 - [ ] securityheaders.com grade A+ on the preview.
 - [ ] Mozilla HTTP Observatory ≥ A+.
-- [ ] No CSP violations in the console across the kitchen-sink page and all page types (Playwright check).
+- [x] No CSP violations in the console across the kitchen-sink page and all page types (Playwright check).
 - [ ] Hotlinked `/media/*` images still load from github.com.
+
+## Verification (6 November 2026)
+
+CSP: the axe test fails on any CSP console message on every page in both themes. Left: the header grades and hotlinked media need a Netlify deploy preview (701).

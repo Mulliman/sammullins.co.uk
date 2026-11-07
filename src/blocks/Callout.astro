@@ -76,7 +76,7 @@ const showTitle = Boolean(title) && title !== label;
 
 <style>
   .callout {
-    --accent: light-dark(#0b57d0, #8ab4ff);
+    --accent: var(--color-note);
     background: var(--color-surface);
     color: var(--color-text);
     border: 1px solid var(--color-border);
@@ -85,10 +85,10 @@ const showTitle = Boolean(title) && title !== label;
     padding: var(--space-s) var(--space-m);
   }
   .callout--tip {
-    --accent: light-dark(#1f6f3a, #8fd6a2);
+    --accent: var(--color-tip);
   }
   .callout--warning {
-    --accent: light-dark(#a4262c, #ff8a80);
+    --accent: var(--color-warning);
   }
   .callout--legacy {
     --accent: var(--brand-orange);

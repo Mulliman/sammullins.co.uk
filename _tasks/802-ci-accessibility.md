@@ -2,7 +2,7 @@
 id: "802"
 title: "CI: axe WCAG 2.2 AA on every page"
 epic: Quality gates
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -26,5 +26,9 @@ WCAG 2.2 AA is enforced, not aspirational (decisions: *Accessibility target*).
 
 ## Acceptance criteria
 
-- [ ] Zero axe violations, with no blanket disables (any rule exception is per-element, with a comment and a linked issue).
-- [ ] A required status check.
+- [x] Zero axe violations, with no blanket disables (any rule exception is per-element, with a comment and a linked issue).
+- [x] A required status check.
+
+## Verification (6 November 2026)
+
+`tests/a11y/axe.test.mjs` has no disabled rules; "Accessibility (axe, WCAG 2.2 AA)" is a required check in the Main ruleset.

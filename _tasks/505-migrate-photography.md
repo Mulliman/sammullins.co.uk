@@ -21,6 +21,10 @@ Keep photography, but hidden (decisions: *Photography*).
 
 ## Acceptance criteria
 
-- [ ] All 10 photography URLs build.
+- [x] All 10 photography URLs build.
 - [ ] Every image has non-empty, non-generic alt text.
-- [ ] Photography does not appear in the main nav.
+- [x] Photography does not appear in the main nav.
+
+## Verification (6 November 2026)
+
+Not met: album alt text is generic (titles such as "Cars2", and 12 empty alts not marked decorative). Content work, not urgent while photography is hidden.

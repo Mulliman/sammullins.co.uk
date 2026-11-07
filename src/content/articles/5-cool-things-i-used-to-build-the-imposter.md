@@ -2,6 +2,8 @@
 title: "5 cool things I used to build The Imposter"
 description: "Continuing the series looking at some of the tech behind my open source projects, this article includes the front end and back end technologies used to create my PWA party game."
 date: "2021-04-07"
+series: "5-cool-things"
+order: 2
 cover:
   src: "../../assets/media/zaqdt00v/5-cool-things-blue.avif"
   alt: "5 cool things I used to build The Imposter"

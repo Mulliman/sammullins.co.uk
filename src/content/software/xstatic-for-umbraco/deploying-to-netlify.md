@@ -18,7 +18,7 @@ blocks:
     surface: "default"
 ---
 
-### Configuring a Netlify deployment step by step
+## Configuring a Netlify deployment step by step
 
 1.  If you don't already have a Netlify account create one and log in.
 2.  Create a folder on your local machine, and add an index.html file. The content of this file are not important.

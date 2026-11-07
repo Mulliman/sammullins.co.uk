@@ -2,6 +2,8 @@
 title: "5 cool things I used to build xStatic"
 description: "As part of a series looking at some of the tech behind my open source projects, this article outlines my favourite products and services I used for the first time on xStatic."
 date: "2021-04-07"
+series: "5-cool-things"
+order: 1
 cover:
   src: "../../assets/media/zapplr3l/5-cool-things-purple.avif"
   alt: "5 cool things I used to build xStatic"

@@ -3,9 +3,11 @@
  * Code (ticket 307): a code block with an optional filename tab and a Copy button.
  * Rendered as escaped text (no build-time highlighting: see report). The block scrolls
  * horizontally inside itself and is focusable so keyboard users can scroll it.
- * The Copy button is hidden until JS runs (.js-only); the script is progressive enhancement.
+ * The markup is the shared code figure (src/lib/markdown.ts, ticket 1005), so fenced code in block
+ * Markdown and `steps` look and copy the same. Styles: global.css. Copy script: CopyCode.astro.
  */
 import Section from '../components/Section.astro';
+import { codeFigure } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
 interface Props {
@@ -13,125 +15,8 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { lang, code, filename } = block;
-const langClass = `language-${lang.replace(/[^a-z0-9-]/gi, '') || 'text'}`;
 ---
 
 <Section nested={nested} width="narrow">
-  <figure class="code" data-code>
-    {filename && <figcaption class="code__filename">{filename}</figcaption>}
-    <div class="code__bar">
-      <span class="code__lang">{lang}</span>
-      <button type="button" class="code__copy js-only" data-copy>
-        Copy
-      </button>
-    </div>
-    <pre
-      class={langClass}
-      tabindex="0"
-      role="region"
-      aria-label={filename ? `Code: ${filename}` : `Code (${lang})`}
-    ><code class={langClass} set:text={code}></code></pre>
-    <p class="visually-hidden" aria-live="polite" data-copy-status></p>
-  </figure>
+  <Fragment set:html={codeFigure(block)} />
 </Section>
-
-<style>
-  .code {
-    margin: 0;
-    min-width: 0;
-    max-width: 100%;
-  }
-
-  .code__filename {
-    display: inline-block;
-    margin-bottom: -1px;
-    padding: var(--space-3xs) var(--space-s);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    border-bottom: 0;
-    border-radius: var(--radius) var(--radius) 0 0;
-  }
-
-  .code__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-s);
-    padding: var(--space-3xs) var(--space-s);
-    font-size: var(--step--1);
-    color: var(--color-text-muted);
-    background: var(--color-code-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius) var(--radius) 0 0;
-  }
-  .code__filename + .code__bar {
-    border-radius: 0;
-  }
-  .code__lang {
-    font-family: var(--font-mono);
-    text-transform: lowercase;
-  }
-
-  .code__copy {
-    padding: var(--space-3xs) var(--space-xs);
-    font-size: var(--step--1);
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    cursor: pointer;
-  }
-  .code__copy:hover {
-    border-color: var(--color-text-muted);
-  }
-
-  .code pre {
-    margin: 0;
-    max-width: 100%;
-    overflow-x: auto;
-    padding: var(--space-s);
-    border: 1px solid var(--color-border);
-    border-top: 0;
-    border-radius: 0 0 var(--radius) var(--radius);
-    background: var(--color-code-bg);
-    color: var(--color-text);
-    white-space: pre;
-    line-height: 1.5;
-  }
-  .code pre code {
-    font-family: var(--font-mono);
-    font-size: 0.9em;
-    background: none;
-    padding: 0;
-  }
-</style>
-
-<script>
-  // Copy buttons: progressive enhancement. Announces "Copied" through the block's aria-live region.
-  const announce = (figure: HTMLElement, message: string) => {
-    const status = figure.querySelector<HTMLElement>('[data-copy-status]');
-    if (!status) return;
-    status.textContent = '';
-    // Re-set on the next frame so repeated copies are announced again.
-    requestAnimationFrame(() => {
-      status.textContent = message;
-    });
-  };
-
-  document.querySelectorAll<HTMLElement>('[data-code]').forEach((figure) => {
-    const button = figure.querySelector<HTMLButtonElement>('[data-copy]');
-    const text = figure.querySelector('pre code')?.textContent ?? '';
-    if (!button) return;
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(text);
-        announce(figure, 'Copied');
-      } catch {
-        announce(figure, 'Copy failed');
-      }
-    });
-  });
-</script>

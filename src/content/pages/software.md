@@ -1,7 +1,7 @@
 ---
 title: "Software"
 description: "As well as spending my career building production websites for others I also like to build software for myself. If I build something that could be used by anyone else, I try to make the code open…"
-authorship: "sam"
+authorship: "sam-ai"
 blocks:
   - type: "hero"
     variant: "plain"
@@ -116,6 +116,6 @@ blocks:
 
 ## For Web Developers
 
-#### This website has been built using two of my own open source projects. In fact, the two projects were started so that I could build and host this site for free.
+#### This site used to be built with two of my own open source projects, [UmbracoFolio](/software/umbracofolio/) and [xStatic](/software/xstatic-for-umbraco/). I started both so that I could build and host it for free.
 
-Anyone with a bit of ASP.Net knowledge will be able to set up and host their own version of this site within an hour.
+The current version is built with [Astro](https://astro.build/), and the source is on [GitHub](https://github.com/Mulliman/sammullins.co.uk). If you'd rather run your own site on Umbraco, UmbracoFolio and xStatic are still there: anyone with a bit of ASP.Net knowledge should be able to set one up within an hour.

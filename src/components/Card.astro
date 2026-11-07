@@ -16,9 +16,12 @@ interface Props {
   date?: Date | undefined;
   cta?: string | undefined;
   variant?: 'full' | 'image' | 'text';
+  /** h2 when nothing above the card grid is a heading (keeps heading order valid); h3 otherwise. */
+  headingLevel?: 2 | 3;
 }
 
-const { title, text, image, href, date, cta, variant = 'full' } = Astro.props;
+const { title, text, image, href, date, cta, variant = 'full', headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
 // An image card with no image falls back to the text style.
 const kind = variant === 'image' && !image ? 'text' : variant;
 
@@ -34,7 +37,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     </div>
   )}
   <div class:list={[kind === 'image' ? 'card__overlay' : 'card__body']}>
-    <h3 class="card__title">
+    <Heading class="card__title">
       {href ? (
         <a class="card__link" href={href}>
           {title}
@@ -42,7 +45,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       ) : (
         title
       )}
-    </h3>
+    </Heading>
     {kind !== 'image' && date && (
       <p class="card__meta">
         <time datetime={iso(date)}>{fmt(date)}</time>
@@ -71,7 +74,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   /* Text style: the original's plain UIkit card. No box, centred thin title and text. */
   .card--text {
-    padding: 30px;
+    padding: var(--space-m-l);
     text-align: center;
   }
   /* Full style: the original UIkit "default" card. White card, image on top, centred body. */
@@ -81,7 +84,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     overflow: hidden;
   }
   .card--full .card__body {
-    padding: 30px;
+    padding: var(--space-m-l);
     flex: 1;
   }
 
@@ -91,8 +94,8 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .card--image {
     display: grid;
     overflow: hidden;
-    color: #fff;
-    background: #000;
+    color: var(--color-on-media);
+    background: var(--color-media-bg);
   }
   .card--image > .card__media,
   .card--image > .card__overlay {
@@ -101,7 +104,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .card__overlay {
     align-self: end;
     padding: var(--space-xs) var(--space-s);
-    background: rgb(0 0 0 / 0.72);
+    background: var(--color-media-scrim-soft);
   }
 
   .card__media {
@@ -140,7 +143,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     text-align: left;
   }
   .card--image .card__title {
-    color: #fff;
+    color: var(--color-on-media);
   }
 
   .card__link {

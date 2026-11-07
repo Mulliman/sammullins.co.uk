@@ -1,0 +1,113 @@
+---
+/**
+ * Disclosure (ticket 1005): a row that is closed by default and opens to show its blocks.
+ * A native <details>, so it works with the keyboard and without JS. `status: done` strikes the
+ * summary and adds a "Done" badge, so the state is shown in text as well as style.
+ */
+import Section from '../components/Section.astro';
+import Badge from '../components/Badge.astro';
+import Blocks from '../components/Blocks.astro';
+import { mdInline } from '../lib/markdown';
+import type { Block, BlockOf } from '../lib/content';
+
+interface Props {
+  block: BlockOf<'disclosure'>;
+  nested?: boolean;
+}
+const { block, nested = false } = Astro.props;
+const { summary, badges = [], status, open } = block;
+const done = status === 'done';
+---
+
+<Section nested={nested} width="narrow" tight>
+  <details class:list={['disclosure', { 'disclosure--done': done }]} open={open}>
+    <summary class="disclosure__summary">
+      <span class="disclosure__title" set:html={mdInline(summary)} />
+      {(done || badges.length > 0) && (
+        <span class="disclosure__badges">
+          {done && <Badge label="Done" tone="tip" />}
+          {badges.map((b) => (
+            <Badge label={b.label} tone={b.tone} />
+          ))}
+        </span>
+      )}
+    </summary>
+    <div class="disclosure__body">
+      <Blocks blocks={block.blocks as Block[]} nested />
+    </div>
+  </details>
+</Section>
+
+<style>
+  .disclosure {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .disclosure__summary {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3xs) var(--space-xs);
+    align-items: baseline;
+    padding: var(--space-s) var(--space-m);
+    cursor: pointer;
+    list-style: none;
+  }
+  .disclosure__summary::-webkit-details-marker {
+    display: none;
+  }
+  /* The chevron: a bordered corner, turned down when open. */
+  .disclosure__summary::before {
+    content: '';
+    grid-row: 1;
+    width: 0.5em;
+    height: 0.5em;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-0.1em) rotate(-45deg);
+    transition: transform 0.15s ease;
+  }
+  .disclosure[open] > .disclosure__summary::before {
+    transform: translateY(-0.25em) rotate(45deg);
+  }
+  .disclosure__summary:hover .disclosure__title {
+    color: var(--color-link);
+  }
+
+  .disclosure__title {
+    font-weight: var(--weight-strong);
+    color: var(--color-heading);
+  }
+  .disclosure__title :global(code) {
+    font-size: 0.9em;
+  }
+  .disclosure__badges {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+  }
+
+  .disclosure--done .disclosure__title {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .disclosure__body {
+    padding: var(--space-s) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--color-border);
+    min-width: 0;
+  }
+  /* Children are nested blocks; let them use the disclosure's full width. */
+  .disclosure__body :global(.nested-block--narrow) {
+    max-width: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .disclosure__summary::before {
+      transition: none;
+    }
+  }
+</style>

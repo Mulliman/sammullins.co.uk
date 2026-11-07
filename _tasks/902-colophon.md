@@ -2,7 +2,7 @@
 id: "902"
 title: "Colophon: last changed + authorship icon"
 epic: Delight
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -25,6 +25,10 @@ Honest, minimal provenance: when it last changed, and whether the *writing* is b
 
 ## Acceptance criteria
 
-- [ ] Changing a content file and committing updates its displayed date.
-- [ ] Both icons have accessible text.
-- [ ] The Markdown twin (901) includes `authorship` and `updated`.
+- [x] Changing a content file and committing updates its displayed date.
+- [x] Both icons have accessible text.
+- [x] The Markdown twin (901) includes `authorship` and `updated`.
+
+## Verification (6 November 2026)
+
+The date comes from the git log per file; the author icon has visually hidden text; twins carry `authorship` and `updated`.

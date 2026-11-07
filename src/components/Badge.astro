@@ -1,0 +1,42 @@
+---
+/**
+ * Badge (ticket 1005): a short label such as a kind, a ticket id or "phone". The tone colours the
+ * edge only; the label is always text, so meaning never depends on colour.
+ */
+interface Props {
+  label: string;
+  tone?: 'neutral' | 'note' | 'tip' | 'warning';
+}
+const { label, tone = 'neutral' } = Astro.props;
+---
+
+<span class:list={['badge', `badge--${tone}`]}>{label}</span>
+
+<style>
+  .badge {
+    --accent: var(--color-border);
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--space-2xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    line-height: 1.6;
+    /* Short labels stay on one line; a long one wraps inside its border rather than widening the page. */
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--accent);
+    border-left-width: 4px;
+    border-radius: var(--radius);
+  }
+  .badge--note {
+    --accent: var(--color-note);
+  }
+  .badge--tip {
+    --accent: var(--color-tip);
+  }
+  .badge--warning {
+    --accent: var(--color-warning);
+  }
+</style>

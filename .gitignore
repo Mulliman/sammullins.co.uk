@@ -14,3 +14,8 @@ Thumbs.db
 
 # agent worktrees
 .claude/worktrees/
+.lighthouseci/
+.compare/
+
+# PM desk pages (ticket 1004): local only
+.desk/

@@ -43,3 +43,20 @@ export function resolve(path, map = redirects()) {
   if (r) return servedFile(r.to) ? { status: r.status, path: r.to } : { status: 404, path: r.to, broken: true };
   return { status: 404, path: clean };
 }
+
+/** The ready style guide pages, parsed from src/lib/style-guide.ts (tickets 1303, 1307). Returns site paths. */
+export function styleGuideReadyPaths() {
+  const src = readFileSync(join(ROOT, 'src/lib/style-guide.ts'), 'utf8');
+  const out = [];
+  for (const m of src.matchAll(/href: '([^']+)',[\s\S]*?ready: (true|false),/g)) {
+    if (m[2] === 'true') out.push(m[1]);
+  }
+  return out;
+}
+
+/** The page theme names from src/styles/themes/index.ts (ticket 207). */
+export function pageThemeNames() {
+  const src = readFileSync(join(ROOT, 'src/styles/themes/index.ts'), 'utf8');
+  const list = /pageThemes = \[([^\]]*)\]/.exec(src)?.[1] ?? '';
+  return [...list.matchAll(/'([^']+)'/g)].map((m) => m[1]);
+}

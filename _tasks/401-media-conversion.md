@@ -24,7 +24,11 @@ The site references 132 MB of legacy media (368 MB counting unused crops). It sh
 
 ## Acceptance criteria
 
-- [ ] All 306 paths in `_docs/legacy/media-referenced.txt` map to a new asset.
-- [ ] Repo media total is ≤ 45 MB.
-- [ ] No GPS or other EXIF in any committed image (checked in CI).
+- [x] All 306 paths in `_docs/legacy/media-referenced.txt` map to a new asset.
+- [x] Repo media total is ≤ 45 MB.
+- [x] No GPS or other EXIF in any committed image (checked in CI).
 - [ ] Spot check of 5 images side by side, approved by Sam.
+
+## Verification (6 November 2026)
+
+203 masters, 35 MB, 0 with EXIF; the hygiene test now enforces this in CI (805). Left: Sam's spot check of 5 images.

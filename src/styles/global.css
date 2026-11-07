@@ -79,31 +79,6 @@
   }
 
   :root {
-    color-scheme: light dark;
-
-    /* Brand */
-    --brand-orange: #da7d03; /* original accent, decorative use only */
-
-    /* Light theme (default) */
-    --color-bg: #ffffff;
-    --color-bg-muted: #f2f2f2;
-    --color-bg-inverse: #1c1c1c;
-    --color-surface: #ffffff;
-    --color-surface-inverse: #262626;
-    --color-text: #4d4d4d; /* body copy, 8.4:1 on bg (the original used #666) */
-    --color-text-muted: #595959; /* 7:1 on bg */
-    --color-heading: #333333; /* thin display headings, as the original */
-    --color-text-strong: #000000; /* section headings ("sam-heading") */
-    --color-text-inverse: #f5f5f5;
-    --color-text-inverse-muted: #c8c8c8;
-    --color-link: #9a5200; /* 6.0:1 on #fff, 5.5:1 on muted */
-    --color-link-hover: #6e3a00;
-    --color-link-inverse: #f2a43c; /* 8.4:1 on inverse */
-    --color-border: #d6d6d6;
-    --color-focus: #0b57d0;
-    --color-frame: #ffffff; /* the thick white photo frame */
-    --color-code-bg: #f6f6f6;
-
     /* Type. One family does everything; weight and size carry the hierarchy. */
     --font-sans: 'Mona Sans', 'Mona Sans fallback', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     --font-display: var(--font-sans);
@@ -128,72 +103,34 @@
     --tracking-display: -0.025em;
     --tracking-heading: -0.015em;
 
-    /* Space & shape */
-    --space-3xs: 0.25rem;
-    --space-2xs: 0.5rem;
-    --space-xs: 0.75rem;
-    --space-s: 1rem;
-    --space-m: 1.5rem;
-    --space-l: 2.5rem;
-    --space-xl: 4rem;
-    --space-2xl: 6rem;
+    /* Space (ticket 205): a fluid scale that matches the type scale (utopia.fyi), from 360px to 1280px
+       wide. Each step grows by the body-text ratio (16px to 18px, 1.125x). The pairs (s-m, m-l, l-xl)
+       grow by one step, for space that should open up more on wide screens, such as section padding. */
+    --space-3xs: clamp(0.25rem, 0.2378rem + 0.0543vw, 0.2813rem);
+    --space-2xs: clamp(0.5rem, 0.4755rem + 0.1087vw, 0.5625rem);
+    --space-xs: clamp(0.75rem, 0.7133rem + 0.163vw, 0.8438rem);
+    --space-s: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+    --space-m: clamp(1.5rem, 1.4266rem + 0.3261vw, 1.6875rem);
+    --space-l: clamp(2.5rem, 2.3777rem + 0.5435vw, 2.8125rem);
+    --space-xl: clamp(4rem, 3.8043rem + 0.8696vw, 4.5rem);
+    --space-2xl: clamp(6rem, 5.7065rem + 1.3043vw, 6.75rem);
+    --space-s-m: clamp(1rem, 0.731rem + 1.1957vw, 1.6875rem);
+    --space-m-l: clamp(1.5rem, 0.9864rem + 2.2826vw, 2.8125rem);
+    /* Section padding: the original 40px on phones to about 70px on desktop, now without the jump at 960px. */
+    --space-l-xl: clamp(2.5rem, 1.7174rem + 3.4783vw, 4.5rem);
     --gutter: clamp(1rem, 4vw, 2.5rem);
     --measure: 68ch; /* about 75 characters of Mona Sans */
     --container: 1200px;
     --container-narrow: 800px; /* the original's 2/3-width text column */
+    /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
-    --shadow: 0 0 20px rgb(0 0 0 / 0.5);
-    --shadow-soft: 0 14px 25px rgb(0 0 0 / 0.16); /* UIkit card hover */
+    --radius-l: 12px;
 
     /* Motion */
     --dur-fast: 150ms;
     --dur: 300ms;
     --dur-slow: 1200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
-  :root[data-theme='dark'] {
-    color-scheme: dark;
-  }
-  :root[data-theme='light'] {
-    color-scheme: light;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-      --color-bg: #121212;
-      --color-bg-muted: #1b1b1b;
-      --color-bg-inverse: #000000;
-      --color-surface: #1f1f1f;
-      --color-surface-inverse: #262626;
-      --color-text: #cfcfcf;
-      --color-text-muted: #b5b5b5;
-      --color-heading: #ededed;
-      --color-text-strong: #ffffff;
-      --color-link: #f2a43c;
-      --color-link-hover: #ffc477;
-      --color-border: #333333;
-      --color-focus: #8ab4ff;
-      --color-frame: #f0f0f0;
-      --color-code-bg: #1a1a1a;
-    }
-  }
-  :root[data-theme='dark'] {
-    --color-bg: #121212;
-    --color-bg-muted: #1b1b1b;
-    --color-bg-inverse: #000000;
-    --color-surface: #1f1f1f;
-    --color-surface-inverse: #262626;
-    --color-text: #cfcfcf;
-    --color-text-muted: #b5b5b5;
-    --color-heading: #ededed;
-    --color-text-strong: #ffffff;
-    --color-link: #f2a43c;
-    --color-link-hover: #ffc477;
-    --color-border: #333333;
-    --color-focus: #8ab4ff;
-    --color-frame: #f0f0f0;
-    --color-code-bg: #1a1a1a;
   }
 }
 
@@ -311,7 +248,7 @@
 
   ::selection {
     background: var(--brand-orange);
-    color: #000;
+    color: var(--color-on-brand);
   }
 }
 
@@ -325,32 +262,25 @@
     margin-inline: auto;
   }
 
-  /* UIkit section rhythm: 40px, 70px from 960px. */
+  /* Section rhythm (ticket 205): the original UIkit sizes (40px to 70px, and 15px to 25px for tight
+     sections), now fluid instead of jumping at 960px. */
   .section {
-    padding-block: 40px;
+    padding-block: var(--space-l-xl);
   }
   .section--tight {
-    padding-block: 15px;
+    padding-block: var(--space-s-m);
   }
-  @media (min-width: 960px) {
-    .section {
-      padding-block: 70px;
-    }
-    .section--tight {
-      padding-block: 25px;
-    }
-  }
-  /* `section` block spacing (UIkit's section sizes). */
+  /* `section` block spacing. */
   .section.section--spacing-none {
     padding-block: 0;
   }
   .section.section--spacing-small {
-    padding-block: 15px;
+    padding-block: var(--space-s-m);
   }
-  @media (min-width: 960px) {
-    .section.section--spacing-small {
-      padding-block: 25px;
-    }
+  /* Two plain bands in a row are split by a hairline rather than a grey band (ticket 205), so a page
+     can use fewer full-width grey bands. Muted and inverse bands still separate themselves. */
+  .section.surface-default + .section.surface-default {
+    border-top: 1px solid var(--color-border);
   }
   .surface-default {
     background: var(--color-bg);
@@ -361,18 +291,10 @@
     --color-surface: var(--color-bg);
     color: var(--color-text);
   }
+  /* The token remapping for inverse surfaces lives in themes/default.css. */
   .surface-inverse {
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
-    --color-text: var(--color-text-inverse-muted);
-    --color-text-muted: var(--color-text-inverse-muted);
-    --color-heading: #ffffff;
-    --color-text-strong: #ffffff;
-    --color-link: var(--color-link-inverse);
-    --color-link-hover: #ffc477;
-    --color-border: #3a3a3a;
-    --color-surface: var(--color-surface-inverse);
-    --color-focus: #8ab4ff;
   }
 
   .skip-link {
@@ -426,13 +348,13 @@
     text-decoration: none;
   }
   .surface-inverse .button {
-    background: #ffffff;
-    border-color: #ffffff;
-    color: #222222;
+    background: var(--color-button-inverse-bg);
+    border-color: var(--color-button-inverse-bg);
+    color: var(--color-button-inverse-fg);
   }
   .surface-inverse .button:hover {
-    background: #e6e6e6;
-    color: #222222;
+    background: var(--color-button-inverse-bg-hover);
+    color: var(--color-button-inverse-fg);
   }
   .text-left {
     text-align: left;
@@ -519,33 +441,6 @@
     opacity: 1;
   }
 
-  /* Prism tokens (class-based, CSP-safe). Light/dark via tokens. */
-  :root {
-    --tok-comment: #5c6670;
-    --tok-keyword: #a3215f;
-    --tok-string: #1f6f3a;
-    --tok-number: #8a4b00;
-    --tok-fn: #2b4fb3;
-    --tok-punct: #444;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-      --tok-comment: #9aa4ad;
-      --tok-keyword: #ff8ac0;
-      --tok-string: #8fd6a2;
-      --tok-number: #ffbe6b;
-      --tok-fn: #9db8ff;
-      --tok-punct: #c8c8c8;
-    }
-  }
-  :root[data-theme='dark'] {
-    --tok-comment: #9aa4ad;
-    --tok-keyword: #ff8ac0;
-    --tok-string: #8fd6a2;
-    --tok-number: #ffbe6b;
-    --tok-fn: #9db8ff;
-    --tok-punct: #c8c8c8;
-  }
   /* Code wraps rather than scrolls: no keyboard-trap scroll regions, no 320px overflow (ticket 802). */
   pre[class*='language-'],
   .prose pre {
@@ -610,39 +505,133 @@
   }
 }
 
-/* Logo gradients are drawn dark-on-light; invert them on dark surfaces (footer) and in the dark theme. */
+/* The logo's gradient stops take their colours from the theme (--logo-stop-a/b/c), which flips
+   them for dark mode and inverse surfaces. "SAM" follows --color-text-strong; "MULLINS" follows currentColor. */
 @layer utilities {
-  /* "SAM" in the logo: black on light, white on dark. "MULLINS" follows currentColor. */
   .logo-strong {
     fill: var(--color-text-strong);
   }
-  .surface-inverse stop[stop-color='#000'] {
-    stop-color: #fff;
+  .logo-stop-a {
+    stop-color: var(--logo-stop-a);
   }
-  .surface-inverse stop[stop-color='#3c3c3c'] {
-    stop-color: #cfcfcf;
+  .logo-stop-b {
+    stop-color: var(--logo-stop-b);
   }
-  .surface-inverse stop[stop-color='#808080'] {
-    stop-color: #8c8c8c;
+  .logo-stop-c {
+    stop-color: var(--logo-stop-c);
   }
-  :root[data-theme='dark'] stop[stop-color='#000'] {
-    stop-color: #fff;
+}
+
+/* The code figure (tickets 307, 1005): shared by the `code` block, `steps` and fenced code in block
+   Markdown (src/lib/markdown.ts codeFigure). Global rather than scoped because Markdown output can't
+   carry Astro's scoped attribute. After the prose rules on purpose: `.code pre` beats `.prose pre`. */
+@layer utilities {
+  .code {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
   }
-  :root[data-theme='dark'] stop[stop-color='#3c3c3c'] {
-    stop-color: #cfcfcf;
+  .code__filename {
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: var(--space-3xs) var(--space-s);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-bottom: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
   }
-  :root[data-theme='dark'] stop[stop-color='#808080'] {
-    stop-color: #8c8c8c;
+  .code__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding: var(--space-3xs) var(--space-s);
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius) var(--radius) 0 0;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) stop[stop-color='#000'] {
-      stop-color: #fff;
+  .code__filename + .code__bar {
+    border-radius: 0;
+  }
+  .code__lang {
+    font-family: var(--font-mono);
+    text-transform: lowercase;
+  }
+  .code__copy {
+    padding: var(--space-3xs) var(--space-xs);
+    font-size: var(--step--1);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .code__copy:hover {
+    border-color: var(--color-text-muted);
+  }
+  .code pre {
+    margin: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: var(--space-s);
+    border: 1px solid var(--color-border);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--color-code-bg);
+    color: var(--color-text);
+    white-space: pre;
+    line-height: 1.5;
+  }
+  .code pre code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: none;
+    padding: 0;
+  }
+  .prose .code {
+    margin-block: 0.75em;
+  }
+
+  /* Tables in block Markdown (ticket 1005): on a phone each row becomes a card, each value under its
+     column name (from the cell's data-label), so nothing scrolls sideways and values get the full width. */
+  @media (max-width: 40rem) {
+    .prose table.table-stack,
+    .table-stack tbody,
+    .table-stack tr,
+    .table-stack td {
+      display: block;
+      width: 100%;
     }
-    :root:not([data-theme='light']) stop[stop-color='#3c3c3c'] {
-      stop-color: #cfcfcf;
+    .table-stack thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
-    :root:not([data-theme='light']) stop[stop-color='#808080'] {
-      stop-color: #8c8c8c;
+    .table-stack tr {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-2xs) var(--space-xs);
+    }
+    .table-stack tr + tr {
+      margin-top: var(--space-xs);
+    }
+    .prose .table-stack td {
+      border: 0;
+      padding: var(--space-3xs) 0;
+    }
+    .table-stack td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: var(--step--1);
+      font-weight: var(--weight-strong);
+      color: var(--color-text-muted);
     }
   }
 }

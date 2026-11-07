@@ -2,7 +2,7 @@
 id: "204"
 title: Typography refresh (one variable sans, fluid scale, no eyebrows)
 epic: Design system
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -30,4 +30,4 @@ After the November 2026 design audit, Sam rejected thin Lato 100 display heading
 - [x] Font payload is at most 120 KB: about 40 KB normal, plus 42 KB italic only when italics are used.
 - [x] No `text-transform: uppercase` and no `--font-script` left in `src/`.
 - [x] `pnpm check`, `pnpm lint` and `pnpm test` pass.
-- [ ] Sam approves the before and after screenshots in the PR.
+- [x] Sam approves the before and after screenshots in the PR (merged as PR #3).

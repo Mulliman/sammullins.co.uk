@@ -32,6 +32,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | 10xx | AI authoring | Voice guide and Agent Skills |
 | 11xx | Docs | README, architecture, licence notices |
 | 12xx | Launch | Content gate, review, cutover, decommission |
+| 13xx | Style guide | Unlisted living style guide: foundations, themes, components, elements, page structures |
 
 ## Ticket index
 
@@ -48,6 +49,10 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [201](201-design-tokens-themes.md) | Design tokens, light/dark themes & toggle | p0 | M | agent | 003 |
 | [202](202-typography.md) | Self-hosted typography & thin heading rules | p0 | S | agent | 201 |
 | [203](203-layout-shell.md) | Layout shell: header, nav, footer, landmarks | p0 | M | agent | 103, 202 |
+| [204](204-typography-refresh.md) | Typography refresh (Mona Sans, fluid scale, no eyebrows) | p0 | M | agent | 202 |
+| [205](205-colour-surfaces.md) | Spacing scale and section rhythm | p0 | M | agent | 207 |
+| [206](206-header-footer.md) | Header, nav and footer refresh | p1 | M | agent | 205 |
+| [207](207-colour-tokens.md) | Centralise colours in a theme, ban literals, add page themes | p0 | M | agent | 204 |
 | [301](301-block-hero.md) | Block: hero | p0 | M | agent | 102, 402 |
 | [302](302-blocks-text.md) | Blocks: intro, prose, callout | p0 | S | agent | 102 |
 | [303](303-block-image.md) | Block: image | p0 | S | agent | 402 |
@@ -57,6 +62,12 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [307](307-blocks-quote-code.md) | Blocks: quote, code | p0 | S | agent | 102 |
 | [308](308-blocks-split-timeline.md) | Blocks: split, timeline | p0 | M | agent | 102 |
 | [309](309-block-embed.md) | Block: embed (click-to-load facade) | p1 | S | agent | 303 |
+| [310](310-hero-portrait.md) | Hero: "live portrait" variant | p0 | M | pair | 205 |
+| [311](311-logowall-strip.md) | Logo wall: compact strip with transparent logos | p1 | S | agent | 205 |
+| [312](312-home-sections.md) | Home: builds grid, writing list and photo strip | p0 | L | agent | 205, 310 |
+| [313](313-article-template.md) | Article template: meta, contents and code blocks | p0 | M | agent | 204 |
+| [314](314-cv-template.md) | CV: newest first, compact timeline | p0 | M | pair | 205 |
+| [315](315-index-pages.md) | Articles and Software index pages | p1 | M | agent | 313 |
 | [401](401-media-conversion.md) | Convert originals to AVIF masters + media map | p0 | M | agent | 002 |
 | [402](402-picture-component.md) | Responsive `<Picture>` component | p0 | S | agent | 401 |
 | [403](403-legacy-media-paths.md) | Legacy `/media/…` paths resolve | p0 | S | agent | 401, 601 |
@@ -67,6 +78,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [505](505-migrate-photography.md) | Migrate photography (hidden) | p0 | M | agent | 501, 304 |
 | [506](506-migrate-xstatic14.md) | Migrate /xstatic14/ | p0 | S | agent | 501 |
 | [507](507-archive-index.md) | Archive index page | p0 | S | agent | 305, 503, 504 |
+| [508](508-copy-refresh.md) | Copy refresh: bio, footer, CV summary, software page | p0 | S | pair | – |
 | [601](601-redirect-map.md) | Redirect map → Netlify `_redirects` | p0 | S | agent | 003 |
 | [602](602-legacy-url-test.md) | CI test: every legacy URL & media path resolves | p0 | M | agent | 601, 801 |
 | [603](603-not-found-page.md) | Helpful 404 page | p1 | S | agent | 203 |
@@ -89,13 +101,24 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1002](1002-skills-authoring.md) | Skills: new-article, new-note, new-page | p0 | M | agent | 004, 1001, 102 |
 | [1003](1003-skills-media-redirect.md) | Skills: add-images, redirect | p0 | S | agent | 004, 401, 601 |
 | [1101](1101-docs.md) | README, ARCHITECTURE, SECURITY, CONTRIBUTING, licences | p0 | M | agent | 001 |
+| [1004](1004-skill-pm-pass.md) | Skill: pm-pass (what needs Sam, as a desk page) | p1 | M | agent | 004 |
+| [1005](1005-desk-page-gaps.md) | Blocks the PM desk page needed and the site lacks | p2 | M | agent | 1004 |
 | [1201](1201-launch-content-gate.md) | Launch content gate (new content series) | p0 | – | sam | 1002 |
 | [1202](1202-bluesky-domain-handle.md) | Bluesky domain handle | p2 | S | pair | 701 |
 | [1203](1203-prelaunch-review.md) | Pre-launch review on preview | p0 | S | sam | all p0 |
 | [1204](1204-cutover.md) | Domain cutover & post-launch monitoring | p0 | S | pair | 1203 |
 | [1205](1205-decommission.md) | Decommission old site & folders | p2 | S | sam | 1204 + 30 days |
+| [1301](1301-style-guide-shell.md) | Style guide: unlisted section, shell and navigation | p1 | M | agent | 207 |
+| [1302](1302-style-guide-foundations.md) | Style guide: foundations generated from the tokens | p1 | M | agent | 1301 |
+| [1303](1303-style-guide-themes.md) | Style guide: themes, light and dark, page themes | p1 | S | agent | 1301, 1302 |
+| [1304](1304-style-guide-components.md) | Style guide: every block and every variant, with its YAML | p1 | L | agent | 1301 |
+| [1305](1305-style-guide-elements.md) | Style guide: generic styles and HTML elements | p1 | S | agent | 1301 |
+| [1306](1306-style-guide-page-structures.md) | Style guide: example page structures | p1 | M | pair | 1301, 1304 |
+| [1307](1307-style-guide-ci.md) | Visual regression in CI: revisit once the redesign settles | p2 | M | agent | 205, 206, 310, 312, 314 |
 
 ## Suggested order
+
+> The build is merged. For what is left, and in what order, see **[BACKLOG.md](BACKLOG.md)**. The original order is below for history.
 
 1. **Foundation:** 001 → 002 → 003, 004, 005, 801, 701
 2. **Model & shell:** 101 → 102, 103 · 201 → 202 → 203 · 401 → 402 · 601

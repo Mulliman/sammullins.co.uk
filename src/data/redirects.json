@@ -8,5 +8,25 @@
     "to": "/software/umbracofolio/",
     "status": 301,
     "reason": "UmbracoFolio is legacy; the 16 MB package download was retired, so the old link lands on its archived page"
+  },
+  "/blocks-demo/text/": {
+    "to": "/style-guide/components/",
+    "status": 301,
+    "reason": "Demo page moved into the style guide components page (ticket 1304)"
+  },
+  "/blocks-demo/media/": {
+    "to": "/style-guide/components/",
+    "status": 301,
+    "reason": "Demo page moved into the style guide components page (ticket 1304)"
+  },
+  "/blocks-demo/lists/": {
+    "to": "/style-guide/components/",
+    "status": 301,
+    "reason": "Demo page moved into the style guide components page (ticket 1304)"
+  },
+  "/blocks-demo/theme-christmas/": {
+    "to": "/style-guide/components/",
+    "status": 301,
+    "reason": "Christmas theme demo moved into the style guide; points at the components page until a theme page exists (ticket 1304)"
   }
 }

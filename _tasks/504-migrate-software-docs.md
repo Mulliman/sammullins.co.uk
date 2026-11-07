@@ -2,7 +2,7 @@
 id: "504"
 title: Migrate software + xStatic/XPEDITE docs
 epic: Migration
-status: review
+status: done
 priority: p0
 size: L
 owner: agent
@@ -25,5 +25,9 @@ Package users still land on these docs from our.umbraco.com, NuGet and GitHub (d
 
 ## Acceptance criteria
 
-- [ ] All 27 `/software/...` legacy URLs are built at identical paths.
-- [ ] Docs series navigation works end to end.
+- [x] All 27 `/software/...` legacy URLs are built at identical paths.
+- [x] Docs series navigation works end to end.
+
+## Verification (6 November 2026)
+
+27 pages under `dist/software/`, matching the legacy URLs (legacy URL test); series nav renders prev and next.

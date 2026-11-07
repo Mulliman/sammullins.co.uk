@@ -2,7 +2,7 @@
 id: "305"
 title: Blocks: cards, listing, nextPrev
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: L
 owner: agent
@@ -29,6 +29,10 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] A query-driven card list updates when a new article is added, with no page edit.
-- [ ] Each card link has one accessible name (no duplicate "read more" links).
-- [ ] nextPrev uses `<nav aria-label="Series">` with `rel="prev"` and `rel="next"`.
+- [x] A query-driven card list updates when a new article is added, with no page edit.
+- [x] Each card link has one accessible name (no duplicate "read more" links).
+- [x] nextPrev uses `<nav aria-label="Series">` with `rel="prev"` and `rel="next"`.
+
+## Verification (6 November 2026)
+
+Articles and Software use `listing` queries; each card has one link (the title, stretched with ::after); nextPrev renders `<nav aria-label="Series">` with `rel="prev"` and `rel="next"`.

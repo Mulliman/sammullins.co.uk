@@ -96,7 +96,32 @@ async function blockToMd(b: Block, entry: AnyEntry): Promise<string> {
       return cols.join('\n\n');
     }
     case 'section':
-      return (await Promise.all(b.blocks.map((x) => blockToMd(x, entry)))).filter((p) => p && p.trim()).join('\n\n');
+      return (await Promise.all(b.blocks.map((x) => blockToMd(x as Block, entry))))
+        .filter((p) => p && p.trim())
+        .join('\n\n');
+    case 'steps':
+      return [
+        b.heading && `## ${b.heading}`,
+        ...b.items.map((s, i) => {
+          const text = `${i + 1}. ${s.text.replace(/\n/g, '\n   ')}`;
+          return s.code
+            ? `${text}\n\n   \`\`\`${s.code.lang}\n   ${s.code.code.replace(/\n/g, '\n   ')}\n   \`\`\``
+            : text;
+        }),
+      ]
+        .filter(Boolean)
+        .join('\n');
+    case 'disclosure': {
+      const tags = [b.status === 'done' ? 'Done' : '', ...(b.badges ?? []).map((x) => x.label)].filter(Boolean);
+      const inner = (await Promise.all(b.blocks.map((x) => blockToMd(x as Block, entry)))).filter((p) => p && p.trim());
+      return [
+        `### ${b.status === 'done' ? `~~${b.summary}~~` : b.summary}`,
+        tags.length ? `_${tags.join(' · ')}_` : '',
+        ...inner,
+      ]
+        .filter(Boolean)
+        .join('\n\n');
+    }
   }
 }
 

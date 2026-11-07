@@ -10,13 +10,22 @@ import Colophon from './Colophon.astro';
 import AgentView from './AgentView.astro';
 import Callout from '../blocks/Callout.astro';
 import NextPrev from '../blocks/NextPrev.astro';
-import { containsBlock, urlFor, seriesNav, type AnyEntry, type Block } from '../lib/content';
+import ArticleHeader from './ArticleHeader.astro';
+import {
+  containsBlock,
+  urlFor,
+  seriesNav,
+  articleSeriesPart,
+  readingMinutes,
+  type AnyEntry,
+  type Block,
+} from '../lib/content';
 
 interface Props {
   entry: AnyEntry;
 }
 const { entry } = Astro.props;
-const { Content } = await render(entry as CollectionEntry<'pages'>);
+const { Content, headings } = await render(entry as CollectionEntry<'pages'>);
 const data = entry.data;
 const url = urlFor(entry);
 
@@ -29,6 +38,18 @@ const hasSeriesNav = Boolean(series.prev || series.next) && !containsBlock(block
 
 const published = 'date' in data ? data.date : undefined;
 const isArticle = entry.collection === 'articles';
+
+// Articles (ticket 313): a light header replaces a leading text-only hero, and the body gets a contents list.
+const article =
+  isArticle && published
+    ? {
+        minutes: readingMinutes(entry.body ?? ''),
+        part: await articleSeriesPart(entry as CollectionEntry<'articles'>),
+        toc: headings.filter((h) => h.depth === 2).map((h) => ({ slug: h.slug, text: h.text })),
+      }
+    : undefined;
+if (article && blocks[0]?.type === 'hero' && (blocks[0].variant === 'plain' || !blocks[0].image))
+  blocks = blocks.slice(1);
 const jsonLd = isArticle
   ? {
       '@context': 'https://schema.org',
@@ -73,11 +94,26 @@ const archiveBlock = {
   noindex={data.noindex}
   markdownHref={`${url}index.md`}
   jsonLd={jsonLd}
+  theme={data.theme}
 >
+  {article && published && (
+    <ArticleHeader
+      title={data.title}
+      description={data.description}
+      date={published}
+      minutes={article.minutes}
+      part={article.part}
+      archived={data.archived}
+    />
+  )}
   {data.archived && blocks[0]?.type === 'hero' && <Blocks blocks={[blocks[0]]} Content={Content} />}
-  {data.archived && <Callout block={archiveBlock} />}
+  {data.archived && !article && <Callout block={archiveBlock} />}
   <div data-agent-human>
-    <Blocks blocks={data.archived && blocks[0]?.type === 'hero' ? blocks.slice(1) : blocks} Content={Content} />
+    <Blocks
+      blocks={data.archived && blocks[0]?.type === 'hero' ? blocks.slice(1) : blocks}
+      Content={Content}
+      toc={article?.toc}
+    />
   </div>
   {hasSeriesNav && <NextPrev block={{ type: 'nextPrev', ...series }} />}
   <AgentView href={`${url}index.md`} slot="colophon" />

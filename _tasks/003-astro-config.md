@@ -24,6 +24,10 @@ Every legacy URL must keep working byte-for-byte (decisions: *Legacy content*; a
 ## Acceptance criteria
 
 - [ ] A sample page at `src/content/pages/test.md` builds to `dist/test/index.html`.
-- [ ] `/test` (without the slash) is not emitted as a separate file.
-- [ ] `dist/sitemap-index.xml` exists with absolute `https://www.` URLs.
+- [x] `/test` (without the slash) is not emitted as a separate file.
+- [x] `dist/sitemap-index.xml` exists with absolute `https://www.` URLs.
 - [ ] Zero JS is shipped for a page with no interactive blocks.
+
+## Verification (6 November 2026)
+
+Not met: "zero JS on pages without interactive blocks". Every page ships the theme toggle, agent view and console secret scripts (small, and loaded as modules). Sam: accept this as site-wide by design, or make them load on demand.

@@ -12,7 +12,8 @@ A page is a typed list of blocks in front matter, plus an optional Markdown body
 
 - Schema and every field: `_docs/content-model.md`.
 - Block fields and examples, generated from the schema: `../_shared/block-catalogue.md`.
-- Live examples: `src/content/pages/blocks-demo/*.md` (hidden demo pages; do not link to them).
+- Live examples: `src/content/style-guide/components.yaml`, shown on the unlisted `/style-guide/components/` page (do not link to it).
+- Example structures for each page type: `/style-guide/page-structures/#<type>` (for example `#cv`, `#index`, `#album`, `#campaign`), with example files `src/content/pages/page-structure-example-*.md`.
 - Voice: `_docs/voice.md` (if missing, say so in the PR body).
 
 ## Preconditions

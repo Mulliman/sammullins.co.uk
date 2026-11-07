@@ -50,7 +50,13 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
         </button>
       </div>
       <figure class="lightbox__figure">
-        <img class="lightbox__img" alt="" decoding="async" />
+        <!-- A 1px transparent placeholder: the script sets the real src when the lightbox opens. -->
+        <img
+          class="lightbox__img"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          alt=""
+          decoding="async"
+        />
         <figcaption class="lightbox__caption" hidden></figcaption>
       </figure>
       <div class="lightbox__nav">
@@ -187,7 +193,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
   .gallery__grid {
     --cols: 3;
     columns: 1;
-    column-gap: 15px;
+    column-gap: var(--space-s);
     list-style: none;
     padding: 0;
   }
@@ -212,7 +218,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
   }
   .gallery__item {
     break-inside: avoid;
-    margin-bottom: 15px;
+    margin-bottom: var(--space-s);
   }
   .gallery__link {
     display: block;
@@ -230,7 +236,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
     padding: var(--space-xs);
     border: 0;
     background: transparent;
-    color: #f5f5f5;
+    color: var(--color-on-media-soft);
   }
   .lightbox[open] {
     display: flex;
@@ -238,7 +244,7 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
     gap: var(--space-xs);
   }
   .lightbox::backdrop {
-    background: rgb(0 0 0 / 0.92);
+    background: var(--color-media-backdrop);
   }
 
   .lightbox__bar,
@@ -269,23 +275,23 @@ const viewerLabel = block.heading ? `${block.heading}: image viewer` : 'Image vi
   .lightbox__caption {
     font-size: var(--step--1);
     text-align: center;
-    color: #c8c8c8;
+    color: var(--color-on-media-muted);
   }
 
   .lightbox__btn {
     min-width: 2.75rem;
     min-height: 2.75rem;
     padding: var(--space-2xs) var(--space-s);
-    background: rgb(255 255 255 / 0.1);
-    color: #f5f5f5;
-    border: 1px solid rgb(255 255 255 / 0.4);
+    background: var(--color-media-control);
+    color: var(--color-on-media-soft);
+    border: 1px solid var(--color-media-control-border);
     border-radius: var(--radius);
     cursor: pointer;
   }
   .lightbox__btn:hover {
-    background: rgb(255 255 255 / 0.2);
+    background: var(--color-media-control-hover);
   }
   .lightbox :focus-visible {
-    outline-color: #8ab4ff;
+    outline-color: var(--color-media-focus);
   }
 </style>

@@ -2,7 +2,7 @@
 id: "309"
 title: Block: embed (click-to-load facade)
 epic: Blocks
-status: review
+status: done
 priority: p1
 size: S
 owner: agent
@@ -23,5 +23,9 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] Zero requests to Google domains before the click (Playwright test).
-- [ ] The iframe has a `title`.
+- [x] Zero requests to Google domains before the click (Playwright test).
+- [x] The iframe has a `title`.
+
+## Verification (6 November 2026)
+
+`tests/a11y/interactions.test.mjs` blocks and records every external request: none go to Google or YouTube before the click, and the iframe added afterwards has a title and a youtube-nocookie URL.

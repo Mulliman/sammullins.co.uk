@@ -1,0 +1,38 @@
+---
+/**
+ * PM desk page (ticket 1004). Renders a desk file made only of the site's own blocks, so the page
+ * dogfoods the real components and any gap shows up as something the blocks can't express.
+ *
+ * It exists only when PM_DESK points at a desk JSON file (see scripts/pm/desk.mjs). Normal and CI
+ * builds have no PM_DESK, so getStaticPaths returns nothing and no page is built or deployed.
+ */
+import { readFileSync } from 'node:fs';
+import { z } from 'astro/zod';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Blocks from '../../components/Blocks.astro';
+import { blockSchema } from '../../content.config';
+import type { Block } from '../../lib/content';
+
+export function getStaticPaths() {
+  const file = process.env.PM_DESK;
+  if (!file) return [];
+  const raw = JSON.parse(readFileSync(file, 'utf8'));
+  return [{ params: { id: String(raw.id) }, props: { raw } }];
+}
+
+// Images are not allowed on a desk page: it is bundled into one file, and nothing on it needs one.
+const noImages = (() => z.never()) as unknown as Parameters<typeof blockSchema>[0];
+
+const desk = z
+  .object({
+    id: z.string().regex(/^[\w-]+$/),
+    title: z.string(),
+    description: z.string(),
+    blocks: z.array(blockSchema(noImages)).min(1),
+  })
+  .parse(Astro.props.raw);
+---
+
+<BaseLayout title={desk.title} description={desk.description} noindex={true}>
+  <Blocks blocks={desk.blocks as Block[]} />
+</BaseLayout>

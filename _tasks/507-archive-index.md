@@ -21,4 +21,8 @@ Dated content lives in an Archive section at unchanged URLs (decisions: *Legacy 
 ## Acceptance criteria
 
 - [ ] Every `archived: true` item appears on `/archive/` automatically.
-- [ ] No archived item appears in the main Articles or Software listings by default.
+- [x] No archived item appears in the main Articles or Software listings by default.
+
+## Verification (6 November 2026)
+
+Partly: archived docs pages are reached through their product page, not listed one by one on /archive/. Sam: is that acceptable?

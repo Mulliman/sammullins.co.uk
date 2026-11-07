@@ -1,0 +1,377 @@
+---
+/**
+ * Style guide: foundations (ticket 1302). Unlisted like the rest of the guide (ticket 1301).
+ *
+ * Every value here is read at build time from src/styles/themes/default.css and
+ * src/styles/global.css (see src/lib/tokens.ts). Nothing is typed in by hand, so a token added to
+ * the theme appears on this page with no other change. The classes that colour and size the
+ * samples come from tokens.css, generated from the same files.
+ */
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import {
+  colourGroups,
+  textContrast,
+  scale,
+  shadowTokens,
+  clampRange,
+  toPx,
+  TEXT_CONTRAST_MIN,
+} from '../../../lib/tokens';
+
+const sections = [
+  { id: 'colour', label: 'Colour' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'space', label: 'Space' },
+  { id: 'radius-shadow', label: 'Radius and shadow' },
+  { id: 'motion', label: 'Motion' },
+];
+
+const groups = colourGroups().map((group) => ({
+  ...group,
+  tokens: group.tokens.map((token) => ({ token, contrast: textContrast(token) })),
+}));
+
+const steps = scale('step').map((token) => ({ token, range: clampRange(token.value) }));
+const weights = scale('weight');
+const leading = scale('leading');
+const tracking = scale('tracking');
+const fonts = scale('font');
+
+const spaces = scale('space').map((token) => ({ token, px: toPx(token.value) }));
+const sizing = [...scale('measure'), ...scale('container')];
+const radii = scale('radius');
+const shadows = shadowTokens();
+const durations = scale('duration');
+const eases = scale('ease');
+
+const ratio = (n: number) => `${n.toFixed(2)}:1`;
+const passes = (n: number) => n >= TEXT_CONTRAST_MIN;
+const px = (n: number) => `${Number(n.toFixed(1))}px`;
+---
+
+<StyleGuideLayout
+  title="Foundations"
+  description="Colour, type, space, radius, shadow and motion tokens, read from the theme CSS at build time."
+  sections={sections}
+>
+  <link rel="stylesheet" href="/style-guide/foundations/tokens.css" />
+
+  <div class="prose">
+    <h1>Foundations</h1>
+    <p>
+      Every value on this page is read at build time from <code>src/styles/themes/default.css</code> and
+      <code>src/styles/global.css</code>. Add a colour token to the theme and it appears here with its own swatch.
+      Nothing is copied by hand.
+    </p>
+  </div>
+
+  <section id="colour" class="guide-section">
+    <h2>Colour</h2>
+    <p>
+      Swatches follow the theme you are viewing, light or dark. The values beside them are the ones written in the CSS.
+      Contrast is worked out from those hex values, for text tokens only, against the background each one is meant for.
+      Anything under {TEXT_CONTRAST_MIN}:1 fails WCAG AA for text and is flagged.
+    </p>
+
+    {groups.map((group) => (
+      <div class="group" id={`colour-${group.slug}`}>
+        <h3>{group.title}</h3>
+        <ul class="tokens">
+          {group.tokens.map(({ token, contrast }) => (
+            <li class="token">
+              <span class={`swatch sw-${token.slug}`} aria-hidden="true" />
+              <div class="token__body">
+                <p class="token__name">
+                  <code>{token.name}</code>
+                </p>
+                <p>
+                  Light <code>{token.light}</code>. Dark{' '}
+                  {token.sameInDark ? 'same as light' : <code>{token.dark}</code>}.
+                </p>
+                {token.note && <p class="token__note">{token.note}</p>}
+                {contrast && (
+                  <ul class="contrast">
+                    <li>
+                      Light, on <code>{contrast.background}</code>: {ratio(contrast.light)}.{' '}
+                      {passes(contrast.light) ? (
+                        'Passes AA.'
+                      ) : (
+                        <span class="flag">Below {TEXT_CONTRAST_MIN}:1, fails AA.</span>
+                      )}
+                    </li>
+                    <li>
+                      Dark, on <code>{contrast.background}</code>: {ratio(contrast.dark)}.{' '}
+                      {passes(contrast.dark) ? (
+                        'Passes AA.'
+                      ) : (
+                        <span class="flag">Below {TEXT_CONTRAST_MIN}:1, fails AA.</span>
+                      )}
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  <section id="typography" class="guide-section">
+    <h2>Typography</h2>
+    <p>
+      One family, Mona Sans, on a fluid scale. Each step is shown at its size. The min and max are the{' '}
+      <code>clamp()</code>
+      range in the CSS, shown in px with a 16px root.
+    </p>
+
+    <h3>Families</h3>
+    <ul class="rows">
+      {fonts.map((token) => (
+        <li>
+          <p class={`ff-${token.slug} sample`}>Mona Sans, the quick brown fox</p>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Scale</h3>
+    <ul class="rows">
+      {steps.map(({ token, range }) => (
+        <li>
+          <p class={`fs-${token.slug} sample`}>The quick brown fox jumps over the lazy dog</p>
+          <p class="token__meta">
+            <code>{token.name}</code>
+            {range ? `: ${px(range.min)} to ${px(range.max)}` : `: ${token.value}`}
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Weights</h3>
+    <ul class="rows">
+      {weights.map((token) => (
+        <li>
+          <p class={`fw-${token.slug} sample`}>Sample text in {token.name}</p>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Leading</h3>
+    <ul class="rows">
+      {leading.map((token) => (
+        <li>
+          <p class={`lh-${token.slug} sample sample--wrap`}>
+            Body copy in a narrow column shows the leading. This sample runs over several lines so the spacing between
+            them is visible, which is the point of the value.
+          </p>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Tracking</h3>
+    <ul class="rows">
+      {tracking.map((token) => (
+        <li>
+          <p class={`ls-${token.slug} sample`}>Tracking sample, capitals and lower case</p>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Heading levels</h3>
+    <p>These are the heading levels as the base styles render them in the page.</p>
+    <div class="prose heading-samples">
+      <h1>Heading level 1</h1>
+      <h2>Heading level 2</h2>
+      <h3>Heading level 3</h3>
+      <h4>Heading level 4</h4>
+      <h5>Heading level 5</h5>
+      <h6>Heading level 6</h6>
+    </div>
+  </section>
+
+  <section id="space" class="guide-section">
+    <h2>Space</h2>
+    <p>Each bar is one space token, drawn at its own width.</p>
+    <ul class="rows">
+      {spaces.map(({ token, px: value }) => (
+        <li>
+          <span class={`bar bar-${token.slug}`} aria-hidden="true" />
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+            {value !== undefined && ` (${px(value)})`}
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Measure and container</h3>
+    <ul class="rows">
+      {sizing.map((token) => (
+        <li>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+            {token.note && ` (${token.note})`}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="radius-shadow" class="guide-section">
+    <h2>Radius and shadow</h2>
+
+    <h3>Radius</h3>
+    <ul class="rows">
+      {radii.map((token) => (
+        <li>
+          <span class={`box rd-${token.slug}`} aria-hidden="true" />
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Shadow</h3>
+    <ul class="rows">
+      {shadows.map((token) => (
+        <li>
+          {!token.name.startsWith('--text-') && <span class={`box box--shadow sh-${token.slug}`} aria-hidden="true" />}
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+            {token.note && ` (${token.note})`}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="motion" class="guide-section">
+    <h2>Motion</h2>
+    <p>
+      Durations and easing, as tokens. Under <code>prefers-reduced-motion</code>, <code>global.css</code> shortens
+      animations and transitions to almost nothing.
+    </p>
+
+    <h3>Durations</h3>
+    <ul class="rows">
+      {durations.map((token) => (
+        <li>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Easing</h3>
+    <ul class="rows">
+      {eases.map((token) => (
+        <li>
+          <p class="token__meta">
+            <code>{token.name}</code>: <code>{token.value}</code>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</StyleGuideLayout>
+
+<style>
+  .guide-section {
+    margin-top: var(--space-xl);
+    scroll-margin-top: var(--space-l);
+  }
+  .group {
+    margin-top: var(--space-l);
+  }
+  .rows,
+  .tokens,
+  .contrast {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-s);
+    display: grid;
+    gap: var(--space-s);
+  }
+  .rows > li,
+  .tokens > li {
+    min-width: 0;
+  }
+  .token {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: var(--space-s);
+    align-items: start;
+  }
+  .token__body {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .token__body p {
+    margin: 0;
+    font-size: var(--step--1);
+  }
+  .token__name {
+    font-weight: var(--weight-strong);
+  }
+  .token__note {
+    color: var(--color-text-muted);
+  }
+  .token__meta {
+    font-size: var(--step--1);
+  }
+  .contrast {
+    margin-top: var(--space-2xs);
+    gap: var(--space-3xs);
+    font-size: var(--step--1);
+  }
+  .flag {
+    color: var(--color-warning);
+    font-weight: var(--weight-strong);
+  }
+  .swatch {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .sample {
+    margin: 0;
+  }
+  .sample--wrap {
+    max-width: 40ch;
+  }
+  .bar {
+    display: block;
+    height: 0.75rem;
+    background-color: var(--color-focus);
+    border-radius: var(--radius);
+  }
+  .box {
+    display: block;
+    width: 6rem;
+    height: 6rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  .box--shadow {
+    margin: var(--space-s);
+  }
+  .heading-samples {
+    margin-top: var(--space-s);
+  }
+</style>

@@ -2,7 +2,7 @@
 id: "501"
 title: One-shot migration script (xStatic HTML to content)
 epic: Migration
-status: review
+status: done
 priority: p0
 size: L
 owner: agent
@@ -31,6 +31,10 @@ The 50 legacy pages should be migrated mechanically, not retyped. SamMullins2026
 
 ## Acceptance criteria
 
-- [ ] Running the script against the legacy output produces an entry for every legacy page (minus the merged duplicate), and `pnpm build` passes.
-- [ ] The unmapped-elements report is committed, and tickets 502–506 resolve every item in it.
-- [ ] The script is idempotent and documented, and is marked as deletable after launch.
+- [x] Running the script against the legacy output produces an entry for every legacy page (minus the merged duplicate), and `pnpm build` passes.
+- [x] The unmapped-elements report is committed, and tickets 502–506 resolve every item in it.
+- [x] The script is idempotent and documented, and is marked as deletable after launch.
+
+## Verification (6 November 2026)
+
+`pnpm build` passes with every legacy page migrated; `_docs/legacy/migration-report.md` is committed; the scripts in `scripts/migrate/` are documented, safe to re-run and one-shot.

@@ -1,0 +1,201 @@
+---
+/**
+ * Style guide: themes (ticket 1303). Unlisted like the rest of the guide (ticket 1301).
+ *
+ * The switcher in the guide's side nav previews any mode and page theme on every guide page. This
+ * page is static: for each page theme in pageThemes, a token diff against default and a contrast
+ * table, both computed at build time from the theme files (src/lib/tokens.ts). Nothing here needs JS.
+ */
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import { pageThemes } from '../../../styles/themes';
+import { pageThemeDiff, pageThemeContrast, TEXT_CONTRAST_MIN } from '../../../lib/tokens';
+
+const label = (name: string) => name.charAt(0).toUpperCase() + name.slice(1);
+const ratio = (n: number) => `${n.toFixed(2)}:1`;
+
+const sections = [
+  { id: 'modes', label: 'Light and dark' },
+  ...pageThemes.map((name) => ({ id: `theme-${name}`, label: label(name) })),
+];
+
+const themes = pageThemes.map((name) => ({
+  name,
+  title: label(name),
+  diff: pageThemeDiff(name),
+  contrast: pageThemeContrast(name),
+}));
+---
+
+<StyleGuideLayout
+  title="Themes"
+  description="Light and dark, and every page theme: token diffs against default and contrast, read from the theme files at build time."
+  sections={sections}
+>
+  <link rel="stylesheet" href="/style-guide/themes/swatches.css" />
+
+  <div class="prose">
+    <h1>Themes</h1>
+    <p>
+      Every colour on the site comes from a theme file in <code>src/styles/themes/</code>. The default theme is the
+      site's own. A page theme sets only the tokens it names, for a page that opts in with <code>theme:</code> in its
+      front matter. Below, each page theme is set against the default, with light and dark side by side, and its text
+      contrast is checked on every surface.
+    </p>
+  </div>
+
+  <section id="modes" class="guide-section">
+    <h2>Light and dark</h2>
+    <p>
+      The switcher in the side nav sets light, dark or system mode, and the page theme, on every guide page. The choice
+      is kept in the URL, for example <code>?theme=christmas&amp;mode=dark</code>, so a view can be shared. Without JS
+      the switcher is hidden and the pages show the default system mode. The tables below do not depend on JS.
+    </p>
+    <p>
+      Light and dark values come from the same theme file. The dark values apply under <code>data-theme='dark'</code>,
+      or to the system preference when no mode is chosen.
+    </p>
+  </section>
+
+  {themes.map(({ name, title, diff, contrast }) => (
+    <section id={`theme-${name}`} class="guide-section">
+      <h2>{title}</h2>
+      {name === 'default' ? (
+        <p>
+          Default is the base theme, so there is nothing to diff it against. Its contrast is checked below, as for every
+          page theme.
+        </p>
+      ) : (
+        <p>
+          Set with <code>theme: {name}</code> in front matter. The table lists the tokens <code>{name}.css</code> sets,
+          and nothing else.
+        </p>
+      )}
+
+      {name !== 'default' && (
+        <>
+          <h3>Token diff</h3>
+          <div class="table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Default light</th>
+                  <th scope="col">{title} light</th>
+                  <th scope="col">Default dark</th>
+                  <th scope="col">{title} dark</th>
+                </tr>
+              </thead>
+              <tbody>
+                {diff.map((t) => (
+                  <tr>
+                    <th scope="row">
+                      <code>{t.name}</code>
+                    </th>
+                    <td>
+                      <span class={`tsw tsw-default-l-${t.slug}`} aria-hidden="true"></span>
+                      <code>{t.defaultLight}</code>
+                    </td>
+                    <td>
+                      <span class={`tsw tsw-${name}-l-${t.slug}`} aria-hidden="true"></span>
+                      <code>{t.themeLight}</code>
+                      {!t.themeLightSet && <span class="note"> (default)</span>}
+                    </td>
+                    <td>
+                      <span class={`tsw tsw-default-d-${t.slug}`} aria-hidden="true"></span>
+                      <code>{t.defaultDark}</code>
+                    </td>
+                    <td>
+                      <span class={`tsw tsw-${name}-d-${t.slug}`} aria-hidden="true"></span>
+                      <code>{t.themeDark}</code>
+                      {!t.themeDarkSet && (
+                        <span class="note">
+                          {' '}
+                          (not set in dark: the {t.themeLightSet ? 'light' : 'default'} value applies)
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+
+      <h3>Contrast</h3>
+      <p>
+        Text, muted text and links on the page background, the muted background and the inverse background. Inverse
+        pairs use the inverse text tokens, as the footer and dark sections do. Anything below {TEXT_CONTRAST_MIN}:1
+        fails WCAG AA for text and is flagged.
+      </p>
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th scope="col">Text on background</th>
+              <th scope="col">Light</th>
+              <th scope="col">Dark</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contrast.map((c) => (
+              <tr>
+                <th scope="row">
+                  <code>{c.text}</code> on <code>{c.background}</code>
+                </th>
+                <td>
+                  {ratio(c.light)} {c.lightPasses ? 'Passes AA' : <span class="flag">Fails AA</span>}
+                </td>
+                <td>
+                  {ratio(c.dark)} {c.darkPasses ? 'Passes AA' : <span class="flag">Fails AA</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ))}
+</StyleGuideLayout>
+
+<style>
+  .guide-section {
+    margin-top: var(--space-xl);
+    scroll-margin-top: var(--space-l);
+  }
+  .table-wrap {
+    margin-top: var(--space-s);
+  }
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+  .guide-table th,
+  .guide-table td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-2xs);
+    border-bottom: 1px solid var(--color-border);
+    overflow-wrap: anywhere;
+  }
+  .guide-table thead th {
+    color: var(--color-heading);
+  }
+  .tsw {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    vertical-align: middle;
+    margin-inline-end: var(--space-2xs);
+  }
+  .note {
+    color: var(--color-text-muted);
+  }
+  .flag {
+    color: var(--color-warning);
+    font-weight: var(--weight-strong);
+  }
+</style>

@@ -1,9 +1,23 @@
-// Ticket 805: hygiene rules that must never regress.
+// Ticket 805: hygiene rules that must never regress. The rules live in hygiene-rules.mjs,
+// and hygiene-rules.test.mjs proves each one fails when violated.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { join, relative } from 'node:path';
+import sharp from 'sharp';
 import { ROOT, DIST, walk } from './helpers.mjs';
+import {
+  GMAIL,
+  GOOGLE_TRACKING_OR_FONTS,
+  UIKIT_CLASS,
+  INLINE_STYLE,
+  unsafeSetHtml,
+  imgsWithoutAlt,
+  unsafeBlankTargets,
+  hasCspMeta,
+  hasExif,
+} from './hygiene-rules.mjs';
 
 const html = () => walk(DIST, (p) => p.endsWith('.html'));
 const srcFiles = () => [
@@ -11,45 +25,29 @@ const srcFiles = () => [
   ...walk(join(ROOT, 'public'), (p) => /\.(txt|html|js|json)$/.test(p)),
 ];
 const rel = (p) => relative(ROOT, p).split(/[\\/]/).join('/');
-
-function grepFiles(files, re) {
-  return files.filter((f) => re.test(readFileSync(f, 'utf8'))).map(rel);
-}
+const read = (f) => readFileSync(f, 'utf8');
+const grepFiles = (files, re) => files.filter((f) => re.test(read(f))).map(rel);
 
 test('no personal gmail address anywhere', () => {
-  assert.deepEqual(grepFiles([...srcFiles(), ...html()], /@gmail\.com/i), []);
+  assert.deepEqual(grepFiles([...srcFiles(), ...html()], GMAIL), []);
 });
 
 test('no Google Analytics, Tag Manager or Google Fonts', () => {
-  assert.deepEqual(
-    grepFiles([...srcFiles(), ...html()], /googletagmanager|google-analytics|gtag\(|fonts\.googleapis|fonts\.gstatic/i),
-    [],
-  );
+  assert.deepEqual(grepFiles([...srcFiles(), ...html()], GOOGLE_TRACKING_OR_FONTS), []);
 });
 
 test('no legacy UIkit classes in output', () => {
-  assert.deepEqual(grepFiles(html(), /class="[^"]*\buk-[a-z]/), []);
+  assert.deepEqual(grepFiles(html(), UIKIT_CLASS), []);
 });
 
 test('no inline style attributes in output HTML (CSP style-src self)', () => {
-  const offenders = [];
-  for (const f of html()) {
-    const s = readFileSync(f, 'utf8');
-    const m = s.match(/<(?!svg|path|g|stop|linearGradient)[a-z][\w-]*\s[^>]*\sstyle="/i);
-    if (m) offenders.push(`${rel(f)}: ${m[0].slice(0, 80)}`);
-  }
-  assert.deepEqual(offenders, []);
+  assert.deepEqual(grepFiles(html(), INLINE_STYLE), []);
 });
 
 test('set:html is only used with sanitised helpers or trusted assets', () => {
-  const allowed =
-    /set:html=\{(md\(|mdInline\(|logo\}|logoSvg\}|footerLogo\}|JSON\.stringify\(|html\}|bodyHtml|leadHtml|textHtml|quoteHtml|captionHtml)/;
-  const offenders = [];
-  for (const f of walk(join(ROOT, 'src'), (p) => p.endsWith('.astro'))) {
-    for (const line of readFileSync(f, 'utf8').split('\n')) {
-      if (line.includes('set:html') && !allowed.test(line)) offenders.push(`${rel(f)}: ${line.trim()}`);
-    }
-  }
+  const offenders = walk(join(ROOT, 'src'), (p) => p.endsWith('.astro')).flatMap((f) =>
+    unsafeSetHtml(read(f)).map((line) => `${rel(f)}: ${line.trim()}`),
+  );
   assert.deepEqual(offenders, []);
 });
 
@@ -57,12 +55,12 @@ test('every page has a CSP meta tag and a Markdown twin', () => {
   const missing = [];
   for (const f of html()) {
     if (f.endsWith('404.html')) continue;
-    const s = readFileSync(f, 'utf8');
-    if (!/http-equiv="content-security-policy"/i.test(s)) missing.push(`${rel(f)}: no CSP`);
-    if (f.endsWith('index.html')) {
-      const md = f.replace(/index\.html$/, 'index.md');
+    if (!hasCspMeta(read(f))) missing.push(`${rel(f)}: no CSP`);
+    // Guide pages (src/pages/style-guide/) are .astro routes, not content, so they have no Markdown twin.
+    // They are unlisted (ticket 1301); the CSP check above still applies to them.
+    if (f.endsWith('index.html') && !rel(f).startsWith('dist/style-guide/')) {
       try {
-        readFileSync(md);
+        readFileSync(f.replace(/index\.html$/, 'index.md'));
       } catch {
         missing.push(`${rel(f)}: no index.md twin`);
       }
@@ -72,22 +70,55 @@ test('every page has a CSP meta tag and a Markdown twin', () => {
 });
 
 test('every <img> has an alt attribute', () => {
-  const offenders = [];
-  for (const f of html()) {
-    for (const m of readFileSync(f, 'utf8').matchAll(/<img\b[^>]*>/g)) {
-      // `alt` with no value is valid and equals alt="" (decorative).
-      if (!/\salt(=|\s|>)/.test(m[0])) offenders.push(`${rel(f)}: ${m[0].slice(0, 100)}`);
-    }
-  }
+  const offenders = html().flatMap((f) => imgsWithoutAlt(read(f)).map((tag) => `${rel(f)}: ${tag.slice(0, 100)}`));
   assert.deepEqual(offenders, []);
 });
 
 test('external links that open new tabs are safe', () => {
+  assert.deepEqual(
+    html()
+      .filter((f) => unsafeBlankTargets(read(f)).length > 0)
+      .map(rel),
+    [],
+  );
+});
+
+test('no committed image carries EXIF (GPS or otherwise)', async () => {
+  const images = walk(join(ROOT, 'src', 'assets'), (p) => /\.(avif|jpe?g|png|webp|tiff?)$/i.test(p));
   const offenders = [];
-  for (const f of html()) {
-    for (const m of readFileSync(f, 'utf8').matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) {
-      if (!/rel="[^"]*noopener/.test(m[0])) offenders.push(rel(f));
-    }
-  }
-  assert.deepEqual([...new Set(offenders)], []);
+  for (const f of images) if (hasExif(await sharp(f).metadata())) offenders.push(rel(f));
+  assert.deepEqual(offenders, []);
+});
+
+test('built HTML passes html-validate', () => {
+  const r = spawnSync('pnpm', ['exec', 'html-validate', 'dist/**/*.html'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    shell: true,
+  });
+  assert.equal(r.status, 0, `${r.stdout}\n${r.stderr}`);
+});
+
+test('no colour literals outside src/styles/themes (use theme tokens)', async () => {
+  const { COLOUR_ALLOWED, colourLiterals } = await import('./hygiene-rules.mjs');
+  const files = walk(join(ROOT, 'src'), (p) => /\.(astro|css|ts|tsx|js|mjs)$/.test(p)).filter(
+    (f) => !COLOUR_ALLOWED.test(rel(f)),
+  );
+  const offenders = files.flatMap((f) =>
+    colourLiterals(read(f)).map(({ line, text }) => `${rel(f)}:${line}: ${text.slice(0, 100)}`),
+  );
+  assert.deepEqual(
+    offenders,
+    [],
+    'Colours belong in src/styles/themes/ (see its README). Use a token such as var(--color-text).',
+  );
+});
+
+test('no fixed px spacing in blocks or components (use the --space-* tokens)', async () => {
+  const { fixedSpacing } = await import('./hygiene-rules.mjs');
+  const files = ['blocks', 'components'].flatMap((d) => walk(join(ROOT, 'src', d), (p) => p.endsWith('.astro')));
+  const offenders = files.flatMap((f) =>
+    fixedSpacing(read(f)).map(({ line, text }) => `${rel(f)}:${line}: ${text.trim()}`),
+  );
+  assert.deepEqual(offenders, [], 'Spacing uses the fluid tokens in src/styles/global.css, e.g. var(--space-s).');
 });

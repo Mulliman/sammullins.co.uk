@@ -2,7 +2,7 @@
 id: "402"
 title: Responsive Picture component
 epic: Media
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -21,5 +21,9 @@ All images are served as responsive AVIF with a WebP fallback; no JPEG (decision
 
 ## Acceptance criteria
 
-- [ ] Output `<picture>` has AVIF and WebP sources, with width and height set.
-- [ ] No `.jpg`/`.png` content images in `dist/` other than the Open Graph cards.
+- [x] Output `<picture>` has AVIF and WebP sources, with width and height set.
+- [x] No `.jpg`/`.png` content images in `dist/` other than the Open Graph cards.
+
+## Verification (6 November 2026)
+
+`<picture>` has AVIF and WebP sources with width and height; the only JPGs in `dist/_astro` are Open Graph cards.

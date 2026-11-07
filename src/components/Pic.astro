@@ -14,13 +14,16 @@ const presets = {
   full: { widths: [800, 1200, 1600, 2000, 2400], sizes: '100vw' },
   half: { widths: [400, 600, 900, 1200], sizes: '(min-width: 1200px) 590px, (min-width: 640px) 48vw, 100vw' },
   logo: { widths: [240, 480], sizes: '(min-width: 960px) 230px, (min-width: 640px) 18vw, 40vw' },
+  // A blurred, darkened backdrop shows no detail, so one tiny file does (the browser scales it up).
+  backdrop: { widths: [160], sizes: '100vw' },
 } as const;
 
 interface Props {
   src: ImageMetadata;
   alt: string;
   preset?: keyof typeof presets;
-  /** LCP image: eager + high fetch priority. */
+  /** LCP image: eager + high fetch priority. Decoding stays async: sync decoding blocked the main thread
+      for 177ms on CI's home page (ticket 804 budget). */
   priority?: boolean;
   class?: string;
   pictureClass?: string;
@@ -40,7 +43,7 @@ if (widths.length === 0) widths.push(src.width);
   widths={widths}
   sizes={p.sizes}
   loading={priority ? 'eager' : 'lazy'}
-  decoding={priority ? 'sync' : 'async'}
+  decoding="async"
   fetchpriority={priority ? 'high' : 'auto'}
   class={cls}
   pictureAttributes={{ class: pictureClass }}

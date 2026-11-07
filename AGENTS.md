@@ -14,17 +14,19 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 4. **Authorship is honest.** Every entry has `authorship: sam` (Sam wrote the words) or `sam-ai` (Sam + AI). If you drafted the words, it's `sam-ai`. Sam changes it if he rewrites.
 5. **Accessibility and security are not optional.** Alt text on every meaningful image. No inline `style=""` attributes or inline scripts in components (strict CSP). No third-party scripts, fonts or embeds that load before user action.
 6. **No new dependencies without a reason** stated in the PR. Direct deps are deliberately tiny (supply-chain hardening; see `pnpm-workspace.yaml`).
+7. **No hard-coded colours.** Every colour value lives in `src/styles/themes/`; everything else uses tokens (`var(--color-…)`). A test fails the build on a colour literal anywhere else. For a campaign or season, add a page theme there and set `theme:` in the page's front matter (see `src/styles/themes/README.md`).
 
 ## Commands
 
-| Command                          | What                                                                                 |
-| -------------------------------- | ------------------------------------------------------------------------------------ |
-| `pnpm install --frozen-lockfile` | Install (new package versions must be ≥ 7 days old)                                  |
-| `pnpm dev`                       | Dev server on http://localhost:4321                                                  |
-| `pnpm build`                     | Static build to `dist/`: validates content, writes `_redirects`                      |
-| `pnpm check`                     | Type and content check (`astro check`)                                               |
-| `pnpm test`                      | Unit tests, legacy URL test, hygiene checks                                          |
-| `pnpm lint`                      | ESLint (Astro, jsx-a11y, TypeScript) and Prettier; `pnpm lint:fix` fixes what it can |
+| Command                                 | What                                                                                                           |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `pnpm install --frozen-lockfile`        | Install (new package versions must be ≥ 7 days old)                                                            |
+| `pnpm dev`                              | Dev server on http://localhost:4321                                                                            |
+| `pnpm build`                            | Static build to `dist/`: validates content, writes `_redirects`                                                |
+| `pnpm check`                            | Type and content check (`astro check`)                                                                         |
+| `pnpm test`                             | Unit tests, legacy URL test, hygiene checks                                                                    |
+| `pnpm lint`                             | ESLint (Astro, jsx-a11y, TypeScript) and Prettier; `pnpm lint:fix` fixes what it can                           |
+| `pnpm compare:base` then `pnpm compare` | Before/after screenshots of the style guide and key pages; reports what changed (on demand, nothing committed) |
 
 ## Repo map
 
@@ -52,6 +54,7 @@ authorship: sam-ai # sam | sam-ai
 kind: note # articles only: article | note
 archived: false # true = dated; shows the archive banner, listed on /archive/
 hidden: false # true = never listed anywhere (still reachable by URL)
+theme: default # page theme from src/styles/themes/ (default | christmas)
 cover: { src: ../../assets/media/x/y.avif, alt: 'Describe the image' }
 blocks:
   - type: hero
@@ -64,7 +67,7 @@ blocks:
 Markdown body (long-form text, code blocks get Prism highlighting).
 ```
 
-Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `split`, `section`. Use a `section` to put a heading and its content in one band (background and spacing), as the original site did. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: `src/content/pages/blocks-demo/*.md`.
+Block types: `hero`, `intro`, `prose`, `body`, `callout`, `image`, `gallery`, `cards`, `listing`, `logoWall`, `quote`, `code`, `nextPrev`, `timeline`, `embed`, `steps`, `split`, `disclosure`, `section`. Use `steps` for numbered instructions with commands (each gets a Copy button) and `disclosure` for rows that open on click. Use a `section` to put a heading and its content in one band (background and spacing), as the original site did. Full field reference with an example of each: [`_docs/content-model.md`](_docs/content-model.md). Live examples: the unlisted [components page](/style-guide/components/), with examples in `src/content/style-guide/components.yaml`.
 
 Where things go:
 
@@ -100,7 +103,7 @@ Where things go:
 
 ## Skills
 
-Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-tooling.md` for how each tool discovers them): `new-article`, `new-note`, `new-page`, `add-images`, `redirect`.
+Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-tooling.md` for how each tool discovers them): `new-article`, `new-note`, `new-page`, `add-images`, `redirect`, and `pm-pass` (what needs Sam, as a desk page; backed by `pnpm tasks:status`).
 
 ## Tickets
 

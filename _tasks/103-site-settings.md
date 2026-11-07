@@ -2,7 +2,7 @@
 id: "103"
 title: Site settings: nav, socials, footer
 epic: Content model
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -25,5 +25,9 @@ Nav, footer and social links are content, editable by AI in one place (decisions
 
 ## Acceptance criteria
 
-- [ ] `grep -ri "gmail" src/ dist/` returns nothing (also enforced in CI, see 805).
-- [ ] All social links have `rel="me"` and an accessible name.
+- [x] `grep -ri "gmail" src/ dist/` returns nothing (also enforced in CI, see 805).
+- [x] All social links have `rel="me"` and an accessible name.
+
+## Verification (6 November 2026)
+
+The hygiene test fails on any gmail address; footer socials render `rel="me noopener"`, and each link is named by its label and handle.

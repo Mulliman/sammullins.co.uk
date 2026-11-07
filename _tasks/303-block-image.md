@@ -2,7 +2,7 @@
 id: "303"
 title: Block: image
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -22,5 +22,9 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] Missing alt without `decorative: true` fails the build.
-- [ ] Lazy-loaded with intrinsic dimensions, so there's no layout shift (CLS = 0 on the kitchen-sink page).
+- [x] Missing alt without `decorative: true` fails the build.
+- [x] Lazy-loaded with intrinsic dimensions, so there's no layout shift (CLS = 0 on the kitchen-sink page).
+
+## Verification (6 November 2026)
+
+The Zod `refine` on images rejects an empty alt unless `decorative: true`; `<img>` has width and height.

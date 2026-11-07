@@ -2,7 +2,7 @@
 id: "901"
 title: "Agent view: Markdown twins, llms.txt, toggle"
 epic: Delight
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -26,6 +26,10 @@ It's the most on-message delight for an AI-focused site: show what an agent sees
 
 ## Acceptance criteria
 
-- [ ] Every built HTML page has a matching `.md` twin (CI check).
-- [ ] The toggle is keyboard-accessible and announced.
-- [ ] `llms.txt` validates against the spec's structure.
+- [x] Every built HTML page has a matching `.md` twin (CI check).
+- [x] The toggle is keyboard-accessible and announced.
+- [x] `llms.txt` validates against the spec's structure.
+
+## Verification (6 November 2026)
+
+The hygiene test checks every page has a Markdown twin; the toggle is a `<button>`; `llms.txt` follows the spec layout (H1, blockquote, H2 link lists).

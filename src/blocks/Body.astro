@@ -1,20 +1,142 @@
 ---
-/** `body` block: the entry's Markdown body, rendered by Astro (Prism highlighting, heading ids). */
+/**
+ * `body` block: the entry's Markdown body, rendered by Astro (Prism highlighting, heading ids).
+ * Articles with three or more sections get a table of contents (ticket 313): a sticky column on
+ * wide screens, and a collapsed list above the text on narrow ones. No JS.
+ */
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Section from '../components/Section.astro';
+import BodyHtml from '../components/BodyHtml.astro';
 import type { BlockOf } from '../lib/content';
+
+export interface TocItem {
+  slug: string;
+  text: string;
+}
+
 interface Props {
   block: BlockOf<'body'>;
   Content?: AstroComponentFactory | undefined;
   nested?: boolean;
+  toc?: TocItem[] | undefined;
 }
-const { block, Content, nested = false } = Astro.props;
+const { block, Content, nested = false, toc = [] } = Astro.props;
+const withToc = !nested && toc.length >= 3;
 ---
 
-{Content && (
+{Content && !withToc && (
   <Section surface={block.surface} width="narrow" nested={nested}>
     <div class="prose">
-      <Content />
+      <BodyHtml>
+        <Content />
+      </BodyHtml>
     </div>
   </Section>
 )}
+{Content && withToc && (
+  <Section surface={block.surface}>
+    <div class="with-toc">
+      <details class="toc-inline">
+        <summary>In this article</summary>
+        <ol>
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </details>
+      <div class="prose">
+        <BodyHtml>
+          <Content />
+        </BodyHtml>
+      </div>
+      <nav class="toc" aria-label="In this article">
+        <p class="toc__title" aria-hidden="true">
+          In this article
+        </p>
+        <ol>
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+  </Section>
+)}
+
+<style>
+  .with-toc {
+    display: grid;
+    /* One shrinkable column on narrow screens: a long code line scrolls inside its figure instead of widening the page. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+  .toc,
+  .toc-inline {
+    font-size: var(--step--1);
+  }
+  .toc ol,
+  .toc-inline ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .toc a,
+  .toc-inline a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .toc a:hover,
+  .toc-inline a:hover {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+
+  /* Narrow: a collapsed list above the text. */
+  .toc {
+    display: none;
+  }
+  .toc-inline {
+    padding: var(--space-xs) var(--space-s);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .toc-inline summary {
+    cursor: pointer;
+    font-weight: var(--weight-strong);
+    color: var(--color-heading);
+  }
+  .toc-inline ol {
+    margin-top: var(--space-xs);
+  }
+
+  /* Wide: the text at its measure, with a sticky contents column beside it. */
+  @media (min-width: 1100px) {
+    .with-toc {
+      grid-template-columns: minmax(0, var(--measure)) minmax(12rem, 16rem);
+      justify-content: space-between;
+      gap: var(--space-xl);
+    }
+    .toc-inline {
+      display: none;
+    }
+    .toc {
+      display: block;
+      position: sticky;
+      top: var(--space-l);
+      align-self: start;
+      padding-left: var(--space-s);
+      border-left: 1px solid var(--color-border);
+    }
+    .toc__title {
+      margin-bottom: var(--space-xs);
+      font-weight: var(--weight-strong);
+      color: var(--color-heading);
+    }
+  }
+</style>

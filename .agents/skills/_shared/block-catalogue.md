@@ -6,7 +6,7 @@
 
 # Block catalogue
 
-Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 17 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
+Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 19 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
 
 Field types are as written in the Zod schema. "optional" means the key may be left out. A "default" is what the site uses when the key is left out.
 
@@ -47,7 +47,7 @@ limit: positive integer (optional)
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
 | `callout` | `tone`, `title`, `body` |
-| `image` | `image`, `caption`, `width`, `surface` |
+| `image` | `image`, `caption`, `width`, `frame`, `backdrop`, `surface` |
 | `gallery` | `heading`, `columns`, `surface`, `images` |
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
@@ -57,7 +57,9 @@ limit: positive integer (optional)
 | `nextPrev` | `prev`, `next` |
 | `timeline` | `heading`, `surface`, `items` |
 | `embed` | `provider`, `id`, `title`, `poster` |
+| `steps` | `heading`, `items` |
 | `split` | `ratio`, `reverseOnMobile`, `columns` |
+| `disclosure` | `summary`, `badges`, `status`, `open`, `blocks` |
 | `section` | `surface`, `spacing`, `blocks` |
 
 ## `hero`
@@ -78,7 +80,7 @@ limit: positive integer (optional)
 | `lead` | string | no |  |
 | `cta` | cta | no |  |
 | `align` | center \| left | no | `'center'` |
-| `surface` | surface | no | `'muted'` |
+| `surface` | default \| muted \| inverse | no | `'muted'` |
 
 ## `prose`
 
@@ -86,13 +88,13 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `markdown` | string | yes |  |
 | `align` | center \| left | no | `'left'` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `body`
 
 | field | type | required | default |
 |---|---|---|---|
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `callout`
 
@@ -109,7 +111,9 @@ limit: positive integer (optional)
 | `image` | imageRef | yes |  |
 | `caption` | string | no |  |
 | `width` | content \| wide \| full | no | `'content'` |
-| `surface` | surface | no | `'default'` |
+| `frame` | thick \| none | no | `'thick'` |
+| `backdrop` | none \| blurred | no | `'none'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `gallery`
 
@@ -117,7 +121,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `columns` | number (min 1) (max 4) | no | `3` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `images` | z.array(imageRef and (z.object({ caption: string }))) (min 1) | no |  |
 
 ## `cards`
@@ -127,7 +131,7 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | full \| image \| text | no | `'full'` |
 | `columns` | number (min 1) (max 4) | no | `3` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | list of cardItem | no |  |
 | `query` | query | no |  |
 
@@ -137,14 +141,14 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | grid \| list \| notes | no | `'grid'` |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 
 ## `logoWall`
 
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
 
 ## `quote`
@@ -175,7 +179,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | z .array(z.object({ when: string (coerced), title: string, org: string, kind: role \| cert \| milestone \| education, body: string, }),)  (min 1) | no | `'role'` |
 
 ## `embed`
@@ -187,6 +191,13 @@ limit: positive integer (optional)
 | `title` | string (min 1) | yes |  |
 | `poster` | imageRef | no |  |
 
+## `steps`
+
+| field | type | required | default |
+|---|---|---|---|
+| `heading` | string | no |  |
+| `items` | z .array(z.object({ text: string (min 1), code: z .object({ lang: string, code: string (min 1), filename: string }) , }),)  (min 1) | no | `'text'` |
+
 ## `split`
 
 | field | type | required | default |
@@ -195,10 +206,20 @@ limit: positive integer (optional)
 | `reverseOnMobile` | boolean | no | `false` |
 | `columns` | z.tuple([list of leaf, list of leaf]) | yes |  |
 
+## `disclosure`
+
+| field | type | required | default |
+|---|---|---|---|
+| `summary` | string (min 1) | yes |  |
+| `badges` | list of badge | no |  |
+| `status` | todo \| done | no | `'todo'` |
+| `open` | boolean | no | `false` |
+| `blocks` | z.array(z.discriminatedUnion('type', nestable)) (min 1) | yes |  |
+
 ## `section`
 
 | field | type | required | default |
 |---|---|---|---|
-| `surface` | surface | no | `'default'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
 | `spacing` | none \| small \| normal | no | `'normal'` |
-| `blocks` | z.array(z.discriminatedUnion('type', nestable)) (min 1) | yes |  |
+| `blocks` | z.array(z.discriminatedUnion('type', [...nestable, disclosure])) (min 1) | yes |  |

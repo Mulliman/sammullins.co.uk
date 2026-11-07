@@ -43,7 +43,7 @@ const { block, nested = false } = Astro.props;
   .logos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
+    gap: var(--space-s);
     list-style: none;
     padding: 0;
   }
@@ -60,7 +60,7 @@ const { block, nested = false } = Astro.props;
     justify-content: center;
     aspect-ratio: 3 / 2;
     padding: 10%;
-    background: #ffffff;
+    background: var(--color-logo-tile);
   }
   .logos__link {
     display: flex;

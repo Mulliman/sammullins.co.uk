@@ -2,7 +2,7 @@
 id: "502"
 title: Migrate home & CV
 epic: Migration
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -21,5 +21,9 @@ The home page keeps today's structure: signposting builds and the people worked 
 
 ## Acceptance criteria
 
-- [ ] `/` and `/cv/` render entirely from content files.
-- [ ] Visual comparison against the live site is approved by Sam.
+- [x] `/` and `/cv/` render entirely from content files.
+- [x] Visual comparison against the live site is approved by Sam.
+
+## Verification (6 November 2026)
+
+`/` and `/cv/` render from content files. Superseded: the visual match with the old site no longer matters now that the redesign (tickets 205 to 314) replaces it.

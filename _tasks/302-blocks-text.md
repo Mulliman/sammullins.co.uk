@@ -2,7 +2,7 @@
 id: "302"
 title: Blocks: intro, prose, callout
 epic: Blocks
-status: review
+status: done
 priority: p0
 size: S
 owner: agent
@@ -23,5 +23,9 @@ Each block: an `.astro` component in `src/blocks/`, its schema in 101, an exampl
 
 ## Acceptance criteria
 
-- [ ] Markdown is rendered at build time; raw HTML in markdown is **disabled or sanitised** (no `set:html` of untrusted strings).
-- [ ] Heading anchors are keyboard-reachable and announced sensibly.
+- [x] Markdown is rendered at build time; raw HTML in markdown is **disabled or sanitised** (no `set:html` of untrusted strings).
+- [x] Heading anchors are keyboard-reachable and announced sensibly.
+
+## Verification (6 November 2026)
+
+`src/lib/markdown.ts` escapes raw HTML, and the hygiene test restricts `set:html`; heading anchors are links with `aria-label="Link to this heading"`.
