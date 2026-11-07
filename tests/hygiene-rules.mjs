@@ -79,3 +79,17 @@ export const fixedSpacing = (source) =>
     .split('\n')
     .map((text, i) => ({ line: i + 1, text }))
     .filter(({ text }) => FIXED_SPACING.test(text));
+
+/**
+ * Literal type (ticket 208): a font-size in px or rem, or a line-height as a number, px or rem. Sizes use
+ * the --step-* scale and leading the --leading-* roles in global.css. Relative font sizes (em, %) are fine.
+ */
+const TYPE_LITERAL =
+  /^\s*(?:font-size\s*:\s*[^;]*?(?<![\w.-])\d*\.?\d+(?:px|rem)\b|line-height\s*:\s*(?:\d*\.?\d+(?:px|rem)?)\s*(?:!important)?\s*;)/;
+
+/** Lines of `source` that set a font size or line height with a literal value. */
+export const typeLiterals = (source) =>
+  source
+    .split('\n')
+    .map((text, i) => ({ line: i + 1, text }))
+    .filter(({ text }) => TYPE_LITERAL.test(text));

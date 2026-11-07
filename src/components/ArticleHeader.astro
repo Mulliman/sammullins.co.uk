@@ -42,7 +42,7 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
 
 <style>
   .article-head {
-    padding-block: clamp(2.5rem, 2rem + 4vw, 6rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+    padding-block: var(--space-section) var(--space-m-l);
     border-bottom: 1px solid var(--color-border);
   }
   .article-head__title {
@@ -53,7 +53,7 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
     max-width: 40em;
     margin-top: var(--space-s);
     font-size: var(--step-1);
-    line-height: 1.5;
+    line-height: var(--leading-lead);
     color: var(--color-text-muted);
   }
   .article-head__meta {

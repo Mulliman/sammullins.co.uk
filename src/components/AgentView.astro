@@ -182,7 +182,7 @@ const { href } = Astro.props;
     color: var(--color-text);
     border: 1px dashed var(--brand-orange);
     border-radius: var(--radius);
-    padding: 0.3rem 0.8rem;
+    padding: var(--space-3xs) var(--space-xs);
     cursor: pointer;
   }
   /* Small phones: the icon only, so the header fits at 320px; the label stays for screen readers. */
@@ -229,7 +229,7 @@ const { href } = Astro.props;
   :global(.agent-panel__actions a) {
     font: inherit;
     font-size: var(--step--1);
-    padding: 0.3rem 0.7rem;
+    padding: var(--space-3xs) var(--space-xs);
     border: 1px solid var(--color-border);
     background: var(--color-bg);
     color: var(--color-text);
@@ -261,12 +261,12 @@ const { href } = Astro.props;
   :global(.agent-panel__meta) {
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: 0.2rem var(--space-s);
+    gap: var(--space-3xs) var(--space-s);
     margin: 0 0 var(--space-m);
     padding-bottom: var(--space-s);
     border-bottom: 1px solid var(--color-border);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: var(--step--1);
     color: var(--color-text-muted);
   }
   :global(.agent-panel__meta dt) {
@@ -288,20 +288,20 @@ const { href } = Astro.props;
     text-transform: none;
     text-align: left;
     color: var(--color-text-strong);
-    line-height: 1.3;
+    line-height: var(--leading-heading);
     margin-top: 1.4em;
   }
   :global(.agent-panel__rendered h1) {
-    font-size: 1.75rem;
+    font-size: var(--step-3);
     margin-top: 0;
   }
   :global(.agent-panel__rendered h2) {
-    font-size: 1.35rem;
+    font-size: var(--step-2);
     padding-bottom: 0.2em;
     border-bottom: 1px solid var(--color-border);
   }
   :global(.agent-panel__rendered h3) {
-    font-size: 1.1rem;
+    font-size: var(--step-1);
   }
   :global(.agent-panel__rendered :is(ul, ol)) {
     padding-left: 1.4em;
@@ -320,15 +320,15 @@ const { href } = Astro.props;
   :global(.agent-img) {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    padding: 0.15rem 0.5rem;
+    font-size: var(--step--1);
+    padding: var(--space-3xs) var(--space-2xs);
     border: 1px dashed var(--color-border);
     border-radius: var(--radius);
     text-decoration: none;
   }
   :global(.agent-panel__md) {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: var(--step--1);
     white-space: pre-wrap;
     word-break: break-word;
     margin: 0;

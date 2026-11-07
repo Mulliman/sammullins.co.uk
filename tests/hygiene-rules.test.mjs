@@ -138,3 +138,15 @@ test('fixed spacing rule', async () => {
   assert.equal(fixedSpacing('  left: calc(0.5rem - 1px);').length, 0, 'hairline nudges are allowed');
   assert.equal(fixedSpacing('  top: -0.375rem;').length, 0);
 });
+
+test('type literal rule', async () => {
+  const { typeLiterals } = await import('./hygiene-rules.mjs');
+  assert.equal(typeLiterals('  font-size: 0.8rem;').length, 1);
+  assert.equal(typeLiterals('  font-size: 14px;').length, 1);
+  assert.equal(typeLiterals('  line-height: 1.3;').length, 1);
+  assert.equal(typeLiterals('  line-height: 2.75rem;').length, 1);
+  assert.equal(typeLiterals('  font-size: var(--step-1);').length, 0);
+  assert.equal(typeLiterals('  font-size: 0.875em;').length, 0, 'relative sizes are fine');
+  assert.equal(typeLiterals('  line-height: var(--leading-body);').length, 0);
+  assert.equal(typeLiterals('  line-height: inherit;').length, 0);
+});

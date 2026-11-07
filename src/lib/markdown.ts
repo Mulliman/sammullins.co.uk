@@ -57,7 +57,16 @@ const unescapeHtml = (s: string) =>
     .replace(/&quot;|&#34;/g, '"')
     .replace(/&#39;|&#x27;/g, "'")
     .replace(/&amp;/g, '&');
-const textOf = (html: string) => unescapeHtml(html.replace(/<[^>]+>/g, ''));
+/** Removes tags until none are left, so a tag split around another (`<sc<b>ript>`) can't survive one pass. */
+const stripTags = (html: string) => {
+  let prev;
+  do {
+    prev = html;
+    html = html.replace(/<[^>]*>/g, '');
+  } while (html !== prev);
+  return html;
+};
+const textOf = (html: string) => unescapeHtml(stripTags(html));
 
 /** Adds the stacking class and each cell's column name to tables in rendered HTML (ticket 1005). */
 function stackTables(html: string): string {
