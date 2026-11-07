@@ -71,9 +71,16 @@ html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g, (tag) => {
 
 // 3. Scripts and head links the single file can't use (the CSP allows no other origin, and the
 // site's module chunks import each other). The page works without JS: theme follows the system.
-html = html
-  .replace(/<script\b[^>]*\bsrc="[^"]*"[^>]*><\/script>/g, '')
-  .replace(/<link\b[^>]*rel="(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)"[^>]*>/g, '');
+// Repeat until nothing changes, so a tag split around another can't survive a single pass.
+for (let prev; prev !== html;) {
+  prev = html;
+  html = html
+    .replace(/<script\b[^>]*\bsrc="[^"]*"[^>]*><\/script>/g, '')
+    .replace(
+      /<link\b[^>]*rel="(?:modulepreload|preload|icon|apple-touch-icon|manifest|alternate|canonical)"[^>]*>/g,
+      '',
+    );
+}
 
 // 4. Local images (the header signature, icons).
 html = html.replace(/(<img\b[^>]*\bsrc=")(\/[^"]+)"/g, (m, pre, p) => {
