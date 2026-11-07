@@ -24,7 +24,9 @@ const subIsLead = (subheading?.length ?? 0) > 60;
 <section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
   {variant === 'blurred' && image && (
     <div class="hero__backdrop" aria-hidden="true">
-      <Pic src={image.src} alt="" preset="wide" priority />
+      {/* Tiny unless it sharpens on scroll (905): decoding and blurring the full photo cost the home page
+          its Lighthouse budget (804) on CI. */}
+      <Pic src={image.src} alt="" preset={sharpen ? 'wide' : 'backdrop'} priority={sharpen} />
     </div>
   )}
   <div class="container hero__inner">
