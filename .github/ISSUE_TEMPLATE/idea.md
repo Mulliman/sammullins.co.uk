@@ -8,4 +8,4 @@ labels: idea
 
 **Why would it help?**
 
-Code changes are by discussion first: describe the change here before opening a pull request. Content pull requests aren't accepted (see CONTRIBUTING.md).
+Code changes are by discussion first: describe the change here before opening a pull request. Content pull requests aren't accepted (see LICENSE-CONTENT.md).
