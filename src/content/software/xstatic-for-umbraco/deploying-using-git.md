@@ -3,7 +3,7 @@ title: "Deploying using Git"
 description: "Using Git to deploy your static site means that you can easily release to GitHub Pages, as well as any other continuous deployment platform."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Deploying using Git"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

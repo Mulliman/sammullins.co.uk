@@ -3,7 +3,7 @@ title: "Autogenerate components with XPEDITE"
 description: "Why start from scratch when XPEDITE can create your Next.js components for you. You choose your Umbraco content types and XPEDITE outputs headless React components that consume the data from the…"
 cover:
   src: "../../../assets/media/gaajlr4q/banner.avif"
-  alt: "Autogenerate components with XPEDITE"
+  alt: "The XPEDITE logo on a dark teal background"
 authorship: "sam"
 status: "legacy"
 archived: true
@@ -34,7 +34,7 @@ blocks:
     width: "wide"
     image:
       src: "../../../assets/media/l14oakx4/generated-template-code.avif"
-      alt: "Generated Template Code"
+      alt: "XPEDITE's Templates Assistant in Umbraco, showing generated template code for a component"
   - type: "prose"
     markdown: "You can choose which fields you want to use in the generated code so you can keep your components as lean as possible. Once the code is generated you can add this to your codebase using the 'Apply to codebase' button."
   - type: "cards"

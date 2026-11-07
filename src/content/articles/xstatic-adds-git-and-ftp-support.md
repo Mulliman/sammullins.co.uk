@@ -4,7 +4,7 @@ description: "By popular demand Git and FTP support has been added to xStatic. T
 date: "2021-02-01"
 cover:
   src: "../../assets/media/nwbp04ek/xstaticwithgitandftp.avif"
-  alt: "xStatic adds Git and FTP support"
+  alt: "The xStatic logo above the words Now with Git and FTP!"
 authorship: "sam"
 archived: true
 blocks:

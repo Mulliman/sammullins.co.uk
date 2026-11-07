@@ -4,7 +4,7 @@ description: "Upgrading xStatic to work on Umbraco 9 wasn't just a case of updat
 date: "2021-10-26"
 cover:
   src: "../../assets/media/xunjqeqi/xstatic2.avif"
-  alt: "What's New in xStatic 2?"
+  alt: "The xStatic logo above the words What's new in xStatic 2?"
 authorship: "sam"
 archived: true
 blocks:
@@ -18,9 +18,9 @@ blocks:
     columns: 2
     images:
       - src: "../../assets/media/io5n4k4g/xstatic-export-types.avif"
-        alt: "Xstatic Export Types"
+        alt: "The xStatic Export Types screen in Umbraco, listing HTML Website and Json export types with their generator, transformer and file name settings"
       - src: "../../assets/media/1debwpsa/xstatic-export-type.avif"
-        alt: "Xstatic Export Type"
+        alt: "The Edit Export Type dialog in xStatic, with dropdowns for the transformer list factory, generator and file name generator"
   - type: "prose"
     markdown: |-
       ## 6\. Post generation actions
@@ -36,9 +36,9 @@ blocks:
     columns: 2
     images:
       - src: "../../assets/media/ikqhqwdt/xstatic-actions.avif"
-        alt: "Xstatic Actions"
+        alt: "The xStatic Actions screen in Umbraco, showing a Not Found action that renames 404/index.html and a Netlify 404 action"
       - src: "../../assets/media/rg2mg4x3/xstatic-action-1.avif"
-        alt: "Xstatic Action 1"
+        alt: "The Edit Action dialog in xStatic, set to FileRenameAction with a file path and a new file path"
   - type: "prose"
     markdown: |-
       ## 7\. Settings tab
@@ -49,7 +49,7 @@ blocks:
     width: "wide"
     image:
       src: "../../assets/media/xducz1kz/xstatic-config.avif"
-      alt: "Xstatic Config"
+      alt: "The xStatic Technical Settings screen, listing the installed generators, transformer list factories, deployers, file name generators and post-generation actions"
   - type: "cards"
     variant: "full"
     surface: "muted"
@@ -94,7 +94,7 @@ This is the package to reference if you want to build your own deployers, transf
 
 All other packages that start with xStatic are plugins; these will add certain functionality into your xStatic installation. Examples of this are xStatic.Netlify, xStatic.Git, and xStatic.Ftp.
 
-![Xstatic Packages](../../assets/media/03taqad3/xstatic-packages.avif)
+![The NuGet package manager in Visual Studio listing the xStatic, xStatic.Netlify, xStatic.Ftp, xStatic.Git and xStatic.Core packages](../../assets/media/03taqad3/xstatic-packages.avif)
 
 ## 2\. You need to write code to make it work
 

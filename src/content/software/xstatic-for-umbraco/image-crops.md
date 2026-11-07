@@ -3,7 +3,7 @@ title: "Image crops"
 description: "xStatic works with the built in Umbraco image cropping functionality, but you do need to do a little bit of configuration."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Image crops"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

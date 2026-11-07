@@ -57,7 +57,7 @@ blocks:
         frame: "none"
         image:
           src: "../../assets/media/gccp2anv/imposter-promo.avif"
-          alt: "The Imposter promotional artwork"
+          alt: "The Imposter logo between two phones showing the game's round overview, with two cartoon players in the middle"
       - type: "prose"
         markdown: |-
           #### The imposter is a party game designed to be played by 4-7 people. It is based on the Big Potato classic 'The Chameleon' with a few different rules and a more fun scoring system.

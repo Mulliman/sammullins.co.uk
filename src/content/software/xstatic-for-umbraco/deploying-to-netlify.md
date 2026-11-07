@@ -3,7 +3,7 @@ title: "Deploying to Netlify"
 description: "Setting up a Netlify site is free, and should only take a few minutes to create and configure within xStatic."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Deploying to Netlify"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

@@ -4,7 +4,7 @@ description: "Now that xStatic has been public for a while I've decided to take 
 date: "2021-02-18"
 cover:
   src: "../../assets/media/hddpv0gy/xstatic1.avif"
-  alt: "xStatic v1 released with wildcard asset paths"
+  alt: "The xStatic logo above the version number 1.0.0"
 authorship: "sam"
 archived: true
 blocks:

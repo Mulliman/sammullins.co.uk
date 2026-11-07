@@ -4,7 +4,7 @@ description: "At Codegarden 2021 the Umbraco Package Award for best newcomer was
 date: "2021-06-11"
 cover:
   src: "../../assets/media/03yabpct/umbracoaward.avif"
-  alt: "xStatic wins an Umbraco Package Award"
+  alt: "The Umbraco Package Award 2021 winner badge"
 authorship: "sam"
 archived: true
 blocks:
@@ -38,4 +38,4 @@ The complete list of winners in the awards were:
 
 You can read more about the package awards and the winners at [umbraco.com/blog/umbraco-package-awards-2021-the-winners/](https://umbraco.com/blog/umbraco-package-awards-2021-the-winners/)
 
-![Umbracoaward](../../assets/media/03yabpct/umbracoaward.avif)
+![The Umbraco Package Award 2021 winner badge](../../assets/media/03yabpct/umbracoaward.avif)

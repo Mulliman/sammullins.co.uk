@@ -6,7 +6,7 @@ series: "5-cool-things"
 order: 2
 cover:
   src: "../../assets/media/zaqdt00v/5-cool-things-blue.avif"
-  alt: "5 cool things I used to build The Imposter"
+  alt: "Banner on blue: The 5 cool things series"
 authorship: "sam"
 archived: true
 blocks:

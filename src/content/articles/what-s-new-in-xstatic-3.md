@@ -4,7 +4,7 @@ description: "Umbraco is moving forward, and xStatic is following along too. Her
 date: "2022-12-04"
 cover:
   src: "../../assets/media/nsipcjdg/banner.avif"
-  alt: "What's New in xStatic 3?"
+  alt: "The xStatic logo above the words xStatic v3"
 authorship: "sam"
 archived: true
 blocks:

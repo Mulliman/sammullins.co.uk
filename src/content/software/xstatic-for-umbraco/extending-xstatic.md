@@ -3,7 +3,7 @@ title: "Extending xStatic v1"
 description: "You can extend xStatic to generate and transform the output to fit your specific requirements."
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Extending xStatic v1"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true

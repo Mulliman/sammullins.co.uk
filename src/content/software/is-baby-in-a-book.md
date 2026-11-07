@@ -3,7 +3,7 @@ title: "Is Baby In A Book?"
 description: "Struggling to find that perfect gift for a little one? Find a book with their name in it using Is Baby In A Book!"
 cover:
   src: "../../assets/media/ycspud32/biab-sam-site.avif"
-  alt: "Is Baby In A Book?"
+  alt: "The Is Baby in a Book? logo: a cartoon baby with a question mark above it, reading a book"
 authorship: "sam"
 blocks:
   - type: "body"
@@ -13,7 +13,7 @@ blocks:
     width: "wide"
     image:
       src: "../../assets/media/3gyc45vu/biab-thin-banner.avif"
-      alt: "Biab Thin Banner"
+      alt: "A thin banner with the Is Baby in a Book? logo on a teal background"
   - type: "prose"
     markdown: |-
       ## What is 'Is Baby In A Book'?

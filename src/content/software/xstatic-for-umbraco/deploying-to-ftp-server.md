@@ -3,7 +3,7 @@ title: "Deploying to FTP server"
 description: "if you have an existing server with FTP access, this may an easy option. xStatic will update the remote server to mirror the files built locally; this seems to be slower than the Git and Netlify…"
 cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
-  alt: "Deploying to FTP server"
+  alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
 status: "legacy"
 archived: true
