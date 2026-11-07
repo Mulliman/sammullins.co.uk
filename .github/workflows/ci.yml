@@ -24,34 +24,65 @@ jobs:
     # A build with a cold image cache generates ~1,500 image variants (~15 min on a hosted runner).
     # With the cache below, later builds take about a minute.
     timeout-minutes: 30
+    outputs:
+      code: ${{ steps.changes.outputs.code }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # full history for "last changed" dates
           persist-credentials: false
+      # Docs-only PRs (root *.md, LICENSE*, _tasks/, _docs/ except _docs/legacy/, issue and PR
+      # templates) skip the build and everything after it; only Prettier runs. Site content in
+      # src/content/ is never docs. Skipped jobs count as passed for the required checks.
+      - name: Docs-only change?
+        id: changes
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          code=true
+          if [ "$EVENT" = "pull_request" ]; then
+            changed=$(git diff --name-only "$BASE" HEAD)
+            docs='^([^/]+\.md|LICENSE[^/]*|_tasks/.+|_docs/.+|\.github/ISSUE_TEMPLATE/.+|\.github/PULL_REQUEST_TEMPLATE\.md)$'
+            other=$(printf '%s\n' "$changed" | grep -Ev "$docs" || true)
+            legacy=$(printf '%s\n' "$changed" | grep -E '^_docs/legacy/' || true)
+            if [ -n "$changed" ] && [ -z "$other$legacy" ]; then code=false; fi
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "Code checks needed: $code"
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - if: steps.changes.outputs.code == 'false'
+        run: pnpm format:check
       # Astro's generated images (node_modules/.astro). Keyed on the masters and image config, with a
       # fallback to the latest cache so adding one photo only generates that photo's sizes.
       - name: Restore generated image cache
+        if: steps.changes.outputs.code == 'true'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: node_modules/.astro
           key: astro-images-${{ hashFiles('src/assets/**', 'astro.config.mjs', 'src/components/Pic.astro', 'pnpm-lock.yaml') }}
           restore-keys: astro-images-
-      - run: pnpm check
-      - run: pnpm lint
+      - if: steps.changes.outputs.code == 'true'
+        run: pnpm check
+      - if: steps.changes.outputs.code == 'true'
+        run: pnpm lint
       - name: Skills catalogue and .claude mirror are up to date
+        if: steps.changes.outputs.code == 'true'
         run: node scripts/skills/block-catalogue.mjs --check && node scripts/skills/sync.mjs --check
-      - run: pnpm build
-      - run: pnpm test
+      - if: steps.changes.outputs.code == 'true'
+        run: pnpm build
+      - if: steps.changes.outputs.code == 'true'
+        run: pnpm test
       - name: Dependency audit (high and critical)
+        if: steps.changes.outputs.code == 'true'
         run: pnpm audit --audit-level high
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      - if: steps.changes.outputs.code == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dist
           path: dist
@@ -60,6 +91,7 @@ jobs:
   links:
     name: Internal links
     needs: build
+    if: needs.build.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -78,6 +110,7 @@ jobs:
   a11y:
     name: Accessibility (axe, WCAG 2.2 AA)
     needs: build
+    if: needs.build.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -113,6 +146,7 @@ jobs:
   lighthouse:
     name: Lighthouse budgets
     needs: build
+    if: needs.build.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
