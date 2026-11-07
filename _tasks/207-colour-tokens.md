@@ -2,7 +2,7 @@
 id: "207"
 title: Centralise colours in a theme, ban literals, add page themes
 epic: Design system
-status: review
+status: done
 priority: p0
 size: M
 owner: agent

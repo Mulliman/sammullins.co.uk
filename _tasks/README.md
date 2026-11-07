@@ -92,6 +92,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [803](803-ci-links.md) | CI: internal & external link check | p0 | S | agent | 801 |
 | [804](804-ci-lighthouse.md) | CI: Lighthouse budgets | p1 | S | agent | 801 |
 | [805](805-ci-html-headers.md) | CI: HTML validation & header checks | p0 | S | agent | 801, 702 |
+| [806](806-workflow-speed.md) | Faster review loop: local verify, PR rules, Playwright cache, changelog | p1 | S | agent | 801 |
 | [901](901-agent-view.md) | Agent view: Markdown twins, llms.txt, toggle | p0 | M | agent | 102 |
 | [902](902-colophon.md) | Colophon: last changed + authorship icon | p0 | S | agent | 101 |
 | [903](903-console-secret.md) | Console secret | p1 | S | pair | 702 |

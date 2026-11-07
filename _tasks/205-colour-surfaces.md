@@ -2,7 +2,7 @@
 id: "205"
 title: Spacing scale and section rhythm
 epic: Design system
-status: review
+status: done
 priority: p0
 size: M
 owner: agent

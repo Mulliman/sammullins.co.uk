@@ -1,0 +1,32 @@
+# Changelog
+
+Notable changes to the site and this repo, newest first. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The site isn't versioned, so entries are grouped by the date they merged. Add a line under **Unreleased** in the same PR as the change.
+
+## Unreleased
+
+### Added
+
+- `pnpm verify` runs every local CI gate in CI's order and stops at the first failure (ticket 806).
+- A changelog (this file).
+- A Netlify build plugin that keeps generated images between deploys, so a deploy isn't a cold 15-minute image build (ticket 806).
+- Branch and PR rules for agents in `AGENTS.md`: one ticket per PR cut from `main`, draft PRs early, rebase instead of merge-forward, Conventional Commits titles (ticket 806).
+
+### Changed
+
+- CI caches Playwright's Chromium for the accessibility job (ticket 806).
+- Netlify unshallows the clone before building, so "last changed" dates are right (ticket 806).
+
+## 7 November 2026
+
+- Code of conduct, issue and PR templates (#9, ticket 1101).
+- Compact sticky header with the agent view and an icon theme toggle; one-line footer (#8, ticket 206).
+- Even type and spacing across pages; body type survives host resets (#7, ticket 208).
+- Fluid spacing scale and section rhythm (#6, ticket 205). The same PR brought in colour tokens and page themes (207), the article template (313), Lighthouse budgets (804), HTML validation (805), the copy refresh (508), the style guide (1301 to 1306), the pm-pass skill (1004) and the desk-page blocks (1005).
+
+## 6 November 2026
+
+- The archive lists entries as thin rows (#5).
+- Footer cards go 4, then 2 by 2, then 1, never 3 and 1 (#4).
+- Typography refresh with Mona Sans and a fluid scale; no eyebrow labels (#3, ticket 204).
+- Code scanning alerts cleared (#2).
+- CI caches generated images and allows time for a cold build (#1).

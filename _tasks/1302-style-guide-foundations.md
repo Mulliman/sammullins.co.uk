@@ -2,7 +2,7 @@
 id: "1302"
 title: "Style guide: foundations generated from the tokens"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: M
 owner: agent

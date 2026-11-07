@@ -2,7 +2,7 @@
 id: "1304"
 title: "Style guide: every block and every variant, with its YAML"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: L
 owner: agent

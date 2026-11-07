@@ -2,7 +2,7 @@
 id: "1005"
 title: "Blocks the PM desk page needed and the site lacks"
 epic: Blocks
-status: review
+status: done
 priority: p2
 size: M
 owner: agent

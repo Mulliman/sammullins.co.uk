@@ -2,7 +2,7 @@
 id: "208"
 title: Tune type and spacing so pages read evenly
 epic: Design system
-status: review
+status: done
 priority: p0
 size: M
 owner: agent

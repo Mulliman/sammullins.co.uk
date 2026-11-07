@@ -8,7 +8,7 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 
 ## Golden rules
 
-1. **Sam merges. Nothing is automatic.** Work on a branch, open a PR, and stop. Never merge, push to `main`, enable auto-merge or schedule publishing, unless Sam explicitly tells you to in the moment.
+1. **Sam merges. Nothing is automatic.** Work on a branch, open a PR, and stop. Never merge, push to `main`, enable auto-merge or schedule publishing, unless Sam explicitly tells you to in the moment. In Claude Code, `.claude/settings.json` backs this up: `gh pr merge` is on the `ask` list, so every merge needs Sam's approval when it runs, and pushing to `main` is denied.
 2. **Never break a URL.** URLs come from file paths. To rename or remove a page, add a redirect in `src/data/redirects.json` (use the `redirect` skill). `pnpm build` fails on broken or chained redirects.
 3. **Content is not code.** Pages live in `src/content/**` as `.md` files. Don't hand-write `.astro` pages for content; compose blocks.
 4. **Authorship is honest.** Every entry has `authorship: sam` (Sam wrote the words) or `sam-ai` (Sam + AI). If you drafted the words, it's `sam-ai`. Sam changes it if he rewrites.
@@ -26,6 +26,8 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 | `pnpm check`                            | Type and content check (`astro check`)                                                                         |
 | `pnpm test`                             | Unit tests, legacy URL test, hygiene checks                                                                    |
 | `pnpm lint`                             | ESLint (Astro, jsx-a11y, TypeScript) and Prettier; `pnpm lint:fix` fixes what it can                           |
+| `pnpm verify` (or `--quick`)            | Every local CI gate in CI's order, stopping at the first failure. Run it before every push                     |
+| `pnpm tasks:status`                     | Tickets checked against git and open PRs; lists drift (e.g. "in review" but already merged)                    |
 | `pnpm compare:base` then `pnpm compare` | Before/after screenshots of the style guide and key pages; reports what changed (on demand, nothing committed) |
 
 ## Repo map
@@ -108,3 +110,17 @@ Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-too
 ## Tickets
 
 Work is tracked in `_tasks/` as Markdown tickets. Pick a `ready` ticket, branch as `NNN-short-slug`, meet every acceptance criterion, set `status: review` and open a PR. Don't silently widen scope; propose a new ticket instead. `_docs/decisions.md` beats a ticket if they disagree.
+
+## Branches and PRs
+
+Small PRs that Sam can review in one sitting merge fastest. A 33-commit stack does not.
+
+- **One ticket, one branch, one PR, cut from `origin/main`.** Don't build on another unmerged branch. If you truly must, open the lower PR first and say so at the top of the upper one.
+- **Open the PR as a draft as soon as the branch has a first commit**, then mark it ready. Don't keep finished work on a local branch overnight; push it as you go.
+- **Keep a stacked branch current by rebasing** onto `origin/main` (`git rebase origin/main`, then `git push --force-with-lease` to your own branch only). Don't merge one feature branch into another.
+- **Work in a git worktree**, not in the main checkout, when another agent might be running. Remove the worktree once its PR merges.
+- **PR titles follow Conventional Commits**: `type(scope): summary`, where type is one of `feat fix docs style refactor perf test build ci chore content revert`. CI fails anything else. Examples: `feat(blocks): add hero`, `content: new note on local models`, `ci: cache Playwright browsers`.
+- **Run `pnpm verify` before every push.** CI is the confirmation, not the place to find out.
+- **Lighthouse budgets are a required check.** If one fails, read the report artifact and fix the page. Don't loosen a budget or drop a page without Sam saying so.
+- **When a PR merges, its ticket goes to `done`** in the next PR or PM pass, once every acceptance criterion is ticked. `pnpm tasks:status` lists the ones that drifted.
+- **Add a line to `CHANGELOG.md`** under _Unreleased_ for anything a visitor or contributor would notice.

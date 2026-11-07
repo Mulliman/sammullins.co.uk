@@ -2,7 +2,7 @@
 id: "1303"
 title: "Style guide: themes, light and dark, page themes"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: S
 owner: agent

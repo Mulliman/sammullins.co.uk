@@ -2,7 +2,7 @@
 id: "1301"
 title: "Style guide: unlisted section, shell and navigation"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: M
 owner: agent

@@ -2,7 +2,7 @@
 id: "206"
 title: Header, nav and footer refresh
 epic: Design system
-status: review
+status: done
 priority: p1
 size: M
 owner: agent

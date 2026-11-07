@@ -2,13 +2,17 @@
 # Static files + headers only: no Functions, Forms, Identity or Edge Functions.
 
 [build]
-  command = "corepack enable && pnpm install --frozen-lockfile && pnpm build"
+  # "Last changed" dates come from git log (ticket 902), so unshallow first if Netlify cloned shallowly.
+  command = "if [ \"$(git rev-parse --is-shallow-repository)\" = true ]; then git fetch --unshallow --quiet; fi; corepack enable && pnpm install --frozen-lockfile && pnpm build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "24"
-  # Full history so "last changed" dates come from git (ticket 902).
   NETLIFY_BUILD_DEBUG = "false"
+
+# Keeps generated images between deploys (ticket 806); the plugin says why.
+[[plugins]]
+  package = "./netlify/plugins/astro-image-cache"
 
 [build.processing]
   skip_processing = true
