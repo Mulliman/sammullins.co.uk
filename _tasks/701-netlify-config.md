@@ -31,6 +31,12 @@ Keep Netlify, with the smallest possible surface: static files plus headers (dec
 
 ## Acceptance criteria
 
-- [ ] A PR produces a deploy preview URL.
+- [x] A PR produces a deploy preview URL.
 - [ ] The Netlify UI shows no functions, forms or identity.
 - [ ] `netlify.toml` is the only source of build config (UI fields empty).
+
+## Verification (7 November 2026, PM pass)
+
+- Deploy previews: PR #13 got `https://deploy-preview-13--sammullinscouk.netlify.app` and the `netlify/sammullinscouk/deploy-preview` check. Met.
+- `noindex` until cutover is on: `https://sammullinscouk.netlify.app/` sends `X-Robots-Tag: noindex, nofollow` (PR #13).
+- Left for Sam, in the Netlify UI: confirm no functions, forms or identity, and that the build settings fields are empty so `netlify.toml` is the only build config.

@@ -29,7 +29,14 @@ The npm dependency tree is the main remaining attack vector, and it exists at bu
 
 ## Acceptance criteria
 
-- [ ] No workflow uses a tag-only action reference.
+- [x] No workflow uses a tag-only action reference.
 - [ ] OpenSSF Scorecard ≥ 8.
 - [ ] A Renovate PR waits ≥ 7 days after an upstream release.
-- [ ] Nothing ever auto-merges.
+- [x] Nothing ever auto-merges.
+
+## Verification (7 November 2026, PM pass)
+
+- Actions: every `uses:` in `.github/workflows/` on `main` is pinned to a 40-character SHA. Met.
+- Auto-merge: `renovate.json` sets `automerge: false` and `platformAutomerge: false`, and `gh pr merge` is on the agent `ask` list (806). Met.
+- Scorecard: **6.7** (api.securityscorecards.dev, 7 November 22:19 UTC). The checks at 0 are Maintained (the repo is under 90 days old), Code-Review (a solo repo has no approvals), Contributors, CII-Best-Practices and Fuzzing; Branch-Protection is 3. Most of these can't move for a one-person repo, so 8 looks out of reach. The target needs Sam's decision.
+- Renovate: no Renovate PR has ever been opened, not even the onboarding one, so the Renovate GitHub app is probably not installed on the repo. That's Sam's to install.

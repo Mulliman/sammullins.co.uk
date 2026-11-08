@@ -2,7 +2,7 @@
 id: "310"
 title: "Hero: \"live portrait\" variant"
 epic: Blocks
-status: todo
+status: ready
 priority: p0
 size: M
 owner: pair

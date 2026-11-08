@@ -33,7 +33,7 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 
 - [x] `pnpm verify` passes on this branch and fails at the first failing gate.
 - [x] AGENTS.md states the PR title format and the branch rules.
-- [ ] The accessibility job restores Chromium from the cache on a second run. (Saved as `playwright-Linux-1.64.1` on 7 November; the first hit comes on the next run.)
+- [x] The accessibility job restores Chromium from the cache on a second run. (Saved as `playwright-Linux-1.64.1` on 7 November; the first hit comes on the next run.)
 - [ ] The first Netlify deploy logs "Saved node_modules/.astro", and the second logs "Restored". (Needs 701.)
 - [x] `CHANGELOG.md` exists and AGENTS.md points to it.
 - [x] Merged tickets with no open criteria are `done`; the rest say what is left.
@@ -43,3 +43,8 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 
 - **Permission allowlist:** `.claude/settings.json` lets Claude Code run read-only `pnpm`, `git` and `gh` commands without asking. `gh pr merge` is on the `ask` list (Sam wants merging possible, but only with his say-so each time), and pushing to `main` is denied. Committed in this PR so worktrees and clones get it.
 - **Lighthouse required:** "Lighthouse budgets" is in the `Main` ruleset's required checks, so ticket 804 is done.
+
+## Verification (7 November 2026, PM pass)
+
+- Playwright cache: CI run 42420018679 (the merge of PR #13) logs "Cache restored from key: playwright-Linux-1.64.1". Met.
+- Left: the Netlify build cache ("Saved" then "Restored" `node_modules/.astro`). Netlify's deploy logs need Sam's login, so this pass couldn't read them. The log for PR #13 is at https://app.netlify.com/projects/sammullinscouk/deploys/6aefa030256c5f690249e86d.

@@ -2,7 +2,7 @@
 id: "805"
 title: "CI: HTML validation, header & hygiene checks"
 epic: Quality gates
-status: review
+status: ready
 priority: p0
 size: S
 owner: agent
@@ -41,3 +41,7 @@ Valid markup, headers actually present, and no leaked personal data.
 - The rules moved to `tests/hygiene-rules.mjs`; `tests/hygiene-rules.test.mjs` proves each one fires on a violation and passes clean input, including EXIF and html-validate.
 - A new rule fails on EXIF in any image under `src/assets`; it found and stripped a date stamp in `src/assets/demo/logo.jpg`.
 - Left: the deploy-preview header assertion, which needs 701.
+
+## PM note (7 November 2026)
+
+701 is done enough: the Netlify site exists and every PR gets a deploy preview (PR #13 got `deploy-preview-13--sammullinscouk.netlify.app`). So the one open item, a post-deploy check that asserts the preview's response headers, is unblocked agent work. Nothing in `.github/workflows/` or `tests/` does it yet. Status moved from `review` (nothing was waiting) to `ready`.

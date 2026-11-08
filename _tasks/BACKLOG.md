@@ -6,6 +6,17 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 ## Where things stand
 
+**7 November 2026, evening (PM pass).** PRs #1 to #13 are merged and none are open; every branch is on `main`. The Netlify site exists (`sammullinscouk.netlify.app`, noindexed until cutover), so the checks that waited on a deploy preview could finally be run:
+
+- **Closed:** 603 (the 404 page serves status 404) and 702 (A+ on securityheaders.com and the Mozilla Observatory, and hotlinked `/media` sends `CORP: cross-origin`).
+- **Ticked, with what's left:** 701 (previews work; Sam checks the Netlify UI), 806 (the Playwright cache hits; the Netlify cache log needs Sam's login), 904 (CLS 0; Sam approves the feel) and 705 (actions SHA-pinned, nothing auto-merges; Scorecard is 6.7 against a target of 8, and Renovate has never opened a PR).
+- **Now agent work:** 805 (the post-deploy header check is unblocked, so it moves to `ready`), plus 310, 311 and 315, whose dependencies are done.
+- **Bug found:** the weekly external link report (803) labels its issue `link-check`, which doesn't exist, so its first run (Monday 9 November) would fail.
+- 1101: the community-profile criterion no longer applies (CONTRIBUTING and CODE_OF_CONDUCT were dropped on purpose). The MIT detection still needs a decision.
+- The 508 copy is on `main` and live on the preview, including the `[the tools I use]` placeholder in the home intro.
+
+The notes below are from earlier on 7 November and are kept for the record.
+
 - The whole rebuild (tickets 002 to 1101) is merged into `main`, and so is the typography refresh (204).
 - On 6 November every merged ticket was checked against its acceptance criteria. 31 are now `done`, each with a "Verification" note giving the evidence. The 12 still in `review` say what's left, which falls into three kinds:
   - **Agent work:** community profile files (1101) and skill dry runs (1002, 1003).

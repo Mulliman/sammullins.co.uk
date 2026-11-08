@@ -23,7 +23,7 @@ The Pacifico logo drawing itself is the craft moment (decisions: *Delight v1*).
 
 ## Acceptance criteria
 
-- [ ] No layout shift during the animation.
+- [x] No layout shift during the animation.
 - [x] Reduced motion means no animation.
 - [x] The logo link keeps an accessible name ("Sam Mullins, home").
 - [ ] Sam approves the feel on the preview.
@@ -31,3 +31,7 @@ The Pacifico logo drawing itself is the craft moment (decisions: *Delight v1*).
 ## Verification (6 November 2026)
 
 Left: check for layout shift on the preview, and Sam approves the feel.
+
+## Verification (7 November 2026, PM pass)
+
+Layout shift measured on `https://sammullinscouk.netlify.app/` in Chromium: a buffered `layout-shift` observer 4.5 seconds after load reported no entries (CLS 0), with the signature in the header. Left: Sam approves the feel.
