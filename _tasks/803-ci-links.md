@@ -44,6 +44,8 @@ Left: wait for the scheduled external link report to run once.
   - The workflow creates the label if it's missing, and closes the open issue when a run is clean.
 - Run 42466173576 on the branch: 214 links, 38 passed, 176 excluded, 0 errors. It closed issue #15 with a link to the run. (Its first attempt failed while downloading lychee from github.com, during the same GitHub problems; the rerun passed.)
 
-## Follow-up (not started)
+## GitHub links through the API (8 November 2026, Sam asked for it)
 
-github.com links are no longer checked. A small step that checks them through `gh api` (repo, user and `blob/<ref>/<path>` URLs) would bring them back. Proposed here; it's outside this ticket's scope.
+- `scripts/links/github-links.mjs` finds every github.com link in `src/content` and asks the GitHub API about it, with the workflow's own token: a profile checks the user, a `blob` or `tree` link checks the file at its ref, and anything else checks the repo. No new dependencies.
+- It runs in the same workflow after lychee. Its findings go into the same issue, and the issue closes only when both checks pass. If the script itself can't run (no token), the job fails visibly rather than closing the issue.
+- `tests/github-links.test.mjs` covers the URL handling. Run locally: 11 checked, 0 broken. Against the API, the old `GitDeployer.cs` path and a missing repo both return 404, and the fixed path returns 200.

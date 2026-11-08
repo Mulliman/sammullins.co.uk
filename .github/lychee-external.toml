@@ -14,7 +14,7 @@ exclude = [
   '^https?://(www\.)?npmjs\.com/',     # 403 (Cloudflare bot check)
   # GitHub answers anonymous requests for profile and file pages with 504 (November 2026),
   # even from a browser user agent, so a moved file and a working page look the same.
-  # The 11 github.com links were checked through the GitHub API instead when this was added.
+  # scripts/links/github-links.mjs checks them through the GitHub API instead, in the same workflow.
   '^https?://github\.com/',
 ]
 
