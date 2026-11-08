@@ -13,6 +13,7 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 - Netlify builds that aren't production on `www.sammullins.co.uk` (the `*.netlify.app` site before cutover, deploy previews, branch deploys) send `X-Robots-Tag: noindex, nofollow` on every path, so search engines stay off them (ticket 701).
 
 - A glossary of tools and terms at the end of the README.
+- GoatCounter analytics: a self-hosted, checksum-pinned `count.js` that counts only on www.sammullins.co.uk, skips Do Not Track and Global Privacy Control, sets no cookies, and records missed paths on the 404 page (ticket 703).
 
 ### Changed
 

@@ -22,9 +22,9 @@ site:
       body: 'I lead a team of Sitecore developers at Allianz Technology, and I build things for the web in C# and TypeScript. Lately that means a lot of work with AI coding agents. I also release open source projects and take photos.'
     - title: Free stuff!
       body: 'Most of what I build ends up open source on [GitHub](https://github.com/Mulliman). Older projects live in the [archive](/archive/).'
-  # Ticket 703: set to your GoatCounter site code (e.g. sammullins) once public/js/count.js is vendored.
+  # Ticket 703: GoatCounter site code. public/js/count.js must exist (the build checks); see _docs/analytics.md.
   analytics:
-    goatcounter: ''
+    goatcounter: sammullins
   # Ticket 905 prototypes: flip to true on a branch to preview, then decide ship / tweak / drop.
   features:
     viewTransitions: false
