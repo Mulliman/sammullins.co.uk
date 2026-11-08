@@ -2,7 +2,7 @@
 id: "505"
 title: Migrate photography (hidden), then a site-wide alt text audit
 epic: Migration
-status: review
+status: done
 priority: p0
 size: M
 owner: agent
@@ -25,7 +25,7 @@ Keep photography, but hidden (decisions: *Photography*). Sam, 7 November 2026: w
 - [x] All 10 photography URLs build.
 - [x] Every image has non-empty, non-generic alt text, or is marked decorative.
 - [x] Photography does not appear in the main nav.
-- [ ] Sam has skimmed the drafted alts and fixed anything wrong (names, places, who is in a photo).
+- [x] Sam has skimmed the drafted alts and fixed anything wrong (names, places, who is in a photo).
 
 ## Verification (6 November 2026)
 
@@ -37,3 +37,7 @@ Not met: album alt text is generic (titles such as "Cars2"). The "12 empty alts"
 - Left as they were: "Sam Mullins logo" on the home page (fine as is), the `[Describe…]` placeholders in the `page-structure-example-*` templates (deliberate), and the 68 decorative card thumbnails.
 - Sam to check: guesses I couldn't confirm from the photo alone. Mainly the people in the Epcot Morocco shots (alts say "a woman"), the dad and son at the lake in Spain, the Brave dancer (described, not named), and which ride the pirate throne scene is from.
 - Not done: page titles and descriptions. If "title text" in Sam's note meant those, that's a separate pass (proposed as a follow-up, not started).
+
+## Sign-off (8 November 2026)
+
+Sam accepted the drafted alts as they are, including the guesses listed above (desk page item 3). No corrections. Done. Page titles and descriptions stay out of scope, as noted.

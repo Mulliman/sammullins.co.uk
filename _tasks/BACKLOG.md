@@ -6,6 +6,8 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 ## Where things stand
 
+**8 November 2026.** Sam signed off 904 (the signature feel), 505 (the drafted alts, guesses included, no corrections) and 1306 (the page structures), so all three are `done`.
+
 **7 November 2026, evening (PM pass).** PRs #1 to #13 are merged and none are open; every branch is on `main`. The Netlify site exists (`sammullinscouk.netlify.app`, noindexed until cutover), so the checks that waited on a deploy preview could finally be run:
 
 - **Closed:** 603 (the 404 page serves status 404) and 702 (A+ on securityheaders.com and the Mozilla Observatory, and hotlinked `/media` sends `CORP: cross-origin`).
@@ -60,7 +62,7 @@ A living style guide at `/style-guide/`, never linked from the site, modelled on
 | 13c | [1303](1303-style-guide-themes.md) Themes: light, dark and page themes | agent | Check the advent calendar theme here. |
 | 13d | [1304](1304-style-guide-components.md) Every block and variant, with YAML | agent | Replaces the `blocks-demo` pages (with redirects). |
 | 13e | [1305](1305-style-guide-elements.md) Generic styles and elements | agent | |
-| 13f | [1306](1306-style-guide-page-structures.md) Example page structures | pair | Sam reviews the structures. |
+| 13f | [1306](1306-style-guide-page-structures.md) Example page structures | pair | **Done** (8 Nov). Sam approved the structures. |
 | 13g | [1307](1307-style-guide-ci.md) Visual regression in CI | agent | **Deferred** until the redesign settles. Kept: page-theme axe test and `pnpm compare`. |
 
 ## 3. Accounts and infrastructure (Sam, any time before step 5)
