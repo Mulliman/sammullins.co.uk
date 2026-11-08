@@ -18,12 +18,21 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+      - uses: ./.github/actions/setup-lychee
+      # Exit codes: 0 all links fine, 2 broken links (a report, not a failure), anything else
+      # means lychee itself failed, which fails the job rather than filing a misleading issue.
+      - name: Check external links
         id: lychee
-        with:
-          args: --config .github/lychee-external.toml --root-dir "${{ github.workspace }}" --no-progress --exclude-path _docs --exclude-path _tasks 'src/content/**/*.md'
-          output: ./lychee-report.md
-          fail: false
+        run: |
+          set +e
+          lychee --config .github/lychee-external.toml --root-dir "${{ github.workspace }}" --no-progress \
+            --format markdown --output lychee-report.md \
+            --exclude-path _docs --exclude-path _tasks 'src/content/**/*.md'
+          code=$?
+          set -e
+          cat lychee-report.md >> "$GITHUB_STEP_SUMMARY"
+          echo "exit_code=${code}" >> "$GITHUB_OUTPUT"
+          if [ "${code}" -ne 0 ] && [ "${code}" -ne 2 ]; then exit "${code}"; fi
       # lychee skips github.com (see .github/lychee-external.toml); the API checks those links instead.
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
