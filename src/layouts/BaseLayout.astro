@@ -55,6 +55,7 @@ if (goatcounter && !vendoredCounter) {
   );
 }
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const notFound = /^\/404(\.html|\/)?$/.test(Astro.url.pathname);
 const fullTitle = Astro.url.pathname === '/' ? `${site.name} | ${site.tagline}` : `${title} | ${site.name}`;
 const og = image ? await getImage({ src: image, width: 1200, format: 'jpg', quality: 80 }) : undefined;
 const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
@@ -94,13 +95,27 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     {/* Ticket 905 prototype: cross-document View Transitions, off unless enabled in site.yaml. */}
     {site.features.viewTransitions && <link rel="stylesheet" href="/css/view-transitions.css" />}
-    {/* Ticket 703: GoatCounter, self-hosted script, only when a site code is configured. Production only. */}
+    {/*
+      Ticket 703: GoatCounter, self-hosted, only when a site code is configured and only in a build.
+      count.js never counts by itself (no_onload); analytics.js counts on the live host only and
+      skips Do Not Track and Global Privacy Control. Both are deferred, so they run in this order.
+    */}
     {goatcounter && import.meta.env.PROD && (
       <script
         is:inline
-        async
+        defer
         src="/js/count.js"
         data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}
+        data-goatcounter-settings='{"no_onload":true,"no_events":true}'
+      ></script>
+    )}
+    {goatcounter && import.meta.env.PROD && (
+      <script
+        is:inline
+        defer
+        src="/js/analytics.js"
+        data-host={new URL(Astro.site ?? 'https://www.sammullins.co.uk').hostname}
+        data-not-found={notFound ? '' : undefined}
       ></script>
     )}
 
