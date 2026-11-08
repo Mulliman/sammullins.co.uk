@@ -49,3 +49,10 @@ Left: wait for the scheduled external link report to run once.
 - `scripts/links/github-links.mjs` finds every github.com link in `src/content` and asks the GitHub API about it, with the workflow's own token: a profile checks the user, a `blob` or `tree` link checks the file at its ref, and anything else checks the repo. No new dependencies.
 - It runs in the same workflow after lychee. Its findings go into the same issue, and the issue closes only when both checks pass. If the script itself can't run (no token), the job fails visibly rather than closing the issue.
 - `tests/github-links.test.mjs` covers the URL handling. Run locally: 11 checked, 0 broken. Against the API, the old `GitDeployer.cs` path and a missing repo both return 404, and the fixed path returns 200.
+
+## lychee install (8 November 2026, Sam asked for it)
+
+- `lycheeverse/lychee-action` downloads lychee from `github.com/.../releases/download` on every run with a single `curl -sf`: no retry, no cache, no checksum. On 8 November GitHub answered those requests from its runners with 504 often enough to fail the required Internal links check on `main` (08:49) and three times on this PR. CodeQL's own bundle download failed the same way, so it was GitHub, not lychee.
+- `.github/actions/setup-lychee` replaces it in both link jobs. It caches the binary by version and digest, fetches the release asset through the GitHub API (`gh release download`) with the direct URL as a fallback, and checks the archive against the release's SHA-256 before anything runs. Both jobs now call `lychee` with the same arguments as before. The external job fails outright on a lychee crash (any exit code other than 0 or 2) instead of filing an issue.
+- Evidence: external run 42467664104 downloaded through the API, verified the checksum and saved the cache. CI run 42467669173's Internal links restored lychee from the cache (no download) and checked 6,322 links with 0 errors.
+- Upgrading lychee is now manual: change the version and SHA-256 together in `.github/actions/setup-lychee/action.yml` (the file says how). Renovate no longer bumps it, because it can't compute the digest.
