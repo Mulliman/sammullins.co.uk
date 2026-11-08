@@ -21,7 +21,7 @@ jobs:
       - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         id: lychee
         with:
-          args: --no-progress --exclude-path _docs --exclude-path _tasks 'src/content/**/*.md'
+          args: --config .github/lychee-external.toml --root-dir "${{ github.workspace }}" --no-progress --exclude-path _docs --exclude-path _tasks 'src/content/**/*.md'
           output: ./lychee-report.md
           fail: false
       - name: Open or update the tracking issue
@@ -29,6 +29,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh label create link-check --description "Weekly external link report" --color d73a4a --force
           n=$(gh issue list --label link-check --state open --json number -q '.[0].number')
           if [ -n "$n" ]; then gh issue edit "$n" --body-file lychee-report.md
           else gh issue create --title "Broken external links" --label link-check --body-file lychee-report.md; fi
+      - name: Close the tracking issue when every link passes
+        if: steps.lychee.outputs.exit_code == 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list --label link-check --state open --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue close "$n" --comment "Every external link passed on ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}."; fi

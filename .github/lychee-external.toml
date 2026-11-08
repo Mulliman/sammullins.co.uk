@@ -1,0 +1,20 @@
+# Settings for the weekly external link report (.github/workflows/external-links.yml, ticket 803).
+# Deliberately not named lychee.toml: lychee loads that file automatically, and these settings
+# would then switch off the offline internal link check in ci.yml.
+
+# Only outside links. Root-relative links (/software/...) resolve to local files through
+# --root-dir and are dropped here; the "Internal links" CI job checks them on every PR
+# against the built site.
+scheme = ["https", "http"]
+
+# Sites that refuse automated checkers, so a working link reports as broken.
+exclude = [
+  '^https?://(www\.)?linkedin\.com/',  # 999 to every bot
+  '^https?://(www\.)?(x|twitter)\.com/', # 403
+  '^https?://(www\.)?npmjs\.com/',     # 403 (Cloudflare bot check)
+]
+
+# GitHub and others time out now and then (504). Retry before calling a link broken.
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
