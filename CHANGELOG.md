@@ -16,6 +16,7 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 
 ### Changed
 
+- The weekly external link report checks only outside links, skips sites that refuse automated checkers (LinkedIn, X, npm, and github.com for now), retries timeouts, and closes its issue when every link passes (ticket 803).
 - Docs-only PRs (root Markdown, `_tasks/`, `_docs/` outside `_docs/legacy/`, issue and PR templates) skip the build, accessibility, link and Lighthouse jobs; only Prettier runs.
 - CI caches Playwright's Chromium for the accessibility job (ticket 806).
 - Netlify unshallows the clone before building, so "last changed" dates are right (ticket 806).
