@@ -2,7 +2,7 @@
 id: "806"
 title: "Faster review loop: local verify, PR rules, Playwright cache, changelog"
 epic: Quality gates
-status: review
+status: done
 priority: p1
 size: S
 owner: agent
@@ -34,7 +34,7 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 - [x] `pnpm verify` passes on this branch and fails at the first failing gate.
 - [x] AGENTS.md states the PR title format and the branch rules.
 - [x] The accessibility job restores Chromium from the cache on a second run. (Saved as `playwright-Linux-1.64.1` on 7 November; the first hit comes on the next run.)
-- [ ] The first Netlify deploy logs "Saved node_modules/.astro", and the second logs "Restored". (Needs 701.)
+- [x] The first Netlify deploy logs "Saved node_modules/.astro", and the second logs "Restored". (Needs 701.)
 - [x] `CHANGELOG.md` exists and AGENTS.md points to it.
 - [x] Merged tickets with no open criteria are `done`; the rest say what is left.
 - [x] "Lighthouse budgets" is a required check in the `Main` ruleset (Sam, 7 November 2026).
@@ -48,3 +48,7 @@ An audit of CI and the agent workflow on 7 November 2026 found that CI is quick 
 
 - Playwright cache: CI run 42420018679 (the merge of PR #13) logs "Cache restored from key: playwright-Linux-1.64.1". Met.
 - Left: the Netlify build cache ("Saved" then "Restored" `node_modules/.astro`). Netlify's deploy logs need Sam's login, so this pass couldn't read them. The log for PR #13 is at https://app.netlify.com/projects/sammullinscouk/deploys/6aefa030256c5f690249e86d.
+
+## Verification (8 November 2026)
+
+Sam read a Netlify deploy log: "10:03:39 PM: Restored node_modules/.astro from the build cache." A restore means an earlier deploy saved it, so the criterion is met. Every criterion is ticked; done.

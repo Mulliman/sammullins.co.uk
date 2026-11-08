@@ -2,7 +2,7 @@
 id: "1306"
 title: "Style guide: example page structures"
 epic: Style guide
-status: review
+status: done
 priority: p1
 size: M
 owner: pair
@@ -33,7 +33,7 @@ Components alone don't show how a page should be put together. The SbS guide has
 - [x] Every page type in the content model has an example structure.
 - [x] Each front matter skeleton passes schema validation (test).
 - [x] The skills reference the matching guide page.
-- [ ] Sam reviews the structures (they encode how he wants pages built).
+- [x] Sam reviews the structures (they encode how he wants pages built).
 
 ## Progress
 
@@ -45,3 +45,7 @@ Components alone don't show how a page should be put together. The SbS guide has
 - Gaps: no published note exists, so the note section links to `/articles/`. No advent calendar page exists, so the campaign section links to the themes guide, which shows the `christmas` theme. Neither was invented.
 - Not done: visual review in a browser. The structures are checked by build and `tests/style-guide-page-structures.test.mjs` only.
 - Found, not fixed: the sitemap already lists the existing `hidden: true` albums (for example `/photography/photoshare21/reptiles/`). That contradicts the content model's "never listed anywhere". It needs its own decision and ticket.
+
+## Sign-off (8 November 2026)
+
+Sam approved the page structures as they are (desk page item 3). Done. The sitemap finding above is still open; ticket 003 says hidden pages are included in the sitemap on purpose, so it is a question for Sam, not a bug.
