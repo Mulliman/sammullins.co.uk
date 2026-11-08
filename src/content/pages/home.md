@@ -1,6 +1,6 @@
 ---
 title: "Sam Mullins"
-description: "Sam Mullins is a web developer and Sitecore team lead in Bournemouth. He has built for the web since 2010, and lately spends a lot of his time on AI-assisted development."
+description: "Sam Mullins is a web developer and Sitecore team lead in Bournemouth. He has built for the web since 2010, and now works agent-first with AI coding tools, at work and at home."
 cover:
   src: "../../assets/media/mrnjubw5/combination-mark-small.avif"
   alt: "Sam Mullins logo"
@@ -17,9 +17,9 @@ blocks:
     heading: "I'm Sam and I like to create things"
     surface: "muted"
     lead: |-
-      I've been building websites since 2010, starting as a student developer at Redweb. Today I lead a team of Sitecore developers at Allianz Technology. Most of that time has been spent with Sitecore and Umbraco (I'm certified in both), building for national charities and businesses.
+      I've been building websites since 2010, starting as a student developer at Redweb. Today I lead a Sitecore team at TCS, still working on the same LV= websites I joined in 2021. Most of that time has been spent with Sitecore and Umbraco (I'm certified in both), building for national charities and businesses.
 
-      Lately I spend a lot of my own time on AI-assisted development, working out where coding agents such as [the tools I use] genuinely help and where they shouldn't be trusted. This site is one of those experiments: it was rebuilt with Astro and Claude Code, and every page says whether I wrote it or wrote it with AI.
+      This year my team went from using GitHub Copilot as a coding helper to working agent-first with Claude, and nearly all of our development now starts with an agent. At home I use a wider mix, mostly Claude Code, Antigravity and OpenCode, to build party games, a golf app, children's stories and a few things that run entirely on my own machines, so that Elon and the other Sam don't get my data. This site is one of those projects: it was rebuilt with Astro and Claude Code, and every page says whether I wrote it or wrote it with AI.
 
       Away from the keyboard I take photos, and I've written plugins for the image editor [CaptureOne](https://www.captureone.com/).
   - type: "section"

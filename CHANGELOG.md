@@ -17,6 +17,7 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 
 ### Changed
 
+- Launch copy redrafted for Sam's current role and AI work: the home intro (fills `[the tools I use]`), the footer card, the CV (employment grouped by place, the TCS role, a Certifications section) and the Software page (xStatic first, the new projects, beta ones marked). The Imposter page compares the 2019 build with the 2026 agent-built rebuild (ticket 508).
 - Renovate leaves Node alone: it stays on the 24 line, set by hand, instead of being pinned (ticket 705).
 - The weekly external link report checks only outside links, skips sites that refuse automated checkers (LinkedIn, X, npm), checks github.com links through the GitHub API instead, retries timeouts, and closes its issue when every link passes (ticket 803).
 - Both link jobs install lychee from a cache, fetched through the GitHub API and checked against its SHA-256, instead of downloading it on every run (ticket 803).

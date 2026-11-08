@@ -19,7 +19,7 @@ site:
   # Kept until Sam has reviewed the 508 draft of the "What do I do?" text, then delete it and its schema field.
   footerCards:
     - title: What do I do?
-      body: 'I lead a team of Sitecore developers at Allianz Technology, and I build things for the web in C# and TypeScript. Lately that means a lot of work with AI coding agents. I also release open source projects and take photos.'
+      body: 'I lead a Sitecore team at TCS, and I build things for the web in C# and TypeScript. This year that has meant moving the team to agent-first development with Claude. At home I build games and apps with coding agents, release open source projects and take photos.'
     - title: Free stuff!
       body: 'Most of what I build ends up open source on [GitHub](https://github.com/Mulliman). Older projects live in the [archive](/archive/).'
   # Ticket 703: GoatCounter site code. public/js/count.js must exist (the build checks); see _docs/analytics.md.

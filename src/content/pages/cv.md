@@ -1,12 +1,12 @@
 ---
 title: "CV"
-description: "Sitecore Team Lead at Allianz Technology. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, with over a dozen production websites built, onboarded or supported."
+description: "Sitecore team lead at TCS, on the LV= websites since 2021. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, and a Claude Certified Architect."
 authorship: "sam-ai"
 blocks:
   - type: "hero"
     variant: "plain"
     heading: "CV"
-    subheading: "Sitecore Team Lead at Allianz Technology. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, with over a dozen production websites built, onboarded or supported."
+    subheading: "Sitecore team lead at TCS, on the LV= websites since 2021. A C# and TypeScript web developer since 2010, certified in Sitecore and Umbraco, and a Claude Certified Architect."
   - type: "section"
     surface: "default"
     blocks:
@@ -35,40 +35,69 @@ blocks:
       - type: "intro"
         heading: "Employment"
         align: "center"
+      - type: "intro"
+        heading: "LV= (2021-Present)"
+        lead: "The same team and the same LV= websites throughout. The employer changed twice, both times by TUPE transfer."
+        align: "center"
       - type: "cards"
         variant: "text"
-        columns: 2
+        columns: 3
         items:
-          - title: "Student Developer (2010-2011)"
+          - title: "Associate Consultant (2025-Present)"
             text: |-
-              **Redweb**
+              **TCS**
 
-              Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
-          - title: "Graduate Developer (2012-2013)"
+              Leading the Sitecore team on the LV= account, now a UK tech lead and a group of offshore developers, with line management handled offshore. In 2026 I moved the team from using GitHub Copilot as a coding helper to agent-first development with Claude. With another tech lead I built a team Claude plugin marketplace; my plugins cover security and environment checks, team reports, and documentation search across several sources from one place. I also run weekly AI knowledge-sharing sessions, mainly to bring the offshore developers up to speed.
+          - title: "Sitecore Team Lead (2023-2025)"
             text: |-
-              **Redweb**
+              **Allianz Technology**
 
-              Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
-          - title: "Web Developer (2013-2016)"
-            text: |-
-              **Redweb**
-
-              Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
-          - title: "Mid-level Web Developer (2016-2021)"
-            text: |-
-              **Redweb**
-
-              Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
+              Led a team of 7 onshore Sitecore developers, supporting, mentoring and line managing them so that we could reliably maintain and deliver new functionality on the existing Sitecore estate.
           - title: "Senior Analyst Developer (2021-2023)"
             text: |-
               **LV=**
 
               Main developer creating the new ElectriX website with Sitecore and React.Js. Part of the team upgrading the entire platform to Sitecore 10.2 and moving to Docker and Managed Cloud.
-          - title: "Sitecore Team Lead (2023-Present)"
+      - type: "intro"
+        heading: "Redweb (2010-2021)"
+        lead: "Eleven years at one agency, from student developer to mid-level developer and line manager."
+        align: "center"
+      - type: "cards"
+        variant: "text"
+        columns: 2
+        items:
+          - title: "Mid-level Web Developer (2016-2021)"
             text: |-
-              **Allianz Technology**
+              Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
+          - title: "Web Developer (2013-2016)"
+            text: |-
+              Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
+          - title: "Graduate Developer (2012-2013)"
+            text: |-
+              Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
+          - title: "Student Developer (2010-2011)"
+            text: |-
+              Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
+  - type: "section"
+    surface: "default"
+    blocks:
+      - type: "intro"
+        heading: "Certifications"
+        align: "center"
+      - type: "cards"
+        variant: "text"
+        columns: 2
+        items:
+          - title: "Claude Certified Architect, Foundations (2026)"
+            text: |-
+              **Anthropic**
 
-              Leader of a team of 7 Sitecore developers, supporting, mentoring, and managing them so that we could reliably maintain and deliver new functionality on our existing Sitecore estate.
+              Passed in August 2026, while moving my team to agent-first development with Claude.
+            href: "https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url"
+            cta: "Check the badge on Credly"
+          - title: "Sitecore and Umbraco"
+            text: |-
+              I'm certified in both CMSs: [which Sitecore and Umbraco certifications, and when].
   - type: "section"
     surface: "default"
     blocks:
@@ -79,6 +108,9 @@ blocks:
         variant: "text"
         columns: 3
         items:
+          - title: "AI-assisted development"
+            text: |-
+              At work my team uses Claude and GitHub Copilot, and nearly all of our development is now agent-first. At home I mostly use Claude Code, Antigravity and OpenCode, and I write my own plugins and skills for them. I'm a Claude Certified Architect (Foundations).
           - title: "C#"
             text: |-
               I've written C# code for over a decade using both .Net Framework and .Net Core. I've got experience using WebForms, MVC, Web API, SignalR and a limited amount of WPF.
@@ -90,7 +122,7 @@ blocks:
               I've created markup and styling ever since I started programming. I've also used Sass for both commercial and open source projects.
           - title: "Content Management Systems"
             text: |-
-              I've now reached my 10 year anniversary using Umbraco and Sitecore, and I'm certified in both. I've released open source packages for Umbraco, most notably xStatic.
+              I've used Umbraco and Sitecore since 2010, and I'm certified in both. I've released open source packages for Umbraco, most notably xStatic, which won best newcomer at the Umbraco Package Awards in 2021.
           - title: "Databases"
             text: |-
               I've been using Microsoft SQL Server for years and have recently used Azure Cosmos DB for the first time as a NoSQL alternative.
@@ -116,7 +148,7 @@ blocks:
               I have presented on multiple occasions to crowds of roughly 100 people and recently have remotely delivered demonstrations to crowds over video conferencing.
           - title: "Written communication"
             text: |-
-              I have strong written English skills, shown over the years in technical  specifications, proposals, and articles on the company blog.
+              I have strong written English skills, shown over the years in technical specifications, proposals, and articles on the company blog.
   - type: "section"
     surface: "default"
     blocks:
@@ -133,7 +165,7 @@ blocks:
             href: "/software/xstatic-for-umbraco/"
           - title: "For Photographers"
             text: |-
-              I've created 2 plugins (so far) for the photo editor CaptureOne. [PostCapture](/software/postcapture/ "PostCapture") is a WCF app that allows users to add multiple borders and watermarks. [PanoCapture](/software/panocapture/ "PanoCapture") is a warpper around Hugin that adds panorama and image stacking functionality to CaptureOne.
+              I've created 2 plugins (so far) for the photo editor CaptureOne. [PostCapture](/software/postcapture/ "PostCapture") is a WPF app that allows users to add multiple borders and watermarks. [PanoCapture](/software/panocapture/ "PanoCapture") is a wrapper around Hugin that adds panorama and image stacking functionality to CaptureOne.
             href: "/software/postcapture/"
           - title: "For Everyone"
             text: |-
