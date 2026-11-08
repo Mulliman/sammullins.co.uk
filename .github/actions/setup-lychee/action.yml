@@ -1,0 +1,60 @@
+# Installs the lychee link checker for the link jobs (ticket 803).
+#
+# Replaces the install inside lycheeverse/lychee-action, which downloads lychee from GitHub
+# releases on every run with a single `curl -sf`: no retry, no cache and no checksum. On
+# 8 November 2026 GitHub refused that download from its own runners often enough to block PRs.
+# Here the binary is cached by version, is fetched through the GitHub API (falling back to the
+# direct URL with retries), and the archive is checked against the release's SHA-256 before
+# anything runs.
+#
+# To upgrade: change VERSION and SHA256 together. The digest is the release asset's
+# (`gh release view lychee-v<version> --repo lycheeverse/lychee --json assets`), for
+# lychee-x86_64-unknown-linux-gnu.tar.gz.
+name: Set up lychee
+description: Install a pinned, checksum-verified lychee binary, cached by version.
+
+runs:
+  using: composite
+  steps:
+    - name: Pin the version
+      id: pin
+      shell: bash
+      run: |
+        echo "version=0.24.2" >> "$GITHUB_OUTPUT"
+        echo "sha256=1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a" >> "$GITHUB_OUTPUT"
+        echo "dir=$HOME/.cache/lychee-bin" >> "$GITHUB_OUTPUT"
+    - name: Restore lychee
+      id: cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ steps.pin.outputs.dir }}
+        key: lychee-${{ runner.os }}-x86_64-${{ steps.pin.outputs.version }}-${{ steps.pin.outputs.sha256 }}
+    - name: Download and verify lychee
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ steps.pin.outputs.version }}
+        SHA256: ${{ steps.pin.outputs.sha256 }}
+        DIR: ${{ steps.pin.outputs.dir }}
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        file="lychee-x86_64-unknown-linux-gnu.tar.gz"
+        url="https://github.com/lycheeverse/lychee/releases/download/lychee-v${VERSION}/${file}"
+        tmp="$(mktemp -d)"
+        # The release asset through the API first: on 8 November github.com/.../releases/download
+        # answered every runner request with 504 while api.github.com kept working.
+        if ! gh release download "lychee-v${VERSION}" --repo lycheeverse/lychee --pattern "${file}" --dir "${tmp}"; then
+          echo "API download failed; trying ${url}"
+          curl --fail --silent --show-error --location --retry 5 --retry-all-errors --retry-delay 5 \
+            --output "${tmp}/${file}" "${url}"
+        fi
+        echo "${SHA256}  ${tmp}/${file}" | sha256sum --check --strict
+        mkdir -p "${DIR}"
+        tar -xzf "${tmp}/${file}" -C "${DIR}" --strip-components=1 lychee-x86_64-unknown-linux-gnu/lychee
+        rm -rf "${tmp}"
+    - name: Put lychee on the PATH
+      shell: bash
+      run: |
+        echo "${{ steps.pin.outputs.dir }}" >> "$GITHUB_PATH"
+        "${{ steps.pin.outputs.dir }}/lychee" --version

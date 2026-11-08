@@ -102,10 +102,9 @@ jobs:
         with:
           name: dist
           path: dist
-      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
-        with:
-          args: --offline --root-dir "${{ github.workspace }}/dist" --no-progress 'dist/**/*.html'
-          fail: true
+      - uses: ./.github/actions/setup-lychee
+      - name: Check internal links and anchors
+        run: lychee --offline --root-dir "${{ github.workspace }}/dist" --no-progress 'dist/**/*.html'
 
   a11y:
     name: Accessibility (axe, WCAG 2.2 AA)
