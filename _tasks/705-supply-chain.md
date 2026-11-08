@@ -44,3 +44,7 @@ The npm dependency tree is the main remaining attack vector, and it exists at bu
 ## Renovate installed (8 November 2026)
 
 Sam installed the Renovate app (Mend) on the repo, in "Scan and Alert" mode. "Scan Only", Mend's default, sets Renovate to silent, so it would never open a PR and the 7-day criterion could never be met. `renovate.json` still decides what the PRs look like: grouped, 7 days' minimum release age, no automerge. Left: the first Renovate PR, checked against an upstream release date, and the Scorecard target decision.
+
+## Renovate's first PR (8 November 2026)
+
+Renovate's first PR (#18, "pin dependencies") would have pinned `.nvmrc` to `v24.22.2` and replaced the `engines` minimum `>=24.16.0` with `v26.13.0`, a different major. That comes from `rangeStrategy: "pin"` applied to Node. `renovate.json` now leaves Node alone: it stays on the 24 line, set by hand in `.nvmrc`, `netlify.toml` and `engines`, and "24" picks up patch releases on every CI run and Netlify build. Renovate closes #18 itself once this is on `main`. Moving to a new Node major is a ticket, not a Renovate PR.
