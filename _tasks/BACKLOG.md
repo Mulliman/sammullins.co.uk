@@ -8,6 +8,8 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 **8 November 2026.** Sam signed off 904 (the signature feel), 505 (the drafted alts, guesses included, no corrections) and 1306 (the page structures), so all three are `done`.
 
+Also on 8 November: Sam set up GoatCounter (`sammullins`), so 703 is `ready`; installed Renovate (Mend, "Scan and Alert"), so 705 waits for its first PR; and found "Restored node_modules/.astro" in a Netlify deploy log, so 806 is `done`. Search Console (704) and the Netlify UI checks (701) are still his.
+
 **7 November 2026, evening (PM pass).** PRs #1 to #13 are merged and none are open; every branch is on `main`. The Netlify site exists (`sammullinscouk.netlify.app`, noindexed until cutover), so the checks that waited on a deploy preview could finally be run:
 
 - **Closed:** 603 (the 404 page serves status 404) and 702 (A+ on securityheaders.com and the Mozilla Observatory, and hotlinked `/media` sends `CORP: cross-origin`).

@@ -40,3 +40,7 @@ The npm dependency tree is the main remaining attack vector, and it exists at bu
 - Auto-merge: `renovate.json` sets `automerge: false` and `platformAutomerge: false`, and `gh pr merge` is on the agent `ask` list (806). Met.
 - Scorecard: **6.7** (api.securityscorecards.dev, 7 November 22:19 UTC). The checks at 0 are Maintained (the repo is under 90 days old), Code-Review (a solo repo has no approvals), Contributors, CII-Best-Practices and Fuzzing; Branch-Protection is 3. Most of these can't move for a one-person repo, so 8 looks out of reach. The target needs Sam's decision.
 - Renovate: no Renovate PR has ever been opened, not even the onboarding one, so the Renovate GitHub app is probably not installed on the repo. That's Sam's to install.
+
+## Renovate installed (8 November 2026)
+
+Sam installed the Renovate app (Mend) on the repo, in "Scan and Alert" mode. "Scan Only", Mend's default, sets Renovate to silent, so it would never open a PR and the 7-day criterion could never be met. `renovate.json` still decides what the PRs look like: grouped, 7 days' minimum release age, no automerge. Left: the first Renovate PR, checked against an upstream release date, and the Scorecard target decision.
