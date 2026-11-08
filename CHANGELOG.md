@@ -17,6 +17,7 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 
 ### Changed
 
+- Renovate leaves Node alone: it stays on the 24 line, set by hand, instead of being pinned (ticket 705).
 - The weekly external link report checks only outside links, skips sites that refuse automated checkers (LinkedIn, X, npm), checks github.com links through the GitHub API instead, retries timeouts, and closes its issue when every link passes (ticket 803).
 - Both link jobs install lychee from a cache, fetched through the GitHub API and checked against its SHA-256, instead of downloading it on every run (ticket 803).
 - Docs-only PRs (root Markdown, `_tasks/`, `_docs/` outside `_docs/legacy/`, issue and PR templates) skip the build, accessibility, link and Lighthouse jobs; only Prettier runs.

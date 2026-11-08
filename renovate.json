@@ -5,10 +5,24 @@
   "automerge": false,
   "platformAutomerge": false,
   "rangeStrategy": "pin",
-  "lockFileMaintenance": { "enabled": true, "schedule": ["before 6am on monday"] },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
   "packageRules": [
-    { "matchUpdateTypes": ["minor", "patch"], "groupName": "non-major dependencies" },
-    { "matchManagers": ["github-actions"], "groupName": "github actions" }
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    },
+    {
+      "description": "Node stays on the 24 line, set by hand in .nvmrc, netlify.toml and engines. Major 24 picks up patches on every build; pinning would stop them, and the engines range is a minimum, not a version.",
+      "matchPackageNames": ["node"],
+      "enabled": false
+    }
   ],
   "labels": ["dependencies"],
   "prConcurrentLimit": 3
