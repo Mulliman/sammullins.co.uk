@@ -139,7 +139,7 @@ While on umbraCoffee a few xStatic improvements were suggested by the community,
 
 Generally I found this library an easy to use alternative to interacting directly with the non-managed provider. I've had an occasional problem with a DLL getting locked, but other than that it seems to work really nicely.
 
-If you need some sample code for creating a repo, committing some changes and pushing the changes to a remote you can look at the [GitDeployer code in xStatic](https://github.com/Mulliman/xStatic-for-Umbraco/blob/master/Source/XStatic/XStatic.Deploy/Git/GitDeployer.cs).
+If you need some sample code for creating a repo, committing some changes and pushing the changes to a remote you can look at the [GitDeployer code in xStatic](https://github.com/Mulliman/xStatic-for-Umbraco/blob/master/Source/XStaticCore/XStatic.Git/GitDeployer.cs).
 
 ## 5\. ImageKit
 
