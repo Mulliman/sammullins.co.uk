@@ -126,3 +126,7 @@ Answer: Another day. Sam will mine his Claude/Gemini history and add his own ide
 ### Q: Launch criteria, cutover and date?
 Recommended: launch at migration parity with lightly refreshed copy; separate Netlify site, then a domain swap.
 Answer: Launch with new content at some point in November 2026. Cutover plan accepted by default.
+
+### Q: TypeScript 7 while Astro and typescript-eslint catch up? (10 Nov 2026)
+Recommended: hold at TS 6 until `astro check` supports TS 7.
+Answer: No, move to where the tooling is heading now; beta tooling is fine for a personal site. Type checking runs on TypeScript 7.1 beta (`@typescript/native`) with `@astrojs/ts-content-mapper` for `.astro` files, replacing the deprecated `astro check`. `typescript` stays aliased to `@typescript/typescript6` only because typescript-eslint needs the TS 6 API; drop the alias once typescript-eslint supports TS 7.1+ (typescript-eslint/typescript-eslint#10940).
