@@ -39,4 +39,4 @@ Check the current pnpm docs for the exact key names of `minimumReleaseAge` and `
 
 ## Verification (6 November 2026)
 
-CI installs with `--frozen-lockfile` and builds on a clean runner; `.npmrc` has `save-exact`; `pnpm-workspace.yaml` allows install scripts only for sharp and esbuild.
+CI installs with `--frozen-lockfile` and builds on a clean runner; `pnpm-workspace.yaml` sets `saveExact` and `engineStrict` (pnpm 11+ ignores them in `.npmrc`); `pnpm-workspace.yaml` allows install scripts only for sharp and esbuild.
