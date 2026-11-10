@@ -1,5 +1,3 @@
-# Supply-chain hardening (ticket 002 / 705)
-# Wait 7 days before resolving any newly published version.
 minimumReleaseAge: 10080
 # Only these packages may run install scripts; all others are blocked.
 onlyBuiltDependencies:
@@ -11,4 +9,4 @@ saveExact: true
 engineStrict: true
 # GHSA-g3hv-75wg-m249: ESLint pulls in minimatch 10.x (dev only). Remove once ESLint depends on >= 11.0.1.
 overrides:
-  'minimatch@>=7.0.0 <11.0.1': 11.0.3
+  'minimatch@>=7.0.0 <11.0.1': 11.0.4
