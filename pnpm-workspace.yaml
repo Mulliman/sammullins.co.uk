@@ -5,6 +5,10 @@ minimumReleaseAge: 10080
 onlyBuiltDependencies:
   - sharp
   - esbuild
+# Pin exact versions on `pnpm add`, and refuse to install on a Node outside `engines`.
+# These used to live in .npmrc, but pnpm 11+ reads only auth and registry settings from there.
+saveExact: true
+engineStrict: true
 # GHSA-g3hv-75wg-m249: ESLint pulls in minimatch 10.x (dev only). Remove once ESLint depends on >= 11.0.1.
 overrides:
   'minimatch@>=7.0.0 <11.0.1': 11.0.3
