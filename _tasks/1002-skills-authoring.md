@@ -2,7 +2,7 @@
 id: "1002"
 title: "Skills: new-article, new-note, new-page"
 epic: AI authoring
-status: review
+status: in-progress
 priority: p0
 size: M
 owner: agent
@@ -34,3 +34,7 @@ Agent Skills (`SKILL.md`), in the folder chosen in 004:
 ## Verification (6 November 2026)
 
 Left: a dry run of each skill, and one non-Claude agent (agent, then Sam).
+
+## PM note (12 November 2026)
+
+The skills are on `main` and no PR is open, so `review` read as drift. Status moves to `in-progress`. Left: a dry run of each skill in Claude Code, and one from a non-Claude agent with the result noted in `_docs/agent-tooling.md`.
