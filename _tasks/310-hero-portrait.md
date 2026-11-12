@@ -2,7 +2,7 @@
 id: "310"
 title: "Hero: \"live portrait\" variant"
 epic: Blocks
-status: ready
+status: in-progress
 priority: p0
 size: M
 owner: pair
@@ -29,3 +29,21 @@ The home hero is an old photo with "Sam Mullins / Developer" in a box over it. T
 ## Notes
 
 Needs a new photo or short video of Sam; the shot list is in the design audit report. Until then the variant works with a still.
+
+## Change of direction (12 November 2026)
+
+Sam decided against the arched "live portrait". He wants the hero to be more interactive and about him in general, and may drop the photo altogether. So the variant is now `about`, with no image or video:
+
+- a one-line statement (the h1), a lead, up to two buttons and a "Now:" line
+- 2 to 6 **facets** (Developer, Team lead, Agent-first, Tinkerer, Photographer in the draft), shown as tabs: click one, or use the arrow keys, and its card swaps in. Without JavaScript every facet is listed.
+- no eyebrow or greeting above the heading (decisions: *Visual direction*)
+- the mockup's code card and "6s loop" badge are dropped
+
+The prototype is a hidden copy of the home page at `/hero-prototype/` (`src/content/pages/hero-prototype.md`, `hidden` and `noindex`), plus a style guide example (`hero-about`). The facet copy is `sam-ai`, drafted only from facts in the 508 launch copy.
+
+The acceptance criteria above were written for the portrait and no longer apply. For `about`:
+
+- [ ] axe passes on the prototype page and the style guide components page.
+- [ ] The tabs follow the WAI-ARIA tabs pattern (arrow keys, Home and End), with a visible focus ring.
+- [ ] Without JavaScript every facet and its link is readable.
+- [ ] Sam approves the look and the facet copy, then the home page switches over and `/hero-prototype/` is deleted.

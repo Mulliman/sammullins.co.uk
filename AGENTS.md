@@ -60,7 +60,7 @@ theme: default # page theme from src/styles/themes/ (default | christmas)
 cover: { src: ../../assets/media/x/y.avif, alt: 'Describe the image' }
 blocks:
   - type: hero
-    variant: plain # blurred | image | plain
+    variant: plain # blurred | image | plain | about (home: statement, buttons and clickable facets)
     heading: 'Big thin heading'
   - type: body # the Markdown below the front matter goes here
   - type: cards
