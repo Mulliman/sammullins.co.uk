@@ -25,3 +25,7 @@ Sam is open to both but wants to see them before committing (decisions: *Delight
 - [ ] Sam picks for each: ship / tweak / drop. The decision is recorded in `_docs/decisions.md`.
 - [ ] Whatever ships respects reduced motion and adds no JS.
 - [ ] Dropped prototypes are removed, not left as dead code.
+
+## Notes
+
+- Until ticket 906, prototype B (and the existing hero drift) never ran in a production build: the CSS minifier folded the `animation` shorthand and `animation-timeline` into a declaration Chrome drops. Compare the two heroes on a build that includes 906. When writing scroll-driven animations, use longhands only; see ticket 906.
