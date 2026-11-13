@@ -120,8 +120,8 @@ const px = (n: number) => `${Number(n.toFixed(1))}px`;
   <section id="typography" class="guide-section">
     <h2>Typography</h2>
     <p>
-      One family, Mona Sans, on a fluid scale. Each step is shown at its size. The min and max are the{' '}
-      <code>clamp()</code>
+      Figtree for headings and UI, Atkinson Hyperlegible Next for running text, on a fluid scale. Each step is shown at
+      its size. The min and max are the <code>clamp()</code>
       range in the CSS, shown in px with a 16px root.
     </p>
 
@@ -129,7 +129,9 @@ const px = (n: number) => `${Number(n.toFixed(1))}px`;
     <ul class="rows">
       {fonts.map((token) => (
         <li>
-          <p class={`ff-${token.slug} sample`}>Mona Sans, the quick brown fox</p>
+          <p class={`ff-${token.slug} sample`}>
+            {(token.value.split(',')[0] ?? token.value).replaceAll("'", '')}: the quick brown fox, Il1 O0
+          </p>
           <p class="token__meta">
             <code>{token.name}</code>: <code>{token.value}</code>
           </p>

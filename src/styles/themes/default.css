@@ -70,10 +70,9 @@
     --color-on-play: #111111;
     --color-logo-tile: #ffffff; /* client logos are drawn on white */
 
-    /* Logo gradient stops (the mark in the header and footer) */
-    --logo-stop-a: #000000;
-    --logo-stop-b: #3c3c3c;
-    --logo-stop-c: #808080;
+    /* The logo's two colours (ticket 209): the S and SAM, then the M and MULLINS */
+    --logo-primary: #000000;
+    --logo-secondary: #3d3f43;
 
     /* Shadows */
     --shadow: 0 0 20px rgb(0 0 0 / 0.5);
@@ -119,9 +118,8 @@
       --color-note: #8ab4ff;
       --color-tip: #8fd6a2;
       --color-warning: #ff8a80;
-      --logo-stop-a: #ffffff;
-      --logo-stop-b: #cfcfcf;
-      --logo-stop-c: #8c8c8c;
+      --logo-primary: #ffffff;
+      --logo-secondary: #c2c4c8;
       --tok-comment: #9aa4ad;
       --tok-keyword: #ff8ac0;
       --tok-string: #8fd6a2;
@@ -150,9 +148,8 @@
     --color-note: #8ab4ff;
     --color-tip: #8fd6a2;
     --color-warning: #ff8a80;
-    --logo-stop-a: #ffffff;
-    --logo-stop-b: #cfcfcf;
-    --logo-stop-c: #8c8c8c;
+    --logo-primary: #ffffff;
+    --logo-secondary: #c2c4c8;
     --tok-comment: #9aa4ad;
     --tok-keyword: #ff8ac0;
     --tok-string: #8fd6a2;
@@ -173,8 +170,7 @@
     --color-surface: var(--color-surface-inverse);
     --color-focus: var(--color-inverse-focus);
     --color-code-bg: var(--color-surface-inverse); /* inline code stays readable on dark sections */
-    --logo-stop-a: #ffffff;
-    --logo-stop-b: #cfcfcf;
-    --logo-stop-c: #8c8c8c;
+    --logo-primary: #ffffff;
+    --logo-secondary: #c2c4c8;
   }
 }

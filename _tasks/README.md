@@ -53,6 +53,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [205](205-colour-surfaces.md) | Spacing scale and section rhythm | p0 | M | agent | 207 |
 | [206](206-header-footer.md) | Header, nav and footer refresh | p1 | M | agent | 205 |
 | [207](207-colour-tokens.md) | Centralise colours in a theme, ban literals, add page themes | p0 | M | agent | 204 |
+| [209](209-brand-refresh.md) | New logo, masthead header, Figtree + Atkinson Hyperlegible Next | p1 | M | agent | 204, 206, 207 |
 | [301](301-block-hero.md) | Block: hero | p0 | M | agent | 102, 402 |
 | [302](302-blocks-text.md) | Blocks: intro, prose, callout | p0 | S | agent | 102 |
 | [303](303-block-image.md) | Block: image | p0 | S | agent | 402 |

@@ -1,25 +1,30 @@
 ---
 /**
- * Site header (tickets 203, 206): a compact sticky bar. The logo on the left; the nav, the agent
- * view toggle (passed in by entry pages through the `actions` slot) and the theme toggle on the
- * right. At most 72px tall on desktop and 64px on a phone. The mobile menu is a <details> element,
- * so it works without JS.
+ * Site header (tickets 203, 206, 209). At the top of the page it is a 100px masthead (80px on a phone)
+ * with the stacked logo centred and the nav and theme toggle on the right (agent view moved to the
+ * footer in ticket 209). It is sticky with a negative top, so once you
+ * scroll, only its bottom --header-h stays on screen: the stacked logo gives way to the horizontal one on
+ * the left and the nav stays where it is. One copy of every control, so nothing is duplicated for
+ * assistive tech. The mobile menu is a <details> element, so it works without JS; without JS the header
+ * simply isn't sticky.
  */
-import logo from '../assets/brand/logo.svg?raw';
+import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
 import ThemeToggle from './ThemeToggle.astro';
 
 const site = await getSite();
 const path = Astro.url.pathname;
-// Gradient ids are prefixed so the footer's copy of the logo doesn't reuse these gradients.
-const logoSvg = logo.replace(/_Linear/g, 'hdr_Linear');
 const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
+  <div class="site-header__sentinel" aria-hidden="true"></div>
   <div class="container site-header__inner">
-    <a href="/" class="logo" aria-label={`${site.name}, home`} data-signature>
-      <span class="logo__mark" aria-hidden="true" set:html={logoSvg} />
+    <a href="/" class="site-logo site-logo--stacked" aria-label={`${site.name}, home`} data-signature>
+      <Logo lockup="stacked" />
+    </a>
+    <a href="/" class="site-logo site-logo--horizontal" aria-label={`${site.name}, home`}>
+      <Logo lockup="horizontal" />
     </a>
 
     <div class="site-header__end">
@@ -36,7 +41,6 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       </nav>
 
       <div class="site-header__tools">
-        <slot name="actions" />
         <ThemeToggle />
       </div>
 
@@ -71,6 +75,18 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     }
   });
 
+  // Masthead to bar (209): the sentinel is the part of the header that scrolls off before it sticks.
+  // Once it has gone, the header is stuck and swaps to the horizontal logo.
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const sentinel = header?.querySelector('.site-header__sentinel');
+  if (header && sentinel && 'IntersectionObserver' in window) {
+    // The -1px top margin: once stuck, the sentinel's bottom edge sits exactly on the viewport's top,
+    // which would still count as intersecting.
+    new IntersectionObserver(([entry]) => header.classList.toggle('is-stuck', !entry?.isIntersecting), {
+      rootMargin: '-1px 0px 0px 0px',
+    }).observe(sentinel);
+  }
+
   // Signature (904): the head script adds .sig-intro before first paint on the first page view of a
   // session (so the logo never shows, hides, then animates). Mark the session and tidy up afterwards.
   const root = document.documentElement;
@@ -80,28 +96,47 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     } catch {
       // Storage blocked: the intro may replay on the next page, which is harmless.
     }
-    window.setTimeout(() => root.classList.remove('sig-intro'), 1500);
+    window.setTimeout(() => root.classList.remove('sig-intro'), 1700);
   }
 </script>
 
 <style>
-  /* A compact sticky bar (ticket 206). Its height is --header-h (global.css), which anchors and
-     sticky columns use as their offset, so headings never land under it. */
+  /* The masthead (ticket 209). It is --masthead-h tall and sticks at top: --header-h minus that, so
+     the stuck bar is exactly --header-h, which anchors and sticky columns use as their offset. */
   .site-header {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 30;
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
   }
+  :global(html.js) .site-header {
+    position: sticky;
+    top: calc(var(--header-h) - var(--masthead-h));
+  }
+  .site-header__sentinel {
+    position: absolute;
+    inset: 0 0 auto;
+    height: calc(var(--masthead-h) - var(--header-h));
+    pointer-events: none;
+  }
   .site-header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-s);
-    /* The bottom border counts towards --header-h, so the bar is exactly that tall. */
-    height: calc(var(--header-h) - 1px);
+    /* The bottom border counts towards the height. */
+    height: calc(var(--masthead-h) - 1px);
     position: relative;
+    transition: transform var(--dur) var(--ease);
+  }
+  /* Stuck: centre everything in the part of the header that is still on screen. */
+  .is-stuck .site-header__inner {
+    transform: translateY(calc((var(--masthead-h) - var(--header-h)) / 2));
+  }
+  .site-header__end {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
   }
   .site-header__end,
   .site-header__tools {
@@ -109,16 +144,56 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     align-items: center;
     gap: var(--space-2xs);
   }
-  .logo {
+  .site-logo {
     display: block;
-    height: 3.25rem;
-    aspect-ratio: 4471 / 2309;
+    grid-row: 1;
     color: var(--color-heading);
+    transition:
+      opacity var(--dur) ease,
+      transform var(--dur) var(--ease),
+      visibility 0s;
   }
-  .logo__mark :global(svg) {
-    width: 100%;
-    height: auto;
+  .site-logo :global(svg) {
     display: block;
+    height: 100%;
+    width: auto;
+  }
+  /* Each link gets its lockup's aspect ratio (the SVG viewBoxes), so a squeezed grid column can't collapse it. */
+  .site-logo--stacked {
+    grid-column: 2;
+    height: calc(var(--masthead-h) - 1.25rem);
+    aspect-ratio: 912 / 440;
+  }
+  .site-logo--horizontal {
+    grid-column: 1;
+    justify-self: start;
+    height: 2rem;
+    aspect-ratio: 1326 / 193;
+  }
+  /* Only one logo is visible (and focusable) at a time; visibility flips after the fade. */
+  .site-logo--horizontal,
+  .is-stuck .site-logo--stacked {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--dur) ease,
+      transform var(--dur) var(--ease),
+      visibility 0s linear var(--dur);
+  }
+  .site-logo--horizontal {
+    transform: translateY(30%);
+  }
+  .is-stuck .site-logo--stacked {
+    transform: scale(0.85);
+  }
+  .is-stuck .site-logo--horizontal {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity var(--dur) ease,
+      transform var(--dur) var(--ease),
+      visibility 0s;
   }
   .nav ul {
     list-style: none;
@@ -130,6 +205,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     padding: var(--space-2xs) var(--space-xs);
     color: var(--color-nav);
     text-decoration: none;
+    font-family: var(--font-display);
     font-weight: 500;
     font-size: var(--step-0);
   }
@@ -150,6 +226,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     display: flex;
     align-items: center;
     gap: var(--space-2xs);
+    font-family: var(--font-display);
     font-size: var(--step--1);
     font-weight: var(--weight-strong);
     padding: var(--space-2xs);
@@ -193,93 +270,6 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     gap: var(--space-s);
   }
 
-  /* Signature (904). The logo SVG has two groups: the name (MULLINS, then SAM) and the icon's 7 blocks.
-     Only opacity and position animate, every animation ends exactly at the resting logo (no
-     forwards fill), so nothing snaps or flickers when it finishes. Skipped under reduced motion. */
-  .logo__mark :global(path),
-  .logo__mark :global(rect) {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    /* First view of a session: the icon's blocks settle into place in turn, then the name fades in. */
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > *) {
-      animation: sig-settle 520ms var(--ease) backwards;
-    }
-    :global(.sig-intro) .logo :global(svg > g:first-of-type > *) {
-      animation: sig-fade 500ms ease-out 420ms backwards;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(2)) {
-      animation-delay: 50ms;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(3)) {
-      animation-delay: 100ms;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(4)) {
-      animation-delay: 150ms;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(5)) {
-      animation-delay: 200ms;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(6)) {
-      animation-delay: 250ms;
-    }
-    :global(.sig-intro) .logo :global(svg > g:nth-of-type(2) > :nth-child(7)) {
-      animation-delay: 300ms;
-    }
-
-    /* Hover and keyboard focus: a small ripple runs across the icon's blocks. */
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > *) {
-      animation: sig-ripple 420ms ease-in-out;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(2)) {
-      animation-delay: 35ms;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(3)) {
-      animation-delay: 70ms;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(4)) {
-      animation-delay: 105ms;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(5)) {
-      animation-delay: 140ms;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(6)) {
-      animation-delay: 175ms;
-    }
-    .logo:is(:hover, :focus-visible) :global(svg > g:nth-of-type(2) > :nth-child(7)) {
-      animation-delay: 210ms;
-    }
-  }
-
-  @keyframes sig-settle {
-    from {
-      opacity: 0;
-      transform: translateY(-18%);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-  @keyframes sig-fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes sig-ripple {
-    0%,
-    100% {
-      transform: none;
-    }
-    45% {
-      transform: translateY(-7%);
-    }
-  }
-
   @media (max-width: 59.99rem) {
     .nav--desktop {
       display: none;
@@ -288,9 +278,28 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       display: block;
     }
   }
+  /* Phones: the toggles and menu leave no room to centre the logo, so both logos sit on the left. */
+  @media (max-width: 40rem) {
+    .site-header__inner {
+      grid-template-columns: 1fr auto;
+    }
+    .site-logo--stacked {
+      grid-column: 1;
+      justify-self: start;
+    }
+    .site-header__end {
+      grid-column: 2;
+    }
+  }
   @media (max-width: 30rem) {
-    .logo {
-      height: 2.75rem;
+    .site-header__inner {
+      gap: var(--space-2xs);
+    }
+    .site-logo--stacked {
+      height: calc(var(--masthead-h) - 1.75rem);
+    }
+    .site-logo--horizontal {
+      height: 1.5rem;
     }
   }
 </style>

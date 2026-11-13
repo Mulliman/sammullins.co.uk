@@ -79,9 +79,8 @@ Generated from `src/styles/themes/default.css`, the only place colours are defin
 
 | Token | Light | Dark | Note |
 |---|---|---|---|
-| `--logo-stop-a` | `#000000` | `#ffffff` |  |
-| `--logo-stop-b` | `#3c3c3c` | `#cfcfcf` |  |
-| `--logo-stop-c` | `#808080` | `#8c8c8c` |  |
+| `--logo-primary` | `#000000` | `#ffffff` | The S bars and SAM |
+| `--logo-secondary` | `#3d3f43` | `#c2c4c8` | The M bars and MULLINS |
 
 ## Shadows
 

@@ -1,21 +1,22 @@
 ---
 /**
- * Site footer (tickets 203, 206): one sign-off line, the nav, socials (rel="me"), the colophon slot
+ * Site footer (tickets 203, 206): one sign-off line, the nav, socials (rel="me"), the agent view toggle
+ * (passed in by entry pages through the `actions` slot; moved back from the header in ticket 209), the colophon slot
  * and the copyright. The bio cards are gone (ticket 206): that copy lives on the home page (508).
  */
-import logo from '../assets/brand/logo.svg?raw';
+import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
 
 const site = await getSite();
 const year = new Date().getFullYear();
-// Prefix gradient ids: the header inlines the same SVG, and duplicate ids resolve to the header's copy.
-const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
 ---
 
 <footer class="site-footer surface-inverse">
   <div class="container site-footer__inner">
     <p class="signoff">
-      <span class="footer-logo" aria-hidden="true" set:html={footerLogo} />
+      <span class="footer-logo">
+        <Logo lockup="stacked" />
+      </span>
       <span>
         {site.name} · {site.tagline}
       </span>
@@ -42,6 +43,7 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
       ))}
     </ul>
 
+    <slot name="actions" />
     <slot name="colophon" />
 
     <p class="copyright">
@@ -71,9 +73,8 @@ const footerLogo = logo.replace(/_Linear/g, 'ftr_Linear');
     font-weight: var(--weight-strong);
   }
   .footer-logo {
-    width: 6rem;
+    width: 7rem;
     display: block;
-    color: var(--color-text-inverse);
   }
   .footer-logo :global(svg) {
     width: 100%;
