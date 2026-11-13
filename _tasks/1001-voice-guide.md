@@ -27,3 +27,7 @@ AI-drafted content should still sound like Sam (decisions: *Voice*).
 
 - [ ] Sam reads it and confirms it sounds like him.
 - [ ] A blind test: an AI-drafted paragraph using the guide, which Sam judges "close enough to edit, not rewrite".
+
+## Blind test (8 November 2026)
+
+The blind test paragraph is the second paragraph of the home intro on branch `content/launch-copy` (it starts "This year my team went from using GitHub Copilot..."). An agent drafted it from this guide and the grilling answers, with no edits from Sam. Sam judges it on the PR: close enough to edit, or a rewrite.
