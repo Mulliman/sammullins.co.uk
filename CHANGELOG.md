@@ -4,6 +4,10 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 
 ## Unreleased
 
+### Fixed
+
+- The blurred hero's scroll-linked drift, and the blur-to-sharp prototype, now run. The CSS minifier had folded them into a declaration Chrome drops, and the hero's `overflow: hidden` pinned the timeline to the hero. A test now fails the build if a scroll timeline ends up inside the `animation` shorthand (ticket 906).
+
 ### Added
 
 - `pnpm verify` runs every local CI gate in CI's order and stops at the first failure (ticket 806).

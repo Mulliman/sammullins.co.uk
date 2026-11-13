@@ -46,7 +46,9 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   .hero {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
+    /* clip, not hidden: hidden makes the hero a scroll container, and scroll()/view() timelines then
+       track the hero (which never scrolls) instead of the page (ticket 906). */
+    overflow: clip;
     padding-block: var(--space-l-xl);
     box-shadow: var(--shadow-inset);
   }
@@ -187,11 +189,15 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     }
   }
 
-  /* Subtle scroll-linked drift on the backdrop. CSS only, skipped without support or with reduced motion. */
+  /* Subtle scroll-linked drift on the backdrop. CSS only, skipped without support or with reduced motion.
+     Longhands only, never the `animation` shorthand: the build's CSS minifier (Lightning CSS) folds the
+     shorthand and `animation-timeline` into one shorthand that Chrome rejects, so nothing runs (ticket 906). */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
       .hero--blurred .hero__backdrop {
-        animation: hero-drift linear both;
+        animation-name: hero-drift;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: scroll();
       }
     }
@@ -205,11 +211,13 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     }
   }
 
-  /* Prototype B (905): scroll-driven focus pull on the backdrop. */
+  /* Prototype B (905): scroll-driven focus pull on the backdrop. Longhands only, as above (906). */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .hero--sharpen .hero__backdrop :global(img) {
-        animation: hero-sharpen linear both;
+        animation-name: hero-sharpen;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: view();
         animation-range: exit 0% exit 80%;
       }

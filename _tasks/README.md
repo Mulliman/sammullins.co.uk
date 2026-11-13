@@ -98,6 +98,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [903](903-console-secret.md) | Console secret | p1 | S | pair | 702 |
 | [904](904-signature-animation.md) | Signature draw + hover animation | p1 | M | agent | 203 |
 | [905](905-prototypes-motion.md) | Prototypes: View Transitions & blur-to-sharp hero | p1 | M | pair | 301 |
+| [906](906-scroll-animation-minifier.md) | Make the hero's scroll-driven animations actually run | p1 | S | agent | 301, 905 |
 | [1001](1001-voice-guide.md) | Voice guide from articles + YouTube | p0 | M | agent | 503 |
 | [1002](1002-skills-authoring.md) | Skills: new-article, new-note, new-page | p0 | M | agent | 004, 1001, 102 |
 | [1003](1003-skills-media-redirect.md) | Skills: add-images, redirect | p0 | S | agent | 004, 401, 601 |
@@ -126,5 +127,5 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 3. **Blocks:** 301–309 (parallelisable)
 4. **Migration:** 501 → 502–507 · 602 · 403
 5. **Hardening:** 702, 705, 802–805
-6. **Delight & authoring:** 901–905 · 1001–1003 · 1101
+6. **Delight & authoring:** 901–906 · 1001–1003 · 1101
 7. **Launch:** 1201 → 1203 → 1204 → 1205
