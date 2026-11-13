@@ -2,7 +2,7 @@
 id: "1004"
 title: "Skill: pm-pass (what needs Sam, as a desk page)"
 epic: AI authoring
-status: review
+status: in-progress
 priority: p1
 size: M
 owner: agent
@@ -36,3 +36,7 @@ With 80-odd tickets, a dozen branches and work split across agent sessions, the 
 ## Notes
 
 The PM may edit ticket front matter (`status`, `depends_on`), `BACKLOG.md` and the ticket index in `README.md`, always on a branch with a PR, because Sam merges.
+
+## PM note (12 November 2026)
+
+Everything is on `main` and no PR is open, so `review` read as drift. Status moves to `in-progress`. Left: Sam confirms the desk page format works for him, or says what to change. Then this is `done`.

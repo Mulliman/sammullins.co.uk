@@ -6,6 +6,13 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 ## Where things stand
 
+**12 November 2026 (ticket tidy).** No ticket was closed; seven statuses changed so they match git, each with a PM note saying what is left. PRs #1 to #28 are merged or closed; #25 (the 508 launch copy, draft) and #29 (Renovate) are open.
+
+- **Agent work, now `in-progress`:** 805 (the deploy-preview header check), 1002 and 1003 (skill dry runs).
+- **Waiting on Sam:** 1004 (confirm the desk page format, `in-progress`) and 1101 (the MIT detection decision, `blocked`).
+- **Waiting on other tickets, now `blocked`:** 703 (page views from production, checked at cutover, 1204) and 1307 (after 310, 312 and 314).
+- **The path to launch:** 310 (hero, with Sam) then 312 (home); 508 (copy, PR #25) then 314 (CV); then 1201, 1203 and 1204.
+
 **8 November 2026.** Sam signed off 904 (the signature feel), 505 (the drafted alts, guesses included, no corrections) and 1306 (the page structures), so all three are `done`.
 
 Also on 8 November: Sam set up GoatCounter (`sammullins`), so 703 is built in PR #21; installed Renovate (Mend, "Scan and Alert"), so 705 waits for its first PR; and found "Restored node_modules/.astro" in a Netlify deploy log, so 806 is `done`. Search Console (704) and the Netlify UI checks (701) are still his.

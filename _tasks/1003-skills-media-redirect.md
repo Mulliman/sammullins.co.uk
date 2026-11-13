@@ -2,7 +2,7 @@
 id: "1003"
 title: "Skills: add-images, redirect"
 epic: AI authoring
-status: review
+status: in-progress
 priority: p0
 size: S
 owner: agent
@@ -32,3 +32,7 @@ Images and URL changes are where AI edits most often go wrong.
 ## Verification (6 November 2026)
 
 Left: a dry run of each skill (agent).
+
+## PM note (12 November 2026)
+
+The skills are on `main` and no PR is open, so `review` read as drift. Status moves to `in-progress`. Left: a dry run of `redirect` (602 still passes) and of `add-images` (no EXIF, alt text in the PR body).

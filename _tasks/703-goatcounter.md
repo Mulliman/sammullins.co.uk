@@ -2,7 +2,7 @@
 id: "703"
 title: GoatCounter analytics (self-hosted script)
 epic: Hosting & security
-status: review
+status: blocked
 priority: p1
 size: S
 owner: pair
@@ -40,3 +40,7 @@ Free, cookieless analytics with no banner (decisions: *Analytics*). The old UA t
 - CSP: no change. `script-src` already allows `'self'`, and `connect-src https://sammullins.goatcounter.com` was already there.
 - Not done (optional in the scope): outbound click events. count.js is loaded with `no_events`; turning them on means `data-goatcounter-click` attributes on the links.
 - Left: page views in the dashboard from production. That needs the live domain (cutover, 1204), so it's checked then.
+
+## PM note (12 November 2026)
+
+Nothing is waiting in review: PR #21 merged and no branch is open. The one open criterion (page views from production only) can't be checked until the domain cutover (1204), so the status moves from `review` to `blocked`. Tick it and close the ticket as part of 1204.

@@ -2,7 +2,7 @@
 id: "805"
 title: "CI: HTML validation, header & hygiene checks"
 epic: Quality gates
-status: ready
+status: in-progress
 priority: p0
 size: S
 owner: agent
@@ -45,3 +45,7 @@ Valid markup, headers actually present, and no leaked personal data.
 ## PM note (7 November 2026)
 
 701 is done enough: the Netlify site exists and every PR gets a deploy preview (PR #13 got `deploy-preview-13--sammullinscouk.netlify.app`). So the one open item, a post-deploy check that asserts the preview's response headers, is unblocked agent work. Nothing in `.github/workflows/` or `tests/` does it yet. Status moved from `review` (nothing was waiting) to `ready`.
+
+## PM note (12 November 2026)
+
+Most of this ticket is on `main`, so `ready` read as drift. Status moves to `in-progress`. One item is left and it is agent work: a post-deploy check that asserts the deploy preview's response headers. Nothing in `.github/workflows/` or `tests/` does it yet.

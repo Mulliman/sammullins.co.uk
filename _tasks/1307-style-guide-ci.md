@@ -2,7 +2,7 @@
 id: "1307"
 title: "Visual regression in CI: revisit once the redesign settles"
 epic: Style guide
-status: todo
+status: blocked
 priority: p2
 size: M
 owner: agent
@@ -32,3 +32,7 @@ After the redesign tickets merge. Then consider per-component screenshots (one s
 - [ ] A one-token colour change fails a visual test naming the affected components.
 - [ ] Baselines update only through an explicit command, and total at most a few MB.
 - [ ] Ten consecutive CI runs on an unchanged commit pass (no flakiness).
+
+## PM note (12 November 2026)
+
+Commits on `main` name this ticket (the first attempt and what was kept), so `todo` read as drift. Status moves to `blocked` until 310, 312 and 314 are done. The local branch holding the dropped full-page baselines was deleted in the 12 November cleanup; the revisit starts fresh, as *When to revisit* says.
