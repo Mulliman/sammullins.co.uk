@@ -9,6 +9,30 @@
 #
 # Every enum option of every block appears in at least one example.
 
+hero-about:
+  title: About hero, with facets to click through
+  block:
+    type: hero
+    variant: about
+    heading: A one-line statement about you
+    subheading: A sentence or two on who you are and what you do now.
+    ctas:
+      - label: Primary action
+        href: /software/
+      - label: Secondary action
+        href: /articles/
+    now: what you're working on this month
+    facets:
+      - label: First side
+        text: Two short sentences about this side of you. The first facet is the one shown on load.
+        link:
+          label: Where to read more
+          href: /cv/
+      - label: Second side
+        text: Arrow keys move between facets, and without JavaScript every facet is listed.
+      - label: Third side
+        text: Between two and six facets, each label up to 24 characters.
+
 hero-blurred-center:
   title: Blurred hero, centred
   block:

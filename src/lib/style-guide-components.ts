@@ -7,7 +7,8 @@ import type { Block } from './content';
 export const BLOCK_GUIDE: Record<Block['type'], { title: string; summary: string }> = {
   hero: {
     title: 'Hero',
-    summary: 'A full-width opening band with a heading, an optional subheading and an optional photo.',
+    summary:
+      'A full-width opening band with a heading, an optional subheading and an optional photo. The about variant adds buttons, a "Now:" line and facets to click through.',
   },
   intro: {
     title: 'Intro',
