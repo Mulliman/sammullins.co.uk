@@ -59,7 +59,8 @@ if (!group) throw new Error(`No #${CONFIG.masterGroupId} group in ${SRC}`);
 const kids = group.childNodes.filter((n) => n.rawTagName === 'g');
 if (kids.length !== 2) throw new Error(`Expected 2 child groups (wordmark, mark), found ${kids.length}`);
 
-const sec = CONFIG.secondaryInMaster.replace(/[()]/g, '\\$&');
+// Escape every regex metacharacter (including backslash) before building a RegExp from the colour.
+const sec = CONFIG.secondaryInMaster.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const tokenise = (markup) =>
   markup
     .replace(/\s*serif:id="[^"]*"/g, '')
