@@ -21,6 +21,8 @@ Notable changes to the site and this repo, newest first. The format follows [Kee
 
 ### Changed
 
+- The new logo, inlined so each bar and letter can be coloured and animated, with a new first-visit animation. The header is a 100px masthead with the logo centred that scrolls up into the 72px sticky bar. New favicons, app icons and a web manifest. The agent view toggle moves from the header to the footer, beside the colophon (ticket 209).
+- Type: Figtree for headings and Atkinson Hyperlegible Next for body text, replacing Mona Sans (ticket 209).
 - Renovate leaves Node alone: it stays on the 24 line, set by hand, instead of being pinned (ticket 705).
 - The weekly external link report checks only outside links, skips sites that refuse automated checkers (LinkedIn, X, npm), checks github.com links through the GitHub API instead, retries timeouts, and closes its issue when every link passes (ticket 803).
 - Both link jobs install lychee from a cache, fetched through the GitHub API and checked against its SHA-256, instead of downloading it on every run (ticket 803).

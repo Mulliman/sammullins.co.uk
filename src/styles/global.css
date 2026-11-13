@@ -1,7 +1,7 @@
 /*
  * Design system (tickets 201, 202).
  * Evolves the 2021 Umbracofolio look: dark/light section rhythm, framed photo heroes,
- * orange accent. Typography (ticket 204): one variable sans (Mona Sans), a fluid modular scale,
+ * orange accent. Typography (tickets 204, 209): Figtree headings, Atkinson Hyperlegible Next body, a fluid modular scale,
  * sentence-case headings that are left-aligned unless a block centres them.
  * Tokens: _docs/design-tokens.md
  */
@@ -47,41 +47,74 @@
 }
 
 @layer tokens {
-  /* Mona Sans (OFL), one variable file per style, weights 200 to 900. Latin subset. */
+  /* Ticket 209. Figtree (OFL) for headings, nav and the logo's wordmark; Atkinson Hyperlegible Next (OFL)
+     for running text, chosen because look-alike characters (Il1, O0) stay distinct. One variable file per
+     style, Latin subset. */
   @font-face {
-    font-family: 'Mona Sans';
-    font-weight: 200 900;
+    font-family: 'Figtree';
+    font-weight: 300 900;
     font-style: normal;
     font-display: swap;
-    src: url('/fonts/mona-sans-latin-wght-normal.woff2') format('woff2');
+    src: url('/fonts/figtree-latin-wght-normal.woff2') format('woff2');
     unicode-range:
       U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
       U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
   @font-face {
-    font-family: 'Mona Sans';
-    font-weight: 200 900;
+    font-family: 'Figtree';
+    font-weight: 300 900;
     font-style: italic;
     font-display: swap;
-    src: url('/fonts/mona-sans-latin-wght-italic.woff2') format('woff2');
+    src: url('/fonts/figtree-latin-wght-italic.woff2') format('woff2');
     unicode-range:
       U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
       U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
-  /* A local fallback resized to Mona Sans's metrics, so the swap doesn't shift the layout. */
   @font-face {
-    font-family: 'Mona Sans fallback';
+    font-family: 'Atkinson Hyperlegible Next';
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+    src: url('/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2') format('woff2');
+    unicode-range:
+      U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+      U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    font-weight: 200 800;
+    font-style: italic;
+    font-display: swap;
+    src: url('/fonts/atkinson-hyperlegible-next-latin-wght-italic.woff2') format('woff2');
+    unicode-range:
+      U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+      U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* Local fallbacks resized to each font's metrics (measured against Arial), so the swap doesn't shift the layout. */
+  @font-face {
+    font-family: 'Figtree fallback';
     src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
-    size-adjust: 103.81%;
-    ascent-override: 105%;
-    descent-override: 30.83%;
+    size-adjust: 100.13%;
+    ascent-override: 94.88%;
+    descent-override: 24.97%;
+    line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'Atkinson Hyperlegible Next fallback';
+    src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+    size-adjust: 98.95%;
+    ascent-override: 99.04%;
+    descent-override: 32.34%;
     line-gap-override: 0%;
   }
 
   :root {
-    /* Type. One family does everything; weight and size carry the hierarchy. */
-    --font-sans: 'Mona Sans', 'Mona Sans fallback', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    --font-display: var(--font-sans);
+    /* Type (ticket 209). Figtree for headings and UI, Atkinson Hyperlegible Next for running text;
+       weight and size carry the hierarchy. */
+    --font-sans:
+      'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible Next fallback', system-ui, -apple-system, 'Segoe UI', Roboto,
+      Arial, sans-serif;
+    --font-display: 'Figtree', 'Figtree fallback', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
     /* Fluid modular scale: 16px body at 360px wide (ratio 1.2) to 18px at 1280px (ratio 1.25). utopia.fyi */
     /* Small text floors at 14px (ticket 208): meta, captions, badges and the footer are still read. */
@@ -128,15 +161,17 @@
        between sections 2 x --space-section. */
     --space-section: clamp(3.5rem, 2.5217rem + 4.3478vw, 6rem);
     --gutter: clamp(1rem, 4vw, 2.5rem);
-    --measure: 68ch; /* about 75 characters of Mona Sans */
+    --measure: 68ch; /* about 75 characters of Atkinson Hyperlegible Next */
     --container: 1200px;
     --container-narrow: 800px; /* the original's 2/3-width text column */
     /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
     --radius-l: 12px;
     /* The sticky header's height (ticket 206): 72px at most on desktop, 64px on a phone. Anchors and
-       sticky columns offset by it. */
+       sticky columns offset by it. At the top of the page the header is a taller masthead (ticket 209),
+       100px on desktop and 80px on a phone, which scrolls up to --header-h and then sticks. */
     --header-h: 4.5rem;
+    --masthead-h: 6.25rem;
 
     /* Motion */
     --dur-fast: 150ms;
@@ -147,6 +182,7 @@
   @media (max-width: 30rem) {
     :root {
       --header-h: 4rem;
+      --masthead-h: 5rem;
     }
   }
 }
@@ -536,20 +572,114 @@
   }
 }
 
-/* The logo's gradient stops take their colours from the theme (--logo-stop-a/b/c), which flips
-   them for dark mode and inverse surfaces. "SAM" follows --color-text-strong; "MULLINS" follows currentColor. */
+/* The logo (ticket 209), inlined by src/components/Logo.astro. Two flat colours from the theme
+   (--logo-primary for the S and SAM, --logo-secondary for the M and MULLINS); each bar and letter pivots
+   on its own centre. Global because the SVG is injected HTML, which scoped styles can't reach. */
 @layer utilities {
-  .logo-strong {
-    fill: var(--color-text-strong);
+  .brand-logo {
+    display: block;
+    overflow: visible;
   }
-  .logo-stop-a {
-    stop-color: var(--logo-stop-a);
+  .brand-logo .logo-primary {
+    fill: var(--logo-primary);
   }
-  .logo-stop-b {
-    stop-color: var(--logo-stop-b);
+  .brand-logo .logo-secondary {
+    fill: var(--logo-secondary);
   }
-  .logo-stop-c {
-    stop-color: var(--logo-stop-c);
+  .brand-logo .logo-bar,
+  .brand-logo .logo-glyph {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .brand-logo .logo-bar[data-index='1'] {
+    --i: 0;
+  }
+  .brand-logo .logo-bar[data-index='2'] {
+    --i: 1;
+  }
+  .brand-logo .logo-bar[data-index='3'] {
+    --i: 2;
+  }
+  .brand-logo .logo-bar[data-index='4'] {
+    --i: 3;
+  }
+  .brand-logo .logo-bar[data-index='5'] {
+    --i: 4;
+  }
+  .brand-logo .logo-bar[data-index='6'] {
+    --i: 5;
+  }
+  .brand-logo .logo-bar[data-index='7'] {
+    --i: 6;
+  }
+  .brand-logo .logo-glyph[data-index='1'] {
+    --i: 0;
+  }
+  .brand-logo .logo-glyph[data-index='2'] {
+    --i: 1;
+  }
+  .brand-logo .logo-glyph[data-index='3'] {
+    --i: 2;
+  }
+  .brand-logo .logo-glyph[data-index='4'] {
+    --i: 3;
+  }
+  .brand-logo .logo-glyph[data-index='5'] {
+    --i: 4;
+  }
+  .brand-logo .logo-glyph[data-index='6'] {
+    --i: 5;
+  }
+  .brand-logo .logo-glyph[data-index='7'] {
+    --i: 6;
+  }
+  .brand-logo .logo-glyph[data-index='8'] {
+    --i: 7;
+  }
+  .brand-logo .logo-glyph[data-index='9'] {
+    --i: 8;
+  }
+  .brand-logo .logo-glyph[data-index='10'] {
+    --i: 9;
+  }
+
+  /* Signature (904, reworked in 209). First page of a session (.sig-intro, set before paint): the S bars
+     build, then the M bars, then the name follows letter by letter. Hover or focus on a logo link: a
+     quick wave through the bars. Only opacity and transform animate, and every animation ends at the
+     resting logo (no forwards fill), so nothing snaps when it finishes. */
+  @media (prefers-reduced-motion: no-preference) {
+    .sig-intro .brand-logo .logo-bar {
+      animation: logo-bar-in 620ms var(--ease) backwards;
+      animation-delay: calc(var(--i) * 75ms);
+    }
+    .sig-intro .brand-logo .logo-bar[data-letter='M'] {
+      animation-delay: calc(120ms + var(--i) * 75ms);
+    }
+    .sig-intro .brand-logo .logo-glyph {
+      animation: logo-glyph-in 420ms ease-out backwards;
+      animation-delay: calc(700ms + var(--i) * 35ms);
+    }
+    a:is(:hover, :focus-visible) > .brand-logo .logo-bar {
+      animation: logo-bar-wave 560ms var(--ease);
+      animation-delay: calc(var(--i) * 40ms);
+    }
+  }
+  @keyframes logo-bar-in {
+    from {
+      opacity: 0;
+      transform: translate(-14%, 14%) scale(0.8);
+    }
+  }
+  @keyframes logo-glyph-in {
+    from {
+      opacity: 0;
+      transform: translateY(35%);
+    }
+  }
+  @keyframes logo-bar-wave {
+    45% {
+      transform: translate(5%, -5%);
+    }
   }
 }
 

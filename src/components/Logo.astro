@@ -1,0 +1,29 @@
+---
+/**
+ * The logo (ticket 209), inlined so CSS can colour and animate each shape. The SVGs come from the brand
+ * kit (`pnpm brand:kit -- --site`): every bar is `.logo-bar[data-letter][data-index]` and every letter
+ * `.logo-glyph[data-word][data-index]`. Colours come from --logo-primary and --logo-secondary (themes),
+ * and the intro and hover animations live in global.css (.brand-logo). The SVG is decorative: the link
+ * around it carries the accessible name. It has no ids, so it can appear more than once on a page.
+ */
+import stacked from '../assets/brand/logo.svg?raw';
+import horizontal from '../assets/brand/logo-horizontal.svg?raw';
+import mark from '../assets/brand/mark.svg?raw';
+
+interface Props {
+  lockup?: 'stacked' | 'horizontal' | 'mark';
+  class?: string;
+}
+
+const { lockup = 'stacked', class: className = '' } = Astro.props;
+const source = { stacked, horizontal, mark }[lockup];
+const logoSvg = source
+  .replace(
+    /class="logo [^"]*"/,
+    `class="brand-logo brand-logo--${lockup} ${className}" aria-hidden="true" focusable="false"`,
+  )
+  .replace(/ role="img"/, '')
+  .replace(/ aria-label="[^"]*"/, '');
+---
+
+<Fragment set:html={logoSvg} />

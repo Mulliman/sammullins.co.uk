@@ -2,7 +2,7 @@ Headings are sentence case. This sample is rendered by Astro's own Markdown pipe
 
 # Heading level 1
 
-Body text sits at the measure, which is about 68 characters of Mona Sans. Lines this long are easy to follow without losing your place, and the rest of the page is built around that width. Paragraphs have a little space between them and no indent.
+Body text sits at the measure, which is about 68 characters of Atkinson Hyperlegible Next. Lines this long are easy to follow without losing your place, and the rest of the page is built around that width. Paragraphs have a little space between them and no indent.
 
 ## Heading level 2
 

@@ -27,7 +27,8 @@
     "lint": "eslint . && prettier --check .",
     "lint:fix": "eslint . --fix && prettier --write .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "brand:kit": "node scripts/brand/kit.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
