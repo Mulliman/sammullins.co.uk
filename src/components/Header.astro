@@ -161,7 +161,8 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
   /* Each link gets its lockup's aspect ratio (the SVG viewBoxes), so a squeezed grid column can't collapse it. */
   .site-logo--stacked {
     grid-column: 2;
-    height: calc(var(--masthead-h) - 1.25rem);
+    /* About 60px of artwork with 20px above and below; the old 80px image had padding built in. */
+    height: calc(var(--masthead-h) - 2.5rem);
     aspect-ratio: 912 / 440;
   }
   .site-logo--horizontal {
@@ -296,7 +297,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       gap: var(--space-2xs);
     }
     .site-logo--stacked {
-      height: calc(var(--masthead-h) - 1.75rem);
+      height: calc(var(--masthead-h) - 2rem);
     }
     .site-logo--horizontal {
       height: 1.5rem;
