@@ -45,7 +45,7 @@
     "eslint-plugin-astro": "3.2.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "globals": "17.14.0",
-    "html-validate": "11.18.0",
+    "html-validate": "11.19.0",
     "node-html-parser": "9.0.7",
     "playwright": "1.65.0",
     "prettier": "3.9.10",
