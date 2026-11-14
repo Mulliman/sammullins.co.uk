@@ -31,6 +31,7 @@ _Nothing yet._
 
 ### Changed
 
+- A 2026 pass over every component: smaller hairline cards that become rows on a phone, a six-across logo grid, solid buttons with an arrow, a monochrome timeline, steps, quote and callout, and a left-aligned footer. Content reveals as you scroll, cards and links respond to hover, the stuck header frosts, and pages hand over with a View Transition, all off with reduced motion. The home page has a typographic hero with the logo's bars and no photography (ticket 210).
 - The new logo, inlined so each bar and letter can be coloured and animated, with a new first-visit animation. The header is a 100px masthead with the logo centred that scrolls up into the 72px sticky bar. New favicons, app icons and a web manifest. The agent view toggle moves from the header to the footer, beside the colophon (ticket 209).
 - Type: Figtree for headings and Atkinson Hyperlegible Next for body text, replacing Mona Sans (ticket 209).
 - Renovate leaves Node alone: it stays on the 24 line, set by hand, instead of being pinned (ticket 705).

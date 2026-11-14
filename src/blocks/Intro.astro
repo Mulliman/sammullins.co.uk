@@ -33,6 +33,12 @@ const { heading, lead, cta, align, surface } = block;
   .intro--center {
     text-align: center;
   }
+  /* Phones (ticket 210): a centred intro whose lead runs to several lines reads left-aligned. */
+  @media (max-width: 39.99rem) {
+    .intro--center:has(.intro__lead) {
+      text-align: left;
+    }
+  }
   .intro--left,
   .intro--left .intro__heading,
   .intro--left .intro__lead {

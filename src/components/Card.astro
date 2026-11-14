@@ -54,43 +54,63 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     {kind !== 'image' && text && <div class="card__text" set:html={md(text)} />}
     {kind !== 'image' && href && cta && (
       <p class="card__cta" aria-hidden="true">
-        <span class="button">{cta}</span>
+        <span class="arrow-link">{cta}</span>
       </p>
     )}
   </div>
 </article>
 
 <style>
+  /* Ticket 210: smaller, calmer cards. Left-aligned, a hairline edge instead of a white slab, a 16:9
+     image, a quiet arrow link instead of a button, and a lift on hover. On a phone a full card becomes a
+     row (thumbnail beside the text), so a list of cards reads as a list instead of a screen per card. */
   .card {
     position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 0;
-    border-radius: var(--radius);
-    transition:
-      transform var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
-  }
-  /* Text style: the original's plain UIkit card. No box, centred thin title and text. */
-  .card--text {
-    padding: var(--space-m-l);
-    text-align: center;
-  }
-  /* Full style: the original UIkit "default" card. White card, image on top, centred body. */
-  .card--full {
-    background: var(--color-surface);
-    text-align: center;
-    overflow: hidden;
-  }
-  .card--full .card__body {
-    padding: var(--space-m-l);
-    flex: 1;
+    border-radius: var(--radius-m);
+    text-align: left;
   }
 
-  /* Image style: the bar sits on the image. Both share one grid cell, so the title link's
-     ::after still covers the whole card (an absolutely positioned bar would become its own
-     containing block). */
+  /* Full: image on top, then title, meta, text and the call to action pinned to the bottom. */
+  .card--full {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+  .card--full .card__media {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-muted);
+  }
+  .card--full .card__media :global(img),
+  .card--image .card__media :global(img) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    flex: 1;
+    padding: var(--space-s-m);
+  }
+
+  /* Text: no box, a rule above, like an entry in a list. */
+  .card--text {
+    padding-top: var(--space-s);
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+  .card--text .card__body {
+    padding: 0;
+  }
+
+  /* Image: the title sits on the photo, in a bar along the bottom. Both share one grid cell, so the
+     title link's ::after still covers the whole card. */
   .card--image {
     display: grid;
     overflow: hidden;
@@ -110,42 +130,20 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .card__media {
     overflow: hidden;
   }
-  .card__img {
-    width: 100%;
-    height: auto;
-  }
-  .card--image .card__img {
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-  }
-  .card__media :global(img) {
-    width: 100%;
-    height: auto;
-  }
-
-  .card__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-    padding-top: var(--space-s);
-  }
-  .card--text .card__body {
-    padding-top: 0;
+  .card__media :global(picture) {
+    display: block;
   }
 
   .card__title {
-    font-size: var(--step-2);
+    font-size: var(--step-1);
     line-height: var(--leading-heading);
     margin: 0;
-  }
-  .card--image .card__title {
-    font-size: var(--step-1);
-    text-align: left;
+    text-wrap: balance;
   }
   .card--image .card__title {
     color: var(--color-on-media);
+    font-size: var(--step-0);
   }
-
   .card__link {
     color: inherit;
     text-decoration: none;
@@ -154,22 +152,38 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
   }
   .card__link:focus-visible {
     outline: none;
-  }
-  .card:hover .card__link {
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
   }
 
   .card__meta {
     margin: 0;
     font-size: var(--step--1);
     color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
   }
   .card__text {
+    font-size: var(--step--1);
+    line-height: var(--leading-small);
     color: var(--color-text-muted);
+  }
+  /* A card with no link, or a text-only card, is the content itself (a CV entry, a skill), so it reads at
+     body size. */
+  .card:not(:has(.card__link)) .card__text,
+  .card--text .card__text {
+    font-size: var(--step-0);
+    line-height: var(--leading-body);
+  }
+  /* Only a linked card trims its summary (the page it links to has the rest). A card without a link,
+     such as a CV entry, always shows all of its text. */
+  .card--full:has(.card__link) .card__text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
   }
   .card__text :global(p) {
     margin: 0;
@@ -179,26 +193,104 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   .card__text :global(a) {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
   .card__cta {
-    margin: var(--space-xs) 0 0;
+    margin: auto 0 0;
+    padding-top: var(--space-2xs);
   }
 
-  .card:has(.card__link):hover {
-    box-shadow: var(--shadow-soft);
+  /* Hover and focus: the card lifts a little and its edge firms up; the image eases in. */
+  .card:has(.card__link) {
+    transition:
+      translate var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
   }
-  /* UIkit's hover: the image scales up slightly inside its frame. */
-  @media (prefers-reduced-motion: no-preference) {
-    .card__media :global(img) {
-      transition: transform var(--dur) var(--ease);
+  .card--full:has(.card__link):hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
+  }
+  .card--text:has(.card__link):hover .card__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card--full:has(.card__link):hover,
+    .card--image:has(.card__link):hover {
+      translate: 0 -0.2rem;
     }
-    .card:hover .card__media :global(img) {
-      transform: scale(1.03);
+    .card__media :global(img) {
+      transition: scale var(--dur-reveal) var(--ease-out);
+    }
+    .card:has(.card__link):hover .card__media :global(img) {
+      scale: 1.04;
     }
   }
   .card:focus-within:has(:focus-visible) {
     outline: 3px solid var(--color-focus);
-    outline-offset: 4px;
+    outline-offset: 3px;
+  }
+  /* Touch: a press gives feedback, since there is no hover. */
+  .card:has(.card__link):active {
+    border-color: var(--color-border-strong);
+  }
+
+  /* A lone full card in a multi-column grid becomes a feature: image beside the text. */
+  @media (min-width: 640px) {
+    :global(.cards__item:only-child) > .card--full {
+      flex-direction: row;
+    }
+    :global(.cards__item:only-child) > .card--full .card__media {
+      flex: 0 0 min(50%, 30rem);
+      border-bottom: 0;
+      border-right: 1px solid var(--color-border);
+    }
+    :global(.cards__item:only-child) > .card--full .card__media :global(:is(picture, img)) {
+      height: 100%;
+    }
+    :global(.cards__item:only-child) > .card--full .card__body {
+      justify-content: center;
+      padding: var(--space-m-l);
+    }
+    :global(.cards__item:only-child) > .card--full .card__title {
+      font-size: var(--step-2);
+    }
+    :global(.cards__item:only-child) > .card--full .card__text {
+      font-size: var(--step-0);
+      line-height: var(--leading-body);
+      -webkit-line-clamp: 6;
+      line-clamp: 6;
+    }
+  }
+
+  /* Phones: a full card is a row, thumbnail on the left. */
+  @media (max-width: 639.98px) {
+    .card--full:has(.card__media) {
+      display: grid;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      align-items: start;
+      padding: var(--space-xs);
+      gap: var(--space-xs);
+    }
+    .card--full .card__media {
+      border: 0;
+      border-radius: var(--radius);
+    }
+    .card--full .card__body {
+      padding: 0;
+      gap: var(--space-3xs);
+    }
+    .card--full:not(:has(.card__media)) .card__body {
+      padding: var(--space-xs) var(--space-s);
+    }
+    .card--full .card__title {
+      font-size: var(--step-0);
+    }
+    .card--full:has(.card__link) .card__text {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
   }
 </style>

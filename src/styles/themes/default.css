@@ -33,6 +33,7 @@
     --color-link-hover: #6e3a00;
     --color-link-inverse: #f2a43c; /* 8.4:1 on inverse */
     --color-border: #d6d6d6;
+    --color-border-strong: #a3a3a3; /* a hovered card's edge, the hairline grid's outer rule */
     --color-focus: #0b57d0;
     --color-frame: #ffffff; /* the thick white photo frame */
     --color-code-bg: #f6f6f6;
@@ -41,6 +42,9 @@
     --color-inverse-heading: #ffffff;
     --color-inverse-link-hover: #ffc477;
     --color-inverse-border: #3a3a3a;
+    --color-inverse-border-strong: #5c5c5c; /* the ghost button's edge on a dark band */
+    --color-hero-mark: #363636; /* the logo's bars, drawn quietly in the home hero (ticket 210) */
+    --color-hero-mark-soft: #2b2b2b;
     --color-inverse-rule: #333333; /* the line under the colophon */
     --color-inverse-focus: #8ab4ff;
     --color-button-inverse-bg: #ffffff;
@@ -78,6 +82,7 @@
     --shadow: 0 0 20px rgb(0 0 0 / 0.5);
     --shadow-soft: 0 14px 25px rgb(0 0 0 / 0.16); /* UIkit card hover */
     --shadow-inset: inset 0 0 20px rgb(0 0 0 / 0.5);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.18); /* a lifted card (ticket 210) */
     --text-shadow-media: 0 0 10px #000000;
 
     /* Code highlighting (Prism) */
@@ -112,6 +117,8 @@
       --color-link: #f2a43c;
       --color-link-hover: #ffc477;
       --color-border: #333333;
+      --color-border-strong: #5c5c5c;
+      --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.8);
       --color-focus: #8ab4ff;
       --color-frame: #f0f0f0;
       --color-code-bg: #1a1a1a;
@@ -142,6 +149,8 @@
     --color-link: #f2a43c;
     --color-link-hover: #ffc477;
     --color-border: #333333;
+    --color-border-strong: #5c5c5c;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.8);
     --color-focus: #8ab4ff;
     --color-frame: #f0f0f0;
     --color-code-bg: #1a1a1a;
@@ -167,6 +176,7 @@
     --color-link: var(--color-link-inverse);
     --color-link-hover: var(--color-inverse-link-hover);
     --color-border: var(--color-inverse-border);
+    --color-border-strong: var(--color-text-inverse-muted);
     --color-surface: var(--color-surface-inverse);
     --color-focus: var(--color-inverse-focus);
     --color-code-bg: var(--color-surface-inverse); /* inline code stays readable on dark sections */

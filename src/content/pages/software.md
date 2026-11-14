@@ -24,44 +24,50 @@ blocks:
               src: "../../assets/media/ycspud32/biab-sam-site.avif"
               alt: ""
               decorative: true
-  - type: "body"
+  - type: "section"
     surface: "default"
-  - type: "cards"
-    variant: "full"
-    surface: "default"
-    columns: 2
-    items:
-      - title: "xStatic for Umbraco"
-        text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
-        href: "/software/xstatic-for-umbraco/"
-        image:
-          src: "../../assets/media/egdifrhl/banner.avif"
-          alt: ""
-          decorative: true
-      - title: "XPEDITE for Umbraco"
-        text: "Create Umbraco headless websites FAST! XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components."
-        href: "/software/xpedite-for-umbraco/"
-        image:
-          src: "../../assets/media/gaajlr4q/banner.avif"
-          alt: ""
-          decorative: true
-  - type: "prose"
-    markdown: "Umbraco is a fantastic CMS that can handle pretty much any task you throw at it, and like my two products is open source and free! You can install Umbraco via NuGet or by visiting [their website](https://umbraco.com/)."
+    blocks:
+      - type: "intro"
+        heading: "For web developers"
+        align: "center"
+        lead: |-
+          This site used to be built with two of my own open source projects, [UmbracoFolio](/software/umbracofolio/) and [xStatic](/software/xstatic-for-umbraco/). I started both so that I could build and host it for free.
+
+          The current version is built with [Astro](https://astro.build/), and the source is on [GitHub](https://github.com/Mulliman/sammullins.co.uk). If you'd rather run your own site on Umbraco, UmbracoFolio and xStatic are still there: anyone with a bit of ASP.Net knowledge should be able to set one up within an hour.
+      - type: "cards"
+        variant: "full"
+        columns: 2
+        items:
+          - title: "xStatic for Umbraco"
+            text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
+            href: "/software/xstatic-for-umbraco/"
+            image:
+              src: "../../assets/media/egdifrhl/banner.avif"
+              alt: ""
+              decorative: true
+          - title: "XPEDITE for Umbraco"
+            text: "Create Umbraco headless websites FAST! XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components."
+            href: "/software/xpedite-for-umbraco/"
+            image:
+              src: "../../assets/media/gaajlr4q/banner.avif"
+              alt: ""
+              decorative: true
+      - type: "intro"
+        lead: "Umbraco is a fantastic CMS that can handle pretty much any task you throw at it, and like my two products is open source and free! You can install Umbraco via NuGet or by visiting [their website](https://umbraco.com/)."
   - type: "section"
     surface: "muted"
     blocks:
       - type: "intro"
         heading: "For everyone"
         align: "center"
+        lead: "The Imposter is a party game designed to be played by 4-7 people. It is based on the Big Potato classic 'The Chameleon' with a few different rules and a more fun scoring system."
       - type: "image"
         frame: "none"
         image:
           src: "../../assets/media/gccp2anv/imposter-promo.avif"
           alt: "The Imposter logo between two phones showing the game's round overview, with two cartoon players in the middle"
-      - type: "prose"
-        markdown: |-
-          #### The imposter is a party game designed to be played by 4-7 people. It is based on the Big Potato classic 'The Chameleon' with a few different rules and a more fun scoring system.
-
+      - type: "intro"
+        lead: |-
           Each round, one player is randomly chosen as the imposter, and that player needs to discover the secret word without attracting suspicion from the others.
 
           The Imposter is an Ionic based web app built on top of Angular and .NET Core. Players can either play directly in the browser or install the app by clicking 'Add to home screen'.
@@ -107,15 +113,9 @@ blocks:
               src: "../../assets/media/irbdcjra/postcapture.avif"
               alt: ""
               decorative: true
-      - type: "prose"
-        markdown: |-
+      - type: "intro"
+        lead: |-
           Both these CaptureOne plugins are Windows only.
 
           You can purchase CaptureOne directly from [their website](https://www.captureone.com/).
 ---
-
-## For Web Developers
-
-#### This site used to be built with two of my own open source projects, [UmbracoFolio](/software/umbracofolio/) and [xStatic](/software/xstatic-for-umbraco/). I started both so that I could build and host it for free.
-
-The current version is built with [Astro](https://astro.build/), and the source is on [GitHub](https://github.com/Mulliman/sammullins.co.uk). If you'd rather run your own site on Umbraco, UmbracoFolio and xStatic are still there: anyone with a bit of ASP.Net knowledge should be able to set one up within an hour.

@@ -39,32 +39,32 @@ blocks:
         variant: "text"
         columns: 2
         items:
-          - title: "Student Developer (2010-2011)"
+          - title: "Student developer (2010-2011)"
             text: |-
               **Redweb**
 
               Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
-          - title: "Graduate Developer (2012-2013)"
+          - title: "Graduate developer (2012-2013)"
             text: |-
               **Redweb**
 
               Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
-          - title: "Web Developer (2013-2016)"
+          - title: "Web developer (2013-2016)"
             text: |-
               **Redweb**
 
               Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
-          - title: "Mid-level Web Developer (2016-2021)"
+          - title: "Mid-level web developer (2016-2021)"
             text: |-
               **Redweb**
 
               Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
-          - title: "Senior Analyst Developer (2021-2023)"
+          - title: "Senior analyst developer (2021-2023)"
             text: |-
               **LV=**
 
               Main developer creating the new ElectriX website with Sitecore and React.Js. Part of the team upgrading the entire platform to Sitecore 10.2 and moving to Docker and Managed Cloud.
-          - title: "Sitecore Team Lead (2023-Present)"
+          - title: "Sitecore team lead (2023 to present)"
             text: |-
               **Allianz Technology**
 
@@ -73,7 +73,7 @@ blocks:
     surface: "default"
     blocks:
       - type: "intro"
-        heading: "Technical Skills"
+        heading: "Technical skills"
         align: "center"
       - type: "cards"
         variant: "text"
@@ -88,7 +88,7 @@ blocks:
           - title: "HTML & CSS"
             text: |-
               I've created markup and styling ever since I started programming. I've also used Sass for both commercial and open source projects.
-          - title: "Content Management Systems"
+          - title: "Content management systems"
             text: |-
               I've now reached my 10 year anniversary using Umbraco and Sitecore, and I'm certified in both. I've released open source packages for Umbraco, most notably xStatic.
           - title: "Databases"
@@ -97,21 +97,22 @@ blocks:
           - title: "DevOps & Azure"
             text: |-
               I've been involved in creating and managing the Azure infrastructure of both small personal projects and large Sitecore Experience Platform solutions. I've used both Azure DevOps and Octopus Deploy for automated releases.
-      - type: "body"
+      - type: "intro"
+        lead: "Don't just take my word for it, you can see all these skills demonstrated in my [open source pieces of software](/software/)."
   - type: "section"
     surface: "muted"
     blocks:
       - type: "intro"
-        heading: "Soft Skills"
+        heading: "Soft skills"
         align: "center"
       - type: "cards"
         variant: "text"
         columns: 3
         items:
-          - title: "Mentoring & Line Management"
+          - title: "Mentoring & line management"
             text: |-
               I've been lucky enough to manage and mentor some talented developers over the years, helping them improve their technical and business skills.
-          - title: "Public Speaking"
+          - title: "Public speaking"
             text: |-
               I have presented on multiple occasions to crowds of roughly 100 people and recently have remotely delivered demonstrations to crowds over video conferencing.
           - title: "Written communication"
@@ -121,37 +122,39 @@ blocks:
     surface: "default"
     blocks:
       - type: "intro"
-        heading: "My Open Source Projects"
+        heading: "My open source projects"
         align: "center"
       - type: "cards"
         variant: "text"
         columns: 3
         items:
-          - title: "For Developers"
+          - title: "For developers"
             text: |-
               I've created two open source offerings for Umbraco. [UmbracoFolio](/software/umbracofolio/ "UmbracoFolio") contains all of the components I built for my website as can be used as a starterkit base build. [xStatic](/software/xstatic-for-umbraco/ "xStatic for Umbraco") is a static site generator for Umbraco that allows you to deploy Umbraco to Netlify for super fast and cheap hosting.
             href: "/software/xstatic-for-umbraco/"
-          - title: "For Photographers"
+          - title: "For photographers"
             text: |-
               I've created 2 plugins (so far) for the photo editor CaptureOne. [PostCapture](/software/postcapture/ "PostCapture") is a WCF app that allows users to add multiple borders and watermarks. [PanoCapture](/software/panocapture/ "PanoCapture") is a warpper around Hugin that adds panorama and image stacking functionality to CaptureOne.
             href: "/software/postcapture/"
-          - title: "For Everyone"
+          - title: "For everyone"
             text: |-
               '[The Imposter](/software/the-imposter/ "The Imposter")' is my most complex personal project; a progressive web app (PWA) party game that uses Ionic, Angular, .Net Core, SignalR, and Cosmos DB to provide a native feeling, real time experience.
             href: "/software/the-imposter/"
-      - type: "prose"
-        markdown: |-
-          ## A bit about me
+  - type: "split"
+    ratio: "1:1"
+    columns:
+      - - type: "prose"
+          markdown: |-
+            ## A bit about me
 
-          Born and bred in Dorset I currently live on the outskirts of Bournemouth. I'm a scratch handicap golfer and member at Dudsbury Golf Club. I like photography and photo editing and relax by walking around with a camera (or two) listening to audiobooks.
+            Born and bred in Dorset I currently live on the outskirts of Bournemouth. I'm a scratch handicap golfer and member at Dudsbury Golf Club. I like photography and photo editing and relax by walking around with a camera (or two) listening to audiobooks.
+      - - type: "prose"
+          markdown: |-
+            ## Contact me
 
-          ## Contact me
+            X: [\_SamMullins\_](https://x.com/_SamMullins_)
 
-          X: [\_SamMullins\_](https://x.com/_SamMullins_)
+            GitHub: [Mulliman](https://github.com/Mulliman)
 
-          GitHub: [Mulliman](https://github.com/Mulliman)
-
-          LinkedIn: [sam-mullins-31471425](https://www.linkedin.com/in/sam-mullins-31471425/)
+            LinkedIn: [sam-mullins-31471425](https://www.linkedin.com/in/sam-mullins-31471425/)
 ---
-
-Don't just take my word for it, you can see all these skills demonstrated in my [open source pieces of software](/software/).

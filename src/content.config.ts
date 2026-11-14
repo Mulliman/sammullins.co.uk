@@ -70,6 +70,10 @@ const leafBlocks = (image: ImageFn) => {
     subheading: z.string().optional(),
     image: img.optional(),
     align: align.default('center'),
+    /** Up to two links under the heading (ticket 210); the first is the solid button. */
+    ctas: z.array(cta).max(2).optional(),
+    /** plain only (ticket 210): the logo's bars drawn large and quiet beside the text. */
+    mark: z.boolean().default(false),
   });
 
   const intro = z.object({
@@ -367,7 +371,6 @@ const settings = defineCollection({
       })
       .default({ goatcounter: '' }),
     features: z.object({
-      viewTransitions: z.boolean().default(false),
       /** Ticket 211: the masthead shrinks to a bar and stays on screen as you scroll. */
       stickyHeader: z.boolean().default(true),
       blurToSharpHero: z.boolean().default(false),

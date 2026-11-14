@@ -3,6 +3,7 @@
  * Site footer (tickets 203, 206): one sign-off line, the nav, socials (rel="me"), the agent view toggle
  * (passed in by entry pages through the `actions` slot; moved back from the header in ticket 209), the colophon slot
  * and the copyright. The bio cards are gone (ticket 206): that copy lives on the home page (508).
+ * Ticket 210: a left-aligned grid (brand, pages, profiles) over a meta row, instead of a centred stack.
  */
 import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
@@ -13,15 +14,12 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer surface-inverse">
   <div class="container site-footer__inner">
-    <p class="signoff">
-      <span class="footer-logo">
+    <div class="site-footer__brand">
+      <a href="/" class="footer-logo" aria-label={`${site.name}, home`}>
         <Logo lockup="stacked" />
-      </span>
-      <span>
-        {site.name} · {site.tagline}
-      </span>
-    </p>
-
+      </a>
+      <p class="signoff">{site.tagline}</p>
+    </div>
     <nav aria-label="Footer" class="footer-nav">
       <ul>
         {[...site.nav, ...site.footerLinks].map((item) => (
@@ -31,7 +29,6 @@ const year = new Date().getFullYear();
         ))}
       </ul>
     </nav>
-
     <ul class="socials" aria-label="Find me">
       {site.socials.map((s) => (
         <li>
@@ -42,10 +39,10 @@ const year = new Date().getFullYear();
         </li>
       ))}
     </ul>
-
-    <slot name="actions" />
-    <slot name="colophon" />
-
+    <div class="site-footer__meta">
+      <slot name="colophon" />
+      <slot name="actions" />
+    </div>
     <p class="copyright">
       &copy; {site.name} {year}. Words and pictures all rights reserved.{' '}
       <a href="https://github.com/Mulliman/sammullins.co.uk">Site source</a> (MIT).
@@ -55,67 +52,104 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    padding-block: var(--space-l-xl) var(--space-m);
+    padding-block: var(--space-xl) var(--space-m);
     margin-top: auto;
   }
   .site-footer__inner {
     display: grid;
-    justify-items: center;
-    gap: var(--space-m);
-    text-align: center;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l) var(--space-m);
+    grid-template-areas:
+      'brand'
+      'nav'
+      'socials'
+      'meta'
+      'copy';
   }
-  .signoff {
+  @media (min-width: 48rem) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'brand nav socials'
+        'meta meta meta'
+        'copy copy copy';
+    }
+  }
+  .site-footer__brand {
+    grid-area: brand;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--space-2xs);
-    color: var(--color-text-inverse);
-    font-weight: var(--weight-strong);
+    align-items: flex-start;
+    gap: var(--space-xs);
   }
   .footer-logo {
-    width: 7rem;
     display: block;
+    width: 7.5rem;
   }
   .footer-logo :global(svg) {
     width: 100%;
     height: auto;
   }
+  .signoff {
+    color: var(--color-text-inverse-muted);
+    font-size: var(--step--1);
+  }
+  .footer-nav {
+    grid-area: nav;
+  }
+  .socials {
+    grid-area: socials;
+  }
   .footer-nav ul,
   .socials {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-2xs) var(--space-m);
+    display: grid;
+    gap: var(--space-2xs);
+    align-content: start;
   }
-  .footer-nav a {
-    color: var(--color-text-inverse);
+  @media (max-width: 47.99rem) {
+    .footer-nav ul,
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2xs) var(--space-m);
+    }
+  }
+  .footer-nav a,
+  .socials a {
+    font-family: var(--font-display);
     font-size: var(--step--1);
-    font-weight: var(--weight-strong);
+    font-weight: 500;
     text-decoration: none;
+    color: var(--color-text-inverse);
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size var(--dur) var(--ease-out);
   }
-  .footer-nav a:hover {
-    text-decoration: underline;
-  }
-  .socials {
-    font-size: var(--step--1);
+  .footer-nav a:hover,
+  .socials a:hover {
+    background-size: 100% 1px;
   }
   .socials a {
     display: inline-flex;
     gap: 0.4em;
-    text-decoration: none;
-  }
-  .socials__label {
-    color: var(--color-text-inverse);
   }
   .socials__handle {
-    color: var(--color-link);
+    color: var(--color-text-inverse-muted);
   }
-  .socials a:hover .socials__handle {
-    text-decoration: underline;
+  .site-footer__meta {
+    grid-area: meta;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-inverse-rule);
   }
   .copyright {
+    grid-area: copy;
+    margin-top: calc(-1 * var(--space-s));
     font-size: var(--step--1);
     color: var(--color-text-inverse-muted);
   }
