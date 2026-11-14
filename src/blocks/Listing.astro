@@ -182,14 +182,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       opacity: 1;
     }
   }
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .listing__img {
-      transition: scale var(--dur-reveal) var(--ease-out);
-    }
-    .listing__row:hover .listing__img {
-      scale: 1.04;
-    }
-  }
   .listing__thumb {
     overflow: hidden;
     border-radius: var(--radius);

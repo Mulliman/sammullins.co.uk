@@ -181,12 +181,11 @@
        the pointer. Durations stay short: motion confirms what happened, it never makes you wait. */
     --dur-fast: 150ms;
     --dur: 300ms;
-    --dur-reveal: 800ms;
+    --dur-reveal: 800ms; /* the hero entrance */
     --dur-slow: 1200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* a soft settle, for reveals and the hero entrance */
-    --rise: 1.25rem; /* how far things travel as they arrive */
-    --stagger: 80ms;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* a soft settle, for the hero entrance and page changes */
+    --rise: 1.25rem; /* how far the hero and a new page travel as they arrive */
   }
   @media (max-width: 30rem) {
     :root {
@@ -402,8 +401,8 @@
   }
 
   /* Buttons, as UIkit's default (outlined) and secondary (dark) buttons. */
-  /* Ticket 210: one solid, quiet button. Ink on paper (paper on ink on inverse bands), Figtree, a small
-     radius and an arrow that nudges on hover, so it reads as "go" without colour. */
+  /* Ticket 210: one solid, quiet button. Ink on paper (paper on ink on inverse bands), Figtree and a
+     small radius. The label says where it goes; there is no decorative arrow. */
   .button {
     display: inline-flex;
     align-items: center;
@@ -425,18 +424,11 @@
       color var(--dur-fast) var(--ease),
       transform var(--dur-fast) var(--ease);
   }
-  .button::after {
-    content: '\2192' / '';
-    transition: transform var(--dur) var(--ease-out);
-  }
   .button:hover {
     background: var(--color-heading);
     border-color: var(--color-heading);
     color: var(--color-bg);
     text-decoration: none;
-  }
-  .button:hover::after {
-    transform: translateX(0.25em);
   }
   .button:active {
     transform: translateY(1px);
@@ -463,8 +455,8 @@
     color: var(--color-button-inverse-fg);
   }
 
-  /* A text link with an arrow (ticket 210): card and row calls to action. The arrow moves when the
-     link's card or row is hovered, not only the link. */
+  /* A text call to action (ticket 210) on cards and rows. It underlines when its card or row is
+     hovered, not only the link itself. */
   .arrow-link {
     display: inline-flex;
     align-items: center;
@@ -474,13 +466,11 @@
     font-weight: var(--weight-strong);
     color: var(--color-heading);
   }
-  .arrow-link::after {
-    content: '\2192' / '';
-    transition: transform var(--dur) var(--ease-out);
-  }
-  :is(a, .card, .listing__row):hover .arrow-link::after,
-  a.arrow-link:hover::after {
-    transform: translateX(0.3em);
+  :is(a, .card, .listing__row):hover .arrow-link,
+  a.arrow-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
   .text-left {
     text-align: left;
@@ -860,33 +850,11 @@
   }
 }
 
-/* Printing shows everything, whatever has or hasn't been scrolled to. */
-@media print {
-  [data-reveal] {
-    opacity: 1 !important;
-    translate: none !important;
-  }
-}
-
-/* Motion (ticket 210). Reveal on scroll: src/components/Reveal.astro marks elements below the fold with
-   data-reveal and flips it to "in" as each one arrives. Without JS or with reduced motion nothing is
-   ever marked, so nothing is ever hidden. */
+/* Motion (ticket 210). The hero entrance is the one moment of motion nobody asked for. Everything else
+   answers an action (hover, press, open, navigate); content does not fade in as you scroll. */
 @layer utilities {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal-ready [data-reveal] {
-      transition:
-        opacity var(--dur-reveal) var(--ease-out),
-        translate var(--dur-reveal) var(--ease-out);
-      transition-delay: var(--reveal-delay, 0ms);
-    }
-    .reveal-ready [data-reveal=''] {
-      opacity: 0;
-      translate: 0 var(--rise);
-    }
-  }
-
   /* Page to page (ticket 905 prototype A, shipped in 210): a cross-document View Transition. The header
-     stays put while the page underneath settles in, the same short rise as a reveal. CSS only; browsers
+     stays put while the page underneath settles in, a short rise. CSS only; browsers
      without it simply navigate. */
   @media (prefers-reduced-motion: no-preference) {
     @view-transition {
