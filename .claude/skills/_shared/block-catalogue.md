@@ -43,7 +43,7 @@ limit: positive integer (optional)
 
 | type | fields |
 |---|---|
-| `hero` | `variant`, `heading`, `subheading`, `image`, `align` |
+| `hero` | `variant`, `heading`, `subheading`, `image`, `align`, `ctas`, `mark` |
 | `intro` | `heading`, `lead`, `cta`, `align`, `surface` |
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
@@ -72,6 +72,8 @@ limit: positive integer (optional)
 | `subheading` | string | no |  |
 | `image` | imageRef | no |  |
 | `align` | center \| left | no | `'center'` |
+| `ctas` | list of cta (max 2) | no |  |
+| `mark` | boolean | no | `false` |
 
 ## `intro`
 

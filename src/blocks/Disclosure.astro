@@ -60,6 +60,8 @@ const done = status === 'done';
       .disclosure::details-content {
         block-size: 0;
         overflow: clip;
+        /* Keeps layout containment constant while content-visibility flips, so margins inside don't jitter. */
+        contain: layout;
         transition:
           block-size var(--dur) var(--ease-out),
           content-visibility var(--dur) allow-discrete;
