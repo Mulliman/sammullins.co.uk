@@ -36,16 +36,24 @@ const suggestions = all.filter((e) => !e.data.hidden).map((e) => ({ href: urlFor
       <nav aria-label="Helpful links">
         <ul class="not-found__links">
           <li>
-            <a href="/">Home</a>
+            <a class="button" href="/">
+              Home
+            </a>
           </li>
           <li>
-            <a href="/articles/">Articles</a>
+            <a class="button button--ghost" href="/articles/">
+              Articles
+            </a>
           </li>
           <li>
-            <a href="/software/">Software</a>
+            <a class="button button--ghost" href="/software/">
+              Software
+            </a>
           </li>
           <li>
-            <a href="/archive/">Archive</a>
+            <a class="button button--ghost" href="/archive/">
+              Archive
+            </a>
           </li>
         </ul>
       </nav>
@@ -95,18 +103,7 @@ const suggestions = all.filter((e) => !e.data.hidden).map((e) => ({ href: urlFor
     flex-wrap: wrap;
     gap: var(--space-s) var(--space-m);
   }
-  .not-found__links a {
-    display: inline-block;
-    padding: var(--space-2xs) var(--space-s);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    text-decoration: none;
-    font-weight: var(--weight-strong);
-    font-size: var(--step--1);
-  }
-  .not-found__links a:hover {
-    border-color: var(--brand-orange);
-  }
+
   .did-you-mean {
     margin-top: var(--space-l);
   }

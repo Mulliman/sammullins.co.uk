@@ -126,12 +126,14 @@
     --step-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
     --step-5: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
     --step-6: clamp(2.986rem, 2.4751rem + 2.2705vw, 4.2915rem);
+    --step-7: clamp(3rem, 1.9rem + 4.6vw, 5.75rem); /* the home hero name only (ticket 210) */
     --weight-body: 400;
     --weight-strong: 600;
     --weight-heading: 600;
     --weight-display: 650;
     /* Leading per role (ticket 208): tighter as text gets bigger. Components use these, never literals. */
     --leading-display: 1.05; /* hero and page titles (--step-6) */
+    --leading-hero: 0.98; /* the home hero name (--step-7) */
     --leading-title: 1.12; /* section titles (--step-3 to --step-5) */
     --leading-heading: 1.25; /* headings and card titles (--step-0 to --step-2), pull quotes */
     --leading-lead: 1.45; /* lead paragraphs (--step-1) */
@@ -166,18 +168,25 @@
     --container-narrow: 800px; /* the original's 2/3-width text column */
     /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
+    --radius-m: 8px; /* cards, callouts, tiles and buttons (ticket 210) */
     --radius-l: 12px;
+    --radius-pill: 999px; /* tags and badges */
     /* The sticky header's height (ticket 206): 72px at most on desktop, 64px on a phone. Anchors and
        sticky columns offset by it. At the top of the page the header is a taller masthead (ticket 209),
        100px on desktop and 80px on a phone, which scrolls up to --header-h and then sticks. */
     --header-h: 4.5rem;
     --masthead-h: 6.25rem;
 
-    /* Motion */
+    /* Motion (ticket 210). One curve for things arriving (a long, soft settle), one for things answering
+       the pointer. Durations stay short: motion confirms what happened, it never makes you wait. */
     --dur-fast: 150ms;
     --dur: 300ms;
+    --dur-reveal: 800ms;
     --dur-slow: 1200ms;
     --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* a soft settle, for reveals and the hero entrance */
+    --rise: 1.25rem; /* how far things travel as they arrive */
+    --stagger: 80ms;
   }
   @media (max-width: 30rem) {
     :root {
@@ -393,22 +402,55 @@
   }
 
   /* Buttons, as UIkit's default (outlined) and secondary (dark) buttons. */
+  /* Ticket 210: one solid, quiet button. Ink on paper (paper on ink on inverse bands), Figtree, a small
+     radius and an arrow that nudges on hover, so it reads as "go" without colour. */
   .button {
-    display: inline-block;
-    padding: 0 1.5rem;
-    line-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    font-family: var(--font-display);
     font-size: var(--step--1);
     font-weight: var(--weight-strong);
+    letter-spacing: 0.005em;
     text-decoration: none;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    background: transparent;
-    color: var(--color-heading);
+    border: 1px solid var(--color-text-strong);
+    border-radius: var(--radius-m);
+    background: var(--color-text-strong);
+    color: var(--color-bg);
+    transition:
+      background var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+  .button::after {
+    content: '\2192' / '';
+    transition: transform var(--dur) var(--ease-out);
   }
   .button:hover {
-    border-color: var(--color-text-muted);
-    color: var(--color-heading);
+    background: var(--color-heading);
+    border-color: var(--color-heading);
+    color: var(--color-bg);
     text-decoration: none;
+  }
+  .button:hover::after {
+    transform: translateX(0.25em);
+  }
+  .button:active {
+    transform: translateY(1px);
+  }
+  /* The secondary button: a hairline outline. */
+  .button--ghost {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-heading);
+  }
+  .button--ghost:hover {
+    background: transparent;
+    border-color: var(--color-heading);
+    color: var(--color-heading);
   }
   .surface-inverse .button {
     background: var(--color-button-inverse-bg);
@@ -417,7 +459,28 @@
   }
   .surface-inverse .button:hover {
     background: var(--color-button-inverse-bg-hover);
+    border-color: var(--color-button-inverse-bg-hover);
     color: var(--color-button-inverse-fg);
+  }
+
+  /* A text link with an arrow (ticket 210): card and row calls to action. The arrow moves when the
+     link's card or row is hovered, not only the link. */
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: var(--weight-strong);
+    color: var(--color-heading);
+  }
+  .arrow-link::after {
+    content: '\2192' / '';
+    transition: transform var(--dur) var(--ease-out);
+  }
+  :is(a, .card, .listing__row):hover .arrow-link::after,
+  a.arrow-link:hover::after {
+    transform: translateX(0.3em);
   }
   .text-left {
     text-align: left;
@@ -475,10 +538,10 @@
   }
   .prose img {
     margin-inline: auto;
-    border-radius: var(--radius);
+    border-radius: var(--radius-m);
   }
   .prose blockquote {
-    border-left: 4px solid var(--brand-orange);
+    border-left: 2px solid var(--color-border-strong);
     padding-left: var(--space-s);
     color: var(--color-text-muted);
   }
@@ -514,7 +577,7 @@
     background: var(--color-code-bg);
     color: var(--color-text);
     padding: var(--space-s);
-    border-radius: var(--radius);
+    border-radius: var(--radius-m);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     tab-size: 2;
@@ -701,7 +764,7 @@
     background: var(--color-code-bg);
     border: 1px solid var(--color-border);
     border-bottom: 0;
-    border-radius: var(--radius) var(--radius) 0 0;
+    border-radius: var(--radius-m) var(--radius-m) 0 0;
   }
   .code__bar {
     display: flex;
@@ -713,7 +776,7 @@
     color: var(--color-text-muted);
     background: var(--color-code-bg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius) var(--radius) 0 0;
+    border-radius: var(--radius-m) var(--radius-m) 0 0;
   }
   .code__filename + .code__bar {
     border-radius: 0;
@@ -741,7 +804,7 @@
     padding: var(--space-s);
     border: 1px solid var(--color-border);
     border-top: 0;
-    border-radius: 0 0 var(--radius) var(--radius);
+    border-radius: 0 0 var(--radius-m) var(--radius-m);
     background: var(--color-code-bg);
     color: var(--color-text);
     white-space: pre;
@@ -793,6 +856,61 @@
       font-size: var(--step--1);
       font-weight: var(--weight-strong);
       color: var(--color-text-muted);
+    }
+  }
+}
+
+/* Printing shows everything, whatever has or hasn't been scrolled to. */
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+/* Motion (ticket 210). Reveal on scroll: src/components/Reveal.astro marks elements below the fold with
+   data-reveal and flips it to "in" as each one arrives. Without JS or with reduced motion nothing is
+   ever marked, so nothing is ever hidden. */
+@layer utilities {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-ready [data-reveal] {
+      transition:
+        opacity var(--dur-reveal) var(--ease-out),
+        translate var(--dur-reveal) var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    .reveal-ready [data-reveal=''] {
+      opacity: 0;
+      translate: 0 var(--rise);
+    }
+  }
+
+  /* Page to page (ticket 905 prototype A, shipped in 210): a cross-document View Transition. The header
+     stays put while the page underneath settles in, the same short rise as a reveal. CSS only; browsers
+     without it simply navigate. */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
+    .site-header {
+      view-transition-name: site-header;
+    }
+    ::view-transition-old(root) {
+      animation: 160ms ease-in both vt-fade-out;
+    }
+    ::view-transition-new(root) {
+      animation: 420ms var(--ease-out) 60ms both vt-rise-in;
+    }
+  }
+  @keyframes vt-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes vt-rise-in {
+    from {
+      opacity: 0;
+      translate: 0 0.75rem;
     }
   }
 }

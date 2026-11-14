@@ -75,6 +75,20 @@ hero-plain-left:
     subheading: Text only, with no photo.
     align: left
 
+hero-plain-mark:
+  title: Plain hero with the mark and actions (the home page)
+  block:
+    type: hero
+    variant: plain
+    heading: Sam Mullins
+    subheading: A lead sentence of more than sixty characters is set as a paragraph rather than a subtitle.
+    mark: true
+    ctas:
+      - label: See what I've built
+        href: /software/
+      - label: Read the articles
+        href: /articles/
+
 intro-default-left:
   title: Default surface, left aligned
   block:

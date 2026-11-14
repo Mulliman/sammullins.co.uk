@@ -65,8 +65,21 @@ const { block, nested = false } = Astro.props;
     font-weight: var(--weight-strong);
     font-variant-numeric: tabular-nums;
     color: var(--color-heading);
-    border: 2px solid var(--brand-orange);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-strong);
     border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+  }
+  /* Ticket 210: a hairline joins each number to the next, so long steps still read as one sequence. */
+  .steps__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: calc(1rem - 0.5px);
+    top: 2.25rem;
+    bottom: calc(-1 * var(--space-m) + 0.25rem);
+    width: 1px;
+    background: var(--color-border);
   }
   .steps__text {
     max-width: none;

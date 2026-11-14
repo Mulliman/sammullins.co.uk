@@ -2,6 +2,8 @@
 /**
  * `timeline` block (ticket 308): a semantic ordered list with a vertical line and a dot per
  * item. The kind is shown as a text badge and a different dot shape, never colour alone.
+ * Ticket 210: the title leads; organisation, dates and kind follow on one line beneath it (nothing
+ * stacked above the title).
  */
 import Section from '../components/Section.astro';
 import { md } from '../lib/markdown';
@@ -26,10 +28,12 @@ const kindLabel = {
   <ol class="timeline">
     {block.items.map((item) => (
       <li class:list={['timeline__item', `timeline__item--${item.kind}`]}>
-        <p class="timeline__when">{item.when}</p>
-        <p class="timeline__badge">{kindLabel[item.kind]}</p>
         <h3 class="timeline__title">{item.title}</h3>
-        {item.org && <p class="timeline__org">{item.org}</p>}
+        <p class="timeline__meta">
+          {item.org && <span class="timeline__org">{item.org}</span>}
+          <span class="timeline__when">{item.when}</span>
+          <span class="timeline__badge">{kindLabel[item.kind]}</span>
+        </p>
         {item.body && <div class="timeline__body" set:html={md(item.body)} />}
       </li>
     ))}
@@ -54,8 +58,8 @@ const kindLabel = {
     position: absolute;
     top: 0.5rem;
     bottom: 0.5rem;
-    left: calc(0.5rem - 1px);
-    width: 2px;
+    left: calc(0.5rem - 0.5px);
+    width: 1px;
     background: var(--color-border);
   }
   .timeline__item {
@@ -67,44 +71,60 @@ const kindLabel = {
   }
 
   /* Dots: the shape encodes the kind. */
+  /* Ticket 210: monochrome nodes (colour is for links), a ring of the page colour so the line breaks
+     around each one. */
   .timeline__item::before {
     content: '';
     position: absolute;
-    left: calc(-1 * var(--space-l));
-    top: 0.4rem;
-    width: 1rem;
-    height: 1rem;
+    left: calc(-1 * var(--space-l) + 0.125rem);
+    top: 0.45rem;
+    width: 0.75rem;
+    height: 0.75rem;
     border-radius: 50%;
-    background: var(--color-link);
+    background: var(--color-heading);
+    box-shadow: 0 0 0 0.3rem var(--color-bg);
+  }
+  :global(.surface-muted) .timeline__item::before {
+    box-shadow: 0 0 0 0.3rem var(--color-bg-muted);
+  }
+  :global(.surface-inverse) .timeline__item::before {
+    box-shadow: 0 0 0 0.3rem var(--color-bg-inverse);
+  }
+  :global(.surface-inverse) .timeline__item--education::before {
+    background: var(--color-bg-inverse);
+  }
+  :global(.surface-muted) .timeline__item--education::before {
+    background: var(--color-bg-muted);
   }
   .timeline__item--cert::before {
-    border-radius: 2px;
+    border-radius: 1px;
     transform: rotate(45deg) scale(0.85);
   }
   .timeline__item--milestone::before {
-    border-radius: 0;
-    background: var(--color-text);
+    border-radius: 1px;
   }
   .timeline__item--education::before {
     background: var(--color-bg);
-    border: 3px solid var(--color-link);
+    border: 2px solid var(--color-heading);
   }
 
-  .timeline__when {
-    margin: 0;
-    font-variant-numeric: tabular-nums;
-    font-size: var(--step--1);
-    color: var(--color-text-muted);
-  }
-  .timeline__badge {
-    display: inline-block;
-    margin: var(--space-3xs) 0;
-    padding: 0 0.45em;
-    border: 1px solid currentColor;
-    border-radius: 2px;
+  .timeline__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3xs) var(--space-xs);
+    margin: var(--space-3xs) 0 0;
     font-size: var(--step--1);
     line-height: var(--leading-small);
     color: var(--color-text-muted);
+  }
+  .timeline__when {
+    font-variant-numeric: tabular-nums;
+  }
+  .timeline__badge {
+    padding: 0 0.5em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
   }
   .timeline__title {
     font-size: var(--step-1);
@@ -112,8 +132,8 @@ const kindLabel = {
     margin: 0;
   }
   .timeline__org {
-    margin: var(--space-3xs) 0 0;
     font-weight: var(--weight-strong);
+    color: var(--color-text);
   }
   .timeline__body {
     margin-top: var(--space-2xs);

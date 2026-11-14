@@ -1,10 +1,16 @@
 ---
 /**
- * Hero (ticket 301). Full-bleed, so it is not wrapped in Section.
- * variant: blurred (today's look) | image (framed photo, heading below) | plain (text only).
- * A variant without an image falls back to plain.
+ * Hero (tickets 301, 210). Full-bleed, so it is not wrapped in Section.
+ * variant: plain (text on the dark band) | image (framed photo, heading below) | blurred (the photo over a
+ * blurred copy of itself). A variant without an image falls back to plain.
+ *
+ * Ticket 210: optional calls to action (`ctas`, the first one solid) and, on a plain hero, `mark`: the
+ * logo's bars drawn large and quiet beside the text, building in bar by bar like the header signature.
+ * The text settles in on load with transform only (never opacity on the heading), so the LCP element
+ * paints straight away.
  */
 import Pic from '../components/Pic.astro';
+import Logo from '../components/Logo.astro';
 import { getSite, type BlockOf } from '../lib/content';
 
 interface Props {
@@ -12,8 +18,9 @@ interface Props {
   nested?: boolean;
 }
 const { block } = Astro.props;
-const { heading, subheading, image, align } = block;
+const { heading, subheading, image, align, ctas, mark } = block;
 const variant = image && block.variant !== 'plain' ? block.variant : 'plain';
+const marked = variant === 'plain' && mark;
 // Ticket 905 prototype B: the blurred backdrop comes into focus as you scroll (flag in site.yaml).
 const sharpen = (await getSite()).features.blurToSharpHero;
 const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
@@ -21,7 +28,14 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 const subIsLead = (subheading?.length ?? 0) > 60;
 ---
 
-<section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
+<section
+  class:list={[
+    'hero',
+    `hero--${variant}`,
+    `hero--${marked ? 'left' : align}`,
+    { 'hero--sharpen': sharpen, 'hero--marked': marked },
+  ]}
+>
   {variant === 'blurred' && image && (
     <div class="hero__backdrop" aria-hidden="true">
       {/* Tiny unless it sharpens on scroll (905): decoding and blurring the full photo cost the home page
@@ -38,7 +52,21 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     <div class="hero__text">
       <h1 class="hero__heading">{heading}</h1>
       {subheading && <p class:list={['hero__sub', { 'hero__sub--lead': subIsLead }]}>{subheading}</p>}
+      {ctas && ctas.length > 0 && (
+        <p class="hero__ctas">
+          {ctas.map((c, i) => (
+            <a class:list={['button', { 'button--ghost': i > 0 }]} href={c.href}>
+              {c.label}
+            </a>
+          ))}
+        </p>
+      )}
     </div>
+    {marked && (
+      <div class="hero__mark" aria-hidden="true">
+        <Logo lockup="mark" />
+      </div>
+    )}
   </div>
 </section>
 
@@ -50,7 +78,6 @@ const subIsLead = (subheading?.length ?? 0) > 60;
        track the hero (which never scrolls) instead of the page (ticket 906). */
     overflow: clip;
     padding-block: var(--space-l-xl);
-    box-shadow: var(--shadow-inset);
   }
 
   /* Variant surfaces. Text colour is set on the section so the h1 inherits it. */
@@ -65,6 +92,7 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   .hero--plain {
     background: var(--color-bg-inverse);
     color: var(--color-text-inverse);
+    padding-block: var(--space-section);
   }
 
   .hero__heading {
@@ -74,14 +102,16 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   }
   .hero__sub {
     margin: var(--space-s) 0 0;
+    font-family: var(--font-display);
     font-size: var(--step-2);
     font-weight: 500;
     line-height: var(--leading-heading);
     letter-spacing: -0.01em;
   }
   .hero__sub--lead {
-    max-width: 38em;
+    max-width: 36em;
     margin-top: var(--space-m);
+    font-family: var(--font-sans);
     font-size: var(--step-1);
     font-weight: 400;
     line-height: var(--leading-lead);
@@ -91,6 +121,19 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   .hero--center .hero__sub--lead {
     margin-inline: auto;
     text-wrap: balance;
+  }
+  /* Phones (ticket 210): a hero with a paragraph lead reads left-aligned; centred lines that long are
+     hard to follow. */
+  @media (max-width: 39.99rem) {
+    .hero--center:has(.hero__sub--lead) .hero__text {
+      text-align: left;
+    }
+    .hero--center .hero__sub--lead {
+      text-wrap: pretty;
+    }
+    .hero--center:has(.hero__sub--lead) .hero__ctas {
+      justify-content: flex-start;
+    }
   }
   .hero--blurred .hero__sub {
     color: var(--color-on-media-soft);
@@ -105,8 +148,38 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     color: var(--color-text-inverse-muted);
   }
 
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin: var(--space-m-l) 0 0;
+  }
+  .hero--center .hero__ctas {
+    justify-content: center;
+  }
+  /* The ghost button on the dark band: a hairline that firms up on hover. */
+  .hero--plain .hero__ctas :global(.button--ghost),
+  .hero--blurred .hero__ctas :global(.button--ghost) {
+    background: transparent;
+    border-color: var(--color-inverse-border-strong);
+    color: var(--color-text-inverse);
+  }
+  .hero--plain .hero__ctas :global(.button--ghost:hover),
+  .hero--blurred .hero__ctas :global(.button--ghost:hover) {
+    border-color: var(--color-text-inverse);
+  }
+  .hero--plain .hero__ctas :global(.button:not(.button--ghost)),
+  .hero--blurred .hero__ctas :global(.button:not(.button--ghost)) {
+    background: var(--color-button-inverse-bg);
+    border-color: var(--color-button-inverse-bg);
+    color: var(--color-button-inverse-fg);
+  }
+
   .hero__text {
     padding: var(--space-m-l);
+  }
+  .hero--plain .hero__text {
+    padding-inline: 0;
   }
   .hero--blurred .hero__text,
   .hero--blurred .hero__heading {
@@ -120,6 +193,56 @@ const subIsLead = (subheading?.length ?? 0) > 60;
   }
   .hero--image .hero__text {
     margin-top: var(--space-m);
+  }
+
+  /* The marked plain hero (the home page): a big display name, the lead, the actions, and the logo's
+     bars on the right. */
+  .hero--marked {
+    padding-block: calc(var(--space-section) * 1.15) var(--space-section);
+  }
+  .hero--marked .hero__inner {
+    display: grid;
+    align-items: center;
+    gap: var(--space-l);
+  }
+  .hero--marked .hero__heading {
+    font-size: var(--step-7);
+    line-height: var(--leading-hero);
+    letter-spacing: -0.035em;
+  }
+  .hero--marked .hero__sub--lead {
+    max-width: 32em;
+    color: var(--color-text-inverse-muted);
+  }
+  .hero__mark {
+    --logo-primary: var(--color-hero-mark);
+    --logo-secondary: var(--color-hero-mark-soft);
+    justify-self: end;
+    width: min(100%, 30rem);
+  }
+  .hero__mark :global(svg) {
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 48rem) {
+    .hero--marked .hero__inner {
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 39.99rem) {
+    .hero__mark {
+      display: none;
+    }
+  }
+  @media (min-width: 40rem) and (max-width: 47.99rem) {
+    /* Small tablets: tucked into the bottom corner, clear of the heading and lead. */
+    .hero__mark {
+      position: absolute;
+      inset: auto calc(-1.5 * var(--gutter)) calc(-1 * var(--space-m)) auto;
+      z-index: -1;
+      width: 11rem;
+      opacity: 0.45;
+    }
   }
 
   /* Blurred backdrop: the same image, heavily blurred and darkened, behind everything. */
@@ -142,12 +265,12 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     transform: scale(1.05);
   }
 
-  /* Framed sharp image: thick white frame and shadow (site identity). */
+  /* Framed image (ticket 210): the thick white 2021 frame is gone; a soft radius and shadow instead. */
   .hero__frame {
     margin: 0 auto;
-    border: 10px solid var(--color-frame);
-    box-shadow: var(--shadow);
-    background: var(--color-frame);
+    border-radius: var(--radius-m);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
   .hero__frame :global(picture) {
     display: block;
@@ -157,10 +280,10 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     height: auto;
   }
 
-  /* Blurred: the text box is a dark translucent panel with a thin white border. */
+  /* Blurred: the text sits on a dark translucent panel. */
   .hero--blurred .hero__text {
     background: var(--color-media-scrim);
-    border: 2px solid var(--color-on-media);
+    border-radius: var(--radius-m);
   }
   .hero--blurred .hero__heading {
     color: var(--color-on-media);
@@ -189,9 +312,44 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     }
   }
 
-  /* Subtle scroll-linked drift on the backdrop. CSS only, skipped without support or with reduced motion.
+  /* Entrance (ticket 210). The heading moves but never fades, so it paints at once; the rest follows it
+     in, then the bars of the mark build one after another. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero--plain .hero__heading {
+      animation: hero-rise var(--dur-reveal) var(--ease-out) backwards;
+    }
+    .hero--plain .hero__sub {
+      animation: hero-fade-rise var(--dur-reveal) var(--ease-out) 120ms backwards;
+    }
+    .hero__ctas {
+      animation: hero-fade-rise var(--dur-reveal) var(--ease-out) 220ms backwards;
+    }
+    .hero__mark :global(.logo-bar) {
+      animation: hero-bar-in 1000ms var(--ease-out) backwards;
+      animation-delay: calc(150ms + var(--i) * 75ms);
+    }
+  }
+  @keyframes hero-rise {
+    from {
+      translate: 0 0.35em;
+    }
+  }
+  @keyframes hero-fade-rise {
+    from {
+      opacity: 0;
+      translate: 0 var(--rise);
+    }
+  }
+  @keyframes hero-bar-in {
+    from {
+      opacity: 0;
+      transform: translate(-28%, 28%);
+    }
+  }
+
+  /* Scroll-linked: the mark drifts up a little faster than the page, and the blurred backdrop drifts.
      Longhands only, never the `animation` shorthand: the build's CSS minifier (Lightning CSS) folds the
-     shorthand and `animation-timeline` into one shorthand that Chrome rejects, so nothing runs (ticket 906). */
+     shorthand and `animation-timeline` into one shorthand that Chrome rejects (ticket 906). */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
       .hero--blurred .hero__backdrop {
@@ -199,6 +357,13 @@ const subIsLead = (subheading?.length ?? 0) > 60;
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: scroll();
+      }
+      .hero--marked .hero__mark {
+        animation-name: hero-mark-drift;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
       }
     }
   }
@@ -208,6 +373,12 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     }
     to {
       transform: translate3d(0, 3%, 0);
+    }
+  }
+  @keyframes hero-mark-drift {
+    to {
+      translate: 0 -18%;
+      opacity: 0.2;
     }
   }
 

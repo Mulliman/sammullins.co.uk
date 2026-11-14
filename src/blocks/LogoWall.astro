@@ -39,28 +39,38 @@ const { block, nested = false } = Astro.props;
     margin-bottom: var(--space-m);
   }
 
-  /* As the original: 2 per row, 4 from 640px. Logos fill 80% of their tile. */
+  /* Ticket 210: a hairline grid instead of big white tiles. 3 across on a phone, 4 from 640px, 6 from
+     960px, so twelve clients take two rows on a desktop instead of three screens. Logos rest at a quieter
+     tone and come up on hover. */
   .logos {
+    --cols: 3;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-s);
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    /* Each tile draws its own hairline (an outline into the 1px gap, so neighbours share one line); a
+       short last row then ends cleanly instead of showing a grey bar. */
+    gap: 1px;
     list-style: none;
-    padding: 0;
+    padding: 1px;
   }
   @media (min-width: 640px) {
     .logos {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      --cols: 4;
+    }
+  }
+  @media (min-width: 960px) {
+    .logos {
+      --cols: 6;
     }
   }
 
-  /* White tiles keep the (white-backed) logos looking intentional in dark mode too. */
   .logos__item {
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 3 / 2;
-    padding: 10%;
+    aspect-ratio: 8 / 5;
+    padding: var(--space-2xs) var(--space-xs);
     background: var(--color-logo-tile);
+    outline: 1px solid var(--color-border);
   }
   .logos__link {
     display: flex;
@@ -76,12 +86,26 @@ const { block, nested = false } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: contain;
+    opacity: 0.85;
+    filter: grayscale(1);
+    transition:
+      opacity var(--dur) var(--ease),
+      filter var(--dur) var(--ease);
+  }
+  .logos__item:hover :global(img) {
+    opacity: 1;
+    filter: none;
+  }
+  @media (max-width: 639.98px) {
+    .logos__item {
+      padding: var(--space-3xs);
+    }
   }
 
-  /* Dark theme: light versions of the logos. The masters are grey on white, so inverting gives
-     light on black, and screen blending drops the black so they sit straight on the page. */
+  /* Dark theme: light versions of the logos on the page colour. The masters are grey on white, so
+     inverting gives light on black, and screen blending drops the black. */
   :global(:root[data-theme='dark']) .logos__item {
-    background: transparent;
+    background: var(--color-bg);
   }
   :global(:root[data-theme='dark']) .logos__item :global(img) {
     filter: invert(1) grayscale(1);
@@ -89,7 +113,7 @@ const { block, nested = false } = Astro.props;
   }
   @media (prefers-color-scheme: dark) {
     :global(:root:not([data-theme='light'])) .logos__item {
-      background: transparent;
+      background: var(--color-bg);
     }
     :global(:root:not([data-theme='light'])) .logos__item :global(img) {
       filter: invert(1) grayscale(1);

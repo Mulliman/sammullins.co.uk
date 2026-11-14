@@ -119,7 +119,7 @@ The build fails on chains, loops and missing targets. See `integrations/site-fil
 
 ### Settings
 
-`src/data/site.yaml` has one entry, `site`: `name`, `tagline`, `nav` and `footerLinks` (label and href), `socials` (label, handle and an https href), `footerCards` (title and body), and `features` (`viewTransitions` and `blurToSharpHero`, both default `false`). Edit it to change the site-wide nav or footer, not content pages.
+`src/data/site.yaml` has one entry, `site`: `name`, `tagline`, `nav` and `footerLinks` (label and href), `socials` (label, handle and an https href), `footerCards` (title and body), and `features` (`blurToSharpHero`, default `false`; View Transitions shipped in ticket 210 and are always on). Edit it to change the site-wide nav or footer, not content pages.
 
 ## Blocks
 
