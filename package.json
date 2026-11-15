@@ -40,7 +40,7 @@
     "@astrojs/ts-content-mapper": "0.2.0",
     "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",
-    "@typescript/native": "npm:typescript@7.1.0-dev.20261106.1",
+    "@typescript/native": "npm:typescript@7.1.0-dev.20261107.1",
     "eslint": "10.14.0",
     "eslint-plugin-astro": "3.2.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
