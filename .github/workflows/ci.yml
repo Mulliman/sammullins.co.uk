@@ -162,3 +162,80 @@ jobs:
           configPath: ./lighthouserc.json
           uploadArtifacts: true
           artifactName: lighthouse-reports
+
+  # Ticket 807: the on-demand compare (ticket 1307) runs on every code PR, so a visual review is a
+  # glance at the job summary and the diff images instead of a local before/after. Advisory: it reports
+  # what moved and never fails the PR, so it is not a required check.
+  visual:
+    name: Visual changes (advisory)
+    needs: build
+    if: needs.build.outputs.code == 'true' && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0 # "last changed" dates, as in the build job
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      # Baseline: build the base and screenshot it, with the base's own scripts and lockfile.
+      - run: pnpm install --frozen-lockfile
+      - name: Restore generated image cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: node_modules/.astro
+          key: astro-images-${{ hashFiles('src/assets/**', 'astro.config.mjs', 'src/components/Pic.astro', 'pnpm-lock.yaml') }}
+          restore-keys: astro-images-
+      - name: Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Restore Playwright browsers
+        id: pw-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      - if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      - if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+      - run: pnpm build && pnpm compare:base
+      # Current: the PR's build from the build job, screenshotted with the PR's scripts.
+      # .compare/ is gitignored, so the baseline survives the checkout.
+      - name: Switch to the PR
+        env:
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          rm -rf dist
+          git checkout --quiet "$HEAD"
+          pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist
+          path: dist
+      # A no-op unless the PR moves Playwright to a version whose browser isn't installed yet.
+      - run: pnpm exec playwright install chromium
+      - name: Compare
+        run: |
+          pnpm --silent compare | tee compare.txt
+          {
+            echo '## Visual changes against the base'
+            echo
+            echo 'Changes are magenta in the `visual-diff` artifact. Light and dark, 1280px.'
+            echo
+            echo '```'
+            cat compare.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-diff
+          path: .compare/diff
+          if-no-files-found: ignore
+          retention-days: 7

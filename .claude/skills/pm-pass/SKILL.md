@@ -10,7 +10,7 @@ Sam's attention is the bottleneck, not compute. This pass turns ~80 tickets, a d
 
 ## The one rule
 
-**You touch nothing but tickets and planning files, and you never merge, push to `main`, delete a branch or close a PR.** You may edit ticket front matter, `_tasks/BACKLOG.md` and the index in `_tasks/README.md`, on a branch, with a PR, because Sam merges (AGENTS.md golden rule 1). Anything destructive (deleting branches, closing PRs, reverting a setting) is written up as **one proposal for Sam to approve**, with the tip SHA of every branch named. If he approves, do exactly that batch, not whatever has grown since.
+**You touch nothing but tickets and planning files, and you never merge, push to `main`, delete a branch or close a PR.** You may edit ticket front matter, `_tasks/BACKLOG.md` and the index in `_tasks/README.md`, on a branch, with a PR. A PR that touches only tickets and planning files is tier 0 (AGENTS.md golden rule 1), so turn on auto-merge with `gh pr merge --auto --squash` and it merges once CI is green. Anything destructive (deleting branches, closing PRs, reverting a setting) is written up as **one proposal for Sam to approve**, with the tip SHA of every branch named. If he approves, do exactly that batch, not whatever has grown since.
 
 You do not do the work in the tickets. If an item is agent work, say which ticket and that an agent can take it; do not start it.
 

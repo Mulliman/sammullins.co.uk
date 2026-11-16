@@ -28,7 +28,9 @@
     "lint:fix": "eslint . --fix && prettier --write .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "brand:kit": "node scripts/brand/kit.mjs"
+    "brand:kit": "node scripts/brand/kit.mjs",
+    "changelog": "node scripts/changelog.mjs",
+    "merge-policy": "node scripts/merge-policy.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
@@ -40,7 +42,7 @@
     "@astrojs/ts-content-mapper": "0.2.0",
     "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",
-    "@typescript/native": "npm:typescript@7.1.0-dev.20261108.1",
+    "@typescript/native": "npm:typescript@7.1.0-beta",
     "eslint": "10.14.0",
     "eslint-plugin-astro": "3.2.1",
     "eslint-plugin-jsx-a11y": "6.10.2",

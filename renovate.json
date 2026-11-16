@@ -2,11 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "minimumReleaseAge": "7 days",
-  "automerge": false,
-  "platformAutomerge": false,
+  "description": "Ticket 807: non-major updates are tier 0 and merge themselves once every required check is green. Majors wait for Sam (label `major`, tier 2 in scripts/merge-policy.mjs).",
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
   "rangeStrategy": "pin",
   "lockFileMaintenance": {
     "enabled": true,
+    "automerge": true,
     "schedule": ["before 6am on monday"]
   },
   "packageRules": [
@@ -17,6 +20,17 @@
     {
       "matchManagers": ["github-actions"],
       "groupName": "github actions"
+    },
+    {
+      "description": "Majors need Sam: no auto-merge, and the label makes them tier 2.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "addLabels": ["major"]
+    },
+    {
+      "description": "TypeScript 7.1 beta by Sam's decision (10 Nov 2026). Renovate ranks the nightly -dev builds above the beta, which opened a PR a day; stay on beta and rc releases.",
+      "matchDepNames": ["@typescript/native"],
+      "allowedVersions": "!/-dev\\./"
     },
     {
       "description": "Node stays on the 24 line, set by hand in .nvmrc, netlify.toml and engines. Major 24 picks up patches on every build; pinning would stop them, and the engines range is a minimum, not a version.",
