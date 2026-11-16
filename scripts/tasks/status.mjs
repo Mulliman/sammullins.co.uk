@@ -183,8 +183,12 @@ for (const t of tickets) {
   t.unmetDeps = unmet;
   t.manualDeps = manualDeps;
   t.depsMet = unmet.length === 0 && manualDeps.length === 0;
+  // Ticket 807: "in review" is derived from an open PR, never written by hand. A ticket's own PR sets
+  // `status: done`, so the ticket is done the moment that PR merges, with no follow-up commit.
+  t.derived = openPrs.length ? 'in review' : t.status;
 
-  if (t.status === 'done' && unmerged.length) {
+  // Read from the PR's branch (--tickets-from), "done" with an open PR is simply in review.
+  if (t.status === 'done' && unmerged.length && !openPrs.length) {
     add(
       'drift',
       t.id,
@@ -299,7 +303,7 @@ for (const t of notDone.sort((a, b) => a.priority.localeCompare(b.priority) || N
   const waits = [...t.unmetDeps, ...t.manualDeps].join(', ') || '–';
   const prCell = prs === null ? '?' : t.openPrs.map((n) => `#${n}`).join(' ') || '–';
   ln(
-    `| ${t.id} | ${t.title.replace(/\|/g, '/')} | ${t.status} | ${t.priority} | ${t.owner} | ${waits} | ${t.branches.join(' ') || '–'} | ${prCell} |`,
+    `| ${t.id} | ${t.title.replace(/\|/g, '/')} | ${t.derived === t.status ? t.status : `${t.status} (${t.derived})`} | ${t.priority} | ${t.owner} | ${waits} | ${t.branches.join(' ') || '–'} | ${prCell} |`,
   );
 }
 ln();

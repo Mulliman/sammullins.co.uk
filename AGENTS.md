@@ -8,7 +8,11 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 
 ## Golden rules
 
-1. **Sam merges. Nothing is automatic.** Work on a branch, open a PR, and stop. Never merge, push to `main`, enable auto-merge or schedule publishing, unless Sam explicitly tells you to in the moment. In Claude Code, `.claude/settings.json` backs this up: `gh pr merge` is on the `ask` list, so every merge needs Sam's approval when it runs, and pushing to `main` is denied.
+1. **Merges are tiered by risk; the required checks are the review.** Work on a branch and open a PR. The `Merge policy` check (`pnpm merge-policy` locally, rules in `scripts/merge-policy.mjs`) puts every PR in a tier:
+   - **Tier 0, bots and bookkeeping** (Renovate non-major updates, `_tasks/`, docs): merges itself on green. Renovate does its own; for yours, run `gh pr merge --auto --squash`.
+   - **Tier 1, code** (`src/` outside content and data, scripts, tests, styles, skills): once the PR is ready, run `gh pr merge --auto --squash`. GitHub merges it when every required check is green. Read the AI review and the visual-changes summary first, and fix anything they find.
+   - **Tier 2, Sam** (content in `src/content/`, `src/data/` (nav, socials, redirects), `netlify.toml` and headers, `integrations/`, `.github/workflows`, dependencies and the toolchain, `AGENTS.md`, `.claude/settings.json`, the decisions record and voice guide, and the merge policy itself): stop at the PR. The check stays red until Sam adds the `sam-approved` label after the latest push. **Never add that label, never use `--admin`, never push to `main`**, and never schedule publishing.
+     If a change mixes tiers, it is tier 2: split it so the code can go ahead without waiting. Netlify can roll back any deploy instantly, and until cutover every build is `noindex` on `*.netlify.app`.
 2. **Never break a URL.** URLs come from file paths. To rename or remove a page, add a redirect in `src/data/redirects.json` (use the `redirect` skill). `pnpm build` fails on broken or chained redirects.
 3. **Content is not code.** Pages live in `src/content/**` as `.md` files. Don't hand-write `.astro` pages for content; compose blocks.
 4. **Authorship is honest.** Every entry has `authorship: sam` (Sam wrote the words) or `sam-ai` (Sam + AI). If you drafted the words, it's `sam-ai`. Sam changes it if he rewrites.
@@ -23,11 +27,13 @@ The source of [www.sammullins.co.uk](https://www.sammullins.co.uk/): a static As
 | `pnpm install --frozen-lockfile`        | Install (new package versions must be ≥ 7 days old)                                                            |
 | `pnpm dev`                              | Dev server on http://localhost:4321                                                                            |
 | `pnpm build`                            | Static build to `dist/`: validates content, writes `_redirects`                                                |
-| `pnpm check`                            | Type and content check (`astro check`)                                                                         |
+| `pnpm check`                            | Type and content check (`tsc` from TypeScript 7.1 beta with the Astro content mapper)                          |
 | `pnpm test`                             | Unit tests, legacy URL test, hygiene checks                                                                    |
 | `pnpm lint`                             | ESLint (Astro, jsx-a11y, TypeScript) and Prettier; `pnpm lint:fix` fixes what it can                           |
 | `pnpm verify` (or `--quick`)            | Every local CI gate in CI's order, stopping at the first failure. Run it before every push                     |
-| `pnpm tasks:status`                     | Tickets checked against git and open PRs; lists drift (e.g. "in review" but already merged)                    |
+| `pnpm tasks:status`                     | Tickets checked against git and open PRs; "in review" comes from an open PR, and drift is listed               |
+| `pnpm merge-policy` (or `--pr N`)       | The merge tier of this branch or a PR, and why                                                                 |
+| `pnpm changelog --write`                | Regenerates the Unreleased section of `CHANGELOG.md` from merged PR titles                                     |
 | `pnpm compare:base` then `pnpm compare` | Before/after screenshots of the style guide and key pages; reports what changed (on demand, nothing committed) |
 
 ## Repo map
@@ -100,7 +106,7 @@ Where things go:
 - No job-seeking language: no "open to opportunities", "hire me", "passionate about", "excited to".
 - AI tooling pieces: practical and honest. Give the setup (model, hardware, versions), what worked, what failed, and where it should not be trusted.
 - If an AI drafted the words, set `authorship: sam-ai`. Sam decides whether it is `sam`.
-- Sam always merges. Never publish or merge on his behalf.
+- Content is tier 2: Sam reviews and merges every content PR. Never publish or merge one on his behalf.
 - Full guide and examples: `_docs/voice.md`.
 
 ## Skills
@@ -109,11 +115,11 @@ Agent Skills (`SKILL.md` format) live in `.agents/skills/` (see `_docs/agent-too
 
 ## Tickets
 
-Work is tracked in `_tasks/` as Markdown tickets. Pick a `ready` ticket, branch as `NNN-short-slug`, meet every acceptance criterion, set `status: review` and open a PR. Don't silently widen scope; propose a new ticket instead. `_docs/decisions.md` beats a ticket if they disagree.
+Work is tracked in `_tasks/` as Markdown tickets. Pick a `ready` ticket, branch as `NNN-short-slug`, meet every acceptance criterion, set `status: done` **in the same PR** and open it. Don't write `review`: an open PR already says so, and `pnpm tasks:status` shows it. The ticket is done the moment the PR merges, with no follow-up commit. Don't silently widen scope; propose a new ticket instead. `_docs/decisions.md` beats a ticket if they disagree.
 
 ## Branches and PRs
 
-Small PRs that Sam can review in one sitting merge fastest. A 33-commit stack does not.
+Small PRs merge fastest: a tier 1 PR merges itself once the checks pass, and a tier 2 PR is quick for Sam to read. A 33-commit stack is neither.
 
 - **One ticket, one branch, one PR, cut from `origin/main`.** Don't build on another unmerged branch. If you truly must, open the lower PR first and say so at the top of the upper one.
 - **Open the PR as a draft as soon as the branch has a first commit**, then mark it ready. Don't keep finished work on a local branch overnight; push it as you go.
@@ -122,5 +128,6 @@ Small PRs that Sam can review in one sitting merge fastest. A 33-commit stack do
 - **PR titles follow Conventional Commits**: `type(scope): summary`, where type is one of `feat fix docs style refactor perf test build ci chore content revert`. CI fails anything else. Examples: `feat(blocks): add hero`, `content: new note on local models`, `ci: cache Playwright browsers`.
 - **Run `pnpm verify` before every push.** CI is the confirmation, not the place to find out.
 - **Lighthouse budgets are a required check.** If one fails, read the report artifact and fix the page. Don't loosen a budget or drop a page without Sam saying so.
-- **When a PR merges, its ticket goes to `done`** in the next PR or PM pass, once every acceptance criterion is ticked. `pnpm tasks:status` lists the ones that drifted.
-- **Add a line to `CHANGELOG.md`** under _Unreleased_ for anything a visitor or contributor would notice.
+- **The ticket goes to `done` in its own PR**, once every acceptance criterion is ticked. If some aren't, leave it `in-progress` and say which in the PR.
+- **Don't edit `CHANGELOG.md` by hand.** The PR title is the changelog line (`pnpm changelog --write` collects them), so write it for a reader: `feat(blocks): add a gallery lightbox`, not `feat: wip`.
+- **Use a squash merge** (`--squash`), so the PR title is the commit on `main`.

@@ -39,7 +39,7 @@ flowchart LR
 
 ## How AI writes this site
 
-1. [`AGENTS.md`](AGENTS.md) holds the house rules for any agent: content model, voice, URL rules, and **Sam merges, nothing is automatic**. `CLAUDE.md` just imports it.
+1. [`AGENTS.md`](AGENTS.md) holds the house rules for any agent: content model, voice, URL rules, and **merges tiered by risk**: bots, docs and code merge on green checks; content, URLs, hosting, CI and dependencies wait for Sam (`scripts/merge-policy.mjs`). `CLAUDE.md` just imports it.
 2. Agent Skills in [`.agents/skills/`](.agents/skills) (`new-article`, `new-note`, `new-page`, `add-images`, `redirect`), mirrored to `.claude/skills/` for Claude Code.
 3. The agent works on a branch and opens a PR. CI runs the schema, build, URL, hygiene and accessibility checks, and Netlify builds a preview.
 4. Sam reviews the preview and merges.
@@ -98,7 +98,7 @@ Plain-English definitions of the tools and terms used above and across the repo.
 | **Renovate**             | A bot that opens pull requests to update dependencies and pinned Actions. Settings are in `renovate.json`; it never merges on its own.                                      |
 | **SHA pinning**          | Referring to a GitHub Action by its full commit hash instead of a tag like `v7`, so the code behind it can't be swapped out later.                                          |
 | **Static site**          | A site made of pre-built HTML, CSS and image files, with no server code running per request.                                                                                |
-| **TypeScript**           | JavaScript with types. `pnpm check` (`astro check`) uses it to catch errors in components and the schema.                                                                   |
+| **TypeScript**           | JavaScript with types. `pnpm check` (`tsc` with the Astro content mapper) uses it to catch errors in components and the schema.                                             |
 | **WCAG 2.2 AA**          | The Web Content Accessibility Guidelines, version 2.2, level AA: the accessibility standard this site is tested against.                                                    |
 | **YAML**                 | A plain-text data format that uses indentation, used for front matter and `src/data/site.yaml`.                                                                             |
 | **Zod**                  | A schema library. `src/content.config.ts` uses it to define every field and block, and the build fails if any content doesn't match.                                        |

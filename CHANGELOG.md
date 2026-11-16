@@ -1,8 +1,18 @@
 # Changelog
 
-Notable changes to the site and this repo, newest first. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The site isn't versioned, so entries are grouped by the date they merged. Add a line under **Unreleased** in the same PR as the change.
+Notable changes to the site and this repo, newest first. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The site isn't versioned, so entries are grouped by the date they merged.
+
+**Unreleased** is generated from merged PR titles by `pnpm changelog --write` (ticket 807), so don't add lines by hand: write the PR title for a reader instead. Dependency bumps, tickets, docs and tests are left out.
 
 ## Unreleased
+
+<!-- changelog:start since=4964e1f90ca63751a0a1682f61e87f5cdc2be785 -->
+
+_Nothing yet._
+
+<!-- changelog:end -->
+
+## 6 to 16 November 2026
 
 ### Fixed
 

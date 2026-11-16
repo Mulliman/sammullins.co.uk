@@ -6,12 +6,12 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 
 - **One file per ticket:** `NNN-short-slug.md`. Numbers are grouped by epic (`0xx` foundation, `1xx` content model, …) and never reused.
 - **Front matter** (see [`_template.md`](_template.md)):
-  - `status`: `todo` · `ready` (dependencies done) · `in-progress` · `blocked` · `review` (PR open) · `done`
+  - `status`: `todo` · `ready` (dependencies done) · `in-progress` · `blocked` · `done` (`review` is retired: an open PR says it, ticket 807)
   - `priority`: `p0` launch blocker · `p1` launch nice-to-have · `p2` post-launch
   - `size`: `S` (< 2h) · `M` (half day) · `L` (a day or more; consider splitting)
   - `depends_on`: ticket ids that must be `done` first
   - `owner`: `agent` · `sam` (needs Sam: accounts, DNS, approvals) · `pair`
-- **Workflow:** an agent picks a `ready` ticket, works on a branch named `NNN-short-slug`, opens a PR referencing the ticket, and sets `status: review`. **Only Sam merges** (or explicitly tells a model to merge in that moment). The ticket moves to `done` in the same PR.
+- **Workflow:** an agent picks a `ready` ticket, works on a branch named `NNN-short-slug`, sets `status: done` in that branch once every acceptance criterion is met, and opens a PR referencing the ticket. "In review" is never written: `pnpm tasks:status` derives it from the open PR. Who merges depends on the PR's tier (AGENTS.md rule 1, ticket 807): tickets, docs and code merge on green checks; content, URLs, hosting, CI and dependencies wait for Sam.
 - **Acceptance criteria are the definition of done.** Each one must be checkable, ideally by CI.
 - Tickets can be split, but not silently widened. New scope gets a new ticket.
 
@@ -94,6 +94,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [804](804-ci-lighthouse.md) | CI: Lighthouse budgets | p1 | S | agent | 801 |
 | [805](805-ci-html-headers.md) | CI: HTML validation & header checks | p0 | S | agent | 801, 702 |
 | [806](806-workflow-speed.md) | Faster review loop: local verify, PR rules, Playwright cache, changelog | p1 | S | agent | 801 |
+| [807](807-merge-tiers.md) | Merge tiers, auto-merge on green, and less bookkeeping | p1 | M | pair | 801, 806 |
 | [901](901-agent-view.md) | Agent view: Markdown twins, llms.txt, toggle | p0 | M | agent | 102 |
 | [902](902-colophon.md) | Colophon: last changed + authorship icon | p0 | S | agent | 101 |
 | [903](903-console-secret.md) | Console secret | p1 | S | pair | 702 |
