@@ -9,7 +9,7 @@ saveExact: true
 engineStrict: true
 # GHSA-g3hv-75wg-m249: ESLint pulls in minimatch 10.x (dev only). Remove once ESLint depends on >= 11.0.1.
 overrides:
-  'minimatch@>=7.0.0 <11.0.1': 11.0.5
+  'minimatch@>=7.0.0 <11.0.1': 11.0.8
   # Lockfile maintenance resolved @emnapi/runtime 2.0.0-beta, which crashes @astrojs/ts-content-mapper
   # (TS18099 in `pnpm check`, Renovate PR #38). Hold it on 1.x until the mapper supports 2.x.
   '@emnapi/runtime': 1.11.3
