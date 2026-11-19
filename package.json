@@ -50,7 +50,7 @@
     "html-validate": "11.21.0",
     "node-html-parser": "9.0.7",
     "playwright": "1.65.0",
-    "prettier": "3.10.0",
+    "prettier": "3.10.1",
     "prettier-plugin-astro": "1.1.2",
     "turndown": "7.2.5",
     "typescript": "npm:@typescript/typescript6@6.0.2",
