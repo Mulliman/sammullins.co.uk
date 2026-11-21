@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.1.0",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "pnpm@12.20.0",
+  "packageManager": "pnpm@12.21.0",
   "engines": {
     "node": ">=24.16.0"
   },
@@ -33,8 +33,8 @@
     "merge-policy": "node scripts/merge-policy.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.4",
-    "astro": "7.4.11",
+    "@astrojs/sitemap": "3.7.5",
+    "astro": "7.4.12",
     "marked": "18.2.0",
     "sharp": "0.35.5"
   },
@@ -43,13 +43,13 @@
     "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",
     "@typescript/native": "npm:typescript@7.1.0-beta",
-    "eslint": "10.14.0",
+    "eslint": "10.15.0",
     "eslint-plugin-astro": "3.2.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "globals": "17.14.0",
     "html-validate": "11.21.1",
     "node-html-parser": "9.0.7",
-    "playwright": "1.65.0",
+    "playwright": "1.65.1",
     "prettier": "3.10.1",
     "prettier-plugin-astro": "1.1.2",
     "turndown": "7.2.5",
