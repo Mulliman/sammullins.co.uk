@@ -43,7 +43,7 @@ limit: positive integer (optional)
 
 | type | fields |
 |---|---|
-| `hero` | `variant`, `heading`, `subheading`, `image`, `align` |
+| `hero` | `variant`, `heading`, `subheading`, `image`, `align`, `ctas`, `now`, `facets` |
 | `intro` | `heading`, `lead`, `cta`, `align`, `surface` |
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
@@ -67,11 +67,14 @@ limit: positive integer (optional)
 
 | field | type | required | default |
 |---|---|---|---|
-| `variant` | image \| blurred \| plain | no | `'blurred'` |
+| `variant` | image \| blurred \| plain \| about | no | `'blurred'` |
 | `heading` | string | yes |  |
 | `subheading` | string | no |  |
 | `image` | imageRef | no |  |
 | `align` | center \| left | no | `'center'` |
+| `ctas` | list of cta (max 2) | no |  |
+| `now` | string (min 1) | no |  |
+| `facets` | z .array(z.object({ label: string (min 1) (max 24), text: string (min 1) (max 280), link: cta, }),) .min(2)  (max 6)  | no |  |
 
 ## `intro`
 

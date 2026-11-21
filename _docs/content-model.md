@@ -143,11 +143,14 @@ Big heading at the top of a page.
 
 | Field | Type | Required | Default | Meaning |
 |---|---|---|---|---|
-| `variant` | `image`, `blurred` or `plain` | no | `blurred` | `blurred` puts a blurred copy behind a framed image. `image` frames the photo with the heading below. `plain` is text only |
+| `variant` | `image`, `blurred`, `plain` or `about` | no | `blurred` | `blurred` puts a blurred copy behind a framed image. `image` frames the photo with the heading below. `plain` is text only. `about` (the home page) is a statement with buttons, a "Now:" line and facets to click through |
 | `heading` | string | yes | none | The heading text |
-| `subheading` | string | no | none | Text under the heading |
-| `image` | image reference | no | none | Required in practice for `image` and `blurred` variants |
-| `align` | `center` or `left` | no | `center` | Text alignment |
+| `subheading` | string | no | none | Text under the heading (the lead, for `about`) |
+| `image` | image reference | no | none | Required in practice for `image` and `blurred` variants; `about` ignores it |
+| `align` | `center` or `left` | no | `center` | Text alignment; `about` ignores it |
+| `ctas` | list of `{label, href}` | no | none | `about` only: up to two buttons under the lead |
+| `now` | string | no | none | `about` only: what Sam is working on, shown after "Now:" |
+| `facets` | list of `{label, text, link?}` | no | none | `about` only: 2 to 6 sides of Sam. Labels up to 24 characters, text up to 280. With JavaScript they are tabs (arrow keys work); without it, every facet is listed |
 
 ```yaml
 - type: hero

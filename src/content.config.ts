@@ -65,11 +65,27 @@ const leafBlocks = (image: ImageFn) => {
 
   const hero = z.object({
     type: z.literal('hero'),
-    variant: z.enum(['image', 'blurred', 'plain']).default('blurred'),
+    variant: z.enum(['image', 'blurred', 'plain', 'about']).default('blurred'),
     heading: z.string(),
     subheading: z.string().optional(),
     image: img.optional(),
     align: align.default('center'),
+    /** `about` only (ticket 310): up to two button links under the lead. */
+    ctas: z.array(cta).max(2).optional(),
+    /** `about` only: one short "Now:" line, updated when Sam starts something new. */
+    now: z.string().min(1).optional(),
+    /** `about` only: the sides of Sam a visitor can click through. The first is shown first. */
+    facets: z
+      .array(
+        z.object({
+          label: z.string().min(1).max(24),
+          text: z.string().min(1).max(280),
+          link: cta.optional(),
+        }),
+      )
+      .min(2)
+      .max(6)
+      .optional(),
   });
 
   const intro = z.object({

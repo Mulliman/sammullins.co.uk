@@ -12,8 +12,11 @@ interface Props {
   nested?: boolean;
 }
 const { block } = Astro.props;
-const { heading, subheading, image, align } = block;
-const variant = image && block.variant !== 'plain' ? block.variant : 'plain';
+const { heading, subheading, image, align, ctas, now, facets } = block;
+// `about` (ticket 310) needs no image; the photo variants fall back to plain without one.
+const variant = block.variant === 'about' ? 'about' : image && block.variant !== 'plain' ? block.variant : 'plain';
+// Unique ids, so two about heroes on one page (the style guide) don't clash.
+const uid = `facets-${Math.random().toString(36).slice(2, 8)}`;
 // Ticket 905 prototype B: the blurred backdrop comes into focus as you scroll (flag in site.yaml).
 const sharpen = (await getSite()).features.blurToSharpHero;
 const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
@@ -21,26 +24,292 @@ const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 const subIsLead = (subheading?.length ?? 0) > 60;
 ---
 
-<section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
-  {variant === 'blurred' && image && (
-    <div class="hero__backdrop" aria-hidden="true">
-      {/* Tiny unless it sharpens on scroll (905): decoding and blurring the full photo cost the home page
-          its Lighthouse budget (804) on CI. */}
-      <Pic src={image.src} alt="" preset={sharpen ? 'wide' : 'backdrop'} priority={sharpen} />
+{variant === 'about' ? (
+  <section class="hero hero--about surface-inverse">
+    <div class="container about">
+      <div class="about__intro">
+        <h1 class="hero__heading about__heading">{heading}</h1>
+        {subheading && <p class="about__lead">{subheading}</p>}
+        {ctas && ctas.length > 0 && (
+          <p class="about__ctas">
+            {ctas.map((c) => (
+              <a class="button" href={c.href}>
+                {c.label}
+              </a>
+            ))}
+          </p>
+        )}
+        {now && (
+          <p class="about__now">
+            <span class="about__dot" aria-hidden="true" />
+            Now: {now}
+          </p>
+        )}
+      </div>
+      {facets && (
+        <div class="facets" data-facets>
+          {/* With JS: a tab strip. Without it: every facet is listed with its label as a heading. */}
+          <div class="facets__tabs js-only" role="tablist" aria-label="About me">
+            {facets.map((f, i) => (
+              <button
+                type="button"
+                class="facets__tab"
+                role="tab"
+                id={`${uid}-tab-${i}`}
+                aria-controls={`${uid}-panel-${i}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+          <div class="facets__panels">
+            {facets.map((f, i) => (
+              <div
+                class="facets__panel"
+                role="tabpanel"
+                id={`${uid}-panel-${i}`}
+                aria-labelledby={`${uid}-tab-${i}`}
+                data-inactive={i === 0 ? undefined : ''}
+              >
+                <h2 class="facets__label no-js-only">{f.label}</h2>
+                <p class="facets__text">{f.text}</p>
+                {f.link && (
+                  <a class="facets__link" href={f.link.href}>
+                    {f.link.label}
+                    <span aria-hidden="true"> →</span>
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
-  )}
-  <div class="container hero__inner">
-    {variant !== 'plain' && image && (
-      <div class="hero__frame">
-        <Pic src={image.src} alt={framedAlt} preset="wide" priority />
+  </section>
+) : (
+  <section class:list={['hero', `hero--${variant}`, `hero--${align}`, { 'hero--sharpen': sharpen }]}>
+    {variant === 'blurred' && image && (
+      <div class="hero__backdrop" aria-hidden="true">
+        {/* Tiny unless it sharpens on scroll (905): decoding and blurring the full photo cost the home page
+          its Lighthouse budget (804) on CI. */}
+        <Pic src={image.src} alt="" preset={sharpen ? 'wide' : 'backdrop'} priority={sharpen} />
       </div>
     )}
-    <div class="hero__text">
-      <h1 class="hero__heading">{heading}</h1>
-      {subheading && <p class:list={['hero__sub', { 'hero__sub--lead': subIsLead }]}>{subheading}</p>}
+    <div class="container hero__inner">
+      {variant !== 'plain' && image && (
+        <div class="hero__frame">
+          <Pic src={image.src} alt={framedAlt} preset="wide" priority />
+        </div>
+      )}
+      <div class="hero__text">
+        <h1 class="hero__heading">{heading}</h1>
+        {subheading && <p class:list={['hero__sub', { 'hero__sub--lead': subIsLead }]}>{subheading}</p>}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+)}
+
+<script>
+  // Facet tabs for the `about` hero (ticket 310), following the WAI-ARIA tabs pattern:
+  // arrow keys, Home and End move between tabs, and a tab is shown as soon as it gets focus.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-facets]')) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const show = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[i]?.toggleAttribute('data-inactive', !on);
+      });
+      if (focus) tabs[index]?.focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => show(i));
+      tab.addEventListener('keydown', (e) => {
+        const last = tabs.length - 1;
+        const next =
+          e.key === 'ArrowRight' || e.key === 'ArrowDown'
+            ? (i + 1) % tabs.length
+            : e.key === 'ArrowLeft' || e.key === 'ArrowUp'
+              ? (i - 1 + tabs.length) % tabs.length
+              : e.key === 'Home'
+                ? 0
+                : e.key === 'End'
+                  ? last
+                  : -1;
+        if (next < 0) return;
+        e.preventDefault();
+        show(next, true);
+      });
+    });
+  }
+</script>
+
+<style>
+  /* About hero (ticket 310): statement on the left, facets of Sam to click through on the right. */
+  .hero--about {
+    padding-block: var(--space-xl) var(--space-2xl);
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+    box-shadow: var(--shadow-inset);
+  }
+  .about {
+    display: grid;
+    gap: var(--space-l-xl);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .about {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    }
+  }
+  .about__heading {
+    color: var(--color-inverse-heading);
+    font-size: var(--step-5);
+    line-height: var(--leading-display);
+    text-wrap: balance;
+  }
+  .about__lead {
+    max-width: 34em;
+    margin: var(--space-m) 0 0;
+    font-size: var(--step-1);
+    line-height: var(--leading-lead);
+    color: var(--color-text-inverse-muted);
+    text-wrap: pretty;
+  }
+  .about__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin: var(--space-l) 0 0;
+  }
+  .about__ctas .button:nth-child(2) {
+    background: transparent;
+    border-color: var(--color-inverse-border);
+    color: var(--color-text-inverse);
+  }
+  .about__ctas .button:nth-child(2):hover {
+    border-color: var(--color-text-inverse);
+  }
+  .about__now {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-l) 0 0;
+    padding: var(--space-3xs) var(--space-s);
+    border: 1px solid var(--color-inverse-border);
+    border-radius: 999px;
+    font-size: var(--step--1);
+    color: var(--color-text-inverse-muted);
+  }
+  .about__dot {
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--brand-orange);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .about__dot {
+      animation: about-pulse 2.4s var(--ease) infinite;
+    }
+  }
+  @keyframes about-pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  /* Facets */
+  .facets__tabs {
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-s);
+  }
+  html.js .facets__tabs {
+    display: flex;
+  }
+  .facets__tab {
+    min-height: 2.75rem;
+    padding: 0 var(--space-s);
+    border: 1px solid var(--color-inverse-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text-inverse);
+    font: inherit;
+    font-size: var(--step--1);
+    font-weight: var(--weight-strong);
+    cursor: pointer;
+    transition:
+      background var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease);
+  }
+  .facets__tab:hover {
+    border-color: var(--color-text-inverse);
+  }
+  .facets__tab[aria-selected='true'] {
+    background: var(--color-button-inverse-bg);
+    border-color: var(--color-button-inverse-bg);
+    color: var(--color-button-inverse-fg);
+  }
+  .facets__tab:focus-visible {
+    outline: 2px solid var(--color-inverse-focus);
+    outline-offset: 2px;
+  }
+  .facets__panels {
+    display: grid;
+    gap: var(--space-s);
+  }
+  .facets__panel {
+    padding: var(--space-m-l);
+    border: 1px solid var(--color-inverse-border);
+    border-radius: var(--radius-l);
+  }
+  /* With JS every panel sits in the same cell, so the box is as tall as the longest and nothing jumps. */
+  html.js .facets__panel {
+    grid-area: 1 / 1;
+  }
+  html.js .facets__panel[data-inactive] {
+    visibility: hidden;
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .facets__panel {
+      transition:
+        opacity var(--dur) var(--ease),
+        transform var(--dur) var(--ease),
+        visibility var(--dur);
+    }
+    html.js .facets__panel[data-inactive] {
+      transform: translateY(0.5rem);
+    }
+  }
+  .facets__label {
+    margin: 0 0 var(--space-xs);
+    font-size: var(--step-1);
+    color: var(--color-inverse-heading);
+  }
+  .facets__text {
+    margin: 0;
+    font-size: var(--step-1);
+    line-height: var(--leading-lead);
+    color: var(--color-text-inverse);
+    text-wrap: pretty;
+  }
+  .facets__link {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-weight: var(--weight-strong);
+    color: var(--color-link-inverse);
+  }
+  .facets__link:hover {
+    color: var(--color-inverse-link-hover);
+  }
+</style>
 
 <style>
   .hero {
