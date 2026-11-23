@@ -2,7 +2,7 @@
 id: "906"
 title: Make the hero's scroll-driven animations actually run
 epic: Delight
-status: review
+status: done
 priority: p1
 size: S
 owner: agent
@@ -25,6 +25,11 @@ The blurred hero's scroll-linked drift, and prototype B of ticket 905 (blur-to-s
 - [x] The drift and the blur-to-sharp animation run in Chromium on a production build (frames and progress values in the PR).
 - [x] `tests/scroll-animations.test.mjs` fails on built CSS with a timeline inside the `animation` shorthand, and on any source rule that pairs the shorthand with `animation-timeline` or `animation-range`. It fails on `main` and passes here.
 - [x] CHANGELOG line.
+
+## Verification (23 November 2026, PM pass)
+
+- Merged into `main` by PR #32 (`7ce76b4`, 13 November 2026). `git rev-list --count origin/main..906-scroll-animation-minifier` is 0.
+- Every acceptance criterion is ticked; the guard test `tests/scroll-animations.test.mjs` is on `main`. Whether prototype B ships stays with 905.
 
 ## Out of scope
 
