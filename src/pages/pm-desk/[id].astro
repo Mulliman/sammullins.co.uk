@@ -33,10 +33,8 @@ const desk = z
   .parse(Astro.props.raw);
 
 // The masthead without the site nav (ticket 211): the desk is a working page, not part of the site.
-// No theme toggle either: desk.mjs drops the bundled scripts that drive it, so it would be a dead
-// button. The system theme applies.
 ---
 
-<BaseLayout title={desk.title} description={desk.description} noindex={true} nav={false} themeToggle={false}>
+<BaseLayout title={desk.title} description={desk.description} noindex={true} nav={false}>
   <Blocks blocks={desk.blocks as Block[]} />
 </BaseLayout>

@@ -368,6 +368,8 @@ const settings = defineCollection({
       .default({ goatcounter: '' }),
     features: z.object({
       viewTransitions: z.boolean().default(false),
+      /** Ticket 211: the masthead shrinks to a bar and stays on screen as you scroll. */
+      stickyHeader: z.boolean().default(true),
       blurToSharpHero: z.boolean().default(false),
     }),
   }),

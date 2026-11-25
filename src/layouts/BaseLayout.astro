@@ -35,6 +35,8 @@ interface Props {
   nav?: boolean;
   /** The header's theme toggle (ticket 211). Off where the page ships without its scripts. */
   themeToggle?: boolean;
+  /** Masthead-to-bar on scroll (ticket 211). Defaults to features.stickyHeader in site.yaml. */
+  stickyHeader?: boolean | undefined;
 }
 
 const {
@@ -51,6 +53,7 @@ const {
   theme = 'default',
   nav = true,
   themeToggle = true,
+  stickyHeader,
 } = Astro.props;
 
 const site = await getSite();
@@ -157,11 +160,11 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
       })();
     </script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#content">
       Skip to content
     </a>
-    <Header themeToggle={themeToggle}>
+    <Header themeToggle={themeToggle} sticky={stickyHeader ?? site.features.stickyHeader}>
       {nav && <SiteNav variant="desktop" />}
       {nav && <SiteNav variant="mobile" slot="menu" />}
     </Header>

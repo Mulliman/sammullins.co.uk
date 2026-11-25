@@ -27,5 +27,7 @@ site:
     goatcounter: sammullins
   # Ticket 905 prototypes: flip to true on a branch to preview, then decide ship / tweak / drop.
   features:
+    # Ticket 211: false makes the masthead scroll away with the page instead of shrinking to a bar.
+    stickyHeader: true
     viewTransitions: false
     blurToSharpHero: false

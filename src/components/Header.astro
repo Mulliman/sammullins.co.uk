@@ -14,6 +14,11 @@
  *   default slot   the nav (SiteNav, or a microsite's own)
  *   slot "menu"    a mobile menu, placed after the tools
  *   themeToggle    the theme toggle between them (default true)
+ *   sticky         masthead-to-bar on scroll (default: features.stickyHeader in site.yaml). When false
+ *                  the masthead simply scrolls away with the page.
+ *
+ * While stuck, a back-to-top arrow slides in at the far right (ticket 211). It is a plain link to the
+ * top of the page, so it works without JS; with JS a mouse click scrolls there smoothly.
  */
 import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
@@ -21,14 +26,15 @@ import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   themeToggle?: boolean;
+  sticky?: boolean;
 }
 
-const { themeToggle = true } = Astro.props;
 const site = await getSite();
+const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
 ---
 
-<header class="site-header" data-site-header>
-  <div class="site-header__sentinel" aria-hidden="true"></div>
+<header class:list={['site-header', { 'site-header--sticky': sticky }]} data-site-header>
+  {sticky && <div class="site-header__sentinel" aria-hidden="true" />}
   <div class="container site-header__inner">
     <a href="/" class="site-logo site-logo--stacked" aria-label={`${site.name}, home`} data-signature>
       <Logo lockup="stacked" />
@@ -45,6 +51,23 @@ const site = await getSite();
         </div>
       )}
       <slot name="menu" />
+      {sticky && (
+        <a href="#top" class="site-header__top" aria-label="Back to top" data-back-to-top>
+          <svg
+            aria-hidden="true"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </a>
+      )}
     </div>
   </div>
 </header>
@@ -61,6 +84,15 @@ const site = await getSite();
       rootMargin: '-1px 0px 0px 0px',
     }).observe(sentinel);
   }
+
+  // Back to top (211): the link jumps to #top without JS, or for a keyboard user, so focus starts
+  // from the top of the page. A mouse click scrolls there smoothly instead, unless motion is reduced.
+  header?.querySelector('[data-back-to-top]')?.addEventListener('click', (e) => {
+    const keyboard = (e as MouseEvent).detail === 0;
+    if (keyboard || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   // Signature (904): the head script adds .sig-intro before first paint on the first page view of a
   // session (so the logo never shows, hides, then animates). Mark the session and tidy up afterwards.
@@ -84,7 +116,7 @@ const site = await getSite();
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
   }
-  :global(html.js) .site-header {
+  :global(html.js) .site-header--sticky {
     position: sticky;
     top: calc(var(--header-h) - var(--masthead-h));
   }
@@ -112,6 +144,38 @@ const site = await getSite();
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
+  }
+  /* Back to top: no width (and hidden from focus and assistive tech) until the header is stuck, then it
+     grows in at the far right and the nav eases left to make room. */
+  .site-header__top {
+    display: grid;
+    place-items: center;
+    width: 0;
+    height: 2.75rem;
+    overflow: hidden;
+    margin-left: calc(var(--space-2xs) * -1);
+    color: var(--color-nav);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      width var(--dur) var(--ease),
+      margin var(--dur) var(--ease),
+      opacity var(--dur) ease,
+      visibility 0s linear var(--dur);
+  }
+  .site-header__top:hover {
+    color: var(--color-heading);
+  }
+  .is-stuck .site-header__top {
+    width: 2.75rem;
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      width var(--dur) var(--ease),
+      margin var(--dur) var(--ease),
+      opacity var(--dur) ease,
+      visibility 0s;
   }
   .site-header__end,
   .site-header__tools {
@@ -193,6 +257,14 @@ const site = await getSite();
     }
     .site-logo--horizontal {
       height: 1.5rem;
+    }
+    /* Small phones: with the back-to-top arrow in, the controls only fit beside the logo if they touch.
+       Each is a 44px target with its own padding, so they still read as separate. */
+    .site-header__end {
+      gap: 0;
+    }
+    .site-header__top {
+      margin-left: 0;
     }
   }
 </style>
