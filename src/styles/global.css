@@ -167,10 +167,10 @@
     /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
     --radius-l: 12px;
-    /* The sticky header's height (ticket 206): 72px at most on desktop, 64px on a phone. Anchors and
+    /* The sticky header's height (tickets 206, 211): 64px on desktop, 56px on a phone. Anchors and
        sticky columns offset by it. At the top of the page the header is a taller masthead (ticket 209),
        100px on desktop and 80px on a phone, which scrolls up to --header-h and then sticks. */
-    --header-h: 4.5rem;
+    --header-h: 4rem;
     --masthead-h: 6.25rem;
 
     /* Motion */
@@ -181,7 +181,7 @@
   }
   @media (max-width: 30rem) {
     :root {
-      --header-h: 4rem;
+      --header-h: 3.5rem;
       --masthead-h: 5rem;
     }
   }
