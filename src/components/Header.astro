@@ -7,14 +7,24 @@
  * the left and the nav stays where it is. One copy of every control, so nothing is duplicated for
  * assistive tech. The mobile menu is a <details> element, so it works without JS; without JS the header
  * simply isn't sticky.
+ *
+ * The header is only the masthead shell (ticket 211): logo, sticky behaviour and an end area for
+ * controls. The caller decides what goes in the end area, so a page without the site nav (the PM desk,
+ * a microsite) gets the same masthead with nothing, or its own nav, on the right:
+ *   default slot   the nav (SiteNav, or a microsite's own)
+ *   slot "menu"    a mobile menu, placed after the tools
+ *   themeToggle    the theme toggle between them (default true)
  */
 import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
 import ThemeToggle from './ThemeToggle.astro';
 
+interface Props {
+  themeToggle?: boolean;
+}
+
+const { themeToggle = true } = Astro.props;
 const site = await getSite();
-const path = Astro.url.pathname;
-const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
 
 <header class="site-header" data-site-header>
@@ -28,53 +38,18 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     </a>
 
     <div class="site-header__end">
-      <nav aria-label="Main" class="nav nav--desktop">
-        <ul>
-          {site.nav.map((item) => (
-            <li>
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div class="site-header__tools">
-        <ThemeToggle />
-      </div>
-
-      <details class="nav nav--mobile">
-        <summary>
-          <span class="nav__burger" aria-hidden="true"></span>
-          <span>Menu</span>
-        </summary>
-        <nav aria-label="Main (mobile)">
-          <ul>
-            {site.nav.map((item) => (
-              <li>
-                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </details>
+      <slot />
+      {themeToggle && (
+        <div class="site-header__tools">
+          <ThemeToggle />
+        </div>
+      )}
+      <slot name="menu" />
     </div>
   </div>
 </header>
 
 <script>
-  // Progressive enhancement: Escape closes the mobile menu and returns focus.
-  const menu = document.querySelector<HTMLDetailsElement>('.nav--mobile');
-  menu?.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu.open) {
-      menu.open = false;
-      menu.querySelector('summary')?.focus();
-    }
-  });
-
   // Masthead to bar (209): the sentinel is the part of the header that scrolls off before it sticks.
   // Once it has gone, the header is stuck and swaps to the horizontal logo.
   const header = document.querySelector<HTMLElement>('[data-site-header]');
@@ -195,89 +170,6 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       opacity var(--dur) ease,
       transform var(--dur) var(--ease),
       visibility 0s;
-  }
-  .nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-  }
-  .nav a {
-    display: block;
-    padding: var(--space-2xs) var(--space-xs);
-    color: var(--color-nav);
-    text-decoration: none;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--step-0);
-  }
-  .nav a:hover {
-    color: var(--color-heading);
-  }
-  .nav a[aria-current='page'] {
-    color: var(--color-text-strong);
-    font-weight: var(--weight-strong);
-  }
-
-  .nav--mobile {
-    display: none;
-  }
-  .nav--mobile summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    font-family: var(--font-display);
-    font-size: var(--step--1);
-    font-weight: var(--weight-strong);
-    padding: var(--space-2xs);
-  }
-  .nav--mobile summary::-webkit-details-marker {
-    display: none;
-  }
-  .nav__burger,
-  .nav__burger::before,
-  .nav__burger::after {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: currentColor;
-    position: relative;
-  }
-  .nav__burger::before,
-  .nav__burger::after {
-    content: '';
-    position: absolute;
-  }
-  .nav__burger::before {
-    top: -0.375rem;
-  }
-  .nav__burger::after {
-    top: 0.375rem;
-  }
-  .nav--mobile nav {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    z-index: 20;
-    background: var(--color-bg);
-    padding: var(--space-s) var(--space-m);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-soft);
-    min-width: 12rem;
-  }
-  .nav--mobile ul {
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  @media (max-width: 59.99rem) {
-    .nav--desktop {
-      display: none;
-    }
-    .nav--mobile {
-      display: block;
-    }
   }
   /* Phones: the toggles and menu leave no room to centre the logo, so both logos sit on the left. */
   @media (max-width: 40rem) {
