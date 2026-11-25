@@ -7,18 +7,34 @@
  * the left and the nav stays where it is. One copy of every control, so nothing is duplicated for
  * assistive tech. The mobile menu is a <details> element, so it works without JS; without JS the header
  * simply isn't sticky.
+ *
+ * The header is only the masthead shell (ticket 211): logo, sticky behaviour and an end area for
+ * controls. The caller decides what goes in the end area, so a page without the site nav (the PM desk,
+ * a microsite) gets the same masthead with nothing, or its own nav, on the right:
+ *   default slot   the nav (SiteNav, or a microsite's own)
+ *   slot "menu"    a mobile menu, placed after the tools
+ *   themeToggle    the theme toggle between them (default true)
+ *   sticky         masthead-to-bar on scroll (default: features.stickyHeader in site.yaml). When false
+ *                  the masthead simply scrolls away with the page.
+ *
+ * While stuck, a back-to-top arrow slides in at the far right (ticket 211). It is a plain link to the
+ * top of the page, so it works without JS; with JS a mouse click scrolls there smoothly.
  */
 import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
 import ThemeToggle from './ThemeToggle.astro';
 
+interface Props {
+  themeToggle?: boolean;
+  sticky?: boolean;
+}
+
 const site = await getSite();
-const path = Astro.url.pathname;
-const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
 ---
 
-<header class="site-header" data-site-header>
-  <div class="site-header__sentinel" aria-hidden="true"></div>
+<header class:list={['site-header', { 'site-header--sticky': sticky }]} data-site-header>
+  {sticky && <div class="site-header__sentinel" aria-hidden="true" />}
   <div class="container site-header__inner">
     <a href="/" class="site-logo site-logo--stacked" aria-label={`${site.name}, home`} data-signature>
       <Logo lockup="stacked" />
@@ -28,53 +44,35 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     </a>
 
     <div class="site-header__end">
-      <nav aria-label="Main" class="nav nav--desktop">
-        <ul>
-          {site.nav.map((item) => (
-            <li>
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div class="site-header__tools">
-        <ThemeToggle />
-      </div>
-
-      <details class="nav nav--mobile">
-        <summary>
-          <span class="nav__burger" aria-hidden="true"></span>
-          <span>Menu</span>
-        </summary>
-        <nav aria-label="Main (mobile)">
-          <ul>
-            {site.nav.map((item) => (
-              <li>
-                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </details>
+      <slot />
+      {themeToggle && (
+        <div class="site-header__tools">
+          <ThemeToggle />
+        </div>
+      )}
+      <slot name="menu" />
+      {sticky && (
+        <a href="#top" class="site-header__top" aria-label="Back to top" data-back-to-top>
+          <svg
+            aria-hidden="true"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+        </a>
+      )}
     </div>
   </div>
 </header>
 
 <script>
-  // Progressive enhancement: Escape closes the mobile menu and returns focus.
-  const menu = document.querySelector<HTMLDetailsElement>('.nav--mobile');
-  menu?.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu.open) {
-      menu.open = false;
-      menu.querySelector('summary')?.focus();
-    }
-  });
-
   // Masthead to bar (209): the sentinel is the part of the header that scrolls off before it sticks.
   // Once it has gone, the header is stuck and swaps to the horizontal logo.
   const header = document.querySelector<HTMLElement>('[data-site-header]');
@@ -86,6 +84,15 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       rootMargin: '-1px 0px 0px 0px',
     }).observe(sentinel);
   }
+
+  // Back to top (211): the link jumps to #top without JS, or for a keyboard user, so focus starts
+  // from the top of the page. A mouse click scrolls there smoothly instead, unless motion is reduced.
+  header?.querySelector('[data-back-to-top]')?.addEventListener('click', (e) => {
+    const keyboard = (e as MouseEvent).detail === 0;
+    if (keyboard || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   // Signature (904): the head script adds .sig-intro before first paint on the first page view of a
   // session (so the logo never shows, hides, then animates). Mark the session and tidy up afterwards.
@@ -109,7 +116,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
   }
-  :global(html.js) .site-header {
+  :global(html.js) .site-header--sticky {
     position: sticky;
     top: calc(var(--header-h) - var(--masthead-h));
   }
@@ -137,6 +144,38 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
+  }
+  /* Back to top: no width (and hidden from focus and assistive tech) until the header is stuck, then it
+     grows in at the far right and the nav eases left to make room. */
+  .site-header__top {
+    display: grid;
+    place-items: center;
+    width: 0;
+    height: 2.75rem;
+    overflow: hidden;
+    margin-left: calc(var(--space-2xs) * -1);
+    color: var(--color-nav);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      width var(--dur) var(--ease),
+      margin var(--dur) var(--ease),
+      opacity var(--dur) ease,
+      visibility 0s linear var(--dur);
+  }
+  .site-header__top:hover {
+    color: var(--color-heading);
+  }
+  .is-stuck .site-header__top {
+    width: 2.75rem;
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      width var(--dur) var(--ease),
+      margin var(--dur) var(--ease),
+      opacity var(--dur) ease,
+      visibility 0s;
   }
   .site-header__end,
   .site-header__tools {
@@ -196,89 +235,6 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       transform var(--dur) var(--ease),
       visibility 0s;
   }
-  .nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-  }
-  .nav a {
-    display: block;
-    padding: var(--space-2xs) var(--space-xs);
-    color: var(--color-nav);
-    text-decoration: none;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--step-0);
-  }
-  .nav a:hover {
-    color: var(--color-heading);
-  }
-  .nav a[aria-current='page'] {
-    color: var(--color-text-strong);
-    font-weight: var(--weight-strong);
-  }
-
-  .nav--mobile {
-    display: none;
-  }
-  .nav--mobile summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    font-family: var(--font-display);
-    font-size: var(--step--1);
-    font-weight: var(--weight-strong);
-    padding: var(--space-2xs);
-  }
-  .nav--mobile summary::-webkit-details-marker {
-    display: none;
-  }
-  .nav__burger,
-  .nav__burger::before,
-  .nav__burger::after {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: currentColor;
-    position: relative;
-  }
-  .nav__burger::before,
-  .nav__burger::after {
-    content: '';
-    position: absolute;
-  }
-  .nav__burger::before {
-    top: -0.375rem;
-  }
-  .nav__burger::after {
-    top: 0.375rem;
-  }
-  .nav--mobile nav {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    z-index: 20;
-    background: var(--color-bg);
-    padding: var(--space-s) var(--space-m);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-soft);
-    min-width: 12rem;
-  }
-  .nav--mobile ul {
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  @media (max-width: 59.99rem) {
-    .nav--desktop {
-      display: none;
-    }
-    .nav--mobile {
-      display: block;
-    }
-  }
   /* Phones: the toggles and menu leave no room to centre the logo, so both logos sit on the left. */
   @media (max-width: 40rem) {
     .site-header__inner {
@@ -301,6 +257,14 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     }
     .site-logo--horizontal {
       height: 1.5rem;
+    }
+    /* Small phones: with the back-to-top arrow in, the controls only fit beside the logo if they touch.
+       Each is a 44px target with its own padding, so they still read as separate. */
+    .site-header__end {
+      gap: 0;
+    }
+    .site-header__top {
+      margin-left: 0;
     }
   }
 </style>

@@ -9,6 +9,7 @@ import.meta.glob('../styles/themes/*.css', { eager: true });
 import { themeColor } from '../styles/themes/meta';
 import type { PageTheme } from '../styles/themes';
 import Header from '../components/Header.astro';
+import SiteNav from '../components/SiteNav.astro';
 import Footer from '../components/Footer.astro';
 import ConsoleSecret from '../components/ConsoleSecret.astro';
 import CopyCode from '../components/CopyCode.astro';
@@ -30,6 +31,12 @@ interface Props {
   jsonLd?: Record<string, unknown> | undefined;
   /** Page theme from front matter (ticket 207). */
   theme?: PageTheme;
+  /** The site nav in the header (ticket 211). Off for pages that aren't part of the site, like the PM desk. */
+  nav?: boolean;
+  /** The header's theme toggle (ticket 211). Off where the page ships without its scripts. */
+  themeToggle?: boolean;
+  /** Masthead-to-bar on scroll (ticket 211). Defaults to features.stickyHeader in site.yaml. */
+  stickyHeader?: boolean | undefined;
 }
 
 const {
@@ -44,6 +51,9 @@ const {
   markdownHref,
   jsonLd,
   theme = 'default',
+  nav = true,
+  themeToggle = true,
+  stickyHeader,
 } = Astro.props;
 
 const site = await getSite();
@@ -150,11 +160,14 @@ const ogUrl = og ? new URL(og.src, Astro.site).href : undefined;
       })();
     </script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#content">
       Skip to content
     </a>
-    <Header />
+    <Header themeToggle={themeToggle} sticky={stickyHeader ?? site.features.stickyHeader}>
+      {nav && <SiteNav variant="desktop" />}
+      {nav && <SiteNav variant="mobile" slot="menu" />}
+    </Header>
     <main id="content" tabindex="-1">
       <slot />
     </main>

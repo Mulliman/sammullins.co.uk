@@ -167,10 +167,10 @@
     /* Shape (ticket 205): one small radius, one large. The soft shadow is a theme token (--shadow-soft). */
     --radius: 4px;
     --radius-l: 12px;
-    /* The sticky header's height (ticket 206): 72px at most on desktop, 64px on a phone. Anchors and
+    /* The sticky header's height (tickets 206, 211): 56px on desktop, 48px on a phone. Anchors and
        sticky columns offset by it. At the top of the page the header is a taller masthead (ticket 209),
        100px on desktop and 80px on a phone, which scrolls up to --header-h and then sticks. */
-    --header-h: 4.5rem;
+    --header-h: 3.5rem;
     --masthead-h: 6.25rem;
 
     /* Motion */
@@ -181,7 +181,7 @@
   }
   @media (max-width: 30rem) {
     :root {
-      --header-h: 4rem;
+      --header-h: 3rem;
       --masthead-h: 5rem;
     }
   }
@@ -644,9 +644,10 @@
   }
 
   /* Signature (904, reworked in 209). First page of a session (.sig-intro, set before paint): the S bars
-     build, then the M bars, then the name follows letter by letter. Hover or focus on a logo link: a
-     quick wave through the bars. Only opacity and transform animate, and every animation ends at the
-     resting logo (no forwards fill), so nothing snaps when it finishes. */
+     build, then the M bars, then the name follows letter by letter. Only opacity and transform animate,
+     and every animation ends at the resting logo (no forwards fill), so nothing snaps when it finishes.
+     The hover wave is a script in Logo.astro, not CSS (ticket 211): a CSS animation inside the SVG blurs
+     the wordmark in Chrome on scaled displays. */
   @media (prefers-reduced-motion: no-preference) {
     .sig-intro .brand-logo .logo-bar {
       animation: logo-bar-in 620ms var(--ease) backwards;
@@ -659,10 +660,6 @@
       animation: logo-glyph-in 420ms ease-out backwards;
       animation-delay: calc(700ms + var(--i) * 35ms);
     }
-    a:is(:hover, :focus-visible) > .brand-logo .logo-bar {
-      animation: logo-bar-wave 560ms var(--ease);
-      animation-delay: calc(var(--i) * 40ms);
-    }
   }
   @keyframes logo-bar-in {
     from {
@@ -674,11 +671,6 @@
     from {
       opacity: 0;
       transform: translateY(35%);
-    }
-  }
-  @keyframes logo-bar-wave {
-    45% {
-      transform: translate(5%, -5%);
     }
   }
 }

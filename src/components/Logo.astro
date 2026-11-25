@@ -3,7 +3,7 @@
  * The logo (ticket 209), inlined so CSS can colour and animate each shape. The SVGs come from the brand
  * kit (`pnpm brand:kit -- --site`): every bar is `.logo-bar[data-letter][data-index]` and every letter
  * `.logo-glyph[data-word][data-index]`. Colours come from --logo-primary and --logo-secondary (themes),
- * and the intro and hover animations live in global.css (.brand-logo). The SVG is decorative: the link
+ * and the intro animation lives in global.css (.brand-logo). The hover wave is the script below. The SVG is decorative: the link
  * around it carries the accessible name. It has no ids, so it can appear more than once on a page.
  */
 import stacked from '../assets/brand/logo.svg?raw';
@@ -27,3 +27,60 @@ const logoSvg = source
 ---
 
 <Fragment set:html={logoSvg} />
+
+<script>
+  // Hover wave (904, moved out of CSS in 211): hover or keyboard focus on a logo link sends a quick wave
+  // through the bars. It sets each bar's transform per frame instead of running a CSS animation: while
+  // any CSS animation runs inside the SVG, Chrome and Edge draw the whole SVG as a layer rasterised at
+  // the wrong scale, so on a 125% or 150% display "SAM MULLINS" blurred until the wave ended. Same
+  // timing as the CSS it replaces: 560ms per bar, 40ms apart, peak at 45%, ease cubic-bezier(0.2, 0.7, 0.2, 1).
+  const DURATION = 560;
+  const STAGGER = 40;
+  const PEAK = 0.45;
+
+  // Solve x(t) = p for the CSS cubic-bezier(0.2, 0.7, 0.2, 1) and return y(t).
+  const ease = (p: number) => {
+    const curve = (a: number, b: number, t: number) => 3 * a * (1 - t) ** 2 * t + 3 * b * (1 - t) * t ** 2 + t ** 3;
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 20; i++) {
+      const mid = (lo + hi) / 2;
+      if (curve(0.2, 0.2, mid) < p) lo = mid;
+      else hi = mid;
+    }
+    return curve(0.7, 1, (lo + hi) / 2);
+  };
+
+  const wave = (svg: SVGSVGElement) => {
+    if (svg.dataset.waving || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.documentElement.classList.contains('sig-intro')) return;
+    svg.dataset.waving = '';
+    const bars = [...svg.querySelectorAll<SVGElement>('.logo-bar')];
+    const start = performance.now();
+    const frame = (now: number) => {
+      let running = false;
+      bars.forEach((bar, i) => {
+        const t = (now - start - i * STAGGER) / DURATION;
+        if (t >= 1) {
+          bar.style.removeProperty('transform');
+          return;
+        }
+        running = true;
+        if (t <= 0) return;
+        const k = t < PEAK ? ease(t / PEAK) : 1 - ease((t - PEAK) / (1 - PEAK));
+        bar.style.transform = `translate(${5 * k}%, ${-5 * k}%)`;
+      });
+      if (running) requestAnimationFrame(frame);
+      else delete svg.dataset.waving;
+    };
+    requestAnimationFrame(frame);
+  };
+
+  document.querySelectorAll<SVGSVGElement>('a > svg.brand-logo').forEach((svg) => {
+    const link = svg.parentElement!;
+    link.addEventListener('mouseenter', () => wave(svg));
+    link.addEventListener('focus', () => {
+      if (link.matches(':focus-visible')) wave(svg);
+    });
+  });
+</script>

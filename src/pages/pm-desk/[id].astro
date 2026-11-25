@@ -31,8 +31,10 @@ const desk = z
     blocks: z.array(blockSchema(noImages)).min(1),
   })
   .parse(Astro.props.raw);
+
+// The masthead without the site nav (ticket 211): the desk is a working page, not part of the site.
 ---
 
-<BaseLayout title={desk.title} description={desk.description} noindex={true}>
+<BaseLayout title={desk.title} description={desk.description} noindex={true} nav={false}>
   <Blocks blocks={desk.blocks as Block[]} />
 </BaseLayout>
