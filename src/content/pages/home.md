@@ -13,7 +13,7 @@ blocks:
     variant: "plain"
     align: "left"
     heading: "~~Jack of all trades?~~ Sam of several software skills"
-    subheading: "In 2011 my website asked \"What is wrong with being a jack of all trades?\" I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms. Fifteen years on, with the industry changing faster than ever, the question is worth asking again."
+    subheading: "I'm Sam, a web developer in Bournemouth. In 2011 my website asked \"What is wrong with being a jack of all trades?\" I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms. Fifteen years on, with AI changing how software gets made, the question deserves a better answer."
     mark: true
     ctas:
       - label: "See what I've built"
@@ -45,7 +45,7 @@ blocks:
         lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
       - type: "logoWall"
         logos:
-          - name: "Action on Hearing Loss"
+          - name: "Action on Hearing Loss (now RNID)"
             logo: "../../assets/media/uknim4iy/ahl.avif"
           - name: "Royal College of Surgeons"
             logo: "../../assets/media/xxtpnjun/rcs.avif"
@@ -80,17 +80,17 @@ blocks:
         columns: 3
         items:
           - title: "LV="
-            text: "About 1,500 colleagues. I was the main developer on the ElectriX website, with Sitecore behind it and React in front."
+            text: "About 1,500 colleagues. Senior analyst developer from 2021, and the main developer on the ElectriX website, with Sitecore behind it and React in front."
           - title: "Allianz"
-            text: "Over 150,000 colleagues. I've led a team of Sitecore developers at Allianz Technology since 2023."
+            text: "Over 150,000 colleagues. Sitecore team lead at Allianz Technology from 2023."
           - title: "TCS"
-            text: "Over 500,000 colleagues."
+            text: "Over 500,000 colleagues. My role moved to TCS under TUPE in 2025, and I carried on leading the team on the Allianz account."
   - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
         heading: "Where my skills kept broadening"
-        lead: "Bigger organisations meant more of the stack to look after, so I kept learning."
+        lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
       - type: "cards"
         variant: "text"
         columns: 3
@@ -98,7 +98,7 @@ blocks:
           - title: "Front end"
             text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
           - title: "DevOps"
-            text: "Azure DevOps, keeping our CI dependable and our releases automated through pipelines."
+            text: "Azure DevOps pipelines for dependable builds and automated releases."
           - title: "Infrastructure"
             text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
   - type: "section"
@@ -110,9 +110,9 @@ blocks:
       - type: "prose"
         markdown: |-
           - Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths.
-          - Switching between several streams of work at once.
-          - Being one of the main links between the business and the development team.
-          - Helping change land across teams, environments and workstreams.
+          - Running several streams of work at once without dropping any.
+          - Translating what the business needs into work the developers can ship.
+          - Coordinating changes that crossed teams, environments and workstreams.
           - Acting as Scrum Master for almost a year.
   - type: "section"
     surface: "default"
@@ -134,7 +134,7 @@ blocks:
         columns: 1
         items:
           - title: "xStatic for Umbraco"
-            text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content, so simple sites can be hosted cheaply and served fast. It won an Umbraco package award in 2021."
+            text: "A free package that generates static HTML sites from Umbraco content, so simple sites can be hosted cheaply and served fast."
             href: "/software/xstatic-for-umbraco/"
             cta: "See the package"
             image:
@@ -160,14 +160,14 @@ blocks:
               alt: ""
               decorative: true
           - title: "PanoCapture"
-            text: "A free and open source plugin for CaptureOne that makes panoramas from several photos."
+            text: "A free and open source plugin for Capture One that makes panoramas from several photos."
             href: "/software/panocapture/"
             image:
               src: "../../assets/media/tolji2b5/panocapture.avif"
               alt: ""
               decorative: true
           - title: "PostCapture"
-            text: "A CaptureOne plugin and standalone program that adds watermarks and borders to photos based on their EXIF data."
+            text: "A Capture One plugin and standalone program that adds watermarks and borders to photos based on their EXIF data."
             href: "/software/postcapture/"
             image:
               src: "../../assets/media/irbdcjra/postcapture.avif"
@@ -189,7 +189,7 @@ blocks:
               lead: |-
                 It started at home: running local models such as Qwen, generating images with ComfyUI and trying local agents with Hermes. Then I moved on to writing real application code with Claude Code, GitHub Copilot, Antigravity and OpenCode. This site is one of those experiments, and every page says whether I wrote it alone or with AI.
 
-                At work, our tech lead and I took what I'd learned and moved our team to an AI-first way of working, with people keeping oversight of the work and a shared marketplace of Claude skills.
+                At work, our tech lead and I took what I'd learned and moved the team to an AI-first workflow, with people reviewing the work and a shared marketplace of Claude skills.
 
                 Along the way I became a [Claude Certified Architect, Foundations](https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url) (CCA-F).
           - - type: "logoWall"
@@ -204,7 +204,7 @@ blocks:
       - type: "intro"
         heading: "So, fifteen years later"
         lead: |-
-          In a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam.
+          Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem and spot when they've got it wrong. So in a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam.
 
           Skilled specialist shaping, scaling, and securing sites and software.
 
@@ -212,6 +212,26 @@ blocks:
 
           Modest man, mildly mortified marketing my mediocre merits.
         cta:
+          label: "Find me on LinkedIn"
+          href: "https://www.linkedin.com/in/sam-mullins-31471425/"
+        secondaryCta:
           label: "Read my CV"
           href: "/cv/"
+  # Sam (26 November 2026): end on what he has been up to recently, before the footer.
+  - type: "section"
+    surface: "muted"
+    blocks:
+      - type: "intro"
+        heading: "What I've been up to recently"
+      - type: "listing"
+        variant: "grid"
+        query:
+          from: "articles"
+          # Every article is archived until the launch articles land; newest first either way.
+          archived: "include"
+          limit: 3
+      - type: "intro"
+        cta:
+          label: "Read all my articles"
+          href: "/articles/"
 ---

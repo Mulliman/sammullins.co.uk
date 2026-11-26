@@ -49,3 +49,11 @@ Sam then sketched the page (`_sketches/Homepage.excalidraw` in the parent folder
 - Stacked on `210-design-2026` (PR #66). Merge that first.
 - It replaces the home intro that draft PR #25 (ticket 508) also rewrites, including its `[the tools I use]` placeholder (now filled from the sketch). Once this lands, #25 only needs its bio, footer and CV changes.
 - The earlier draft's timeline is gone: the sketch gives each stage its own band instead.
+- Second pass (26 November 2026), from the Opus and Neon reviews and Sam's answers:
+  - TCS is now explained: Sam's role moved to TCS under TUPE in 2025, still on the Allianz account.
+  - The award is now mentioned once in the text, beside the badge image.
+  - Tighter wording, "Capture One" spelt as two words, and "Action on Hearing Loss (now RNID)".
+  - The closing band now argues the payoff: agents do the narrow work, so breadth is what's scarce.
+  - The page ends with a LinkedIn button, the CV as a second button (the new `intro.secondaryCta`), and "What I've been up to recently", showing the three newest articles. Archived articles are included, because every article is archived until the launch articles land.
+- Later: a subtle monochrome photo of Sam as a background (Sam, 26 November 2026), in the visual pass.
+- Open: whether to merge the enterprise and skills bands (Sam to decide from the screenshots).

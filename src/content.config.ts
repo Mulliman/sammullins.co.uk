@@ -81,6 +81,8 @@ const leafBlocks = (image: ImageFn) => {
     heading: z.string().optional(),
     lead: z.string().optional(),
     cta: cta.optional(),
+    /** A second, quieter button beside `cta` (ticket 509). */
+    secondaryCta: cta.optional(),
     align: align.default('center'),
     surface: surface.default('muted'),
   });

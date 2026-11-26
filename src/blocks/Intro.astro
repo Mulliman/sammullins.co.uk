@@ -12,18 +12,25 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { heading, lead, cta, align, surface } = block;
+const { heading, lead, cta, secondaryCta, align, surface } = block;
 ---
 
 <Section nested={nested} surface={surface} width="narrow">
   <div class:list={['intro', `intro--${align}`]}>
     {heading && <h2 class="intro__heading">{heading}</h2>}
     {lead && <div class="intro__lead" set:html={md(lead)} />}
-    {cta && (
+    {(cta || secondaryCta) && (
       <p class="intro__cta">
-        <a class="button" href={cta.href}>
-          {cta.label}
-        </a>
+        {cta && (
+          <a class="button" href={cta.href}>
+            {cta.label}
+          </a>
+        )}
+        {secondaryCta && (
+          <a class="button button--ghost" href={secondaryCta.href}>
+            {secondaryCta.label}
+          </a>
+        )}
       </p>
     )}
   </div>
@@ -37,6 +44,9 @@ const { heading, lead, cta, align, surface } = block;
   @media (max-width: 39.99rem) {
     .intro--center:has(.intro__lead) {
       text-align: left;
+    }
+    .intro--center:has(.intro__lead) .intro__cta {
+      justify-content: flex-start;
     }
   }
   .intro--left,
@@ -64,7 +74,13 @@ const { heading, lead, cta, align, surface } = block;
     margin-top: var(--space-s-m);
   }
   .intro__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
     margin: var(--space-m) 0 0;
+  }
+  .intro--center .intro__cta {
+    justify-content: center;
   }
   /* No trailing margin: the section (or the gap to the next component) sets the spacing. */
   .intro > :last-child {
