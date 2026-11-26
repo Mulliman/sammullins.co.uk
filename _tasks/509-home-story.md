@@ -42,7 +42,7 @@ Sam (26 November 2026): build on the ticket 210 home page, and make it tell one 
 ## Acceptance criteria
 
 - [ ] Sam approves the story order and the wording, on the deploy preview.
-- [ ] Every placeholder is filled by Sam (none may be guessed). Filled 26 November 2026: front end from 2021, DevOps from 2023 (put under Allianz Technology), AI engineering from 2025 ("simmering for years, but truly one year of proper AI engineering"). Still open: what the AI transformation at work involves.
+- [x] Every placeholder is filled by Sam (none may be guessed). Filled 26 November 2026: front end from 2021, DevOps from 2023 (put under Allianz Technology), AI engineering from 2025 ("simmering for years, but truly one year of proper AI engineering"). The "At work" paragraph was filled on the same day from Sam's notes (coder-first to AI-first with human oversight, driven by Sam and the tech lead, a shared Claude skill library, the CCA-F certification).
 - [ ] Only existing blocks; no new components or CSS (visual polish is a follow-up ticket).
 - [ ] Voice rules from `AGENTS.md`: first person, British English, no em or en dashes as punctuation, no hype words, sentence-case headings. `authorship: "sam-ai"`.
 - [ ] `pnpm verify` passes.

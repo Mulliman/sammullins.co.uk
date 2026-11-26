@@ -61,7 +61,7 @@ blocks:
         title: "AI, at work and at home"
         org: "Allianz Technology and my own projects"
         kind: "cert"
-        body: "AI had been simmering in the background for years. The last year has been proper AI engineering: helping change how we work with it, and experimenting with coding agents outside work. I'm a Claude Certified Architect (Claude Code)."
+        body: "AI had been simmering in the background for years. The last year has been proper AI engineering: helping change how we work with it, and experimenting with coding agents outside work. I'm a Claude Certified Architect (CCA-F)."
   - type: "section"
     surface: "default"
     blocks:
@@ -159,7 +159,7 @@ blocks:
         markdown: |-
           ### At work
 
-          [What the AI transformation at work involves: what the team does differently, which tools, and what changed as a result.]
+          At Allianz Technology our team has been moving from a coder-first workflow to an AI-first one, with people keeping oversight of the work. Our tech lead and I have been the ones driving that change. Together we built a shared skill library for Claude, and I got my Claude Certified Architect certification (CCA-F) along the way.
 
           ### Outside work
 
