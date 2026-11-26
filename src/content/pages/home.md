@@ -64,7 +64,7 @@ blocks:
         lead: "Coding for money is fine, but coding for fun is where you get real satisfaction. I've created a collection of open source projects, from party games to static site builders."
       - type: "cards"
         variant: "full"
-        columns: 3
+        columns: 1
         items:
           - title: "The Imposter"
             text: "The imposter is a party game for 4-7 people played on each individual's mobile phone. Each round one player is randomly chosen as the imposter, and that player needs to discover the secret word without attracting suspicion from the others."
@@ -74,6 +74,10 @@ blocks:
               src: "../../assets/media/xwceuizg/imposter.avif"
               alt: ""
               decorative: true
+      - type: "cards"
+        variant: "full"
+        columns: 4
+        items:
           - title: "xStatic for Umbraco"
             text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
             href: "/software/xstatic-for-umbraco/"
@@ -86,6 +90,20 @@ blocks:
             href: "/software/xpedite-for-umbraco/"
             image:
               src: "../../assets/media/gaajlr4q/banner.avif"
+              alt: ""
+              decorative: true
+          - title: "PanoCapture"
+            text: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
+            href: "/software/panocapture/"
+            image:
+              src: "../../assets/media/tolji2b5/panocapture.avif"
+              alt: ""
+              decorative: true
+          - title: "PostCapture"
+            text: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
+            href: "/software/postcapture/"
+            image:
+              src: "../../assets/media/irbdcjra/postcapture.avif"
               alt: ""
               decorative: true
       - type: "intro"
