@@ -1,73 +1,48 @@
 ---
 title: "Sam Mullins"
-description: "Sam Mullins is a web developer and Sitecore team lead in Bournemouth. He has built for the web since 2010, and lately spends a lot of his time on AI-assisted development."
+description: "Sam Mullins is a web developer and Sitecore team lead in Bournemouth: a C# specialist who kept adding skills, from front end and DevOps to leading a team and AI engineering."
 cover:
   src: "../../assets/media/mrnjubw5/combination-mark-small.avif"
   alt: "Sam Mullins logo"
 authorship: "sam-ai"
 blocks:
-  # Ticket 509: the home page tells one story, from the 2011 question to its answer, using existing
-  # blocks only. Beats: the question (hero), 2011 (intro), the trades picked up since (timeline), the
-  # clients (logo wall), things made for fun (cards), where AI fits (split), the answer (closing band).
+  # Ticket 509, following Sam's sketch (_sketches/Homepage.excalidraw, 26 November 2026): one band per
+  # stage, from the 2011 question to the answer. Bands alternate muted and default; the last one stays
+  # light because the footer is already dark.
   - type: "hero"
     variant: "plain"
     align: "left"
-    heading: "What is wrong with being a ~~jack of all trades~~ Sam of several skills?"
-    subheading: "My website asked that in 2011. I'm Sam Mullins, a web developer and Sitecore team lead in Bournemouth, and fifteen years later I think I've earned an answer."
+    heading: "~~Jack of all trades?~~ Sam of several software skills"
+    subheading: "In 2011 my website asked \"What is wrong with being a jack of all trades?\" I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms. Fifteen years on, with the industry changing faster than ever, the question is worth asking again."
     mark: true
     ctas:
       - label: "See what I've built"
         href: "/software/"
       - label: "Read the articles"
         href: "/articles/"
-  - type: "intro"
-    heading: "The question, in 2011"
-    surface: "default"
-    align: "left"
-    lead: |-
-      Web development was splitting into specialisms. Designers, front-end developers and back-end developers each had their own job title, and agencies hired for one of them. I liked all three, so I put the question at the top of my website.
-
-      Looking back, liking design, front end and back end didn't make me a jack of all trades. It meant I had some tech skills. The trades came later, one at a time.
-  - type: "timeline"
-    heading: "Fifteen years of picking up trades"
+  - type: "section"
     surface: "muted"
-    items:
-      - when: "2010 to 2021"
-        title: "Back-end specialist"
-        org: "Redweb"
-        kind: "role"
-        body: "I started as a student developer and spent most of a decade going deep on C# and web content management. I'm certified in both Sitecore and Umbraco."
-      - when: "2010 to 2021"
-        title: "Working directly with clients"
-        org: "Redweb"
-        kind: "role"
-        body: "Agency work put me in the room with clients, from national charities to broadcasters: training their teams, consulting on their platforms, and mentoring up to three developers of our own."
-      - when: "2021 to now"
-        title: "Front end again"
-        org: "LV= and my own projects"
-        kind: "role"
-        body: "JavaScript, TypeScript and React came back into my work. At LV= I was the main developer on the ElectriX website, with Sitecore behind it and React in front, and I kept building with them outside work."
-      - when: "2023 to now"
-        title: "DevOps and infrastructure"
-        org: "Allianz Technology"
-        kind: "role"
-        body: "The job moved towards the platform underneath the site: Sitecore on Docker in Managed Cloud, running on AKS, shipped through Azure DevOps."
-      - when: "2023 to now"
-        title: "Team lead"
-        org: "Allianz Technology"
-        kind: "role"
-        body: "I lead a team of up to seven Sitecore developers, and I'm one of the main points of contact between the business and the technical team."
-      - when: "2025 to now"
-        title: "AI, at work and at home"
-        org: "Allianz Technology and my own projects"
-        kind: "cert"
-        body: "AI had been simmering in the background for years. The last year has been proper AI engineering: helping change how we work with it, and experimenting with coding agents outside work. I'm a Claude Certified Architect (CCA-F)."
+    blocks:
+      - type: "split"
+        ratio: "2:1"
+        columns:
+          - - type: "intro"
+              heading: "First, a C# specialist"
+              align: "left"
+              lead: "I spent my first eleven years at Redweb, starting as a student developer, going deep on C# and web content management. I built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
+          - - type: "logoWall"
+              variant: "badges"
+              logos:
+                - name: "Sitecore"
+                  logo: "../../assets/media/badges/sitecore.avif"
+                - name: "Umbraco"
+                  logo: "../../assets/media/badges/umbraco.avif"
   - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
-        heading: "Who I've built for"
-        lead: "I've worked directly with clients from charities and housing associations to broadcasters and retailers, building websites that integrate with CRMs, payment providers, vacancy portals and plenty of internal systems."
+        heading: "Working with clients"
+        lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
       - type: "logoWall"
         logos:
           - name: "Action on Hearing Loss"
@@ -98,14 +73,68 @@ blocks:
     surface: "muted"
     blocks:
       - type: "intro"
-        heading: "Things I make outside work"
-        lead: "Coding for money is fine, but coding for fun is where you get real satisfaction. The best known is xStatic, which won an Umbraco package award. The rest range from a party game to plugins for CaptureOne."
+        heading: "Then into enterprise"
+        lead: "In 2021 I moved in-house, and each organisation since has been bigger than the last."
+      - type: "cards"
+        variant: "text"
+        columns: 3
+        items:
+          - title: "LV="
+            text: "About 1,500 colleagues. I was the main developer on the ElectriX website, with Sitecore behind it and React in front."
+          - title: "Allianz"
+            text: "Over 150,000 colleagues. I've led a team of Sitecore developers at Allianz Technology since 2023."
+          - title: "TCS"
+            text: "Over 500,000 colleagues."
+  - type: "section"
+    surface: "default"
+    blocks:
+      - type: "intro"
+        heading: "Where my skills kept broadening"
+        lead: "Bigger organisations meant more of the stack to look after, so I kept learning."
+      - type: "cards"
+        variant: "text"
+        columns: 3
+        items:
+          - title: "Front end"
+            text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
+          - title: "DevOps"
+            text: "Azure DevOps, keeping our CI dependable and our releases automated through pipelines."
+          - title: "Infrastructure"
+            text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
+  - type: "section"
+    surface: "muted"
+    blocks:
+      - type: "intro"
+        heading: "And then a team lead"
+        lead: "Leading a team turned out to be a trade of its own."
+      - type: "prose"
+        markdown: |-
+          - Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths.
+          - Switching between several streams of work at once.
+          - Being one of the main links between the business and the development team.
+          - Helping change land across teams, environments and workstreams.
+          - Acting as Scrum Master for almost a year.
+  - type: "section"
+    surface: "default"
+    blocks:
+      - type: "split"
+        ratio: "2:1"
+        columns:
+          - - type: "intro"
+              heading: "But it was never just a job"
+              align: "left"
+              lead: "I love making software, so I keep doing it outside work: an award-winning Umbraco package, games, websites and tools for editing photos."
+          - - type: "image"
+              frame: "none"
+              image:
+                src: "../../assets/media/03yabpct/umbracoaward.avif"
+                alt: "Umbraco package award 2021, winner"
       - type: "cards"
         variant: "full"
         columns: 1
         items:
           - title: "xStatic for Umbraco"
-            text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content, so simple sites can be hosted cheaply and served fast. It won an Umbraco package award."
+            text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content, so simple sites can be hosted cheaply and served fast. It won an Umbraco package award in 2021."
             href: "/software/xstatic-for-umbraco/"
             cta: "See the package"
             image:
@@ -117,28 +146,28 @@ blocks:
         columns: 4
         items:
           - title: "The Imposter"
-            text: "The imposter is a party game for 4-7 people played on each individual's mobile phone. Each round one player is randomly chosen as the imposter, and that player needs to discover the secret word without attracting suspicion from the others."
+            text: "A party game for four to seven people, played on their phones. Each round one player is secretly the imposter, and has to work out the secret word without being caught."
             href: "/software/the-imposter/"
             image:
               src: "../../assets/media/xwceuizg/imposter.avif"
               alt: ""
               decorative: true
           - title: "XPEDITE for Umbraco"
-            text: "Create Umbraco headless websites FAST! XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components."
+            text: "Sets up headless Umbraco websites for you, and automates building unit-tested components."
             href: "/software/xpedite-for-umbraco/"
             image:
               src: "../../assets/media/gaajlr4q/banner.avif"
               alt: ""
               decorative: true
           - title: "PanoCapture"
-            text: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
+            text: "A free and open source plugin for CaptureOne that makes panoramas from several photos."
             href: "/software/panocapture/"
             image:
               src: "../../assets/media/tolji2b5/panocapture.avif"
               alt: ""
               decorative: true
           - title: "PostCapture"
-            text: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
+            text: "A CaptureOne plugin and standalone program that adds watermarks and borders to photos based on their EXIF data."
             href: "/software/postcapture/"
             image:
               src: "../../assets/media/irbdcjra/postcapture.avif"
@@ -149,31 +178,39 @@ blocks:
           label: "See all my software"
           href: "/software/"
   - type: "section"
+    surface: "muted"
+    blocks:
+      - type: "split"
+        ratio: "2:1"
+        columns:
+          - - type: "intro"
+              heading: "Getting ready for the agentic era"
+              align: "left"
+              lead: |-
+                It started at home: running local models such as Qwen, generating images with ComfyUI and trying local agents with Hermes. Then I moved on to writing real application code with Claude Code, GitHub Copilot, Antigravity and OpenCode. This site is one of those experiments, and every page says whether I wrote it alone or with AI.
+
+                At work, our tech lead and I took what I'd learned and moved our team to an AI-first way of working, with people keeping oversight of the work and a shared marketplace of Claude skills.
+
+                Along the way I became a [Claude Certified Architect, Foundations](https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url) (CCA-F).
+          - - type: "logoWall"
+              variant: "badges"
+              logos:
+                - name: "Claude Certified Architect, Foundations badge on Credly"
+                  logo: "../../assets/media/badges/cca-f.avif"
+                  href: "https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url"
+  - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
-        heading: "Where AI fits"
-        lead: "Coding agents are the biggest change to my work since I started. I use them at work and at home, for different reasons."
-      # A split (two columns) can't sit inside a section yet, so this is one prose block for now.
-      - type: "prose"
-        markdown: |-
-          ### At work
-
-          At Allianz Technology our team has been moving from a coder-first workflow to an AI-first one, with people keeping oversight of the work. Our tech lead and I have been the ones driving that change. Together we built a shared skill library for Claude, and along the way I became a Claude Certified Architect (CCA-F).
-
-          ### Outside work
-
-          I experiment with coding agents on my own projects, to find out where they help and where they shouldn't be trusted. This site is one of those experiments: I rebuilt it with Astro and Claude Code, and every page says whether I wrote it or wrote it with AI.
-  - type: "section"
-    surface: "inverse"
-    blocks:
-      - type: "intro"
-        heading: "So, what is wrong with being a jack of all trades?"
-        surface: "inverse"
+        heading: "So, fifteen years later"
         lead: |-
-          Nothing, once you've earned the trades. For most of my career the industry rewarded specialists, and I became one. Now coding agents make it cheap to work across the whole stack, and what's scarce is someone who can see the whole system and tell when the AI is wrong.
+          In a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam.
 
-          Specialism got me here. Generalism is where things are heading, and I plan to be a Sam of all trades.
+          Skilled specialist shaping, scaling, and securing sites and software.
+
+          Anthropic-accredited AI ace automating actions with agents.
+
+          Modest man, mildly mortified marketing my mediocre merits.
         cta:
           label: "Read my CV"
           href: "/cv/"

@@ -1,7 +1,8 @@
 ---
 /**
  * `logoWall` block (ticket 306): client logos on white tiles, four to a row as the original.
- * Each logo's alt text is the client name.
+ * Each logo's alt text is the client name. `variant: badges` (ticket 509) shows certificates and
+ * awards in colour instead.
  */
 import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
@@ -16,7 +17,7 @@ const { block, nested = false } = Astro.props;
 
 <Section nested={nested} surface={block.surface}>
   {block.heading && <h2 class="logos__heading">{block.heading}</h2>}
-  <ul class="logos">
+  <ul class:list={['logos', `logos--${block.variant}`]}>
     {block.logos.map((item) => {
       const pic = <Pic src={item.logo} alt={item.name} preset="logo" />;
       return (
@@ -115,6 +116,37 @@ const { block, nested = false } = Astro.props;
     :global(:root:not([data-theme='light'])) .logos__item :global(img) {
       filter: invert(1) grayscale(1);
       mix-blend-mode: screen;
+    }
+  }
+
+  /* Badges (ticket 509): certificates and awards in their own colours, side by side at a fixed size,
+     with no tile and no grey. Declared after the dark rules so they win in both themes. */
+  .logos.logos--badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-m);
+  }
+  .logos--badges .logos__item,
+  :global(:root[data-theme]) .logos--badges .logos__item {
+    width: min(10rem, 40%);
+    aspect-ratio: 1;
+    padding: 0;
+    background: none;
+  }
+  .logos--badges .logos__item :global(img),
+  :global(:root[data-theme]) .logos--badges .logos__item :global(img) {
+    opacity: 1;
+    filter: none;
+    mix-blend-mode: normal;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .logos--badges .logos__item {
+      background: none;
+    }
+    :global(:root:not([data-theme='light'])) .logos--badges .logos__item :global(img) {
+      filter: none;
+      mix-blend-mode: normal;
     }
   }
 </style>

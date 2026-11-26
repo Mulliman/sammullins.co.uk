@@ -52,7 +52,7 @@ limit: positive integer (optional)
 | `gallery` | `heading`, `columns`, `surface`, `images` |
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
-| `logoWall` | `heading`, `surface`, `logos` |
+| `logoWall` | `heading`, `variant`, `surface`, `logos` |
 | `quote` | `text`, `attribution`, `source` |
 | `code` | `lang`, `code`, `filename` |
 | `nextPrev` | `prev`, `next` |
@@ -151,6 +151,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
+| `variant` | logos \| badges | no | `'logos'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
 
@@ -225,4 +226,4 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `spacing` | none \| small \| normal | no | `'normal'` |
-| `blocks` | z.array(z.discriminatedUnion('type', [...nestable, disclosure])) (min 1) | yes |  |
+| `blocks` | z.array(z.discriminatedUnion('type', [...nestable, disclosure, split])) (min 1) | yes |  |

@@ -75,7 +75,7 @@ function assertNever(x: never): never {
     case 'embed':
       return <Embed block={block} nested={nested} />;
     case 'split':
-      return <Split block={block} Content={Content} />;
+      return <Split block={block} Content={Content} nested={nested} />;
     case 'steps':
       return <Steps block={block} nested={nested} />;
     case 'disclosure':

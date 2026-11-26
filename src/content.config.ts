@@ -149,6 +149,9 @@ const leafBlocks = (image: ImageFn) => {
   const logoWall = z.object({
     type: z.literal('logoWall'),
     heading: z.string().optional(),
+    /** logos: client logos on tiles, in grey until hovered. badges: certificates and awards, in full
+        colour with no tile, at a fixed size (ticket 509). */
+    variant: z.enum(['logos', 'badges']).default('logos'),
     surface: surface.default('default'),
     logos: z.array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() })).min(1),
   });
@@ -252,7 +255,7 @@ export const blockSchema = (image: ImageFn) => {
   });
   // `section` is one full-width band (background and spacing) holding components in order, as the
   // original site did (a heading and its cards share a section). Children render without their own
-  // band, so their `surface` is ignored. Heroes are full-bleed and splits are bands, so neither nests.
+  // band, so their `surface` is ignored. Heroes are full-bleed, so they never nest.
   const [, ...nestable] = leaves;
   // `disclosure` (ticket 1005) is a closed-by-default row (<details>) that opens to show its blocks.
   // It needs no JS. `status: done` strikes the summary and adds a "Done" badge. It holds the same
@@ -269,7 +272,8 @@ export const blockSchema = (image: ImageFn) => {
     type: z.literal('section'),
     surface: surface.default('default'),
     spacing: z.enum(['none', 'small', 'normal']).default('normal'),
-    blocks: z.array(z.discriminatedUnion('type', [...nestable, disclosure])).min(1),
+    // A split may sit in a section too (ticket 509): it then shares the section's band.
+    blocks: z.array(z.discriminatedUnion('type', [...nestable, disclosure, split])).min(1),
   });
   return z.discriminatedUnion('type', [...leaves, split, disclosure, section]);
 };

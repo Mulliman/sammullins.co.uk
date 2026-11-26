@@ -114,7 +114,12 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
     margin: 0;
     font-size: var(--step-6);
   }
+  /* As in Sam's sketch: the crossed-out words sit smaller on their own line above the correction. */
   .hero__struck {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0.1em;
+    font-size: 0.5em;
     text-decoration-line: line-through;
     text-decoration-thickness: 0.08em;
     opacity: 0.6;

@@ -8,12 +8,14 @@ type SplitBlock = Extract<Block, { type: 'split' }>;
 interface Props {
   block: SplitBlock;
   Content?: AstroComponentFactory | undefined;
+  /** Inside a section (ticket 509): no band of its own. */
+  nested?: boolean;
 }
-const { block, Content } = Astro.props;
+const { block, Content, nested = false } = Astro.props;
 const [a, b] = block.columns;
 ---
 
-<Section>
+<Section nested={nested}>
   <div class:list={['split', `split--${block.ratio.replace(':', '-')}`, { 'split--reverse': block.reverseOnMobile }]}>
     <div class="split__col">
       <Blocks blocks={a} Content={Content} nested />
@@ -28,6 +30,10 @@ const [a, b] = block.columns;
     display: grid;
     gap: var(--space-l);
     align-items: start;
+  }
+  /* In a section, text beside a badge sits level with it. */
+  :global(.nested-block) > .split {
+    align-items: center;
   }
   @media (min-width: 48rem) {
     .split--1-1 {

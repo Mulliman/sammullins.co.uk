@@ -568,6 +568,7 @@ logo-wall-default:
   title: Logos, default surface
   block:
     type: logoWall
+    variant: logos
     heading: People I have worked with
     surface: default
     logos:
@@ -602,6 +603,37 @@ logo-wall-inverse:
         logo: ../../assets/demo/logo.jpg
       - name: Client Two
         logo: ../../assets/demo/logo.jpg
+
+logo-wall-badges:
+  title: Badges (certificates and awards in colour)
+  block:
+    type: logoWall
+    variant: badges
+    heading: Certified in
+    logos:
+      - name: Sitecore
+        logo: ../../assets/media/badges/sitecore.avif
+      - name: Umbraco
+        logo: ../../assets/media/badges/umbraco.avif
+
+section-with-split:
+  title: Section holding a split (text beside badges)
+  block:
+    type: section
+    surface: muted
+    blocks:
+      - type: split
+        ratio: '2:1'
+        columns:
+          - - type: intro
+              heading: Text beside a badge
+              align: left
+              lead: Inside a section, a split shares the section's band and centres its columns.
+          - - type: logoWall
+              variant: badges
+              logos:
+                - name: Claude Certified Architect, Foundations
+                  logo: ../../assets/media/badges/cca-f.avif
 
 quote-with-attribution:
   title: Quote, with attribution and source
