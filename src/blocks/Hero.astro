@@ -26,6 +26,9 @@ const sharpen = (await getSite()).features.blurToSharpHero;
 const framedAlt = image?.decorative ? '' : (image?.alt ?? '');
 // A short subheading is a one-line subtitle ("Developer"); a sentence is a lead paragraph.
 const subIsLead = (subheading?.length ?? 0) > 60;
+// Ticket 509: `~~words~~` in the heading are shown struck through, so the home page can cross out
+// "jack of all trades" and write a correction after it. Screen readers hear "crossed out" first.
+const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck: i % 2 === 1 }));
 ---
 
 <section
@@ -50,7 +53,18 @@ const subIsLead = (subheading?.length ?? 0) > 60;
       </div>
     )}
     <div class="hero__text">
-      <h1 class="hero__heading">{heading}</h1>
+      <h1 class="hero__heading">
+        {headingParts.map((part) =>
+          part.struck ? (
+            <del class="hero__struck">
+              <span class="visually-hidden">crossed out: </span>
+              {part.text}
+            </del>
+          ) : (
+            part.text
+          ),
+        )}
+      </h1>
       {subheading && <p class:list={['hero__sub', { 'hero__sub--lead': subIsLead }]}>{subheading}</p>}
       {ctas && ctas.length > 0 && (
         <p class="hero__ctas">
@@ -99,6 +113,11 @@ const subIsLead = (subheading?.length ?? 0) > 60;
     color: inherit;
     margin: 0;
     font-size: var(--step-6);
+  }
+  .hero__struck {
+    text-decoration-line: line-through;
+    text-decoration-thickness: 0.08em;
+    opacity: 0.6;
   }
   .hero__sub {
     margin: var(--space-s) 0 0;

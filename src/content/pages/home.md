@@ -12,7 +12,7 @@ blocks:
   - type: "hero"
     variant: "plain"
     align: "left"
-    heading: "What is wrong with being a jack of all trades?"
+    heading: "What is wrong with being a ~~jack of all trades~~ Sam of several skills?"
     subheading: "My website asked that in 2011. I'm Sam Mullins, a web developer and Sitecore team lead in Bournemouth, and fifteen years later I think I've earned an answer."
     mark: true
     ctas:
@@ -159,7 +159,7 @@ blocks:
         markdown: |-
           ### At work
 
-          At Allianz Technology our team has been moving from a coder-first workflow to an AI-first one, with people keeping oversight of the work. Our tech lead and I have been the ones driving that change. Together we built a shared skill library for Claude, and I got my Claude Certified Architect certification (CCA-F) along the way.
+          At Allianz Technology our team has been moving from a coder-first workflow to an AI-first one, with people keeping oversight of the work. Our tech lead and I have been the ones driving that change. Together we built a shared skill library for Claude, and along the way I became a Claude Certified Architect (CCA-F).
 
           ### Outside work
 

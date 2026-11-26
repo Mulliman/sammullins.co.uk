@@ -50,5 +50,6 @@ Sam (26 November 2026): build on the ticket 210 home page, and make it tell one 
 ## Notes
 
 - Stacked on `210-design-2026` (PR #66). Merge that first.
+- One exception to "only existing blocks", at Sam's request (26 November 2026): the hero heading now supports `~~words~~` for struck-through text, so the question reads "What is wrong with being a ~~jack of all trades~~ Sam of several skills?" (poking fun at the 2011 claim). Screen readers hear "crossed out" before the struck words. The page still closes on "a Sam of all trades", the payoff for earning the trades since.
 - It replaces the home intro that draft PR #25 (ticket 508) also rewrites, including its `[the tools I use]` placeholder. Once this lands, #25 only needs its bio, footer and CV changes.
 - Facts beyond Sam's outline come from the home lab brief's fact list (Redweb 2010 to 2021, LV= ElectriX on Sitecore and React, Sitecore 10.2 on Docker and Managed Cloud, Allianz Technology from 2023, certified in Sitecore and Umbraco, mentoring up to three developers).
