@@ -59,7 +59,7 @@ limit: positive integer (optional)
 | `timeline` | `heading`, `surface`, `items` |
 | `embed` | `provider`, `id`, `title`, `poster` |
 | `steps` | `heading`, `items` |
-| `figures` | `heading`, `variant`, `surface`, `items` |
+| `figures` | `heading`, `variant`, `align`, `surface`, `items` |
 | `indexList` | `heading`, `variant`, `surface`, `items` |
 | `statement` | `heading`, `variant`, `align`, `surface`, `lines` |
 | `split` | `ratio`, `reverseOnMobile`, `sticky`, `columns` |
@@ -214,6 +214,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | columns \| ladder | no | `'columns'` |
+| `align` | center \| left | no | `'left'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | z .array(z.object({ title: string (min 1), value: string (min 1), logo: image(), prefix: string, suffix: string, text: string, }),)  (min 1) | no |  |
 

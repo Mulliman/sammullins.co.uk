@@ -168,13 +168,18 @@ const idBase = nextId('logo');
         flip-block;
     }
   }
-  /* Phones: a sheet along the bottom of the screen, clear of the edges, instead of under the logo. */
+  /* Phones: in the middle of the screen over a soft backdrop, clear of the edges (Sam: a sheet at
+     the very bottom felt far from the logo). */
   @media (max-width: 39.99rem) {
     .logos__pop {
-      inset: auto var(--gutter) var(--gutter);
+      inset: 0;
       width: auto;
-      margin: 0;
+      height: fit-content;
+      margin: auto var(--gutter);
       position-area: none;
+    }
+    .logos__pop::backdrop {
+      background: var(--color-backdrop);
     }
   }
   .logos__pop-title {
@@ -350,6 +355,15 @@ const idBase = nextId('logo');
   .logos--badges .logos__item:only-child,
   :global(:root[data-theme]) .logos--badges .logos__item:only-child {
     width: min(13rem, 65%);
+  }
+  /* Phones: badges small, so they don't take a screen of their own. */
+  @media (max-width: 39.99rem) {
+    .logos--badges .logos__item,
+    .logos--badges .logos__item:only-child,
+    :global(:root[data-theme]) .logos--badges .logos__item,
+    :global(:root[data-theme]) .logos--badges .logos__item:only-child {
+      width: 5rem;
+    }
   }
   .logos--badges .logos__link {
     border-radius: var(--radius-m);

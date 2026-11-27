@@ -19,13 +19,13 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
 
 <Section nested={nested} surface={block.surface}>
   {block.heading && <h2 class="figures__heading">{block.heading}</h2>}
-  <ol class:list={['figures', `figures--${block.variant}`]}>
+  <ol class:list={['figures', `figures--${block.variant}`, `figures--${block.align}`]}>
     {block.items.map((item) => (
       <li class="figures__item">
         {item.logo ? (
           <Heading class="figures__title figures__title--logo">
-            <span class="visually-hidden">{item.title}</span>
             <Pic src={item.logo} alt="" preset="logo" class="figures__logo" />
+            <span>{item.title}</span>
           </Heading>
         ) : (
           <Heading class="figures__title">{item.title}</Heading>
@@ -121,12 +121,25 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     display: flex;
     flex-direction: column;
     min-width: 0;
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--color-border-strong);
-    transition: border-color var(--dur) var(--ease);
   }
-  .figures__item:hover {
-    border-top-color: var(--color-text-strong);
+  /* Centred (509-symmetry): each column centred, and the scale bar grows from the middle. */
+  .figures--center .figures__item {
+    align-items: center;
+    text-align: center;
+  }
+  .figures--center .figures__metric {
+    align-items: center;
+  }
+  .figures--center .figures__fill {
+    margin-inline: auto;
+    transform-origin: center;
+  }
+  /* No track behind the bar: just the bar, so there is no hairline. */
+  .figures--center .figures__track {
+    background: none;
+  }
+  .figures--center .figures__text {
+    max-width: 22rem;
   }
 
   .figures__title {
@@ -140,21 +153,21 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   }
 
   /* A logo in place of the title (ticket 509): black masters, greyed here and inverted in dark mode. */
+  /* A logo (509-symmetry): a small mark beside the name, like the icons elsewhere on the page. */
   .figures__title--logo {
     display: flex;
     align-items: center;
-    height: 2.25rem;
+    gap: var(--space-2xs);
   }
   .figures__title--logo :global(picture) {
     display: contents;
   }
   .figures__title--logo :global(img) {
     width: auto;
-    max-width: 9rem;
-    height: 100%;
+    max-width: 2.25rem;
+    height: 1.75rem;
     object-fit: contain;
-    object-position: left center;
-    opacity: 0.7;
+    opacity: 0.75;
     transition: opacity var(--dur) var(--ease);
   }
   .figures__item:hover .figures__title--logo :global(img) {
@@ -191,6 +204,30 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     text-box: trim-both cap alphabetic;
     font-variant-numeric: tabular-nums;
     color: var(--color-text-strong);
+  }
+
+  /* Phones: smaller figures, so three stages don't fill three screens. */
+  @media (max-width: 39.99rem) {
+    .figures {
+      gap: var(--space-l);
+    }
+    /* "About 1,500 colleagues" on one line. */
+    .figures__metric {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0 0.35em;
+    }
+    .figures__value {
+      font-size: var(--step-3);
+    }
+    .figures__title {
+      margin-bottom: var(--space-2xs);
+    }
+    .figures__track {
+      margin-bottom: var(--space-s);
+    }
   }
 
   /* Ladder variant: progressive Figtree weight and proportional monochrome scale bar. */

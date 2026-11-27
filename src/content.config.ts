@@ -248,6 +248,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('figures'),
     heading: z.string().optional(),
     variant: z.enum(['columns', 'ladder']).default('columns'),
+    align: align.default('left'),
     surface: surface.default('default'),
     items: z
       .array(

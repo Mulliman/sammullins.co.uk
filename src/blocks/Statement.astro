@@ -3,7 +3,8 @@
  * `statement` block: magazine-scale editorial statements.
  * `variant: manifesto` frames high-impact display sentences between hairline rules.
  * `variant: acrostic` sets lines whose first letters spell a word (the closing S, A, M lines on the
- * home page). Only the first letter is bold; readers are trusted to notice (Sam, 27 November 2026).
+ * home page) as a short verse, with nothing pointing at the letters: readers are trusted to notice
+ * (Sam, 27 November 2026: "I don't want to telegraph the pun").
  * `~~words~~` are struck through, the line drawing across as it scrolls into view (ticket 509).
  */
 import Section from '../components/Section.astro';
@@ -18,12 +19,6 @@ const { block, nested = false } = Astro.props;
 // Screen readers hear "crossed out" before struck words, as in the hero.
 const render = (line: string) =>
   mdInline(line).replace(/<del>/g, '<del><span class="visually-hidden">crossed out: </span>');
-// The first letter of an acrostic line, split off so it can be bold.
-const initialOf = (line: string) => {
-  const html = render(line);
-  const m = html.match(/^([A-Za-z])/);
-  return m ? { initial: m[1]!, rest: html.slice(1) } : { initial: '', rest: html };
-};
 ---
 
 <Section nested={nested} surface={block.surface} width="narrow">
@@ -31,17 +26,11 @@ const initialOf = (line: string) => {
   <div class:list={['statement__wrap', `statement__wrap--${block.align}`]}>
     {block.variant === 'acrostic' ? (
       <ul class="statement statement--acrostic">
-        {block.lines.map((line) => {
-          const { initial, rest: html } = initialOf(line);
-          return (
-            <li class="statement__row">
-              <p class="statement__line">
-                <b class="statement__initial">{initial}</b>
-                <Fragment set:html={html} />
-              </p>
-            </li>
-          );
-        })}
+        {block.lines.map(render).map((html) => (
+          <li class="statement__row">
+            <p class="statement__line" set:html={html} />
+          </li>
+        ))}
       </ul>
     ) : (
       <div class="statement statement--manifesto">
@@ -62,51 +51,34 @@ const initialOf = (line: string) => {
     color: var(--color-text-strong);
   }
 
-  /* Acrostic: one sentence per hairline-ruled row, the first letter bold. */
+  /* Acrostic: a short verse, one line each, no rules and nothing marking the first letters. */
   .statement--acrostic {
+    display: grid;
+    gap: var(--space-2xs);
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-border);
-  }
-  .statement__row {
-    padding-block: var(--space-s-m);
-    border-bottom: 1px solid var(--color-border);
-    transition: border-color var(--dur) var(--ease);
-  }
-  .statement__row:hover {
-    border-bottom-color: var(--color-border-strong);
   }
   .statement--acrostic .statement__line {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--step-2);
-    font-weight: 380;
+    font-size: var(--step-1);
+    font-weight: 400;
     line-height: var(--leading-heading);
     letter-spacing: var(--tracking-heading);
-    color: var(--color-heading);
+    color: var(--color-text-muted);
     text-wrap: balance;
-    transition: translate var(--dur) var(--ease-out);
-  }
-  .statement__initial {
-    font-weight: 800;
-    color: var(--color-text-strong);
-  }
-  .statement__wrap--left .statement__row:hover .statement__line {
-    translate: 0.2em 0;
   }
 
   /* Manifesto: display statements between hairlines. */
   .statement--manifesto {
-    padding-block: var(--space-l);
-    border-top: 2px solid var(--color-text-strong);
     display: grid;
-    gap: var(--space-2xs);
+    gap: var(--space-3xs);
   }
   .statement--manifesto .statement__line {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--step-4);
+    font-size: var(--step-3);
     font-weight: 600;
     line-height: var(--leading-title);
     letter-spacing: var(--tracking-display);

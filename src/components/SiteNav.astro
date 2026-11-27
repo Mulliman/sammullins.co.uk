@@ -34,7 +34,7 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
   <details class="nav nav--mobile">
     <summary>
       <span class="nav__burger" aria-hidden="true" />
-      <span>Menu</span>
+      <span class="visually-hidden">Menu</span>
     </summary>
     <nav aria-label="Main (mobile)">
       <ul>
@@ -116,6 +116,9 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     font-family: var(--font-display);
     font-size: var(--step--1);
     font-weight: var(--weight-strong);
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
     padding: var(--space-2xs);
   }
   .nav--mobile summary::-webkit-details-marker {

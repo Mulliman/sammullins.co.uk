@@ -14,13 +14,12 @@ site:
     - { label: LinkedIn, handle: sam-mullins, href: 'https://www.linkedin.com/in/sam-mullins-31471425/' }
     # Bluesky: add once Sam confirms the handle (ticket 1202)
     # - { label: Bluesky, handle: "", href: "https://bsky.app/profile/" }
-  # Not shown since ticket 206 (the footer is one sign-off line now; this copy lives on the home page).
-  # Kept until Sam has reviewed the 508 draft of the "What do I do?" text, then delete it and its schema field.
+  # The footer boxes (509-symmetry): the logo, these two, then "Get in touch" from socials.
   footerCards:
     - title: What do I do?
-      body: 'I lead a team of Sitecore developers at Allianz Technology, and I build things for the web in C# and TypeScript. Lately that means a lot of work with AI coding agents. I also release open source projects and take photos.'
+      body: "I'm a web developer and Sitecore team lead. I build websites and applications in C# and TypeScript, and lately a lot of that is with AI coding agents. I also take photos."
     - title: Free stuff!
-      body: 'Most of what I build ends up open source on [GitHub](https://github.com/Mulliman). Older projects live in the [archive](/archive/).'
+      body: 'Most of what I build outside work is free, and much of it is open source: Umbraco packages, Capture One plugins and games. [See my software](/software/), or browse the code on [GitHub](https://github.com/Mulliman).'
   # Ticket 703: GoatCounter site code. public/js/count.js must exist (the build checks); see _docs/analytics.md.
   analytics:
     goatcounter: sammullins

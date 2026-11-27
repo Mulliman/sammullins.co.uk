@@ -245,17 +245,29 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
       transform var(--dur) var(--ease),
       visibility 0s;
   }
-  /* Phones: the toggles and menu leave no room to centre the logo, so both logos sit on the left. */
+  /* Phones (509-symmetry): the logo stays centred, with the theme toggle on the left and the menu
+     (an icon; "Menu" is for screen readers) on the right. Both logos sit in the middle column. The
+     back-to-top arrow is left out: there is no room for it beside a centred logo. */
   @media (max-width: 40rem) {
-    .site-header__inner {
-      grid-template-columns: 1fr auto;
+    .site-header__end {
+      display: contents;
     }
-    .site-logo--stacked {
+    .site-header__tools {
       grid-column: 1;
+      grid-row: 1;
       justify-self: start;
     }
-    .site-header__end {
+    .site-header__end > :global(.nav--mobile) {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+    }
+    .site-logo--horizontal {
       grid-column: 2;
+      justify-self: center;
+    }
+    .site-header__top {
+      display: none;
     }
   }
   @media (max-width: 30rem) {
@@ -267,14 +279,6 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
     }
     .site-logo--horizontal {
       height: 1.5rem;
-    }
-    /* Small phones: with the back-to-top arrow in, the controls only fit beside the logo if they touch.
-       Each is a 44px target with its own padding, so they still read as separate. */
-    .site-header__end {
-      gap: 0;
-    }
-    .site-header__top {
-      margin-left: 0;
     }
   }
 </style>

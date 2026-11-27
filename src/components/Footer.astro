@@ -1,25 +1,25 @@
 ---
 /**
- * Site footer (tickets 203, 206): one sign-off line, the nav, socials (rel="me"), the agent view toggle
- * (passed in by entry pages through the `actions` slot; moved back from the header in ticket 209), the colophon slot
- * and the copyright. The bio cards are gone (ticket 206): that copy lives on the home page (508).
- * Ticket 210: a left-aligned grid (brand, pages, profiles) over a meta row, instead of a centred stack.
+ * Site footer (tickets 203, 206, 209, 210; 509-symmetry).
+ *
+ * 509-symmetry: the four boxes of the old site come back (Sam, 27 November 2026: "I've had 4 boxes for
+ * ages, and I want to keep that lineage"): the logo, "What do I do?", "Free stuff!" and "Get in touch",
+ * one row of four on a desktop, two by two on a tablet and one column on a phone. The nav sits centred
+ * above them, and the colophon, agent view toggle and copyright centred below. No rules: the boxes are
+ * panels a shade off the footer colour.
  */
 import Logo from './Logo.astro';
 import { getSite } from '../lib/content';
+import { md } from '../lib/markdown';
 
 const site = await getSite();
 const year = new Date().getFullYear();
+// The middle two boxes ("What do I do?" and "Free stuff!") come from site.yaml.
+const cards = site.footerCards.slice(0, 2).map((c) => ({ title: c.title, textHtml: md(c.body) }));
 ---
 
 <footer class="site-footer surface-inverse">
   <div class="container site-footer__inner">
-    <div class="site-footer__brand">
-      <a href="/" class="footer-logo" aria-label={`${site.name}, home`}>
-        <Logo lockup="stacked" />
-      </a>
-      <p class="signoff">{site.tagline}</p>
-    </div>
     <nav aria-label="Footer" class="footer-nav">
       <ul>
         {[...site.nav, ...site.footerLinks].map((item) => (
@@ -29,16 +29,39 @@ const year = new Date().getFullYear();
         ))}
       </ul>
     </nav>
-    <ul class="socials" aria-label="Find me">
-      {site.socials.map((s) => (
-        <li>
-          <a href={s.href} rel="me noopener">
-            <span class="socials__label">{s.label}</span>
-            <span class="socials__handle">{s.handle}</span>
-          </a>
-        </li>
+
+    <div class="footer-boxes">
+      <div class="footer-box footer-box--brand">
+        <a href="/" class="footer-logo" aria-label={`${site.name}, home`}>
+          <Logo lockup="stacked" />
+        </a>
+        <p class="footer-box__where">{site.tagline} in Bournemouth, UK</p>
+      </div>
+      {cards.map(({ title, textHtml }, i) => (
+        <section class="footer-box" aria-labelledby={`footer-box-${i}`}>
+          <h2 class="footer-box__title" id={`footer-box-${i}`}>
+            {title}
+          </h2>
+          <div class="footer-box__text" set:html={textHtml} />
+        </section>
       ))}
-    </ul>
+      <section class="footer-box" aria-labelledby="footer-touch">
+        <h2 class="footer-box__title" id="footer-touch">
+          Get in touch
+        </h2>
+        <ul class="socials">
+          {site.socials.map((s) => (
+            <li>
+              <a href={s.href} rel="me noopener">
+                <span class="socials__label">{s.label}</span>
+                <span class="socials__handle">{s.handle}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
     <div class="site-footer__meta">
       <slot name="colophon" />
       <slot name="actions" />
@@ -52,104 +75,141 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    padding-block: var(--space-xl) var(--space-m);
+    padding-block: var(--space-l) var(--space-m);
     margin-top: auto;
   }
   .site-footer__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-l) var(--space-m);
-    grid-template-areas:
-      'brand'
-      'nav'
-      'socials'
-      'meta'
-      'copy';
+    gap: var(--space-m-l);
+    justify-items: center;
+    text-align: center;
   }
-  @media (min-width: 48rem) {
-    .site-footer__inner {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-areas:
-        'brand nav socials'
-        'meta meta meta'
-        'copy copy copy';
-    }
-  }
-  .site-footer__brand {
-    grid-area: brand;
+
+  .footer-nav ul {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-xs);
-  }
-  .footer-logo {
-    display: block;
-    width: 7.5rem;
-  }
-  .footer-logo :global(svg) {
-    width: 100%;
-    height: auto;
-  }
-  .signoff {
-    color: var(--color-text-inverse-muted);
-    font-size: var(--step--1);
-  }
-  .footer-nav {
-    grid-area: nav;
-  }
-  .socials {
-    grid-area: socials;
-  }
-  .footer-nav ul,
-  .socials {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2xs) var(--space-m);
     list-style: none;
+    margin: 0;
     padding: 0;
-    display: grid;
-    gap: var(--space-2xs);
-    align-content: start;
-  }
-  @media (max-width: 47.99rem) {
-    .footer-nav ul,
-    .socials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2xs) var(--space-m);
-    }
   }
   .footer-nav a,
   .socials a {
     font-family: var(--font-display);
-    font-size: var(--step--1);
     font-weight: 500;
     text-decoration: none;
     color: var(--color-text-inverse);
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
     transition: background-size var(--dur) var(--ease-out);
   }
+  .footer-nav a {
+    font-size: var(--step-0);
+  }
   .footer-nav a:hover,
   .socials a:hover {
     background-size: 100% 1px;
   }
+
+  /* The four boxes: 1 x 4, 2 x 2, then one column. */
+  .footer-boxes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+    width: 100%;
+  }
+  @media (min-width: 36rem) {
+    .footer-boxes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .footer-boxes {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .footer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-m) var(--space-s-m);
+    border-radius: var(--radius-m);
+    background: var(--color-inverse-panel);
+  }
+  /* Titles line up across a row; the logo box centres its contents. */
+  .footer-box:not(.footer-box--brand) {
+    justify-content: flex-start;
+  }
+  .footer-box--brand {
+    gap: var(--space-s);
+  }
+  .footer-logo {
+    display: block;
+    width: 8rem;
+    color: var(--color-text-inverse);
+  }
+  .footer-logo :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .footer-box__where {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-text-inverse-muted);
+  }
+  .footer-box__title {
+    margin: 0;
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--color-inverse-heading);
+  }
+  .footer-box__text {
+    max-width: 24em;
+    font-size: var(--step--1);
+    line-height: var(--leading-small);
+    color: var(--color-text-inverse-muted);
+  }
+  .footer-box__text :global(p) {
+    margin: 0;
+  }
+  .footer-box__text :global(p + p) {
+    margin-top: 0.6em;
+  }
+  .footer-box__text :global(a) {
+    color: var(--color-text-inverse);
+  }
+
+  .socials {
+    display: grid;
+    gap: var(--space-3xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   .socials a {
     display: inline-flex;
     gap: 0.4em;
+    font-size: var(--step--1);
   }
   .socials__handle {
     color: var(--color-text-inverse-muted);
   }
+
   .site-footer__meta {
-    grid-area: meta;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-s);
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--color-inverse-rule);
+    justify-content: center;
+    gap: var(--space-s) var(--space-m);
+  }
+  .site-footer__meta > :global(*) {
+    justify-content: center;
   }
   .copyright {
-    grid-area: copy;
-    margin-top: calc(-1 * var(--space-s));
+    margin: calc(-1 * var(--space-xs)) 0 0;
     font-size: var(--step--1);
     color: var(--color-text-inverse-muted);
   }

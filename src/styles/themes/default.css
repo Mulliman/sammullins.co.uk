@@ -20,6 +20,7 @@
     --color-bg: #ffffff;
     --color-bg-muted: #f2f2f2;
     --color-bg-inverse: #1c1c1c;
+    --color-inverse-panel: #111111; /* the footer boxes (509-symmetry) */
     --color-surface: #ffffff;
     --color-surface-inverse: #262626;
     --color-text: #4d4d4d; /* body copy, 8.4:1 on bg (the original used #666) */
@@ -64,6 +65,7 @@
     --color-on-media-muted: #c8c8c8;
     --color-media-scrim: rgb(0 0 0 / 0.85); /* the blurred hero's text panel */
     --color-media-scrim-soft: rgb(0 0 0 / 0.72); /* image card caption bar */
+    --color-backdrop: rgb(0 0 0 / 0.35); /* behind a popover on a phone (509-symmetry) */
     --color-media-backdrop: rgb(0 0 0 / 0.92); /* the lightbox */
     --color-media-control: rgb(255 255 255 / 0.1);
     --color-media-control-hover: rgb(255 255 255 / 0.2);
@@ -107,6 +109,7 @@
       --color-bg: #121212;
       --color-bg-muted: #1b1b1b;
       --color-bg-inverse: #000000;
+      --color-inverse-panel: #161616;
       --color-surface: #1f1f1f;
       --color-surface-inverse: #262626;
       --color-text: #cfcfcf;
@@ -139,6 +142,7 @@
     --color-bg: #121212;
     --color-bg-muted: #1b1b1b;
     --color-bg-inverse: #000000;
+    --color-inverse-panel: #161616;
     --color-surface: #1f1f1f;
     --color-surface-inverse: #262626;
     --color-text: #cfcfcf;

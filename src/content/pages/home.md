@@ -6,20 +6,19 @@ cover:
   alt: "Sam Mullins logo"
 authorship: "sam-ai"
 blocks:
-  # Ticket 509: n1 "Monochrome Folio" won the design round (Sam, 27 November 2026). Bands alternate
-  # muted and default, and their layouts flow between left, right and centred.
+  # 509-symmetry (Sam, 27 November 2026): every band has a centred heading and at most a two-line
+  # centred subtitle; longer text is left-aligned in a narrow column; components are balanced; no
+  # hairline rules. Bands alternate muted and default.
   - type: "hero"
     variant: "plain"
-    align: "left"
+    align: "center"
     heading: "~~Jack of all trades?~~ Sam of several software skills"
     subheading: "I'm Sam, a web developer in Bournemouth."
-    mark: true
     ctas:
       - label: "See what I've built"
         href: "/software/"
       - label: "Read the articles"
         href: "/articles/"
-  # Sam: the hero's paragraph was too solid. The 2011 question gets its own band, as a pull quote.
   - type: "section"
     surface: "default"
     blocks:
@@ -27,38 +26,38 @@ blocks:
         variant: "display"
         text: "What is wrong with being a jack of all trades?"
         attribution: "My website, in 2011"
-      - type: "intro"
-        lead: |-
+      - type: "prose"
+        markdown: |-
           I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms.
 
           Fifteen years on, with AI changing how software gets made, the question deserves a better answer.
   - type: "section"
     surface: "muted"
     blocks:
-      - type: "split"
-        ratio: "2:1"
-        columns:
-          - - type: "intro"
-              heading: "First, a C# CMS specialist"
-              align: "left"
-              lead: "I spent my first eleven years at Redweb, starting as a student developer, going deep on C# and web content management. I built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
-          - - type: "logoWall"
-              variant: "badges"
-              logos:
-                - name: "Sitecore"
-                  logo: "../../assets/media/badges/sitecore.avif"
-                  href: "https://www.sitecore.com/"
-                  details: "Sitecore is an enterprise content management and digital experience platform, built on .NET. Large organisations use it to run big, personalised websites."
-                - name: "Umbraco"
-                  logo: "../../assets/media/badges/umbraco.avif"
-                  href: "https://umbraco.com/"
-                  details: "Umbraco is a free, open source content management system, built on .NET. It's popular with agencies, and has a friendly community behind it."
+      - type: "intro"
+        heading: "First, a C# CMS specialist"
+        lead: "My first eleven years were at Redweb, going deep on C# and web content management."
+      - type: "logoWall"
+        variant: "badges"
+        logos:
+          - name: "Sitecore"
+            logo: "../../assets/media/badges/sitecore.avif"
+            href: "https://www.sitecore.com/"
+            details: "Sitecore is an enterprise content management and digital experience platform, built on .NET. Large organisations use it to run big, personalised websites."
+          - name: "Umbraco"
+            logo: "../../assets/media/badges/umbraco.avif"
+            href: "https://umbraco.com/"
+            details: "Umbraco is a free, open source content management system, built on .NET. It's popular with agencies, and has a friendly community behind it."
+      - type: "prose"
+        markdown: "I started there as a student developer, built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
   - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
         heading: "Working with clients"
-        lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
+        lead: "Agency work put me in front of clients, both in the development team and on site as a consultant."
+      - type: "prose"
+        markdown: "I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
       # Sam to write one or two sentences per client on his involvement (27 November 2026).
       - type: "logoWall"
         logos:
@@ -103,33 +102,33 @@ blocks:
     blocks:
       - type: "intro"
         heading: "Then into enterprise"
-        align: "left"
-        lead: "In 2021 I joined LV= in-house. My role has moved twice since, under TUPE, and each organisation has been bigger than the last."
+        lead: "In 2021 I joined LV= in-house. Two TUPE transfers later, each organisation has been bigger than the last."
+      # Sam: just the marks (the LV= heart, the Allianz and Tata symbols), with the names as text.
       - type: "figures"
         variant: "ladder"
+        align: "center"
         items:
           - title: "LV="
-            logo: "../../assets/media/employers/lv.avif"
+            logo: "../../assets/media/employers/lv-mark.avif"
             prefix: "About"
             value: "1,500"
             suffix: "colleagues"
             text: "I joined as a senior analyst developer in 2021, and was the main developer on the ElectriX website, with Sitecore behind it and React in front."
           - title: "Allianz"
-            logo: "../../assets/media/employers/allianz.avif"
+            logo: "../../assets/media/employers/allianz-mark.avif"
             prefix: "Over"
             value: "150,000"
             suffix: "colleagues"
             text: "My role moved to Allianz Technology under TUPE in 2023, where I was the Sitecore team lead."
           - title: "TCS"
-            logo: "../../assets/media/employers/tcs.avif"
+            logo: "../../assets/media/employers/tata-mark.avif"
             prefix: "Over"
             value: "500,000"
             suffix: "colleagues"
-            text: "My role moved to TCS under TUPE in 2025, and I carried on leading the team on the Allianz account."
+            text: "My role moved to Tata Consultancy Services under TUPE in 2025, and I carried on leading the team on the Allianz account."
   - type: "section"
     surface: "default"
     blocks:
-      # Sam (27 November 2026): centred, with three columns underneath, like the original site.
       - type: "intro"
         heading: "Where my skills kept broadening"
         lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
@@ -148,28 +147,27 @@ blocks:
   - type: "section"
     surface: "muted"
     blocks:
-      - type: "split"
-        ratio: "1:2"
-        sticky: true
-        columns:
-          - - type: "intro"
-              variant: "editorial"
-              heading: "And then a team lead"
-              align: "left"
-              lead: "Leading a team turned out to be a trade of its own."
-          - - type: "indexList"
-              variant: "ruled"
-              items:
-                - icon: "users"
-                  text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
-                - icon: "layers"
-                  text: "Running several streams of work at once without dropping any."
-                - icon: "translate"
-                  text: "Translating what the business needs into work the developers can ship."
-                - icon: "network"
-                  text: "Coordinating changes that crossed teams, environments and workstreams."
-                - icon: "iteration"
-                  text: "Acting as Scrum Master for almost a year."
+      - type: "intro"
+        heading: "And then a team lead"
+        lead: "Leading a team turned out to be a trade of its own."
+      - type: "indexList"
+        variant: "columns"
+        items:
+          - title: "Mentoring"
+            icon: "users"
+            text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
+          - title: "Several streams"
+            icon: "layers"
+            text: "Running several streams of work at once without dropping any."
+          - title: "Translating"
+            icon: "translate"
+            text: "Translating what the business needs into work the developers can ship."
+          - title: "Coordinating"
+            icon: "network"
+            text: "Coordinating changes that crossed teams, environments and workstreams."
+          - title: "Scrum Master"
+            icon: "iteration"
+            text: "Acting as Scrum Master for almost a year."
   - type: "section"
     surface: "default"
     blocks:
@@ -231,9 +229,11 @@ blocks:
   - type: "section"
     surface: "muted"
     blocks:
+      - type: "intro"
+        heading: "Getting ready for the agentic era"
+        lead: "It started with local models at home, and ended with an AI-first team at work."
       - type: "split"
         ratio: "1:2"
-        reverseOnMobile: true
         columns:
           - - type: "logoWall"
               variant: "badges"
@@ -241,11 +241,9 @@ blocks:
                 - name: "Claude Certified Architect, Foundations badge on Credly"
                   logo: "../../assets/media/badges/cca-f.avif"
                   href: "https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url"
-          - - type: "intro"
-              heading: "Getting ready for the agentic era"
-              align: "left"
-              lead: |-
-                It started at home: running local models such as Qwen, generating images with ComfyUI and trying local agents with Hermes. Then I moved on to writing real application code with Claude Code, GitHub Copilot, Antigravity and OpenCode. This site is one of those experiments, and every page says whether I wrote it alone or with AI.
+          - - type: "prose"
+              markdown: |-
+                At home I ran local models such as Qwen, generated images with ComfyUI and tried local agents with Hermes. Then I moved on to writing real application code with Claude Code, GitHub Copilot, Antigravity and OpenCode. This site is one of those experiments, and every page says whether I wrote it alone or with AI.
 
                 At work, our tech lead and I took what I'd learned and moved the team to an AI-first workflow, with people reviewing the work and a shared marketplace of Claude skills.
 
@@ -255,18 +253,19 @@ blocks:
     blocks:
       - type: "intro"
         heading: "So, fifteen years later"
-        lead: |-
-          Coding agents now do more and more of the narrow, specialist work.
-
-          What they can't do is know enough of every trade to point them at the right problem, and spot when they've got it wrong.
+      - type: "prose"
+        markdown: |-
+          Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem, and spot when they've got it wrong.
 
           So in a world changing this fast, being capable across many trades is now the game.
+      # Sam: a subtle separation, Jack struck through again as it scrolls in.
       - type: "statement"
         variant: "manifesto"
         align: "center"
         lines:
           - "But I don't want to be ~~Jack~~."
           - "I just want to be Sam."
+      # Sam: the S, A and M lines are plainish; don't telegraph the pun.
       - type: "statement"
         variant: "acrostic"
         align: "center"
@@ -285,21 +284,17 @@ blocks:
   - type: "section"
     surface: "muted"
     blocks:
-      - type: "split"
-        ratio: "1:2"
-        sticky: true
-        columns:
-          - - type: "intro"
-              heading: "What I've been up to recently"
-              align: "left"
-              cta:
-                label: "Read all my articles"
-                href: "/articles/"
-          - - type: "listing"
-              variant: "list"
-              query:
-                from: "articles"
-                # Every article is archived until the launch articles land; newest first either way.
-                archived: "include"
-                limit: 3
+      - type: "intro"
+        heading: "What I've been up to recently"
+      - type: "listing"
+        variant: "grid"
+        query:
+          from: "articles"
+          # Every article is archived until the launch articles land; newest first either way.
+          archived: "include"
+          limit: 3
+      - type: "intro"
+        cta:
+          label: "Read all my articles"
+          href: "/articles/"
 ---

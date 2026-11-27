@@ -40,14 +40,10 @@ const { heading, lead, cta, secondaryCta, align, variant, surface } = block;
   .intro--center {
     text-align: center;
   }
-  /* Phones (ticket 210): a centred intro whose lead runs to several lines reads left-aligned. */
-  @media (max-width: 39.99rem) {
-    .intro--center:has(.intro__lead) {
-      text-align: left;
-    }
-    .intro--center:has(.intro__lead) .intro__cta {
-      justify-content: flex-start;
-    }
+  /* 509-symmetry: a centred intro stays centred on phones. Its lead is a short subtitle (two lines at
+     most on a desktop); longer text goes in a left-aligned prose block below it. */
+  .intro--center .intro__lead {
+    text-wrap: balance;
   }
   .intro--left,
   .intro--left .intro__heading,
@@ -78,10 +74,7 @@ const { heading, lead, cta, secondaryCta, align, variant, surface } = block;
     color: var(--color-heading);
     text-wrap: balance;
   }
-  .intro--editorial.intro--left .intro__lead {
-    padding-left: var(--space-m);
-    border-left: 2px solid var(--color-text-strong);
-  }
+
   .intro--center .intro__lead {
     max-width: 36em;
     margin-inline: auto;

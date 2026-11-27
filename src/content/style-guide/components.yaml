@@ -1048,10 +1048,11 @@ figures-ladder-muted:
   block:
     type: figures
     variant: ladder
+    align: center
     surface: muted
     items:
       - title: LV=
-        logo: ../../assets/media/employers/lv.avif
+        logo: ../../assets/media/employers/lv-mark.avif
         prefix: About
         value: "1,500"
         suffix: colleagues
@@ -1072,6 +1073,7 @@ figures-columns-inverse:
   block:
     type: figures
     variant: columns
+    align: left
     surface: inverse
     items:
       - title: Static output
