@@ -62,6 +62,19 @@ export const BLOCK_GUIDE: Record<Block['type'], { title: string; summary: string
     summary:
       'A row that is closed by default and opens to show its blocks, with optional badges and a done state. Works without JS.',
   },
+  figures: {
+    title: 'Figures',
+    summary: 'Oversized editorial metrics side by side, or a ladder with progressive weight and scale bars.',
+  },
+  indexList: {
+    title: 'Index list',
+    summary: 'A hairline-ruled editorial list with either two-column titled rows or a numbered tabular index rail.',
+  },
+  statement: {
+    title: 'Statement',
+    summary:
+      'Display-scale editorial sentences, either framed between rules or paired with vertical acrostic initials.',
+  },
 };
 
 /** The guide entry for a block type. Throws for a type with no description. */

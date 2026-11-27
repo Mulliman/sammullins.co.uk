@@ -40,7 +40,7 @@ const items: CardData[] = [
 {items.length > 0 && (
   <Section surface={block.surface} nested={nested}>
     {block.heading && <h2 class="cards__heading">{block.heading}</h2>}
-    <ul class:list={['cards__grid', `cards--cols-${block.columns}`]}>
+    <ul class:list={['cards__grid', `cards--cols-${block.columns}`, `cards--variant-${block.variant}`]}>
       {items.map((item) => (
         <li class="cards__item">
           <Card
@@ -87,9 +87,9 @@ const items: CardData[] = [
     .cards__grid:not(.cards--cols-1) {
       --cols: 2;
     }
-    /* Two-up image cards stop at the narrow column, or they become posters; text cards use the full
-       container, so a page's edges don't jump between bands. */
-    .cards__grid.cards--cols-2:has(.card__media) {
+    /* Two-up image cards stop at the narrow column, or they become posters; text and row cards use
+       the full container, so a page's edges don't jump between bands. */
+    .cards__grid.cards--cols-2:has(.card__media):not(.cards--variant-row) {
       max-width: var(--container-narrow);
       margin-inline: auto;
     }
@@ -100,7 +100,8 @@ const items: CardData[] = [
       max-width: var(--container-narrow);
       margin-inline: auto;
     }
-    :global(.section:has(.cards--cols-3, .cards--cols-4)) .cards__grid:has(> .cards__item:only-child) {
+    :global(.section:has(.cards--cols-3, .cards--cols-4, .cards--variant-row))
+      .cards__grid:has(> .cards__item:only-child) {
       max-width: none;
     }
   }

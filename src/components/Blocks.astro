@@ -24,6 +24,9 @@ import BodySection, { type TocItem } from '../blocks/Body.astro';
 import SectionBlock from '../blocks/SectionBlock.astro';
 import Steps from '../blocks/Steps.astro';
 import Disclosure from '../blocks/Disclosure.astro';
+import Figures from '../blocks/Figures.astro';
+import IndexList from '../blocks/IndexList.astro';
+import Statement from '../blocks/Statement.astro';
 
 interface Props {
   blocks: Block[];
@@ -78,6 +81,12 @@ function assertNever(x: never): never {
       return <Split block={block} Content={Content} nested={nested} />;
     case 'steps':
       return <Steps block={block} nested={nested} />;
+    case 'figures':
+      return <Figures block={block} nested={nested} />;
+    case 'indexList':
+      return <IndexList block={block} nested={nested} />;
+    case 'statement':
+      return <Statement block={block} nested={nested} />;
     case 'disclosure':
       return <Disclosure block={block} nested={nested} />;
     case 'section':

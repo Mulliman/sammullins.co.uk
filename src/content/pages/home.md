@@ -6,9 +6,8 @@ cover:
   alt: "Sam Mullins logo"
 authorship: "sam-ai"
 blocks:
-  # Ticket 509, following Sam's sketch (_sketches/Homepage.excalidraw, 26 November 2026): one band per
-  # stage, from the 2011 question to the answer. Bands alternate muted and default; the last one stays
-  # light because the footer is already dark.
+  # Editorial feature layout: asymmetric splits, sticky headings, oversized scale figures, hairline
+  # index lists and the closing S / A / M acrostic statement.
   - type: "hero"
     variant: "plain"
     align: "left"
@@ -40,80 +39,106 @@ blocks:
   - type: "section"
     surface: "default"
     blocks:
-      - type: "intro"
-        heading: "Working with clients"
-        lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
-      - type: "logoWall"
-        logos:
-          - name: "Action on Hearing Loss (now RNID)"
-            logo: "../../assets/media/uknim4iy/ahl.avif"
-          - name: "Royal College of Surgeons"
-            logo: "../../assets/media/xxtpnjun/rcs.avif"
-          - name: "RNLI"
-            logo: "../../assets/media/uzbdm1ky/rnli.avif"
-          - name: "Walk Your Socks Off for Guide Dogs"
-            logo: "../../assets/media/dqbioh02/wyso.avif"
-          - name: "Mace"
-            logo: "../../assets/media/ynlforjt/mace.avif"
-          - name: "Channel 4"
-            logo: "../../assets/media/nxklurtj/c4.avif"
-          - name: "Clarion Housing"
-            logo: "../../assets/media/gs2pmkam/clarion.avif"
-          - name: "City & Guilds"
-            logo: "../../assets/media/afhnrqox/cg.avif"
-          - name: "haart"
-            logo: "../../assets/media/towdfgyf/haart.avif"
-          - name: "Farrow & Ball"
-            logo: "../../assets/media/ev5bh0we/fab.avif"
-          - name: "Healthspan"
-            logo: "../../assets/media/ob1pwtpo/hs.avif"
-          - name: "Insight Vacations"
-            logo: "../../assets/media/pzupnmbz/iv.avif"
+      - type: "split"
+        ratio: "1:2"
+        sticky: true
+        columns:
+          - - type: "intro"
+              heading: "Working with clients"
+              align: "left"
+              lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
+          - - type: "logoWall"
+              variant: "grid"
+              logos:
+                - name: "Action on Hearing Loss (now RNID)"
+                  logo: "../../assets/media/uknim4iy/ahl.avif"
+                - name: "Royal College of Surgeons"
+                  logo: "../../assets/media/xxtpnjun/rcs.avif"
+                - name: "RNLI"
+                  logo: "../../assets/media/uzbdm1ky/rnli.avif"
+                - name: "Walk Your Socks Off for Guide Dogs"
+                  logo: "../../assets/media/dqbioh02/wyso.avif"
+                - name: "Mace"
+                  logo: "../../assets/media/ynlforjt/mace.avif"
+                - name: "Channel 4"
+                  logo: "../../assets/media/nxklurtj/c4.avif"
+                - name: "Clarion Housing"
+                  logo: "../../assets/media/gs2pmkam/clarion.avif"
+                - name: "City & Guilds"
+                  logo: "../../assets/media/afhnrqox/cg.avif"
+                - name: "haart"
+                  logo: "../../assets/media/towdfgyf/haart.avif"
+                - name: "Farrow & Ball"
+                  logo: "../../assets/media/ev5bh0we/fab.avif"
+                - name: "Healthspan"
+                  logo: "../../assets/media/ob1pwtpo/hs.avif"
+                - name: "Insight Vacations"
+                  logo: "../../assets/media/pzupnmbz/iv.avif"
   - type: "section"
     surface: "muted"
     blocks:
       - type: "intro"
         heading: "Then into enterprise"
+        align: "left"
         lead: "In 2021 I moved in-house, and each organisation since has been bigger than the last."
-      - type: "cards"
-        variant: "text"
-        columns: 3
+      - type: "figures"
+        variant: "ladder"
         items:
           - title: "LV="
-            text: "About 1,500 colleagues. Senior analyst developer from 2021, and the main developer on the ElectriX website, with Sitecore behind it and React in front."
+            prefix: "About"
+            value: "1,500"
+            suffix: "colleagues"
+            text: "Senior analyst developer from 2021, and the main developer on the ElectriX website, with Sitecore behind it and React in front."
           - title: "Allianz"
-            text: "Over 150,000 colleagues. Sitecore team lead at Allianz Technology from 2023."
+            prefix: "Over"
+            value: "150,000"
+            suffix: "colleagues"
+            text: "Sitecore team lead at Allianz Technology from 2023."
           - title: "TCS"
-            text: "Over 500,000 colleagues. My role moved to TCS under TUPE in 2025, and I carried on leading the team on the Allianz account."
+            prefix: "Over"
+            value: "500,000"
+            suffix: "colleagues"
+            text: "My role moved to TCS under TUPE in 2025, and I carried on leading the team on the Allianz account."
   - type: "section"
     surface: "default"
     blocks:
-      - type: "intro"
-        heading: "Where my skills kept broadening"
-        lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
-      - type: "cards"
-        variant: "text"
-        columns: 3
-        items:
-          - title: "Front end"
-            text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
-          - title: "DevOps"
-            text: "Azure DevOps pipelines for dependable builds and automated releases."
-          - title: "Infrastructure"
-            text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
+      - type: "split"
+        ratio: "1:2"
+        sticky: true
+        columns:
+          - - type: "intro"
+              heading: "Where my skills kept broadening"
+              align: "left"
+              lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
+          - - type: "indexList"
+              variant: "ruled"
+              items:
+                - title: "Front end"
+                  text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
+                - title: "DevOps"
+                  text: "Azure DevOps pipelines for dependable builds and automated releases."
+                - title: "Infrastructure"
+                  text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
   - type: "section"
     surface: "muted"
     blocks:
-      - type: "intro"
-        heading: "And then a team lead"
-        lead: "Leading a team turned out to be a trade of its own."
-      - type: "prose"
-        markdown: |-
-          - Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths.
-          - Running several streams of work at once without dropping any.
-          - Translating what the business needs into work the developers can ship.
-          - Coordinating changes that crossed teams, environments and workstreams.
-          - Acting as Scrum Master for almost a year.
+      - type: "split"
+        ratio: "1:2"
+        sticky: true
+        columns:
+          - - type: "intro"
+              variant: "editorial"
+              heading: "And then a team lead"
+              align: "left"
+              lead: "Leading a team turned out to be a trade of its own."
+          - - type: "indexList"
+              variant: "numbered"
+              items:
+                - text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
+                - text: "Running several streams of work at once without dropping any."
+                - text: "Translating what the business needs into work the developers can ship."
+                - text: "Coordinating changes that crossed teams, environments and workstreams."
+                - text: "Acting as Scrum Master for almost a year."
   - type: "section"
     surface: "default"
     blocks:
@@ -142,8 +167,8 @@ blocks:
               alt: ""
               decorative: true
       - type: "cards"
-        variant: "full"
-        columns: 4
+        variant: "row"
+        columns: 2
         items:
           - title: "The Imposter"
             text: "A party game for four to seven people, played on their phones. Each round one player is secretly the imposter, and has to work out the secret word without being caught."
@@ -174,6 +199,7 @@ blocks:
               alt: ""
               decorative: true
       - type: "intro"
+        align: "left"
         cta:
           label: "See all my software"
           href: "/software/"
@@ -203,14 +229,16 @@ blocks:
     blocks:
       - type: "intro"
         heading: "So, fifteen years later"
-        lead: |-
-          Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem and spot when they've got it wrong. So in a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam.
-
-          Skilled specialist shaping, scaling, and securing sites and software.
-
-          Anthropic-accredited AI ace automating actions with agents.
-
-          Modest man, mildly mortified marketing my mediocre merits.
+        align: "left"
+        lead: "Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem and spot when they've got it wrong. So in a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam."
+      - type: "statement"
+        variant: "acrostic"
+        lines:
+          - "Skilled specialist shaping, scaling, and securing sites and software."
+          - "Anthropic-accredited AI ace automating actions with agents."
+          - "Modest man, mildly mortified marketing my mediocre merits."
+      - type: "intro"
+        align: "left"
         cta:
           label: "Find me on LinkedIn"
           href: "https://www.linkedin.com/in/sam-mullins-31471425/"
@@ -221,17 +249,21 @@ blocks:
   - type: "section"
     surface: "muted"
     blocks:
-      - type: "intro"
-        heading: "What I've been up to recently"
-      - type: "listing"
-        variant: "grid"
-        query:
-          from: "articles"
-          # Every article is archived until the launch articles land; newest first either way.
-          archived: "include"
-          limit: 3
-      - type: "intro"
-        cta:
-          label: "Read all my articles"
-          href: "/articles/"
+      - type: "split"
+        ratio: "1:2"
+        sticky: true
+        columns:
+          - - type: "intro"
+              heading: "What I've been up to recently"
+              align: "left"
+              cta:
+                label: "Read all my articles"
+                href: "/articles/"
+          - - type: "listing"
+              variant: "list"
+              query:
+                from: "articles"
+                # Every article is archived until the launch articles land; newest first either way.
+                archived: "include"
+                limit: 3
 ---

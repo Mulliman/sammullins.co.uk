@@ -93,8 +93,19 @@ intro-default-left:
   title: Default surface, left aligned
   block:
     type: intro
+    variant: default
     heading: Left aligned on the default surface
     lead: "A **lead paragraph** that is larger than body text, with a [link](https://example.com/)."
+    align: left
+    surface: default
+
+intro-editorial-left:
+  title: Editorial variant, pull-quote deck
+  block:
+    type: intro
+    variant: editorial
+    heading: Editorial chapter heading
+    lead: A short, punchy lead set in the display face beside a vertical rule.
     align: left
     surface: default
 
@@ -403,6 +414,28 @@ cards-text-manual:
       - title: Fourth
         text: A card with no link.
 
+cards-row-manual:
+  title: Row cards, compact horizontal showcase
+  block:
+    type: cards
+    heading: Row cards
+    variant: row
+    columns: 2
+    surface: default
+    items:
+      - title: Horizontal card one
+        text: Compact thumbnail on the left with the full summary beside it.
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: A portrait on a beach at dusk
+        href: /
+      - title: Horizontal card two
+        text: Keeps descriptions readable without truncating short blurbs.
+        image:
+          src: ../../assets/demo/logo.jpg
+          alt: A client logo
+        href: /
+
 cards-query-articles:
   title: Articles from a query, including archived
   block:
@@ -604,6 +637,23 @@ logo-wall-inverse:
       - name: Client Two
         logo: ../../assets/demo/logo.jpg
 
+logo-wall-grid:
+  title: Logos, hairline specimen grid
+  block:
+    type: logoWall
+    variant: grid
+    heading: Client grid
+    surface: default
+    logos:
+      - name: Client One
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Two
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Three
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Four
+        logo: ../../assets/demo/logo.jpg
+
 logo-wall-badges:
   title: Badges (certificates and awards in colour)
   block:
@@ -799,6 +849,24 @@ split-2-1:
             alt: Demo photo, a beach portrait
           width: content
 
+split-sticky:
+  title: Ratio 1:2, sticky first column
+  block:
+    type: split
+    ratio: "1:2"
+    sticky: true
+    columns:
+      - - type: intro
+          heading: Sticky chapter heading
+          align: left
+          lead: Pins cleanly beside longer content on desktop while stacking normally on a phone.
+      - - type: indexList
+          variant: numbered
+          items:
+            - text: First editorial point in the right column.
+            - text: Second editorial point in the right column.
+            - text: Third editorial point in the right column.
+
 section-none-default:
   title: No spacing, default surface
   block:
@@ -912,3 +980,126 @@ disclosure-done:
     blocks:
       - type: prose
         markdown: Closed on 6 November. The remaining criteria were dropped by choice.
+
+figures-columns-default:
+  title: Columns, default surface
+  block:
+    type: figures
+    heading: Key numbers
+    variant: columns
+    surface: default
+    items:
+      - title: Years building web software
+        value: "15"
+        suffix: years
+        text: Agency and enterprise platforms across C#, TypeScript and cloud infrastructure.
+      - title: Open source packages
+        value: "4"
+        text: Tools for Umbraco and Capture One, built outside work.
+      - title: Team size led
+        prefix: Up to
+        value: "7"
+        suffix: developers
+        text: Mentoring, delivery and cross-team coordination.
+
+figures-ladder-muted:
+  title: Ladder, muted surface
+  block:
+    type: figures
+    variant: ladder
+    surface: muted
+    items:
+      - title: Stage one
+        prefix: About
+        value: "1,500"
+        suffix: colleagues
+        text: Moving in-house to lead a greenfield web build.
+      - title: Stage two
+        prefix: Over
+        value: "150,000"
+        suffix: colleagues
+        text: Stepping up to team lead across a global estate.
+      - title: Stage three
+        prefix: Over
+        value: "500,000"
+        suffix: colleagues
+        text: Carrying the team on through a TUPE transfer.
+
+figures-columns-inverse:
+  title: Columns, inverse surface
+  block:
+    type: figures
+    variant: columns
+    surface: inverse
+    items:
+      - title: Static output
+        value: "100%"
+        text: Served as plain files with strict security headers.
+      - title: Dependencies
+        value: "4"
+        text: Kept deliberately small for supply-chain safety.
+
+index-list-ruled-default:
+  title: Ruled two-column rows, default surface
+  block:
+    type: indexList
+    heading: Areas of focus
+    variant: ruled
+    surface: default
+    items:
+      - title: Front end
+        text: React, TypeScript and accessible semantic HTML.
+      - title: DevOps
+        text: Automated pipelines for dependable builds and releases.
+
+index-list-numbered-muted:
+  title: Numbered rail, muted surface
+  block:
+    type: indexList
+    variant: numbered
+    surface: muted
+    items:
+      - text: Line managing and mentoring developers towards their own goals.
+      - text: Running several streams of work at once without dropping any.
+      - text: Translating business needs into shippable engineering work.
+
+index-list-ruled-inverse:
+  title: Ruled rows, inverse surface
+  block:
+    type: indexList
+    variant: ruled
+    surface: inverse
+    items:
+      - title: Monochrome
+        text: Hairlines and typography carry hierarchy on dark surfaces too.
+
+statement-manifesto-default:
+  title: Manifesto, default surface
+  block:
+    type: statement
+    heading: Editorial statement
+    variant: manifesto
+    surface: default
+    lines:
+      - Being capable across many trades is now the game.
+      - Good tooling lets a small team ship with confidence.
+
+statement-acrostic-muted:
+  title: Acrostic monograms, muted surface
+  block:
+    type: statement
+    variant: acrostic
+    surface: muted
+    lines:
+      - Skilled specialist shaping, scaling, and securing sites and software.
+      - Anthropic-accredited AI ace automating actions with agents.
+      - Modest man, mildly mortified marketing my mediocre merits.
+
+statement-manifesto-inverse:
+  title: Manifesto, inverse surface
+  block:
+    type: statement
+    variant: manifesto
+    surface: inverse
+    lines:
+      - Restraint outlasts spectacle.

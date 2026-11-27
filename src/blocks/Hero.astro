@@ -58,7 +58,7 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
           part.struck ? (
             <del class="hero__struck">
               <span class="visually-hidden">crossed out: </span>
-              {part.text}
+              <span class="hero__struck-text">{part.text}</span>
             </del>
           ) : (
             part.text
@@ -114,15 +114,31 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
     margin: 0;
     font-size: var(--step-6);
   }
-  /* As in Sam's sketch: the crossed-out words sit smaller on their own line above the correction. */
+  /* As in Sam's sketch: the crossed-out words sit smaller on their own line above the correction.
+     Static default is already crossed out (no-JS and reduced motion). With JS and motion enabled,
+     the strike line draws cleanly left-to-right on load, even if the phrase wraps on narrow screens. */
   .hero__struck {
     display: block;
     width: fit-content;
-    margin-bottom: 0.1em;
-    font-size: 0.5em;
-    text-decoration-line: line-through;
-    text-decoration-thickness: 0.08em;
-    opacity: 0.6;
+    margin-bottom: 0.3em;
+    font-size: 0.44em;
+    font-weight: 420;
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    text-decoration: none;
+    color: var(--color-text-inverse-muted);
+    opacity: 0.68;
+  }
+  .hero--image .hero__struck {
+    color: var(--color-text-muted);
+  }
+  .hero__struck-text {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 57%;
+    background-size: 100% 0.09em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .hero__sub {
     margin: var(--space-s) 0 0;
@@ -231,11 +247,15 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
   }
   .hero--marked .hero__heading {
     font-size: var(--step-7);
+    font-weight: 700;
     line-height: var(--leading-hero);
     letter-spacing: -0.035em;
   }
   .hero--marked .hero__sub--lead {
-    max-width: 32em;
+    max-width: 36em;
+    margin-top: var(--space-m-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-inverse-border);
     color: var(--color-text-inverse-muted);
   }
   .hero__mark {
@@ -337,10 +357,17 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
   }
 
   /* Entrance (ticket 210). The heading moves but never fades, so it paints at once; the rest follows it
-     in, then the bars of the mark build one after another. */
+     in, then the bars of the mark build one after another. The cross-out strike draws across on load
+     only when JS and motion are active; without JS or with reduced motion it sits already crossed out. */
   @media (prefers-reduced-motion: no-preference) {
     .hero--plain .hero__heading {
       animation: hero-rise var(--dur-reveal) var(--ease-out) backwards;
+    }
+    :global(html.js) .hero__struck {
+      animation: hero-struck-fade 540ms var(--ease-out) 380ms backwards;
+    }
+    :global(html.js) .hero__struck-text {
+      animation: hero-strike-draw 580ms var(--ease-out) 320ms backwards;
     }
     .hero--plain .hero__sub {
       animation: hero-fade-rise var(--dur-reveal) var(--ease-out) 120ms backwards;
@@ -351,6 +378,22 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
     .hero__mark :global(.logo-bar) {
       animation: hero-bar-in 1000ms var(--ease-out) backwards;
       animation-delay: calc(150ms + var(--i) * 75ms);
+    }
+  }
+  @keyframes hero-strike-draw {
+    from {
+      background-size: 0% 0.09em;
+    }
+    to {
+      background-size: 100% 0.09em;
+    }
+  }
+  @keyframes hero-struck-fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.68;
     }
   }
   @keyframes hero-rise {

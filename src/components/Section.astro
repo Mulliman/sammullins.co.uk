@@ -32,6 +32,10 @@ const { nested = false, surface = 'default', width = 'normal', tight = false, cl
     max-width: var(--container-narrow);
     margin-inline: auto;
   }
+  /* Left-aligned intros snap flush to the container's left margin while keeping a readable measure. */
+  .nested-block--narrow:has(> :global(.intro--left)) {
+    margin-inline: 0;
+  }
   /* Components inside one section: the original's grid margin between stacked items. */
   .nested-block + .nested-block {
     margin-top: var(--space-m);

@@ -1,0 +1,165 @@
+---
+/**
+ * `statement` block: magazine-scale editorial statements.
+ * `variant: manifesto` frames high-impact display sentences between hairline rules.
+ * `variant: acrostic` pairs each line with a monumental vertical monogram of its opening letter
+ * (e.g. the closing S / A / M lines on the home page), keeping the full sentence intact for readers.
+ */
+import Section from '../components/Section.astro';
+import { mdInline } from '../lib/markdown';
+import type { BlockOf } from '../lib/content';
+
+interface Props {
+  block: BlockOf<'statement'>;
+  nested?: boolean;
+}
+const { block, nested = false } = Astro.props;
+---
+
+<Section nested={nested} surface={block.surface} width={block.variant === 'manifesto' ? 'narrow' : 'normal'}>
+  {block.heading && <h2 class="statement__heading">{block.heading}</h2>}
+  {block.variant === 'acrostic' ? (
+    <ul class="statement statement--acrostic">
+      {block.lines.map((line) => {
+        const initial = line.trim().charAt(0).toUpperCase();
+        return (
+          <li class="statement__row">
+            <span class="statement__initial" aria-hidden="true">
+              {initial}
+            </span>
+            <p class="statement__line" set:html={mdInline(line)} />
+          </li>
+        );
+      })}
+    </ul>
+  ) : (
+    <div class="statement statement--manifesto">
+      {block.lines.map((line) => (
+        <p class="statement__line" set:html={mdInline(line)} />
+      ))}
+    </div>
+  )}
+</Section>
+
+<style>
+  .statement__heading {
+    margin: 0 0 var(--space-m-l);
+    color: var(--color-text-strong);
+  }
+
+  /* Acrostic: monumental vertical initials beside hairline-ruled editorial sentences. */
+  .statement--acrostic {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .statement__row {
+    display: grid;
+    grid-template-columns: clamp(3rem, 8vw, 5.5rem) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-s-m);
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--color-border);
+    transition: border-color var(--dur) var(--ease);
+  }
+  .statement__row:hover {
+    border-bottom-color: var(--color-border-strong);
+  }
+
+  .statement__initial {
+    display: block;
+    padding-right: var(--space-s);
+    border-right: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-size: var(--step-5);
+    font-weight: 750;
+    line-height: var(--leading-hero);
+    letter-spacing: var(--tracking-display);
+    text-box: trim-both cap alphabetic;
+    color: var(--color-text-strong);
+    text-align: center;
+    transition:
+      transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease);
+  }
+  @media (min-width: 40rem) {
+    .statement__initial {
+      font-size: var(--step-6);
+    }
+  }
+  .statement__row:hover .statement__initial {
+    transform: scale(1.06);
+    border-right-color: var(--color-text-strong);
+  }
+
+  .statement--acrostic .statement__line {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 420;
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    color: var(--color-heading);
+    text-wrap: balance;
+    transition: translate var(--dur) var(--ease-out);
+  }
+  .statement__row:hover .statement__line {
+    translate: 0.2em 0;
+  }
+
+  /* Manifesto: clean typographic display statements flanked by hairlines. */
+  .statement--manifesto {
+    padding-block: var(--space-l);
+    border-top: 2px solid var(--color-text-strong);
+    border-bottom: 1px solid var(--color-border);
+    display: grid;
+    gap: var(--space-m);
+  }
+  .statement--manifesto .statement__line {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 500;
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text-strong);
+    text-wrap: balance;
+  }
+
+  /* Scroll-driven kinetic settle (always opacity: 1 so full-page screenshots stay complete). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .statement__initial {
+        animation-name: statement-initial-in;
+        animation-timing-function: var(--ease-out);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 35%;
+      }
+      .statement--acrostic .statement__line {
+        animation-name: statement-line-in;
+        animation-timing-function: var(--ease-out);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 35%;
+      }
+    }
+  }
+  @keyframes statement-initial-in {
+    from {
+      translate: 0 0.25em;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+  @keyframes statement-line-in {
+    from {
+      translate: 0.5rem 0;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+</style>

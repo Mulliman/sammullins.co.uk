@@ -84,6 +84,8 @@ const leafBlocks = (image: ImageFn) => {
     /** A second, quieter button beside `cta` (ticket 509). */
     secondaryCta: cta.optional(),
     align: align.default('center'),
+    /** editorial: magazine-scale heading and display-face pull-quote lead. */
+    variant: z.enum(['default', 'editorial']).default('default'),
     surface: surface.default('muted'),
   });
 
@@ -133,7 +135,7 @@ const leafBlocks = (image: ImageFn) => {
   const cards = z.object({
     type: z.literal('cards'),
     heading: z.string().optional(),
-    variant: z.enum(['full', 'image', 'text']).default('full'),
+    variant: z.enum(['full', 'image', 'text', 'row']).default('full'),
     columns: z.number().int().min(1).max(4).default(3),
     surface: surface.default('default'),
     items: z.array(cardItem).optional(),
@@ -151,9 +153,9 @@ const leafBlocks = (image: ImageFn) => {
   const logoWall = z.object({
     type: z.literal('logoWall'),
     heading: z.string().optional(),
-    /** logos: client logos on tiles, in grey until hovered. badges: certificates and awards, in full
-        colour with no tile, at a fixed size (ticket 509). */
-    variant: z.enum(['logos', 'badges']).default('logos'),
+    /** logos: open logo grid in grey until hovered. grid: architectural hairline-ruled specimen grid.
+        badges: certificates and awards, in full colour with no tile, at a fixed size (ticket 509). */
+    variant: z.enum(['logos', 'badges', 'grid']).default('logos'),
     surface: surface.default('default'),
     logos: z.array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() })).min(1),
   });
@@ -219,6 +221,50 @@ const leafBlocks = (image: ImageFn) => {
       .min(1),
   });
 
+  /** Oversized editorial metrics and stepped scale progressions. */
+  const figures = z.object({
+    type: z.literal('figures'),
+    heading: z.string().optional(),
+    variant: z.enum(['columns', 'ladder']).default('columns'),
+    surface: surface.default('default'),
+    items: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          value: z.string().min(1),
+          prefix: z.string().optional(),
+          suffix: z.string().optional(),
+          text: z.string().optional(),
+        }),
+      )
+      .min(1),
+  });
+
+  /** Hairline-ruled editorial list: titled two-column rows or a tabular numbered rail. */
+  const indexList = z.object({
+    type: z.literal('indexList'),
+    heading: z.string().optional(),
+    variant: z.enum(['ruled', 'numbered']).default('ruled'),
+    surface: surface.default('default'),
+    items: z
+      .array(
+        z.object({
+          title: z.string().optional(),
+          text: z.string().min(1),
+        }),
+      )
+      .min(1),
+  });
+
+  /** Magazine-scale display statements or an acrostic with vertical monogram initials. */
+  const statement = z.object({
+    type: z.literal('statement'),
+    heading: z.string().optional(),
+    variant: z.enum(['manifesto', 'acrostic']).default('manifesto'),
+    surface: surface.default('default'),
+    lines: z.array(z.string().min(1)).min(1),
+  });
+
   /** Places the file Markdown body (rendered by Astro, with Prism) at this position. */
   const body = z.object({
     type: z.literal('body'),
@@ -242,6 +288,9 @@ const leafBlocks = (image: ImageFn) => {
     timeline,
     embed,
     steps,
+    figures,
+    indexList,
+    statement,
   ] as const;
 };
 
@@ -253,6 +302,8 @@ export const blockSchema = (image: ImageFn) => {
     type: z.literal('split'),
     ratio: z.enum(['1:1', '1:2', '2:1']).default('1:1'),
     reverseOnMobile: z.boolean().default(false),
+    /** Pin the first column beside longer content on desktop while scrolling. */
+    sticky: z.boolean().default(false),
     columns: z.tuple([z.array(leaf), z.array(leaf)]),
   });
   // `section` is one full-width band (background and spacing) holding components in order, as the
