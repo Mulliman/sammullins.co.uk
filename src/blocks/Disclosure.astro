@@ -43,7 +43,33 @@ const done = status === 'done';
     background: var(--color-surface);
     color: var(--color-text);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-m);
+    transition: border-color var(--dur) var(--ease);
+  }
+  .disclosure:hover,
+  .disclosure[open] {
+    border-color: var(--color-border-strong);
+  }
+  /* Ticket 210: the body opens and closes smoothly where the browser can animate to auto height
+     (::details-content and interpolate-size); elsewhere it simply opens. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (interpolate-size: allow-keywords) {
+      .disclosure {
+        interpolate-size: allow-keywords;
+      }
+      .disclosure::details-content {
+        block-size: 0;
+        overflow: clip;
+        /* Keeps layout containment constant while content-visibility flips, so margins inside don't jitter. */
+        contain: layout;
+        transition:
+          block-size var(--dur) var(--ease-out),
+          content-visibility var(--dur) allow-discrete;
+      }
+      .disclosure[open]::details-content {
+        block-size: auto;
+      }
+    }
   }
 
   .disclosure__summary {

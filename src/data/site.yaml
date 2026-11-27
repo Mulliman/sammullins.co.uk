@@ -8,7 +8,6 @@ site:
     - { label: CV, href: /cv/ }
   footerLinks:
     - { label: Archive, href: /archive/ }
-    - { label: Photography, href: /photography/ }
   socials:
     - { label: GitHub, handle: Mulliman, href: 'https://github.com/Mulliman' }
     - { label: X, handle: _SamMullins_, href: 'https://x.com/_SamMullins_' }
@@ -29,5 +28,4 @@ site:
   features:
     # Ticket 211: false makes the masthead scroll away with the page instead of shrinking to a bar.
     stickyHeader: true
-    viewTransitions: false
     blurToSharpHero: false

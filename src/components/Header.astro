@@ -119,6 +119,16 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
   :global(html.js) .site-header--sticky {
     position: sticky;
     top: calc(var(--header-h) - var(--masthead-h));
+    transition:
+      background-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+  /* Stuck (ticket 210): the bar goes slightly translucent and frosts what scrolls under it. */
+  @supports (backdrop-filter: blur(1px)) {
+    :global(html.js) .site-header.is-stuck {
+      background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+      backdrop-filter: saturate(1.4) blur(14px);
+    }
   }
   .site-header__sentinel {
     position: absolute;

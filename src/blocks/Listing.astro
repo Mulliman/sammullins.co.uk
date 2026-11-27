@@ -100,25 +100,27 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 <style>
   .listing__heading {
     text-align: center;
-    margin-bottom: var(--space-l);
+    margin-bottom: var(--space-m-l);
   }
 
   /* Grid: as the original articles page. 1 column, 2 from 640px, 3 from 960px, rows centred. */
   .listing__grid {
     --cols: 1;
-    --gap: var(--space-s);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--gap);
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: var(--space-m) var(--space-s-m);
     list-style: none;
     margin: 0;
     padding: 0;
   }
+  @media (max-width: 639.98px) {
+    .listing__grid {
+      row-gap: var(--space-s);
+    }
+  }
   .listing__cell {
     display: flex;
     min-width: 0;
-    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
   }
   @media (min-width: 640px) {
     .listing__grid {
@@ -152,6 +154,37 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     align-items: start;
     padding-block: var(--space-s);
     border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--dur) var(--ease);
+  }
+  .listing__list {
+    border-top: 1px solid var(--color-border);
+  }
+  /* Ticket 210: the row answers the pointer, a faint wash that bleeds just past the text and a nudge of
+     the thumbnail. */
+  .listing__row::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(-1 * var(--space-xs));
+    z-index: -1;
+    border-radius: var(--radius-m);
+    background: var(--color-bg-muted);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+  }
+  :global(.surface-muted) .listing__row::before {
+    background: var(--color-bg);
+  }
+  .listing__list {
+    isolation: isolate;
+  }
+  @media (hover: hover) {
+    .listing__row:hover::before {
+      opacity: 1;
+    }
+  }
+  .listing__thumb {
+    overflow: hidden;
+    border-radius: var(--radius);
   }
   .listing__thumb {
     grid-area: thumb;
@@ -191,16 +224,18 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   .listing__title {
     font-size: var(--step-0);
-    font-weight: 700;
+    font-weight: var(--weight-heading);
     line-height: var(--leading-heading);
     margin: 0;
     font-family: var(--font-display);
     text-transform: none;
     text-align: left;
-    color: var(--color-text);
+    color: var(--color-heading);
   }
   .listing__desc {
     margin: 0;
+    font-size: var(--step--1);
+    line-height: var(--leading-small);
     color: var(--color-text-muted);
   }
 
@@ -235,7 +270,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .note {
     position: relative;
     padding-block: var(--space-2xs);
-    border-bottom: 1px dotted var(--color-border);
+    border-bottom: 1px solid var(--color-border);
   }
   .note__head {
     display: flex;
@@ -243,7 +278,8 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     align-items: baseline;
     column-gap: var(--space-s);
     margin: 0;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
   }
   .note__date {
     font-size: var(--step--1);

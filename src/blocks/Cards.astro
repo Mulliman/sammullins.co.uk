@@ -62,17 +62,14 @@ const items: CardData[] = [
 <style>
   .cards__heading {
     text-align: center;
-    margin-bottom: var(--space-l);
+    margin-bottom: var(--space-m-l);
   }
-  /* As the original UIkit grid: 1 column, 2 from 640px, N from 960px. Rows are centred,
-     so a lone card sits in the middle at its column width. */
+  /* Ticket 210: a real grid with a wider row gap than column gap. 1 column, 2 from 640px, N from 960px. */
   .cards__grid {
     --cols: 1;
-    --gap: var(--space-s);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--gap);
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: var(--space-m) var(--space-s-m);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -80,11 +77,31 @@ const items: CardData[] = [
   .cards__item {
     display: flex;
     min-width: 0;
-    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  }
+  @media (max-width: 639.98px) {
+    .cards__grid {
+      row-gap: var(--space-s);
+    }
   }
   @media (min-width: 640px) {
     .cards__grid:not(.cards--cols-1) {
       --cols: 2;
+    }
+    /* Two-up image cards stop at the narrow column, or they become posters; text cards use the full
+       container, so a page's edges don't jump between bands. */
+    .cards__grid.cards--cols-2:has(.card__media) {
+      max-width: var(--container-narrow);
+      margin-inline: auto;
+    }
+    /* One card on its own is a feature (see Card): it spans the row. It keeps the narrow column, unless
+       its section also holds a wider grid, where it lines up with that grid instead. */
+    .cards__grid:has(> .cards__item:only-child) {
+      --cols: 1;
+      max-width: var(--container-narrow);
+      margin-inline: auto;
+    }
+    :global(.section:has(.cards--cols-3, .cards--cols-4)) .cards__grid:has(> .cards__item:only-child) {
+      max-width: none;
     }
   }
   @media (min-width: 960px) {

@@ -7,21 +7,23 @@ cover:
 authorship: "sam-ai"
 blocks:
   - type: "hero"
-    variant: "blurred"
+    variant: "plain"
     heading: "Sam Mullins"
-    subheading: "Developer and Sitecore team lead"
-    image:
-      src: "../../assets/media/ekzoyg0n/mebeach.avif"
-      alt: "Sam walking along a ridge against a cloudy sky, with a rucksack and a camera in hand"
+    subheading: "I'm a web developer and Sitecore team lead in Bournemouth. I've built for the web since 2010, and lately I spend a lot of my time on AI-assisted development."
+    mark: true
+    ctas:
+      - label: "See what I've built"
+        href: "/software/"
+      - label: "Read the articles"
+        href: "/articles/"
   - type: "intro"
     heading: "I'm Sam and I like to create things"
     surface: "muted"
+    align: "left"
     lead: |-
       I've been building websites since 2010, starting as a student developer at Redweb. Today I lead a team of Sitecore developers at Allianz Technology. Most of that time has been spent with Sitecore and Umbraco (I'm certified in both), building for national charities and businesses.
 
       Lately I spend a lot of my own time on AI-assisted development, working out where coding agents such as [the tools I use] genuinely help and where they shouldn't be trusted. This site is one of those experiments: it was rebuilt with Astro and Claude Code, and every page says whether I wrote it or wrote it with AI.
-
-      Away from the keyboard I take photos, and I've written plugins for the image editor [CaptureOne](https://www.captureone.com/).
   - type: "section"
     surface: "default"
     blocks:
@@ -59,10 +61,10 @@ blocks:
     blocks:
       - type: "intro"
         heading: "Free and open source"
-        lead: "Coding for money is fine, but coding for fun is where you get real satisfaction. I've created a collection of open source projects ranging from party games, to photography tools, to static site builders."
+        lead: "Coding for money is fine, but coding for fun is where you get real satisfaction. I've created a collection of open source projects, from party games to static site builders."
       - type: "cards"
         variant: "full"
-        columns: 2
+        columns: 1
         items:
           - title: "The Imposter"
             text: "The imposter is a party game for 4-7 people played on each individual's mobile phone. Each round one player is randomly chosen as the imposter, and that player needs to discover the secret word without attracting suspicion from the others."
@@ -76,20 +78,6 @@ blocks:
         variant: "full"
         columns: 4
         items:
-          - title: "PanoCapture"
-            text: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
-            href: "/software/panocapture/"
-            image:
-              src: "../../assets/media/tolji2b5/panocapture.avif"
-              alt: ""
-              decorative: true
-          - title: "PostCapture"
-            text: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
-            href: "/software/postcapture/"
-            image:
-              src: "../../assets/media/irbdcjra/postcapture.avif"
-              alt: ""
-              decorative: true
           - title: "xStatic for Umbraco"
             text: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
             href: "/software/xstatic-for-umbraco/"
@@ -104,21 +92,22 @@ blocks:
               src: "../../assets/media/gaajlr4q/banner.avif"
               alt: ""
               decorative: true
-  - type: "section"
-    surface: "inverse"
-    blocks:
-      - type: "intro"
-        heading: "Photography"
-        lead: "Fairly recently I've discovered photography and will often be seen carrying one of my cameras. I use Sony APS-C cameras and photo editing software that does not come with a forced subscription (CaptureOne, Affinity Photo, and Luminar)."
-      - type: "gallery"
-        columns: 2
-        images:
-          - src: "../../assets/media/kwqkfhvg/king-of-the-river-1.avif"
-            alt: "A kingfisher perched on a mossy branch, looking to the right"
-          - src: "../../assets/media/ff5dehow/kingfisher-in-the-ice.avif"
-            alt: "A kingfisher perched among frost-covered branches"
+          - title: "PanoCapture"
+            text: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
+            href: "/software/panocapture/"
+            image:
+              src: "../../assets/media/tolji2b5/panocapture.avif"
+              alt: ""
+              decorative: true
+          - title: "PostCapture"
+            text: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
+            href: "/software/postcapture/"
+            image:
+              src: "../../assets/media/irbdcjra/postcapture.avif"
+              alt: ""
+              decorative: true
       - type: "intro"
         cta:
-          label: "View more of my photography"
-          href: "/photography/"
+          label: "See all my software"
+          href: "/software/"
 ---
