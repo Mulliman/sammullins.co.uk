@@ -52,7 +52,7 @@ limit: positive integer (optional)
 | `gallery` | `heading`, `columns`, `surface`, `images` |
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
-| `logoWall` | `heading`, `variant`, `surface`, `logos` |
+| `logoWall` | `heading`, `variant`, `hint`, `surface`, `logos` |
 | `quote` | `variant`, `text`, `attribution`, `source` |
 | `code` | `lang`, `code`, `filename` |
 | `nextPrev` | `prev`, `next` |
@@ -157,6 +157,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | logos \| badges \| grid | no | `'logos'` |
+| `hint` | string | no |  |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `logos` | z .array(z.object({ name: string (min 1), logo: image(), href: url, details: string (min 1), }),)  (min 1) | no |  |
 

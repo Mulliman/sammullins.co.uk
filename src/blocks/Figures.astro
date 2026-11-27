@@ -110,7 +110,7 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     margin: 0;
     padding: 0;
   }
-  @media (min-width: 56rem) {
+  @media (min-width: 48rem) {
     .figures {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-m) var(--space-l);
@@ -206,8 +206,8 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     color: var(--color-text-strong);
   }
 
-  /* Phones: smaller figures, so three stages don't fill three screens. */
-  @media (max-width: 39.99rem) {
+  /* Phones and small tablets: smaller figures, so three stages don't fill three screens. */
+  @media (max-width: 47.99rem) {
     .figures {
       gap: var(--space-l);
     }

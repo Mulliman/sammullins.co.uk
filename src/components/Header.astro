@@ -114,7 +114,11 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
     position: relative;
     z-index: 30;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid transparent;
+  }
+  /* 509-symmetry: no line under the masthead; once stuck, a soft shadow separates the bar. */
+  :global(html.js) .site-header.is-stuck {
+    box-shadow: var(--shadow-header);
   }
   :global(html.js) .site-header--sticky {
     position: sticky;
@@ -248,7 +252,7 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
   /* Phones (509-symmetry): the logo stays centred, with the theme toggle on the left and the menu
      (an icon; "Menu" is for screen readers) on the right. Both logos sit in the middle column. The
      back-to-top arrow is left out: there is no room for it beside a centred logo. */
-  @media (max-width: 40rem) {
+  @media (max-width: 59.99rem) {
     .site-header__end {
       display: contents;
     }

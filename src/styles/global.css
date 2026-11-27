@@ -436,7 +436,7 @@
   /* The secondary button: a hairline outline. */
   .button--ghost {
     background: transparent;
-    border-color: var(--color-border);
+    border-color: var(--color-button-ghost-border);
     color: var(--color-heading);
   }
   .button--ghost:hover {

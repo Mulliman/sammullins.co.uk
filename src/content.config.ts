@@ -165,6 +165,8 @@ const leafBlocks = (image: ImageFn) => {
     /** logos: open logo grid in grey until hovered. grid: architectural hairline-ruled specimen grid.
         badges: certificates and awards, in full colour with no tile, at a fixed size (ticket 509). */
     variant: z.enum(['logos', 'badges', 'grid']).default('logos'),
+    /** A quiet line under the logos, e.g. telling people the logos open (509-symmetry). */
+    hint: z.string().optional(),
     surface: surface.default('default'),
     /** `details` (Markdown, ticket 509): clicking the logo opens a small popover with this text, and
         `href` becomes a "Visit" link in it (opening a new tab). Without details, `href` links the logo. */

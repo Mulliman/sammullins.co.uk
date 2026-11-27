@@ -59,6 +59,10 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
       menu.querySelector('summary')?.focus();
     }
   });
+  // A tap or click anywhere outside the open menu closes it (509-symmetry).
+  document.addEventListener('click', (e) => {
+    if (menu?.open && e.target instanceof Node && !menu.contains(e.target)) menu.open = false;
+  });
 </script>
 
 <style>
@@ -121,6 +125,9 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
     min-height: 2.75rem;
     padding: var(--space-2xs);
   }
+  .nav--mobile summary:focus-visible {
+    outline-offset: -3px;
+  }
   .nav--mobile summary::-webkit-details-marker {
     display: none;
   }
@@ -144,10 +151,14 @@ const isCurrent = (href: string) => path === href || (href !== '/' && path.start
   .nav__burger::after {
     top: 0.375rem;
   }
+  /* The menu drops from its own button, so it sits just under the bar when the header is stuck too. */
+  .nav--mobile {
+    position: relative;
+  }
   .nav--mobile nav {
     position: absolute;
     right: 0;
-    top: calc(100% + var(--space-2xs));
+    top: calc(100% + var(--space-3xs));
     z-index: 20;
     background: var(--color-bg);
     padding: var(--space-s) var(--space-m);

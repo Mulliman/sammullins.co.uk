@@ -65,4 +65,5 @@ Sam then sketched the page (`_sketches/Homepage.excalidraw` in the parent folder
   - Side projects: the award image is now a rosette on the xStatic card (`cards` item `award`, new `Rosette` component). XPEDITE is out; Is Baby In A Book? is in.
   - Closing band: the lead is three short paragraphs; "But I don't want to be ~~Jack~~. I just want to be Sam." is its own statement, with Jack struck through as it scrolls in; the S, A, M lines only bold their first letter (`statement` gets `align`).
   - Bands now flow between left, right (`split` `sticky: end`) and centred.
+- 509-symmetry (27 November 2026, branch `509-symmetry`): a variation on Sam's rules (centred headings with two-line subtitles, left-aligned body text, balance, no hairlines, compact phones, the old four-box footer, a centred phone header). Reviewed by Opus and Neon (both 7/10); the overnight pass fixed the tablet layouts, ghost button contrast, the rosette text size, popover focus and the close button, the mobile menu, three CSS bugs and the card hairlines, and took their copy suggestions Sam agreed to.
 - Open: whether to merge the enterprise and skills bands (Sam to decide from the screenshots).

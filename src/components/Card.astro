@@ -85,7 +85,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   /* Award (ticket 509): the rosette sits in the top corner, over the image on a stacked card and beside
      the text on a feature card, which keeps room for it. */
   .card__award {
-    --rosette-size: 6.5rem;
+    --rosette-size: 7.5rem;
     position: absolute;
     width: var(--rosette-size);
     top: var(--space-xs);
@@ -99,19 +99,21 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       top: var(--space-s);
       right: var(--space-m);
     }
+  }
+  @media (min-width: 960px) {
     :global(.cards__item:only-child) > .card--full.card--award .card__body {
       padding-right: calc(8.5rem + var(--space-l));
     }
   }
 
   /* Full: image on top, then title, meta, text and the call to action pinned to the bottom. */
+  /* 509-symmetry: no hairline edges. Cards sit on a soft shadow (and a lighter surface in dark mode). */
   .card--full {
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card-rest);
     overflow: hidden;
   }
   .card--full .card__media {
-    border-bottom: 1px solid var(--color-border);
     background: var(--color-bg-muted);
   }
   .card--full .card__media :global(img),
@@ -143,7 +145,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     gap: var(--space-xs);
     padding: var(--space-xs);
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card-rest);
     overflow: hidden;
   }
   .card--row:not(:has(.card__media)) {
@@ -167,23 +169,13 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   @media (min-width: 48rem) {
     .card--row {
-      grid-template-columns: minmax(9.5rem, 38%) minmax(0, 1fr);
-      align-items: stretch;
-      gap: 0;
-      padding: 0;
-    }
-    .card--row:not(:has(.card__media)) {
-      padding: 0;
-    }
-    .card--row .card__media {
-      border-radius: 0;
-      border-right: 1px solid var(--color-border);
-    }
-    .card--row .card__media :global(:is(picture, img)) {
-      height: 100%;
+      grid-template-columns: minmax(9.5rem, 34%) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-s);
+      padding: var(--space-xs);
     }
     .card--row .card__body {
-      padding: var(--space-s) var(--space-m);
+      padding: var(--space-2xs) var(--space-xs) var(--space-2xs) 0;
       gap: var(--space-2xs);
     }
     .card--row .card__title {
@@ -294,11 +286,11 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 
   /* Hover and focus: the edge firms up and the call to action underlines. No lift, no shadow. */
   .card:has(.card__link) {
-    transition: border-color var(--dur) var(--ease-out);
+    transition: box-shadow var(--dur) var(--ease-out);
   }
   .card--full:has(.card__link):hover,
   .card--row:has(.card__link):hover {
-    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
   }
   .card--row:has(.card__link):hover .card__title {
     text-decoration: underline;
@@ -316,18 +308,16 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
   /* Touch: a press gives feedback, since there is no hover. */
   .card:has(.card__link):active {
-    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
   }
 
   /* A lone full card in a multi-column grid becomes a feature: image beside the text. */
-  @media (min-width: 640px) {
+  @media (min-width: 960px) {
     :global(.cards__item:only-child) > .card--full {
       flex-direction: row;
     }
     :global(.cards__item:only-child) > .card--full .card__media {
       flex: 0 0 min(50%, 30rem);
-      border-bottom: 0;
-      border-right: 1px solid var(--color-border);
     }
     :global(.cards__item:only-child) > .card--full .card__media :global(:is(picture, img)) {
       height: 100%;
@@ -347,31 +337,55 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     }
   }
 
+  /* Tablets (640px to 959px): the feature card is a row like the cards under it, so its banner doesn't
+     fill the screen; the rosette keeps a corner of the text side. */
+  @media (min-width: 640px) and (max-width: 959.98px) {
+    :global(.cards__item:only-child) > .card--full:has(.card__media) {
+      display: grid;
+      grid-template-columns: minmax(9.5rem, 34%) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-s);
+      padding: var(--space-xs);
+    }
+    :global(.cards__item:only-child) > .card--full .card__media {
+      border-radius: var(--radius);
+    }
+    :global(.cards__item:only-child) > .card--full .card__body {
+      padding: var(--space-2xs) var(--space-xs) var(--space-2xs) 0;
+    }
+    :global(.cards__item:only-child) > .card--full.card--award .card__body {
+      padding-right: calc(7rem + var(--space-s));
+    }
+    :global(.cards__item:only-child) > .card--award .card__award {
+      --rosette-size: 7rem;
+    }
+  }
+
   /* Phones: a full card in a multi-card grid is a row, thumbnail on the left. A lone feature card
      stays stacked with its full-width 16:9 banner on top so it keeps its hierarchy. */
   @media (max-width: 639.98px) {
-    :global(.cards__item:not(:only-child)) > .card--full:has(.card__media) {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full:has(.card__media) {
       display: grid;
       grid-template-columns: 7.5rem minmax(0, 1fr);
       align-items: start;
       padding: var(--space-xs);
       gap: var(--space-xs);
     }
-    :global(.cards__item:not(:only-child)) > .card--full .card__media {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full .card__media {
       border: 0;
       border-radius: var(--radius);
     }
-    :global(.cards__item:not(:only-child)) > .card--full .card__body {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full .card__body {
       padding: 0;
       gap: var(--space-3xs);
     }
-    :global(.cards__item:not(:only-child)) > .card--full:not(:has(.card__media)) .card__body {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full:not(:has(.card__media)) .card__body {
       padding: var(--space-xs) var(--space-s);
     }
-    :global(.cards__item:not(:only-child)) > .card--full .card__title {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full .card__title {
       font-size: var(--step-0);
     }
-    :global(.cards__item:not(:only-child)) > .card--full:has(.card__link) .card__text {
+    :global(:is(.cards__item, .listing__cell):not(:only-child)) > .card--full:has(.card__link) .card__text {
       -webkit-line-clamp: 3;
       line-clamp: 3;
     }

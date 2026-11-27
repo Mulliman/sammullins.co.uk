@@ -203,9 +203,11 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
       justify-items: center;
     }
   }
-  .index-list--columns .index-list__icon :global(.icon) {
-    width: 1.6rem;
-    height: 1.6rem;
+  @media (min-width: 48rem) {
+    .index-list--columns .index-list__icon :global(.icon) {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
   }
   .index-list--columns .index-list__item:hover .index-list__title {
     translate: none;

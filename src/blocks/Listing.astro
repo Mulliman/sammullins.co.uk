@@ -127,6 +127,12 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
       --cols: 2;
     }
   }
+  /* Exactly three (a "latest" strip): three across from 768px, so there is no two-over-one. */
+  @media (min-width: 48rem) {
+    .listing__grid:has(> :nth-child(3):last-child) {
+      --cols: 3;
+    }
+  }
   @media (min-width: 960px) {
     .listing__grid {
       --cols: 3;

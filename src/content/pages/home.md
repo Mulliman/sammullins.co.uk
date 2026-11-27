@@ -62,6 +62,7 @@ blocks:
         lead: "Agency work put me in front of clients, both in the development team and on site as a consultant."
       # Sam to write one or two sentences per client on his involvement (27 November 2026).
       - type: "logoWall"
+        hint: "Select a logo to see what I did there."
         logos:
           - name: "Action on Hearing Loss (now RNID)"
             logo: "../../assets/media/uknim4iy/ahl.avif"
@@ -105,7 +106,7 @@ blocks:
     surface: "muted"
     blocks:
       - type: "intro"
-        heading: "Then into enterprise"
+        heading: "Into enterprise"
         lead: "In 2021 I joined LV= in-house. Two TUPE transfers later, each organisation has been bigger than the last."
       # Sam: just the marks (the LV= heart, the Allianz and Tata symbols), with the names as text.
       - type: "figures"
@@ -162,13 +163,13 @@ blocks:
             text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
           - title: "Several streams"
             icon: "layers"
-            text: "Running several streams of work at once without dropping any."
+            text: "Keeping several pieces of work moving at once, without dropping any."
           - title: "Translating"
             icon: "translate"
-            text: "Translating what the business needs into work the developers can ship."
+            text: "Turning what the business asks for into work the developers can ship."
           - title: "Coordinating"
             icon: "network"
-            text: "Coordinating changes that crossed teams, environments and workstreams."
+            text: "Lining up changes that crossed teams, environments and workstreams."
           - title: "Scrum Master"
             icon: "iteration"
             text: "Acting as Scrum Master for almost a year."
@@ -235,9 +236,10 @@ blocks:
     blocks:
       - type: "intro"
         heading: "Getting ready for the agentic era"
-        lead: "It started with local models at home, and ended with an AI-first team at work."
+        lead: "It started with local models at home, and led to an AI-first team at work."
       - type: "split"
         ratio: "1:2"
+        narrow: true
         columns:
           - - type: "logoWall"
               variant: "badges"
@@ -257,8 +259,8 @@ blocks:
     blocks:
       # Sam: what still needs a person, as icons that map to his skills.
       - type: "intro"
-        heading: "So, fifteen years later"
-        lead: "Coding agents now do more and more of the narrow, specialist work. What they can't do is the rest."
+        heading: "Fifteen years later"
+        lead: "Coding agents now do more and more of the narrow, specialist work. The rest still needs a person."
       - type: "indexList"
         variant: "columns"
         items:
@@ -278,7 +280,7 @@ blocks:
     surface: "muted"
     blocks:
       - type: "intro"
-        lead: "So in a world changing this fast, being capable across many trades is now the game."
+        lead: "With software changing this fast, being good at several trades is the job now."
       # Sam: a subtle separation, Jack struck through again as it scrolls in.
       - type: "statement"
         variant: "manifesto"
@@ -306,7 +308,7 @@ blocks:
     surface: "default"
     blocks:
       - type: "intro"
-        heading: "What I've been up to recently"
+        heading: "What I've written lately"
       - type: "listing"
         variant: "grid"
         query:

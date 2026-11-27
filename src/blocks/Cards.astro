@@ -89,6 +89,10 @@ const items: CardData[] = [
     .cards__grid:not(.cards--cols-1) {
       --cols: 2;
     }
+    /* Row cards (thumbnail beside text) need the width: one per line until 960px. */
+    .cards__grid.cards--variant-row {
+      --cols: 1;
+    }
     /* Two-up image cards stop at the narrow column, or they become posters; text and row cards use
        the full container, so a page's edges don't jump between bands. */
     .cards__grid.cards--cols-2:has(.card__media):not(.cards--variant-row) {
@@ -108,6 +112,9 @@ const items: CardData[] = [
     }
   }
   @media (min-width: 960px) {
+    .cards__grid.cards--variant-row.cards--cols-2 {
+      --cols: 2;
+    }
     .cards__grid.cards--cols-3 {
       --cols: 3;
     }

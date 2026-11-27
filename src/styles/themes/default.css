@@ -34,6 +34,7 @@
     --color-link-hover: #6e3a00;
     --color-link-inverse: #f2a43c; /* 8.4:1 on inverse */
     --color-border: #d6d6d6;
+    --color-button-ghost-border: #858585; /* 3:1 or more on white and on the muted band (WCAG 1.4.11) */
     --color-border-strong: #a3a3a3; /* a hovered card's edge, the hairline grid's outer rule */
     --color-focus: #0b57d0;
     --color-frame: #ffffff; /* the thick white photo frame */
@@ -43,7 +44,7 @@
     --color-inverse-heading: #ffffff;
     --color-inverse-link-hover: #ffc477;
     --color-inverse-border: #3a3a3a;
-    --color-inverse-border-strong: #5c5c5c; /* the ghost button's edge on a dark band */
+    --color-inverse-border-strong: #7a7a7a; /* the ghost button's edge on a dark band (3:1 or more) */
     --color-hero-mark: #363636; /* the logo's bars, drawn quietly in the home hero (ticket 210) */
     --color-hero-mark-soft: #2b2b2b;
     --color-inverse-rule: #333333; /* the line under the colophon */
@@ -85,6 +86,9 @@
     --shadow-soft: 0 14px 25px rgb(0 0 0 / 0.16); /* UIkit card hover */
     --shadow-inset: inset 0 0 20px rgb(0 0 0 / 0.5);
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.18); /* a lifted card (ticket 210) */
+    --shadow-card-rest:
+      0 1px 2px rgb(0 0 0 / 0.06), 0 6px 20px -10px rgb(0 0 0 / 0.16); /* a card's edge without a border (509-symmetry) */
+    --shadow-header: 0 1px 12px rgb(0 0 0 / 0.08); /* the stuck header bar (509-symmetry) */
     --text-shadow-media: 0 0 10px #000000;
 
     /* Code highlighting (Prism) */
@@ -120,8 +124,11 @@
       --color-link: #f2a43c;
       --color-link-hover: #ffc477;
       --color-border: #333333;
+      --color-button-ghost-border: #7a7a7a;
       --color-border-strong: #5c5c5c;
       --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.8);
+      --shadow-card-rest: 0 1px 2px rgb(0 0 0 / 0.3);
+      --shadow-header: 0 1px 12px rgb(0 0 0 / 0.5);
       --color-focus: #8ab4ff;
       --color-frame: #f0f0f0;
       --color-code-bg: #1a1a1a;
@@ -153,8 +160,11 @@
     --color-link: #f2a43c;
     --color-link-hover: #ffc477;
     --color-border: #333333;
+    --color-button-ghost-border: #7a7a7a;
     --color-border-strong: #5c5c5c;
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.8);
+    --shadow-card-rest: 0 1px 2px rgb(0 0 0 / 0.3);
+    --shadow-header: 0 1px 12px rgb(0 0 0 / 0.5);
     --color-focus: #8ab4ff;
     --color-frame: #f0f0f0;
     --color-code-bg: #1a1a1a;

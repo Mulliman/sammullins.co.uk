@@ -64,11 +64,29 @@ const idBase = nextId('logo');
       );
     })}
   </ul>
+  {block.hint && <p class="logos__hint">{block.hint}</p>}
 </Section>
+
+<script>
+  // When a logo's popover opens, focus moves to its close button, so keyboard and screen reader users
+  // land in it; Esc or the button closes it and the browser returns focus to the logo (509-symmetry).
+  for (const pop of document.querySelectorAll<HTMLElement>('.logos__pop')) {
+    pop.addEventListener('toggle', (e) => {
+      if ((e as ToggleEvent).newState === 'open') pop.querySelector<HTMLElement>('.logos__pop-close')?.focus();
+    });
+  }
+</script>
 
 <style>
   .logos__heading {
     margin-bottom: var(--space-m);
+  }
+  /* A quiet hint that the logos open (509-symmetry). */
+  .logos__hint {
+    margin: var(--space-s) 0 0;
+    text-align: center;
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
   }
 
   /* Ticket 210: an open grid of logos with no borders (Sam, 26 November 2026). 3 across on a phone, 4
@@ -126,7 +144,7 @@ const idBase = nextId('logo');
      Logos rest faded and come to full strength on hover, focus or while their popover is open. */
   .logos__item:hover :global(img),
   .logos__link:focus-visible :global(img),
-  .logos__button[aria-expanded='true'] :global(img) {
+  .logos__button:has(+ .logos__pop:popover-open) :global(img) {
     opacity: 1;
     filter: none;
   }
@@ -146,7 +164,7 @@ const idBase = nextId('logo');
   .logos__pop {
     width: min(22rem, calc(100vw - 2 * var(--gutter)));
     margin: auto;
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
+    padding: var(--space-s) calc(2.75rem + var(--space-2xs)) var(--space-s) var(--space-s);
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-m);
     background: var(--color-surface);
@@ -257,6 +275,7 @@ const idBase = nextId('logo');
   :global(:root[data-theme='dark']) .logos__item :global(img) {
     filter: invert(1) grayscale(1);
     mix-blend-mode: screen;
+    opacity: 0.8;
   }
   @media (prefers-color-scheme: dark) {
     :global(:root:not([data-theme='light'])) .logos__item {
@@ -265,6 +284,7 @@ const idBase = nextId('logo');
     :global(:root:not([data-theme='light'])) .logos__item :global(img) {
       filter: invert(1) grayscale(1);
       mix-blend-mode: screen;
+      opacity: 0.8;
     }
   }
 
@@ -357,9 +377,11 @@ const idBase = nextId('logo');
     width: min(13rem, 65%);
   }
   /* Beside text in a split (509-symmetry): small, on one line. */
-  :global(.split__col) .logos--badges .logos__item:not(:only-child),
-  :global(:root[data-theme]) :global(.split__col) .logos--badges .logos__item:not(:only-child) {
-    width: 5.5rem;
+  @media (min-width: 40rem) {
+    :global(.split__col) .logos--badges .logos__item:not(:only-child),
+    :global(:root[data-theme]) :global(.split__col) .logos--badges .logos__item:not(:only-child) {
+      width: 5.5rem;
+    }
   }
   /* Phones: badges small, so they don't take a screen of their own. */
   @media (max-width: 39.99rem) {
