@@ -93,8 +93,19 @@ intro-default-left:
   title: Default surface, left aligned
   block:
     type: intro
+    variant: default
     heading: Left aligned on the default surface
     lead: "A **lead paragraph** that is larger than body text, with a [link](https://example.com/)."
+    align: left
+    surface: default
+
+intro-editorial-left:
+  title: Editorial variant, pull-quote deck
+  block:
+    type: intro
+    variant: editorial
+    heading: Editorial chapter heading
+    lead: A short, punchy lead set in the display face beside a vertical rule.
     align: left
     surface: default
 
@@ -344,12 +355,16 @@ cards-full-manual:
     surface: default
     items:
       - title: Beach portrait
-        text: A **manual** card with an image, text and a link.
+        text: A **manual** card with an image, text and a link, and an award rosette in its corner.
         image:
           src: ../../assets/demo/demo.jpg
           alt: A portrait on a beach at dusk
         href: /
         cta: Read more
+        award:
+          label: Winner
+          title: Demo award
+          detail: Best example 2026
       - title: Client logo
         text: Plain text under the frame.
         image:
@@ -402,6 +417,28 @@ cards-text-manual:
         text: Markdown works *here* too.
       - title: Fourth
         text: A card with no link.
+
+cards-row-manual:
+  title: Row cards, compact horizontal showcase
+  block:
+    type: cards
+    heading: Row cards
+    variant: row
+    columns: 2
+    surface: default
+    items:
+      - title: Horizontal card one
+        text: Compact thumbnail on the left with the full summary beside it.
+        image:
+          src: ../../assets/demo/demo.jpg
+          alt: A portrait on a beach at dusk
+        href: /
+      - title: Horizontal card two
+        text: Keeps descriptions readable without truncating short blurbs.
+        image:
+          src: ../../assets/demo/logo.jpg
+          alt: A client logo
+        href: /
 
 cards-query-articles:
   title: Articles from a query, including archived
@@ -568,6 +605,7 @@ logo-wall-default:
   title: Logos, default surface
   block:
     type: logoWall
+    variant: logos
     heading: People I have worked with
     surface: default
     logos:
@@ -603,13 +641,73 @@ logo-wall-inverse:
       - name: Client Two
         logo: ../../assets/demo/logo.jpg
 
+logo-wall-grid:
+  title: Logos, hairline specimen grid
+  block:
+    type: logoWall
+    variant: grid
+    heading: Client grid
+    surface: default
+    logos:
+      - name: Client One
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Two
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Three
+        logo: ../../assets/demo/logo.jpg
+      - name: Client Four
+        logo: ../../assets/demo/logo.jpg
+
+logo-wall-badges:
+  title: Badges (certificates and awards in colour)
+  block:
+    type: logoWall
+    variant: badges
+    heading: Certified in
+    logos:
+      - name: Sitecore
+        logo: ../../assets/media/badges/sitecore.avif
+        href: https://www.sitecore.com/
+        details: With `details`, the logo opens a popover. The `href` becomes a link in it that opens a new tab.
+      - name: Umbraco
+        logo: ../../assets/media/badges/umbraco.avif
+        details: Details without a link. Press Esc or click outside to close.
+
+section-with-split:
+  title: Section holding a split (text beside badges)
+  block:
+    type: section
+    surface: muted
+    blocks:
+      - type: split
+        ratio: '2:1'
+        columns:
+          - - type: intro
+              heading: Text beside a badge
+              align: left
+              lead: Inside a section, a split shares the section's band and centres its columns.
+          - - type: logoWall
+              variant: badges
+              logos:
+                - name: Claude Certified Architect, Foundations
+                  logo: ../../assets/media/badges/cca-f.avif
+
 quote-with-attribution:
   title: Quote, with attribution and source
   block:
     type: quote
+    variant: default
     text: Good design is as little design as possible.
     attribution: Dieter Rams
     source: https://www.vitsoe.com/
+
+quote-display:
+  title: Display quote, large and centred
+  block:
+    type: quote
+    variant: display
+    text: What is wrong with being a jack of all trades?
+    attribution: My website, in 2011
 
 quote-plain:
   title: Quote, with no attribution or source
@@ -767,6 +865,49 @@ split-2-1:
             alt: Demo photo, a beach portrait
           width: content
 
+split-sticky:
+  title: Ratio 1:2, sticky first column
+  block:
+    type: split
+    ratio: "1:2"
+    sticky: start
+    columns:
+      - - type: intro
+          heading: Sticky chapter heading
+          align: left
+          lead: Pins cleanly beside longer content on desktop while stacking normally on a phone.
+      - - type: indexList
+          variant: numbered
+          items:
+            - text: First editorial point in the right column.
+            - text: Second editorial point in the right column.
+            - text: Third editorial point in the right column.
+
+split-sticky-end:
+  title: Ratio 2:1, sticky second column (heading first on a phone)
+  block:
+    type: split
+    ratio: "2:1"
+    sticky: end
+    reverseOnMobile: true
+    columns:
+      - - type: indexList
+          variant: ruled
+          items:
+            - title: Front end
+              icon: code
+              text: The longer column scrolls on the left.
+            - title: DevOps
+              icon: loop
+              text: The heading stays pinned on the right.
+            - title: Infrastructure
+              icon: server
+              text: On a phone the heading comes first.
+      - - type: intro
+          heading: Pinned on the right
+          align: left
+          lead: For bands that flow right instead of left.
+
 section-none-default:
   title: No spacing, default surface
   block:
@@ -880,3 +1021,167 @@ disclosure-done:
     blocks:
       - type: prose
         markdown: Closed on 6 November. The remaining criteria were dropped by choice.
+
+figures-columns-default:
+  title: Columns, default surface
+  block:
+    type: figures
+    heading: Key numbers
+    variant: columns
+    surface: default
+    items:
+      - title: Years building web software
+        value: "15"
+        suffix: years
+        text: Agency and enterprise platforms across C#, TypeScript and cloud infrastructure.
+      - title: Open source packages
+        value: "4"
+        text: Tools for Umbraco and Capture One, built outside work.
+      - title: Team size led
+        prefix: Up to
+        value: "7"
+        suffix: developers
+        text: Mentoring, delivery and cross-team coordination.
+
+figures-ladder-muted:
+  title: Ladder, muted surface
+  block:
+    type: figures
+    variant: ladder
+    surface: muted
+    items:
+      - title: LV=
+        logo: ../../assets/media/employers/lv.avif
+        prefix: About
+        value: "1,500"
+        suffix: colleagues
+        text: Moving in-house to lead a greenfield web build.
+      - title: Stage two
+        prefix: Over
+        value: "150,000"
+        suffix: colleagues
+        text: Stepping up to team lead across a global estate.
+      - title: Stage three
+        prefix: Over
+        value: "500,000"
+        suffix: colleagues
+        text: Carrying the team on through a TUPE transfer.
+
+figures-columns-inverse:
+  title: Columns, inverse surface
+  block:
+    type: figures
+    variant: columns
+    surface: inverse
+    items:
+      - title: Static output
+        value: "100%"
+        text: Served as plain files with strict security headers.
+      - title: Dependencies
+        value: "4"
+        text: Kept deliberately small for supply-chain safety.
+
+index-list-ruled-default:
+  title: Ruled two-column rows, default surface
+  block:
+    type: indexList
+    heading: Areas of focus
+    variant: ruled
+    surface: default
+    items:
+      - title: Front end
+        icon: code
+        text: React, TypeScript and accessible semantic HTML.
+      - title: DevOps
+        icon: loop
+        text: Automated pipelines for dependable builds and releases.
+
+index-list-icons-muted:
+  title: Icon rail, no titles, muted surface
+  block:
+    type: indexList
+    variant: ruled
+    surface: muted
+    items:
+      - icon: users
+        text: Line managing and mentoring developers.
+      - icon: layers
+        text: Running several streams of work at once.
+      - icon: translate
+        text: Translating business needs into work developers can ship.
+      - icon: network
+        text: Coordinating changes across teams.
+      - icon: iteration
+        text: Acting as Scrum Master.
+      - icon: cloud
+        text: Every icon in src/lib/icons.ts appears in this list or the one above.
+
+index-list-numbered-muted:
+  title: Numbered rail, muted surface
+  block:
+    type: indexList
+    variant: numbered
+    surface: muted
+    items:
+      - text: Line managing and mentoring developers towards their own goals.
+      - text: Running several streams of work at once without dropping any.
+      - text: Translating business needs into shippable engineering work.
+
+index-list-columns-default:
+  title: Centred columns with icons, default surface
+  block:
+    type: indexList
+    variant: columns
+    items:
+      - title: Front end
+        icon: code
+        text: Up to three across on a desktop, stacked on a phone.
+      - title: DevOps
+        icon: loop
+        text: Centred, with the icon above the title.
+      - title: Infrastructure
+        icon: server
+        text: Like the original site's skill bands.
+
+index-list-ruled-inverse:
+  title: Ruled rows, inverse surface
+  block:
+    type: indexList
+    variant: ruled
+    surface: inverse
+    items:
+      - title: Monochrome
+        text: Hairlines and typography carry hierarchy on dark surfaces too.
+
+statement-manifesto-default:
+  title: Manifesto, default surface
+  block:
+    type: statement
+    heading: Editorial statement
+    variant: manifesto
+    surface: default
+    lines:
+      - Being capable across many trades is now the game.
+      - Good tooling lets a small team ship with confidence.
+
+statement-acrostic-muted:
+  title: Acrostic monograms, muted surface
+  block:
+    type: statement
+    variant: acrostic
+    align: left
+    surface: muted
+    lines:
+      - Skilled specialist shaping, scaling, and securing sites and software.
+      - Anthropic-accredited AI ace automating actions with agents.
+      - Modest man, mildly mortified marketing my mediocre merits.
+
+statement-manifesto-inverse:
+  title: Manifesto, inverse surface
+  block:
+    type: statement
+    variant: manifesto
+    align: center
+    surface: inverse
+    lines:
+      - Restraint outlasts spectacle.

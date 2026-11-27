@@ -1,0 +1,282 @@
+---
+/**
+ * `figures` block: oversized editorial metrics and scale progressions.
+ * `variant: columns` sets key figures side by side; `variant: ladder` adds progressive
+ * typographic weight and proportional monochrome scale bars for stepped growth.
+ */
+import Section from '../components/Section.astro';
+import Pic from '../components/Pic.astro';
+import { md } from '../lib/markdown';
+import type { BlockOf } from '../lib/content';
+
+interface Props {
+  block: BlockOf<'figures'>;
+  nested?: boolean;
+}
+const { block, nested = false } = Astro.props;
+const Heading = block.heading || nested ? 'h3' : 'h2';
+---
+
+<Section nested={nested} surface={block.surface}>
+  {block.heading && <h2 class="figures__heading">{block.heading}</h2>}
+  <ol class:list={['figures', `figures--${block.variant}`]}>
+    {block.items.map((item) => (
+      <li class="figures__item">
+        {item.logo ? (
+          <Heading class="figures__title figures__title--logo">
+            <span class="visually-hidden">{item.title}</span>
+            <Pic src={item.logo} alt="" preset="logo" class="figures__logo" />
+          </Heading>
+        ) : (
+          <Heading class="figures__title">{item.title}</Heading>
+        )}
+        <p class="figures__metric">
+          {item.prefix && <span class="figures__prefix">{item.prefix}</span>}
+          <span class="figures__value" data-count-value={item.value}>
+            {item.value}
+          </span>
+          {item.suffix && <span class="figures__suffix">{item.suffix}</span>}
+        </p>
+        {block.variant === 'ladder' && (
+          <span class="figures__track" aria-hidden="true">
+            <span class="figures__fill" />
+          </span>
+        )}
+        {item.text && <div class="figures__text" set:html={md(item.text)} />}
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<script>
+  // Count-up polish: the final value is rendered in HTML so no-JS, reduced motion and full-page
+  // screenshots always show the real figure. Only elements starting below the viewport tick up when
+  // scrolled into view.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const fmt = new Intl.NumberFormat('en-GB');
+    const parseTarget = (raw: string) => {
+      const m = raw.match(/^([^0-9]*)(\d[\d,]*)([^0-9]*)$/);
+      if (!m) return null;
+      const num = Number(m[2]!.replace(/,/g, ''));
+      if (!Number.isFinite(num) || num <= 0) return null;
+      return { lead: m[1]!, num, tail: m[3]!, commas: m[2]!.includes(',') };
+    };
+
+    const nodes = [...document.querySelectorAll<HTMLElement>('[data-count-value]')];
+    const belowFold = nodes.filter((el) => el.getBoundingClientRect().top > window.innerHeight * 0.95);
+
+    if (belowFold.length > 0) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const el = entry.target as HTMLElement;
+            io.unobserve(el);
+            const raw = el.dataset.countValue ?? '';
+            const parsed = parseTarget(raw);
+            if (!parsed) continue;
+            const startVal = Math.round(parsed.num * 0.35);
+            const duration = 620;
+            const started = performance.now();
+            const step = (now: number) => {
+              const t = Math.min(1, (now - started) / duration);
+              const eased = 1 - (1 - t) ** 3;
+              const current = Math.round(startVal + (parsed.num - startVal) * eased);
+              const formatted = parsed.commas ? fmt.format(current) : String(current);
+              el.textContent = t >= 1 ? raw : `${parsed.lead}${formatted}${parsed.tail}`;
+              if (t < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          }
+        },
+        { threshold: 0.35 },
+      );
+      belowFold.forEach((el) => io.observe(el));
+    }
+  }
+</script>
+
+<style>
+  .figures__heading {
+    margin: 0 0 var(--space-m-l);
+    color: var(--color-text-strong);
+  }
+
+  .figures {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 56rem) {
+    .figures {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-m) var(--space-l);
+    }
+  }
+
+  .figures__item {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border-strong);
+    transition: border-color var(--dur) var(--ease);
+  }
+  .figures__item:hover {
+    border-top-color: var(--color-text-strong);
+  }
+
+  .figures__title {
+    margin: 0 0 var(--space-s);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    color: var(--color-text-strong);
+  }
+
+  /* A logo in place of the title (ticket 509): black masters, greyed here and inverted in dark mode. */
+  .figures__title--logo {
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+  }
+  .figures__title--logo :global(picture) {
+    display: contents;
+  }
+  .figures__title--logo :global(img) {
+    width: auto;
+    max-width: 9rem;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+    opacity: 0.7;
+    transition: opacity var(--dur) var(--ease);
+  }
+  .figures__item:hover .figures__title--logo :global(img) {
+    opacity: 1;
+  }
+  :global(:root[data-theme='dark']) .figures__title--logo :global(img) {
+    filter: invert(1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .figures__title--logo :global(img) {
+      filter: invert(1);
+    }
+  }
+
+  .figures__metric {
+    margin: 0 0 var(--space-s);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+  }
+  .figures__prefix,
+  .figures__suffix {
+    font-size: var(--step--1);
+    line-height: var(--leading-small);
+    color: var(--color-text-muted);
+  }
+  .figures__value {
+    font-family: var(--font-display);
+    font-size: var(--step-5);
+    font-weight: 500;
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    text-box: trim-both cap alphabetic;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-strong);
+  }
+
+  /* Ladder variant: progressive Figtree weight and proportional monochrome scale bar. */
+  .figures--ladder .figures__item:nth-child(1) .figures__value {
+    font-weight: 350;
+  }
+  .figures--ladder .figures__item:nth-child(2) .figures__value {
+    font-weight: 540;
+  }
+  .figures--ladder .figures__item:nth-child(3) .figures__value {
+    font-weight: 760;
+  }
+  .figures--ladder .figures__item:nth-child(n + 4) .figures__value {
+    font-weight: 760;
+  }
+
+  .figures__track {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-bottom: var(--space-m);
+    background: var(--color-border);
+    overflow: hidden;
+  }
+  .figures__fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--color-text-strong);
+    transform-origin: left center;
+  }
+  .figures--ladder .figures__item:nth-child(1) .figures__fill {
+    width: 12%;
+  }
+  .figures--ladder .figures__item:nth-child(2) .figures__fill {
+    width: 44%;
+  }
+  .figures--ladder .figures__item:nth-child(3) .figures__fill {
+    width: 100%;
+  }
+
+  .figures__text {
+    font-size: var(--step-0);
+    line-height: var(--leading-body);
+    color: var(--color-text-muted);
+  }
+  .figures__text :global(p) {
+    margin: 0;
+  }
+  .figures__text :global(p + p) {
+    margin-top: var(--space-xs);
+  }
+
+  /* Gentle scroll-driven settle (never opacity: 0, so full-page screenshots stay sharp). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .figures__item {
+        animation-name: figures-settle;
+        animation-timing-function: var(--ease-out);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+      }
+      .figures__fill {
+        animation-name: figures-bar-grow;
+        animation-timing-function: var(--ease-out);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 32%;
+      }
+    }
+  }
+  @keyframes figures-settle {
+    from {
+      translate: 0 0.75rem;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+  @keyframes figures-bar-grow {
+    from {
+      transform: scaleX(0.84);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>

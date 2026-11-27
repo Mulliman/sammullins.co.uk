@@ -9,12 +9,12 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { text, attribution, source } = block;
+const { text, attribution, source, variant } = block;
 const caption = attribution ?? source;
 ---
 
 <Section nested={nested} width="narrow">
-  <figure class="quote">
+  <figure class:list={['quote', `quote--${variant}`]}>
     <blockquote cite={source}>
       <div class="quote__text" set:html={md(text)} />
     </blockquote>
@@ -67,5 +67,40 @@ const caption = attribution ?? source;
   }
   .quote__caption :global(p) {
     margin: 0;
+  }
+
+  /* Display (ticket 509): a large, centred line between two big quote marks, caption underneath. */
+  .quote--display {
+    text-align: center;
+  }
+  .quote--display .quote__text {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: 600;
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-text-strong);
+    text-wrap: balance;
+  }
+  .quote--display .quote__text::before,
+  .quote--display .quote__text::after {
+    position: static;
+    color: var(--color-border-strong);
+    font-weight: 400;
+  }
+  .quote--display .quote__text::before {
+    content: '\201C';
+  }
+  .quote--display .quote__text::after {
+    content: '\201D';
+  }
+  .quote--display .quote__text :global(p) {
+    display: inline;
+  }
+  .quote--display .quote__caption {
+    display: inline-block;
+    margin-top: var(--space-s);
+    padding-left: 0;
+    border-left: 0;
   }
 </style>

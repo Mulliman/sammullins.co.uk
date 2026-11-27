@@ -9,6 +9,7 @@ import { defineCollection, type SchemaContext } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { pageThemes } from './styles/themes';
+import { iconNames } from './lib/icons';
 
 type ImageFn = SchemaContext['image'];
 
@@ -81,7 +82,11 @@ const leafBlocks = (image: ImageFn) => {
     heading: z.string().optional(),
     lead: z.string().optional(),
     cta: cta.optional(),
+    /** A second, quieter button beside `cta` (ticket 509). */
+    secondaryCta: cta.optional(),
     align: align.default('center'),
+    /** editorial: magazine-scale heading and display-face pull-quote lead. */
+    variant: z.enum(['default', 'editorial']).default('default'),
     surface: surface.default('muted'),
   });
 
@@ -126,12 +131,20 @@ const leafBlocks = (image: ImageFn) => {
     href: z.string().optional(),
     /** Button label; shown when the card has an href. */
     cta: z.string().optional(),
+    /** A rosette in the card's corner for an award the item won (ticket 509). */
+    award: z
+      .object({
+        label: z.string().min(1),
+        title: z.string().min(1),
+        detail: z.string().optional(),
+      })
+      .optional(),
   });
 
   const cards = z.object({
     type: z.literal('cards'),
     heading: z.string().optional(),
-    variant: z.enum(['full', 'image', 'text']).default('full'),
+    variant: z.enum(['full', 'image', 'text', 'row']).default('full'),
     columns: z.number().int().min(1).max(4).default(3),
     surface: surface.default('default'),
     items: z.array(cardItem).optional(),
@@ -149,12 +162,28 @@ const leafBlocks = (image: ImageFn) => {
   const logoWall = z.object({
     type: z.literal('logoWall'),
     heading: z.string().optional(),
+    /** logos: open logo grid in grey until hovered. grid: architectural hairline-ruled specimen grid.
+        badges: certificates and awards, in full colour with no tile, at a fixed size (ticket 509). */
+    variant: z.enum(['logos', 'badges', 'grid']).default('logos'),
     surface: surface.default('default'),
-    logos: z.array(z.object({ name: z.string().min(1), logo: image(), href: z.url().optional() })).min(1),
+    /** `details` (Markdown, ticket 509): clicking the logo opens a small popover with this text, and
+        `href` becomes a "Visit" link in it (opening a new tab). Without details, `href` links the logo. */
+    logos: z
+      .array(
+        z.object({
+          name: z.string().min(1),
+          logo: image(),
+          href: z.url().optional(),
+          details: z.string().min(1).optional(),
+        }),
+      )
+      .min(1),
   });
 
   const quote = z.object({
     type: z.literal('quote'),
+    /** display: large and centred, for a line that opens a band (ticket 509). */
+    variant: z.enum(['default', 'display']).default('default'),
     text: z.string(),
     attribution: z.string().optional(),
     source: z.url().optional(),
@@ -214,6 +243,57 @@ const leafBlocks = (image: ImageFn) => {
       .min(1),
   });
 
+  /** Oversized editorial metrics and stepped scale progressions. */
+  const figures = z.object({
+    type: z.literal('figures'),
+    heading: z.string().optional(),
+    variant: z.enum(['columns', 'ladder']).default('columns'),
+    surface: surface.default('default'),
+    items: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          value: z.string().min(1),
+          /** A monochrome logo shown in place of the visible title (the title stays for screen readers). */
+          logo: image().optional(),
+          prefix: z.string().optional(),
+          suffix: z.string().optional(),
+          text: z.string().optional(),
+        }),
+      )
+      .min(1),
+  });
+
+  /** Hairline-ruled editorial list: titled two-column rows or a tabular numbered rail. */
+  const indexList = z.object({
+    type: z.literal('indexList'),
+    heading: z.string().optional(),
+    /** columns (ticket 509): centred columns, icon on top, like the original site's skill bands. */
+    variant: z.enum(['ruled', 'numbered', 'columns']).default('ruled'),
+    surface: surface.default('default'),
+    items: z
+      .array(
+        z.object({
+          title: z.string().optional(),
+          /** A line icon beside the row, from src/lib/icons.ts (ticket 509). */
+          icon: z.enum(iconNames).optional(),
+          text: z.string().min(1),
+        }),
+      )
+      .min(1),
+  });
+
+  /** Magazine-scale display statements, or an acrostic: lines whose bold first letters spell a word.
+      `~~words~~` are struck through as the line scrolls into view (ticket 509). */
+  const statement = z.object({
+    type: z.literal('statement'),
+    heading: z.string().optional(),
+    variant: z.enum(['manifesto', 'acrostic']).default('manifesto'),
+    align: align.default('left'),
+    surface: surface.default('default'),
+    lines: z.array(z.string().min(1)).min(1),
+  });
+
   /** Places the file Markdown body (rendered by Astro, with Prism) at this position. */
   const body = z.object({
     type: z.literal('body'),
@@ -237,6 +317,9 @@ const leafBlocks = (image: ImageFn) => {
     timeline,
     embed,
     steps,
+    figures,
+    indexList,
+    statement,
   ] as const;
 };
 
@@ -248,11 +331,14 @@ export const blockSchema = (image: ImageFn) => {
     type: z.literal('split'),
     ratio: z.enum(['1:1', '1:2', '2:1']).default('1:1'),
     reverseOnMobile: z.boolean().default(false),
+    /** Pin the first column beside longer content on desktop while scrolling. */
+    /** true or "start" pins the first column; "end" pins the second (ticket 509). */
+    sticky: z.union([z.boolean(), z.enum(['start', 'end'])]).default(false),
     columns: z.tuple([z.array(leaf), z.array(leaf)]),
   });
   // `section` is one full-width band (background and spacing) holding components in order, as the
   // original site did (a heading and its cards share a section). Children render without their own
-  // band, so their `surface` is ignored. Heroes are full-bleed and splits are bands, so neither nests.
+  // band, so their `surface` is ignored. Heroes are full-bleed, so they never nest.
   const [, ...nestable] = leaves;
   // `disclosure` (ticket 1005) is a closed-by-default row (<details>) that opens to show its blocks.
   // It needs no JS. `status: done` strikes the summary and adds a "Done" badge. It holds the same
@@ -269,7 +355,8 @@ export const blockSchema = (image: ImageFn) => {
     type: z.literal('section'),
     surface: surface.default('default'),
     spacing: z.enum(['none', 'small', 'normal']).default('normal'),
-    blocks: z.array(z.discriminatedUnion('type', [...nestable, disclosure])).min(1),
+    // A split may sit in a section too (ticket 509): it then shares the section's band.
+    blocks: z.array(z.discriminatedUnion('type', [...nestable, disclosure, split])).min(1),
   });
   return z.discriminatedUnion('type', [...leaves, split, disclosure, section]);
 };

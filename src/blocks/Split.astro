@@ -8,13 +8,25 @@ type SplitBlock = Extract<Block, { type: 'split' }>;
 interface Props {
   block: SplitBlock;
   Content?: AstroComponentFactory | undefined;
+  /** Inside a section (ticket 509): no band of its own. */
+  nested?: boolean;
 }
-const { block, Content } = Astro.props;
+const { block, Content, nested = false } = Astro.props;
 const [a, b] = block.columns;
 ---
 
-<Section>
-  <div class:list={['split', `split--${block.ratio.replace(':', '-')}`, { 'split--reverse': block.reverseOnMobile }]}>
+<Section nested={nested}>
+  <div
+    class:list={[
+      'split',
+      `split--${block.ratio.replace(':', '-')}`,
+      {
+        'split--reverse': block.reverseOnMobile,
+        'split--sticky': block.sticky !== false,
+        'split--sticky-end': block.sticky === 'end',
+      },
+    ]}
+  >
     <div class="split__col">
       <Blocks blocks={a} Content={Content} nested />
     </div>
@@ -29,15 +41,27 @@ const [a, b] = block.columns;
     gap: var(--space-l);
     align-items: start;
   }
+  /* In a section, text beside a badge sits level with it unless sticky top-alignment is requested. */
+  :global(.nested-block) > .split:not(.split--sticky) {
+    align-items: center;
+  }
+  .split__col {
+    min-width: 0;
+  }
   @media (min-width: 48rem) {
     .split--1-1 {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
     .split--1-2 {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     }
     .split--2-1 {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    }
+    .split--sticky:not(.split--sticky-end) > .split__col:first-child,
+    .split--sticky-end > .split__col:last-child {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-l));
     }
   }
   @media (max-width: 47.99rem) {

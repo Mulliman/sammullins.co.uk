@@ -111,6 +111,28 @@ async function blockToMd(b: Block, entry: AnyEntry): Promise<string> {
       ]
         .filter(Boolean)
         .join('\n');
+    case 'figures':
+      return [
+        b.heading && `## ${b.heading}`,
+        ...b.items.map((i) => {
+          const metric = [i.prefix, i.value, i.suffix].filter(Boolean).join(' ');
+          return `- **${i.title}** (${metric})${i.text ? `: ${i.text}` : ''}`;
+        }),
+      ]
+        .filter(Boolean)
+        .join('\n');
+    case 'indexList':
+      return [
+        b.heading && `## ${b.heading}`,
+        ...b.items.map((item, idx) => {
+          const bullet = b.variant === 'numbered' ? `${idx + 1}.` : '-';
+          return `${bullet} ${item.title ? `**${item.title}**: ` : ''}${item.text}`;
+        }),
+      ]
+        .filter(Boolean)
+        .join('\n');
+    case 'statement':
+      return [b.heading && `## ${b.heading}`, ...b.lines].filter(Boolean).join('\n\n');
     case 'disclosure': {
       const tags = [b.status === 'done' ? 'Done' : '', ...(b.badges ?? []).map((x) => x.label)].filter(Boolean);
       const inner = (await Promise.all(b.blocks.map((x) => blockToMd(x as Block, entry)))).filter((p) => p && p.trim());

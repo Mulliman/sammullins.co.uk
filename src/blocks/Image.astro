@@ -53,6 +53,10 @@ const framed = frame === 'thick' && width !== 'full';
     width: 100%;
     height: auto;
   }
+  :global(.split__col) .image__frame:not(.image__frame--thick) {
+    border-radius: var(--radius-m);
+    overflow: hidden;
+  }
 
   .image__frame--thick {
     border: 10px solid var(--color-frame);

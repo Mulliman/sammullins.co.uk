@@ -12,18 +12,25 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
-const { heading, lead, cta, align, surface } = block;
+const { heading, lead, cta, secondaryCta, align, variant, surface } = block;
 ---
 
 <Section nested={nested} surface={surface} width="narrow">
-  <div class:list={['intro', `intro--${align}`]}>
+  <div class:list={['intro', `intro--${align}`, `intro--${variant}`]}>
     {heading && <h2 class="intro__heading">{heading}</h2>}
     {lead && <div class="intro__lead" set:html={md(lead)} />}
-    {cta && (
+    {(cta || secondaryCta) && (
       <p class="intro__cta">
-        <a class="button" href={cta.href}>
-          {cta.label}
-        </a>
+        {cta && (
+          <a class="button" href={cta.href}>
+            {cta.label}
+          </a>
+        )}
+        {secondaryCta && (
+          <a class="button button--ghost" href={secondaryCta.href}>
+            {secondaryCta.label}
+          </a>
+        )}
       </p>
     )}
   </div>
@@ -37,6 +44,9 @@ const { heading, lead, cta, align, surface } = block;
   @media (max-width: 39.99rem) {
     .intro--center:has(.intro__lead) {
       text-align: left;
+    }
+    .intro--center:has(.intro__lead) .intro__cta {
+      justify-content: flex-start;
     }
   }
   .intro--left,
@@ -53,6 +63,25 @@ const { heading, lead, cta, align, surface } = block;
     line-height: var(--leading-lead);
     color: var(--color-text-muted);
   }
+  /* Editorial variant: magazine-scale heading and display-face pull-quote deck. */
+  .intro--editorial .intro__heading {
+    font-size: var(--step-5);
+    line-height: var(--leading-display);
+    margin-bottom: var(--space-m);
+  }
+  .intro--editorial .intro__lead {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 420;
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+  .intro--editorial.intro--left .intro__lead {
+    padding-left: var(--space-m);
+    border-left: 2px solid var(--color-text-strong);
+  }
   .intro--center .intro__lead {
     max-width: 36em;
     margin-inline: auto;
@@ -64,7 +93,13 @@ const { heading, lead, cta, align, surface } = block;
     margin-top: var(--space-s-m);
   }
   .intro__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
     margin: var(--space-m) 0 0;
+  }
+  .intro--center .intro__cta {
+    justify-content: center;
   }
   /* No trailing margin: the section (or the gap to the next component) sets the spacing. */
   .intro > :last-child {

@@ -7,7 +7,7 @@
 
 # Block catalogue
 
-Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 19 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
+Every page body is a list of blocks in front matter under `blocks:`. Each block has a `type` and the fields below. 22 types. Field reference and gotchas: [`_docs/content-model.md`](../../../_docs/content-model.md).
 
 Field types are as written in the Zod schema. "optional" means the key may be left out. A "default" is what the site uses when the key is left out.
 
@@ -44,7 +44,7 @@ limit: positive integer (optional)
 | type | fields |
 |---|---|
 | `hero` | `variant`, `heading`, `subheading`, `image`, `align`, `ctas`, `mark` |
-| `intro` | `heading`, `lead`, `cta`, `align`, `surface` |
+| `intro` | `heading`, `lead`, `cta`, `secondaryCta`, `align`, `variant`, `surface` |
 | `prose` | `markdown`, `align`, `surface` |
 | `body` | `surface` |
 | `callout` | `tone`, `title`, `body` |
@@ -52,14 +52,17 @@ limit: positive integer (optional)
 | `gallery` | `heading`, `columns`, `surface`, `images` |
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
-| `logoWall` | `heading`, `surface`, `logos` |
-| `quote` | `text`, `attribution`, `source` |
+| `logoWall` | `heading`, `variant`, `surface`, `logos` |
+| `quote` | `variant`, `text`, `attribution`, `source` |
 | `code` | `lang`, `code`, `filename` |
 | `nextPrev` | `prev`, `next` |
 | `timeline` | `heading`, `surface`, `items` |
 | `embed` | `provider`, `id`, `title`, `poster` |
 | `steps` | `heading`, `items` |
-| `split` | `ratio`, `reverseOnMobile`, `columns` |
+| `figures` | `heading`, `variant`, `surface`, `items` |
+| `indexList` | `heading`, `variant`, `surface`, `items` |
+| `statement` | `heading`, `variant`, `align`, `surface`, `lines` |
+| `split` | `ratio`, `reverseOnMobile`, `sticky`, `columns` |
 | `disclosure` | `summary`, `badges`, `status`, `open`, `blocks` |
 | `section` | `surface`, `spacing`, `blocks` |
 
@@ -82,7 +85,9 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `lead` | string | no |  |
 | `cta` | cta | no |  |
+| `secondaryCta` | cta | no |  |
 | `align` | center \| left | no | `'center'` |
+| `variant` | default \| editorial | no | `'default'` |
 | `surface` | default \| muted \| inverse | no | `'muted'` |
 
 ## `prose`
@@ -132,7 +137,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `variant` | full \| image \| text | no | `'full'` |
+| `variant` | full \| image \| text \| row | no | `'full'` |
 | `columns` | number (min 1) (max 4) | no | `3` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | list of cardItem | no |  |
@@ -151,13 +156,15 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
+| `variant` | logos \| badges \| grid | no | `'logos'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
-| `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
+| `logos` | z .array(z.object({ name: string (min 1), logo: image(), href: url, details: string (min 1), }),)  (min 1) | no |  |
 
 ## `quote`
 
 | field | type | required | default |
 |---|---|---|---|
+| `variant` | default \| display | no | `'default'` |
 | `text` | string | yes |  |
 | `attribution` | string | no |  |
 | `source` | url | no |  |
@@ -201,12 +208,41 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `items` | z .array(z.object({ text: string (min 1), code: z .object({ lang: string, code: string (min 1), filename: string }) , }),)  (min 1) | no | `'text'` |
 
+## `figures`
+
+| field | type | required | default |
+|---|---|---|---|
+| `heading` | string | no |  |
+| `variant` | columns \| ladder | no | `'columns'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
+| `items` | z .array(z.object({ title: string (min 1), value: string (min 1), logo: image(), prefix: string, suffix: string, text: string, }),)  (min 1) | no |  |
+
+## `indexList`
+
+| field | type | required | default |
+|---|---|---|---|
+| `heading` | string | no |  |
+| `variant` | ruled \| numbered \| columns | no | `'ruled'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
+| `items` | z .array(z.object({ title: string, icon: z.enum(iconNames), text: string (min 1), }),)  (min 1) | no |  |
+
+## `statement`
+
+| field | type | required | default |
+|---|---|---|---|
+| `heading` | string | no |  |
+| `variant` | manifesto \| acrostic | no | `'manifesto'` |
+| `align` | center \| left | no | `'left'` |
+| `surface` | default \| muted \| inverse | no | `'default'` |
+| `lines` | z.array(string (min 1)) (min 1) | yes |  |
+
 ## `split`
 
 | field | type | required | default |
 |---|---|---|---|
 | `ratio` | 1:1 \| 1:2 \| 2:1 | no | `'1:1'` |
 | `reverseOnMobile` | boolean | no | `false` |
+| `sticky` | z.union([boolean, start \| end]) | no | `false` |
 | `columns` | z.tuple([list of leaf, list of leaf]) | yes |  |
 
 ## `disclosure`
@@ -225,4 +261,4 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `spacing` | none \| small \| normal | no | `'normal'` |
-| `blocks` | z.array(z.discriminatedUnion('type', [...nestable, disclosure])) (min 1) | yes |  |
+| `blocks` | z.array(z.discriminatedUnion('type', [...nestable, disclosure, split])) (min 1) | yes |  |
