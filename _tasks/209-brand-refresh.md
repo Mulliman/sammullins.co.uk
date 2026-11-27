@@ -2,7 +2,7 @@
 id: "209"
 title: Roll out the new logo, the masthead header and Figtree with Atkinson Hyperlegible Next
 epic: Design system
-status: review
+status: done
 priority: p1
 size: M
 owner: agent
@@ -32,6 +32,11 @@ Sam redrew the logo (November 2026): the same mark rebuilt on its grid, a Figtre
 - [x] No colour literals outside `src/styles/themes/`; the logo follows light, dark and inverse surfaces.
 - [x] Without JS the header isn't sticky and shows the masthead; the mobile menu still works.
 - [x] `pnpm verify` passes.
+
+## Verification (23 November 2026, PM pass)
+
+- Merged into `main` by PR #33 (`a8958ed`, 13 November 2026). The branch tip `522cd33` is an ancestor of `origin/main`: `git rev-list --count origin/main..209-brand-refresh` is 0.
+- Every acceptance criterion was already ticked with the work, and `pnpm verify` ran in the PR. Nothing is left, so the ticket closes.
 
 ## Out of scope
 

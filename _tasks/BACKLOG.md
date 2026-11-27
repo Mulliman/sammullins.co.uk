@@ -6,6 +6,11 @@ What's left between today and launch, in the order to do it. It replaces the "Su
 
 ## Where things stand
 
+**23 November 2026 (PM pass).** 209 (new logo, masthead header, fonts) and 906 (scroll animations) were merged on 13 November (PRs #33 and #32) and are now `done`. 807 (merge tiers) merged in PR #40 on 16 November but stays `in-progress`: four repo settings are Sam's. Open PRs: #25 (508 launch copy, draft, now conflicting with `main`), #31 (310 about hero, draft) and #38 (Renovate). `210-design-2026` (the 2026 component pass, direction A) has 3 commits not on `main`, no PR and no ticket on `main`; it waits on three decisions from Sam.
+
+- **Content:** no new article is on the site yet (newest: December 2022). In the private content repo, two launch drafts are in review (The Imposter, built three times: 1,341 words, 12 open findings; No AI to agent first: 564 words, 22 open findings) and five more are idea stubs. The 24-article advent calendar is not reachable by Christmas; see the desk page.
+- **The path to launch is unchanged:** 210 decisions, 508 (copy), 314 (CV), then 1201, 1203 and 1204.
+
 **12 November 2026 (ticket tidy).** No ticket was closed; seven statuses changed so they match git, each with a PM note saying what is left. PRs #1 to #28 are merged or closed; #25 (the 508 launch copy, draft) and #29 (Renovate) are open.
 
 - **Agent work, now `in-progress`:** 805 (the deploy-preview header check), 1002 and 1003 (skill dry runs).
