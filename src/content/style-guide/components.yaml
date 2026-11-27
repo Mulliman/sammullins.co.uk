@@ -1052,7 +1052,7 @@ figures-ladder-muted:
     surface: muted
     items:
       - title: LV=
-        logo: ../../assets/media/employers/lv-mark.avif
+        logo: ../../assets/media/employers/lv-heart.avif
         prefix: About
         value: "1,500"
         suffix: colleagues

@@ -45,6 +45,17 @@ const { heading, lead, cta, secondaryCta, align, variant, surface } = block;
   .intro--center .intro__lead {
     text-wrap: balance;
   }
+  /* A heading on its own gets the same breathing room below it as a heading with a subtitle. */
+  .intro:not(:has(.intro__lead, .intro__cta)) .intro__heading {
+    margin-bottom: var(--space-s-m);
+  }
+  /* Phones: centred headings and subtitles sit in a narrower measure than the body, as the old site did. */
+  @media (max-width: 39.99rem) {
+    .intro--center .intro__heading,
+    .intro--center .intro__lead {
+      padding-inline: var(--space-s);
+    }
+  }
   .intro--left,
   .intro--left .intro__heading,
   .intro--left .intro__lead {

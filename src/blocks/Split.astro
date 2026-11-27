@@ -24,6 +24,7 @@ const [a, b] = block.columns;
         'split--reverse': block.reverseOnMobile,
         'split--sticky': block.sticky !== false,
         'split--sticky-end': block.sticky === 'end',
+        'split--narrow': block.narrow,
       },
     ]}
   >
@@ -47,6 +48,10 @@ const [a, b] = block.columns;
   }
   .split__col {
     min-width: 0;
+  }
+  .split--narrow {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
   }
   @media (min-width: 48rem) {
     .split--1-1 {

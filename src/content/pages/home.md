@@ -37,27 +37,29 @@ blocks:
       - type: "intro"
         heading: "First, a C# CMS specialist"
         lead: "My first eleven years were at Redweb, going deep on C# and web content management."
-      - type: "logoWall"
-        variant: "badges"
-        logos:
-          - name: "Sitecore"
-            logo: "../../assets/media/badges/sitecore.avif"
-            href: "https://www.sitecore.com/"
-            details: "Sitecore is an enterprise content management and digital experience platform, built on .NET. Large organisations use it to run big, personalised websites."
-          - name: "Umbraco"
-            logo: "../../assets/media/badges/umbraco.avif"
-            href: "https://umbraco.com/"
-            details: "Umbraco is a free, open source content management system, built on .NET. It's popular with agencies, and has a friendly community behind it."
-      - type: "prose"
-        markdown: "I started there as a student developer, built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
+      - type: "split"
+        ratio: "2:1"
+        narrow: true
+        columns:
+          - - type: "prose"
+              markdown: "I started there as a student developer, built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
+          - - type: "logoWall"
+              variant: "badges"
+              logos:
+                - name: "Sitecore"
+                  logo: "../../assets/media/badges/sitecore.avif"
+                  href: "https://www.sitecore.com/"
+                  details: "Sitecore is an enterprise content management and digital experience platform, built on .NET. Large organisations use it to run big, personalised websites."
+                - name: "Umbraco"
+                  logo: "../../assets/media/badges/umbraco.avif"
+                  href: "https://umbraco.com/"
+                  details: "Umbraco is a free, open source content management system, built on .NET. It's popular with agencies, and has a friendly community behind it."
   - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
         heading: "Working with clients"
         lead: "Agency work put me in front of clients, both in the development team and on site as a consultant."
-      - type: "prose"
-        markdown: "I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
       # Sam to write one or two sentences per client on his involvement (27 November 2026).
       - type: "logoWall"
         logos:
@@ -97,6 +99,8 @@ blocks:
           - name: "Insight Vacations"
             logo: "../../assets/media/pzupnmbz/iv.avif"
             details: "[Sam to write: one or two sentences on what I did for Insight Vacations.]"
+      - type: "prose"
+        markdown: "I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
   - type: "section"
     surface: "muted"
     blocks:
@@ -109,7 +113,7 @@ blocks:
         align: "center"
         items:
           - title: "LV="
-            logo: "../../assets/media/employers/lv-mark.avif"
+            logo: "../../assets/media/employers/lv-heart.avif"
             prefix: "About"
             value: "1,500"
             suffix: "colleagues"
@@ -251,13 +255,30 @@ blocks:
   - type: "section"
     surface: "default"
     blocks:
+      # Sam: what still needs a person, as icons that map to his skills.
       - type: "intro"
         heading: "So, fifteen years later"
-      - type: "prose"
-        markdown: |-
-          Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem, and spot when they've got it wrong.
-
-          So in a world changing this fast, being capable across many trades is now the game.
+        lead: "Coding agents now do more and more of the narrow, specialist work. What they can't do is the rest."
+      - type: "indexList"
+        variant: "columns"
+        items:
+          - title: "Choosing the problem"
+            icon: "target"
+            text: "Pointing them at the right problem, from years of working with clients and the business."
+          - title: "Spotting the mistakes"
+            icon: "review"
+            text: "Knowing enough of every trade to see when they've got it wrong."
+          - title: "Seeing the whole"
+            icon: "puzzle"
+            text: "Making sure the front end, back end, pipelines and infrastructure still fit together."
+          - title: "Leading the people"
+            icon: "users"
+            text: "Helping a team of developers work with agents, and keep growing themselves."
+  - type: "section"
+    surface: "muted"
+    blocks:
+      - type: "intro"
+        lead: "So in a world changing this fast, being capable across many trades is now the game."
       # Sam: a subtle separation, Jack struck through again as it scrolls in.
       - type: "statement"
         variant: "manifesto"
@@ -282,7 +303,7 @@ blocks:
           href: "/cv/"
   # Sam (26 November 2026): end on what he has been up to recently, before the footer.
   - type: "section"
-    surface: "muted"
+    surface: "default"
     blocks:
       - type: "intro"
         heading: "What I've been up to recently"

@@ -158,6 +158,17 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     .index-list--columns > .index-list__item {
       flex: 0 1 calc((100% - 2 * var(--space-l-xl)) / 3);
     }
+    .index-list--columns:has(> :nth-child(4):last-child) > .index-list__item {
+      flex-basis: calc((100% - var(--space-l-xl)) / 2);
+    }
+  }
+  @media (min-width: 64rem) {
+    .index-list--columns:has(> :nth-child(4):last-child) > .index-list__item {
+      flex-basis: calc((100% - 3 * var(--space-l)) / 4);
+    }
+    .index-list--columns:has(> :nth-child(4):last-child) {
+      column-gap: var(--space-l);
+    }
   }
   .index-list--columns .index-list__item {
     align-content: start;

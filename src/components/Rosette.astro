@@ -69,6 +69,14 @@ d += ' Z';
     height: 100%;
     overflow: visible;
   }
+  /* A halo in the surface colour (painted under the fill), so the rosette reads on a dark image. */
+  .rosette__disc,
+  .rosette__tail {
+    stroke: var(--color-surface);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    paint-order: stroke;
+  }
   .rosette__disc {
     fill: var(--color-text-strong);
   }

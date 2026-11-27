@@ -62,7 +62,7 @@ limit: positive integer (optional)
 | `figures` | `heading`, `variant`, `align`, `surface`, `items` |
 | `indexList` | `heading`, `variant`, `surface`, `items` |
 | `statement` | `heading`, `variant`, `align`, `surface`, `lines` |
-| `split` | `ratio`, `reverseOnMobile`, `sticky`, `columns` |
+| `split` | `ratio`, `reverseOnMobile`, `sticky`, `narrow`, `columns` |
 | `disclosure` | `summary`, `badges`, `status`, `open`, `blocks` |
 | `section` | `surface`, `spacing`, `blocks` |
 
@@ -244,6 +244,7 @@ limit: positive integer (optional)
 | `ratio` | 1:1 \| 1:2 \| 2:1 | no | `'1:1'` |
 | `reverseOnMobile` | boolean | no | `false` |
 | `sticky` | z.union([boolean, start \| end]) | no | `false` |
+| `narrow` | boolean | no | `false` |
 | `columns` | z.tuple([list of leaf, list of leaf]) | yes |  |
 
 ## `disclosure`

@@ -356,6 +356,11 @@ const idBase = nextId('logo');
   :global(:root[data-theme]) .logos--badges .logos__item:only-child {
     width: min(13rem, 65%);
   }
+  /* Beside text in a split (509-symmetry): small, on one line. */
+  :global(.split__col) .logos--badges .logos__item:not(:only-child),
+  :global(:root[data-theme]) :global(.split__col) .logos--badges .logos__item:not(:only-child) {
+    width: 5.5rem;
+  }
   /* Phones: badges small, so they don't take a screen of their own. */
   @media (max-width: 39.99rem) {
     .logos--badges .logos__item,

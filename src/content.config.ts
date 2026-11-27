@@ -335,6 +335,8 @@ export const blockSchema = (image: ImageFn) => {
     /** Pin the first column beside longer content on desktop while scrolling. */
     /** true or "start" pins the first column; "end" pins the second (ticket 509). */
     sticky: z.union([z.boolean(), z.enum(['start', 'end'])]).default(false),
+    /** Keep both columns within the narrow text measure, so short text and small logos sit together. */
+    narrow: z.boolean().default(false),
     columns: z.tuple([z.array(leaf), z.array(leaf)]),
   });
   // `section` is one full-width band (background and spacing) holding components in order, as the
