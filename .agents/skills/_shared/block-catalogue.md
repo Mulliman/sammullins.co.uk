@@ -52,7 +52,7 @@ limit: positive integer (optional)
 | `cards` | `heading`, `variant`, `columns`, `surface`, `items`, `query` |
 | `listing` | `heading`, `variant`, `surface` |
 | `logoWall` | `heading`, `variant`, `surface`, `logos` |
-| `quote` | `text`, `attribution`, `source` |
+| `quote` | `variant`, `text`, `attribution`, `source` |
 | `code` | `lang`, `code`, `filename` |
 | `nextPrev` | `prev`, `next` |
 | `timeline` | `heading`, `surface`, `items` |
@@ -60,7 +60,7 @@ limit: positive integer (optional)
 | `steps` | `heading`, `items` |
 | `figures` | `heading`, `variant`, `surface`, `items` |
 | `indexList` | `heading`, `variant`, `surface`, `items` |
-| `statement` | `heading`, `variant`, `surface`, `lines` |
+| `statement` | `heading`, `variant`, `align`, `surface`, `lines` |
 | `split` | `ratio`, `reverseOnMobile`, `sticky`, `columns` |
 | `disclosure` | `summary`, `badges`, `status`, `open`, `blocks` |
 | `section` | `surface`, `spacing`, `blocks` |
@@ -157,12 +157,13 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | logos \| badges \| grid | no | `'logos'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
-| `logos` | z.array(z.object({ name: string (min 1), logo: image(), href: url })) (min 1) | no |  |
+| `logos` | z .array(z.object({ name: string (min 1), logo: image(), href: url, details: string (min 1), }),)  (min 1) | no |  |
 
 ## `quote`
 
 | field | type | required | default |
 |---|---|---|---|
+| `variant` | default \| display | no | `'default'` |
 | `text` | string | yes |  |
 | `attribution` | string | no |  |
 | `source` | url | no |  |
@@ -213,7 +214,7 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | columns \| ladder | no | `'columns'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
-| `items` | z .array(z.object({ title: string (min 1), value: string (min 1), prefix: string, suffix: string, text: string, }),)  (min 1) | no |  |
+| `items` | z .array(z.object({ title: string (min 1), value: string (min 1), logo: image(), prefix: string, suffix: string, text: string, }),)  (min 1) | no |  |
 
 ## `indexList`
 
@@ -222,7 +223,7 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | ruled \| numbered | no | `'ruled'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
-| `items` | z .array(z.object({ title: string, text: string (min 1), }),)  (min 1) | no |  |
+| `items` | z .array(z.object({ title: string, icon: z.enum(iconNames), text: string (min 1), }),)  (min 1) | no |  |
 
 ## `statement`
 
@@ -230,6 +231,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | manifesto \| acrostic | no | `'manifesto'` |
+| `align` | center \| left | no | `'left'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `lines` | z.array(string (min 1)) (min 1) | yes |  |
 
@@ -239,7 +241,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `ratio` | 1:1 \| 1:2 \| 2:1 | no | `'1:1'` |
 | `reverseOnMobile` | boolean | no | `false` |
-| `sticky` | boolean | no | `false` |
+| `sticky` | z.union([boolean, start \| end]) | no | `false` |
 | `columns` | z.tuple([list of leaf, list of leaf]) | yes |  |
 
 ## `disclosure`

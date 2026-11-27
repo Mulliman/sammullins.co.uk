@@ -1,0 +1,24 @@
+---
+/** A decorative line icon from `src/lib/icons.ts` (ticket 509). It inherits the text colour. */
+import { icons, type IconName } from '../lib/icons';
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+const html = icons[name];
+---
+
+<svg
+  class:list={['icon', className]}
+  aria-hidden="true"
+  focusable="false"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  set:html={html}
+/>

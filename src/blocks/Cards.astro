@@ -21,6 +21,7 @@ interface CardData {
   href?: string | undefined;
   date?: Date | undefined;
   cta?: string | undefined;
+  award?: { label: string; title: string; detail?: string | undefined } | undefined;
 }
 
 const items: CardData[] = [
@@ -51,6 +52,7 @@ const items: CardData[] = [
             href={item.href}
             date={item.date}
             cta={item.cta}
+            award={item.award}
             variant={block.variant}
           />
         </li>

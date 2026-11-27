@@ -3,9 +3,15 @@
  * `logoWall` block (ticket 306): client logos on white tiles, four to a row as the original.
  * Each logo's alt text is the client name. `variant: badges` (ticket 509) shows certificates and
  * awards in colour instead.
+ *
+ * Ticket 509: a logo with `details` is a button that opens a popover (the HTML popover API, so it needs
+ * no script: Esc and clicking outside close it). It sits under the logo where CSS anchor positioning is
+ * supported, and in the middle of the screen where it isn't.
  */
 import Section from '../components/Section.astro';
 import Pic from '../components/Pic.astro';
+import { md } from '../lib/markdown';
+import { nextId } from '../lib/ids';
 import type { BlockOf } from '../lib/content';
 
 interface Props {
@@ -13,16 +19,41 @@ interface Props {
   nested?: boolean;
 }
 const { block, nested = false } = Astro.props;
+// Popover ids must be unique on the page, and a page can hold several walls.
+const idBase = nextId('logo');
 ---
 
 <Section nested={nested} surface={block.surface}>
   {block.heading && <h2 class="logos__heading">{block.heading}</h2>}
   <ul class:list={['logos', `logos--${block.variant}`]}>
-    {block.logos.map((item) => {
+    {block.logos.map((item, i) => {
       const pic = <Pic src={item.logo} alt={item.name} preset="logo" />;
+      const popId = `${idBase}-${i}`;
       return (
         <li class="logos__item">
-          {item.href ? (
+          {item.details ? (
+            <>
+              <button class="logos__link logos__button" type="button" popovertarget={popId} aria-haspopup="dialog">
+                {pic}
+              </button>
+              <div class="logos__pop" id={popId} popover role="dialog" aria-label={item.name}>
+                <p class="logos__pop-title">{item.name}</p>
+                <div class="logos__pop-text" set:html={md(item.details)} />
+                {item.href && (
+                  <p class="logos__pop-visit">
+                    <a class="arrow-link" href={item.href} target="_blank" rel="noopener">
+                      Visit {item.name}
+                      <span class="visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                  </p>
+                )}
+                <button class="logos__pop-close" type="button" popovertarget={popId} popovertargetaction="hide">
+                  <span class="visually-hidden">Close</span>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+            </>
+          ) : item.href ? (
             <a class="logos__link" href={item.href} rel="noopener">
               {pic}
             </a>
@@ -84,15 +115,128 @@ const { block, nested = false } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    opacity: 0.85;
+    opacity: 0.55;
     filter: grayscale(1);
     transition:
       opacity var(--dur) var(--ease),
-      filter var(--dur) var(--ease);
+      filter var(--dur) var(--ease),
+      scale var(--dur) var(--ease-out);
   }
-  .logos__item:hover :global(img) {
+  /* Sam (27 November 2026): no borders and no background change (the logos' own white would show).
+     Logos rest faded and come to full strength on hover, focus or while their popover is open. */
+  .logos__item:hover :global(img),
+  .logos__link:focus-visible :global(img),
+  .logos__button[aria-expanded='true'] :global(img) {
     opacity: 1;
     filter: none;
+  }
+  .logos__button:hover :global(img) {
+    scale: 1.04;
+  }
+
+  .logos__button {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--radius);
+  }
+
+  /* The popover: a small card under its logo. */
+  .logos__pop {
+    width: min(22rem, calc(100vw - 2 * var(--gutter)));
+    margin: auto;
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-m);
+    background: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+  .logos__pop::backdrop {
+    background: transparent;
+  }
+  @supports (position-area: bottom) {
+    .logos__pop {
+      inset: auto;
+      margin: var(--space-2xs) 0;
+      position-area: bottom;
+      position-try-fallbacks:
+        bottom span-right,
+        bottom span-left,
+        flip-block;
+    }
+  }
+  /* Phones: a sheet along the bottom of the screen, clear of the edges, instead of under the logo. */
+  @media (max-width: 39.99rem) {
+    .logos__pop {
+      inset: auto var(--gutter) var(--gutter);
+      width: auto;
+      margin: 0;
+      position-area: none;
+    }
+  }
+  .logos__pop-title {
+    margin: 0 0 var(--space-3xs);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-heading);
+    color: var(--color-text-strong);
+  }
+  .logos__pop-text {
+    font-size: var(--step--1);
+    line-height: var(--leading-small);
+    color: var(--color-text-muted);
+  }
+  .logos__pop-text :global(p) {
+    margin: 0;
+  }
+  .logos__pop-text :global(p + p) {
+    margin-top: 0.6em;
+  }
+  .logos__pop-visit {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--step--1);
+  }
+  .logos__pop-close {
+    position: absolute;
+    inset: var(--space-3xs) var(--space-3xs) auto auto;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--color-text-muted);
+    font-size: var(--step-1);
+    line-height: var(--leading-hero);
+    cursor: pointer;
+  }
+  .logos__pop-close:hover {
+    color: var(--color-text-strong);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .logos__pop {
+      transition:
+        opacity var(--dur) var(--ease-out),
+        translate var(--dur) var(--ease-out),
+        display var(--dur) allow-discrete,
+        overlay var(--dur) allow-discrete;
+    }
+    .logos__pop:not(:popover-open) {
+      opacity: 0;
+      translate: 0 -0.25rem;
+    }
+    @starting-style {
+      .logos__pop:popover-open {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
+    }
   }
   @media (max-width: 639.98px) {
     .logos__item {

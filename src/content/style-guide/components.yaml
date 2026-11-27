@@ -355,12 +355,16 @@ cards-full-manual:
     surface: default
     items:
       - title: Beach portrait
-        text: A **manual** card with an image, text and a link.
+        text: A **manual** card with an image, text and a link, and an award rosette in its corner.
         image:
           src: ../../assets/demo/demo.jpg
           alt: A portrait on a beach at dusk
         href: /
         cta: Read more
+        award:
+          label: Winner
+          title: Demo award
+          detail: Best example 2026
       - title: Client logo
         text: Plain text under the frame.
         image:
@@ -663,8 +667,11 @@ logo-wall-badges:
     logos:
       - name: Sitecore
         logo: ../../assets/media/badges/sitecore.avif
+        href: https://www.sitecore.com/
+        details: With `details`, the logo opens a popover. The `href` becomes a link in it that opens a new tab.
       - name: Umbraco
         logo: ../../assets/media/badges/umbraco.avif
+        details: Details without a link. Press Esc or click outside to close.
 
 section-with-split:
   title: Section holding a split (text beside badges)
@@ -689,9 +696,18 @@ quote-with-attribution:
   title: Quote, with attribution and source
   block:
     type: quote
+    variant: default
     text: Good design is as little design as possible.
     attribution: Dieter Rams
     source: https://www.vitsoe.com/
+
+quote-display:
+  title: Display quote, large and centred
+  block:
+    type: quote
+    variant: display
+    text: What is wrong with being a jack of all trades?
+    attribution: My website, in 2011
 
 quote-plain:
   title: Quote, with no attribution or source
@@ -854,7 +870,7 @@ split-sticky:
   block:
     type: split
     ratio: "1:2"
-    sticky: true
+    sticky: start
     columns:
       - - type: intro
           heading: Sticky chapter heading
@@ -866,6 +882,31 @@ split-sticky:
             - text: First editorial point in the right column.
             - text: Second editorial point in the right column.
             - text: Third editorial point in the right column.
+
+split-sticky-end:
+  title: Ratio 2:1, sticky second column (heading first on a phone)
+  block:
+    type: split
+    ratio: "2:1"
+    sticky: end
+    reverseOnMobile: true
+    columns:
+      - - type: indexList
+          variant: ruled
+          items:
+            - title: Front end
+              icon: code
+              text: The longer column scrolls on the left.
+            - title: DevOps
+              icon: loop
+              text: The heading stays pinned on the right.
+            - title: Infrastructure
+              icon: server
+              text: On a phone the heading comes first.
+      - - type: intro
+          heading: Pinned on the right
+          align: left
+          lead: For bands that flow right instead of left.
 
 section-none-default:
   title: No spacing, default surface
@@ -1009,7 +1050,8 @@ figures-ladder-muted:
     variant: ladder
     surface: muted
     items:
-      - title: Stage one
+      - title: LV=
+        logo: ../../assets/media/employers/lv.avif
         prefix: About
         value: "1,500"
         suffix: colleagues
@@ -1048,9 +1090,31 @@ index-list-ruled-default:
     surface: default
     items:
       - title: Front end
+        icon: code
         text: React, TypeScript and accessible semantic HTML.
       - title: DevOps
+        icon: loop
         text: Automated pipelines for dependable builds and releases.
+
+index-list-icons-muted:
+  title: Icon rail, no titles, muted surface
+  block:
+    type: indexList
+    variant: ruled
+    surface: muted
+    items:
+      - icon: users
+        text: Line managing and mentoring developers.
+      - icon: layers
+        text: Running several streams of work at once.
+      - icon: translate
+        text: Translating business needs into work developers can ship.
+      - icon: network
+        text: Coordinating changes across teams.
+      - icon: iteration
+        text: Acting as Scrum Master.
+      - icon: cloud
+        text: Every icon in src/lib/icons.ts appears in this list or the one above.
 
 index-list-numbered-muted:
   title: Numbered rail, muted surface
@@ -1089,6 +1153,7 @@ statement-acrostic-muted:
   block:
     type: statement
     variant: acrostic
+    align: left
     surface: muted
     lines:
       - Skilled specialist shaping, scaling, and securing sites and software.
@@ -1100,6 +1165,7 @@ statement-manifesto-inverse:
   block:
     type: statement
     variant: manifesto
+    align: center
     surface: inverse
     lines:
       - Restraint outlasts spectacle.

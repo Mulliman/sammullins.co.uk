@@ -5,6 +5,7 @@
  * clickable without nesting links. Links inside the text sit above that cover.
  */
 import Pic from './Pic.astro';
+import Rosette from './Rosette.astro';
 import { md } from '../lib/markdown';
 import type { ImageMetadata } from 'astro';
 
@@ -15,12 +16,14 @@ interface Props {
   href?: string | undefined;
   date?: Date | undefined;
   cta?: string | undefined;
+  /** An award rosette in the card's top corner (ticket 509). */
+  award?: { label: string; title: string; detail?: string | undefined } | undefined;
   variant?: 'full' | 'image' | 'text' | 'row';
   /** h2 when nothing above the card grid is a heading (keeps heading order valid); h3 otherwise. */
   headingLevel?: 2 | 3;
 }
 
-const { title, text, image, href, date, cta, variant = 'full', headingLevel = 3 } = Astro.props;
+const { title, text, image, href, date, cta, award, variant = 'full', headingLevel = 3 } = Astro.props;
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 // An image card with no image falls back to the text style.
 const kind = variant === 'image' && !image ? 'text' : variant;
@@ -30,7 +33,12 @@ const fmt = (d: Date) =>
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
-<article class:list={['card', `card--${kind}`]}>
+<article class:list={['card', `card--${kind}`, { 'card--award': award }]}>
+  {award && (
+    <div class="card__award">
+      <Rosette {...award} />
+    </div>
+  )}
   {image && kind !== 'text' && (
     <div class="card__media">
       <Pic src={image.src} alt={image.decorative ? '' : image.alt} preset="card" class="card__img" />
@@ -72,6 +80,28 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     min-width: 0;
     border-radius: var(--radius-m);
     text-align: left;
+  }
+
+  /* Award (ticket 509): the rosette sits in the top corner, over the image on a stacked card and beside
+     the text on a feature card, which keeps room for it. */
+  .card__award {
+    --rosette-size: 6.5rem;
+    position: absolute;
+    width: var(--rosette-size);
+    top: var(--space-xs);
+    right: var(--space-xs);
+    z-index: 2;
+    pointer-events: none;
+  }
+  @media (min-width: 640px) {
+    .card__award {
+      --rosette-size: 8.5rem;
+      top: var(--space-s);
+      right: var(--space-m);
+    }
+    :global(.cards__item:only-child) > .card--full.card--award .card__body {
+      padding-right: calc(8.5rem + var(--space-l));
+    }
   }
 
   /* Full: image on top, then title, meta, text and the call to action pinned to the bottom. */

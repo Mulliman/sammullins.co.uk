@@ -3,7 +3,9 @@
  * `indexList` block: an editorial ruled list.
  * `variant: numbered` pairs each row with a tabular 01/02/03 index rail;
  * `variant: ruled` lays out titled rows across a hairline two-column editorial grid.
+ * An item's `icon` (ticket 509) sits in the rail instead of a number.
  */
+import Icon from '../components/Icon.astro';
 import Section from '../components/Section.astro';
 import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
@@ -21,8 +23,18 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   {block.heading && <h2 class="index-list__heading">{block.heading}</h2>}
   <ListTag class:list={['index-list', `index-list--${block.variant}`]}>
     {block.items.map((item, i) => (
-      <li class:list={['index-list__item', { 'index-list__item--titled': Boolean(item.title) }]}>
-        {block.variant === 'numbered' && (
+      <li
+        class:list={[
+          'index-list__item',
+          { 'index-list__item--titled': Boolean(item.title), 'index-list__item--icon': Boolean(item.icon) },
+        ]}
+      >
+        {item.icon && (
+          <span class="index-list__icon">
+            <Icon name={item.icon} />
+          </span>
+        )}
+        {block.variant === 'numbered' && !item.icon && (
           <span class="index-list__num" aria-hidden="true">
             {String(i + 1).padStart(2, '0')}
           </span>
@@ -85,6 +97,46 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   .index-list__item:hover .index-list__num {
     color: var(--color-text-strong);
     translate: 0.15em 0;
+  }
+
+  /* Icon rail (ticket 509): a line icon in a soft disc, which fills on hover. */
+  .index-list__item--icon {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-2xs) var(--space-s-m);
+  }
+  .index-list--ruled .index-list__item--icon:not(.index-list__item--titled) {
+    align-items: center;
+  }
+  .index-list__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+    color: var(--color-text-strong);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+  .index-list__icon :global(.icon) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .index-list__item:hover .index-list__icon {
+    border-color: var(--color-text-strong);
+    background: var(--color-text-strong);
+    color: var(--color-bg);
+  }
+  @media (min-width: 40rem) {
+    .index-list__item--icon {
+      grid-template-columns: 3.25rem minmax(0, 1fr);
+    }
+    .index-list__icon {
+      width: 3.25rem;
+    }
   }
 
   .index-list__body {

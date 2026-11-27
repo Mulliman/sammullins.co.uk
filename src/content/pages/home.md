@@ -6,19 +6,32 @@ cover:
   alt: "Sam Mullins logo"
 authorship: "sam-ai"
 blocks:
-  # Editorial feature layout: asymmetric splits, sticky headings, oversized scale figures, hairline
-  # index lists and the closing S / A / M acrostic statement.
+  # Ticket 509: n1 "Monochrome Folio" won the design round (Sam, 27 November 2026). Bands alternate
+  # muted and default, and their layouts flow between left, right and centred.
   - type: "hero"
     variant: "plain"
     align: "left"
     heading: "~~Jack of all trades?~~ Sam of several software skills"
-    subheading: "I'm Sam, a web developer in Bournemouth. In 2011 my website asked \"What is wrong with being a jack of all trades?\" I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms. Fifteen years on, with AI changing how software gets made, the question deserves a better answer."
+    subheading: "I'm Sam, a web developer in Bournemouth."
     mark: true
     ctas:
       - label: "See what I've built"
         href: "/software/"
       - label: "Read the articles"
         href: "/articles/"
+  # Sam: the hero's paragraph was too solid. The 2011 question gets its own band, as a pull quote.
+  - type: "section"
+    surface: "default"
+    blocks:
+      - type: "quote"
+        variant: "display"
+        text: "What is wrong with being a jack of all trades?"
+        attribution: "My website, in 2011"
+      - type: "intro"
+        lead: |-
+          I liked design, front-end and back-end development, and naively thought that made me one, just as web development was splitting into specialisms.
+
+          Fifteen years on, with AI changing how software gets made, the question deserves a better answer.
   - type: "section"
     surface: "muted"
     blocks:
@@ -26,7 +39,7 @@ blocks:
         ratio: "2:1"
         columns:
           - - type: "intro"
-              heading: "First, a C# specialist"
+              heading: "First, a C# CMS specialist"
               align: "left"
               lead: "I spent my first eleven years at Redweb, starting as a student developer, going deep on C# and web content management. I built web applications and ecommerce sites on Sitecore and Umbraco, and became certified in both."
           - - type: "logoWall"
@@ -34,67 +47,81 @@ blocks:
               logos:
                 - name: "Sitecore"
                   logo: "../../assets/media/badges/sitecore.avif"
+                  href: "https://www.sitecore.com/"
+                  details: "Sitecore is an enterprise content management and digital experience platform, built on .NET. Large organisations use it to run big, personalised websites."
                 - name: "Umbraco"
                   logo: "../../assets/media/badges/umbraco.avif"
+                  href: "https://umbraco.com/"
+                  details: "Umbraco is a free, open source content management system, built on .NET. It's popular with agencies, and has a friendly community behind it."
   - type: "section"
     surface: "default"
     blocks:
-      - type: "split"
-        ratio: "1:2"
-        sticky: true
-        columns:
-          - - type: "intro"
-              heading: "Working with clients"
-              align: "left"
-              lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
-          - - type: "logoWall"
-              variant: "grid"
-              logos:
-                - name: "Action on Hearing Loss (now RNID)"
-                  logo: "../../assets/media/uknim4iy/ahl.avif"
-                - name: "Royal College of Surgeons"
-                  logo: "../../assets/media/xxtpnjun/rcs.avif"
-                - name: "RNLI"
-                  logo: "../../assets/media/uzbdm1ky/rnli.avif"
-                - name: "Walk Your Socks Off for Guide Dogs"
-                  logo: "../../assets/media/dqbioh02/wyso.avif"
-                - name: "Mace"
-                  logo: "../../assets/media/ynlforjt/mace.avif"
-                - name: "Channel 4"
-                  logo: "../../assets/media/nxklurtj/c4.avif"
-                - name: "Clarion Housing"
-                  logo: "../../assets/media/gs2pmkam/clarion.avif"
-                - name: "City & Guilds"
-                  logo: "../../assets/media/afhnrqox/cg.avif"
-                - name: "haart"
-                  logo: "../../assets/media/towdfgyf/haart.avif"
-                - name: "Farrow & Ball"
-                  logo: "../../assets/media/ev5bh0we/fab.avif"
-                - name: "Healthspan"
-                  logo: "../../assets/media/ob1pwtpo/hs.avif"
-                - name: "Insight Vacations"
-                  logo: "../../assets/media/pzupnmbz/iv.avif"
+      - type: "intro"
+        heading: "Working with clients"
+        lead: "Agency work put me in front of clients, both in the development team and on site as a consultant. I trained their teams, advised on their platforms and built sites that connect to CRMs, payment providers, vacancy portals and their own internal systems."
+      # Sam to write one or two sentences per client on his involvement (27 November 2026).
+      - type: "logoWall"
+        logos:
+          - name: "Action on Hearing Loss (now RNID)"
+            logo: "../../assets/media/uknim4iy/ahl.avif"
+            details: "[Sam to write: one or two sentences on what I did for Action on Hearing Loss (now RNID).]"
+          - name: "Royal College of Surgeons"
+            logo: "../../assets/media/xxtpnjun/rcs.avif"
+            details: "[Sam to write: one or two sentences on what I did for Royal College of Surgeons.]"
+          - name: "RNLI"
+            logo: "../../assets/media/uzbdm1ky/rnli.avif"
+            details: "[Sam to write: one or two sentences on what I did for RNLI.]"
+          - name: "Walk Your Socks Off for Guide Dogs"
+            logo: "../../assets/media/dqbioh02/wyso.avif"
+            details: "[Sam to write: one or two sentences on what I did for Walk Your Socks Off for Guide Dogs.]"
+          - name: "Mace"
+            logo: "../../assets/media/ynlforjt/mace.avif"
+            details: "[Sam to write: one or two sentences on what I did for Mace.]"
+          - name: "Channel 4"
+            logo: "../../assets/media/nxklurtj/c4.avif"
+            details: "[Sam to write: one or two sentences on what I did for Channel 4.]"
+          - name: "Clarion Housing"
+            logo: "../../assets/media/gs2pmkam/clarion.avif"
+            details: "[Sam to write: one or two sentences on what I did for Clarion Housing.]"
+          - name: "City & Guilds"
+            logo: "../../assets/media/afhnrqox/cg.avif"
+            details: "[Sam to write: one or two sentences on what I did for City & Guilds.]"
+          - name: "haart"
+            logo: "../../assets/media/towdfgyf/haart.avif"
+            details: "[Sam to write: one or two sentences on what I did for haart.]"
+          - name: "Farrow & Ball"
+            logo: "../../assets/media/ev5bh0we/fab.avif"
+            details: "[Sam to write: one or two sentences on what I did for Farrow & Ball.]"
+          - name: "Healthspan"
+            logo: "../../assets/media/ob1pwtpo/hs.avif"
+            details: "[Sam to write: one or two sentences on what I did for Healthspan.]"
+          - name: "Insight Vacations"
+            logo: "../../assets/media/pzupnmbz/iv.avif"
+            details: "[Sam to write: one or two sentences on what I did for Insight Vacations.]"
   - type: "section"
     surface: "muted"
     blocks:
       - type: "intro"
         heading: "Then into enterprise"
         align: "left"
-        lead: "In 2021 I moved in-house, and each organisation since has been bigger than the last."
+        lead: "In 2021 I joined LV= in-house. My role has moved twice since, under TUPE, and each organisation has been bigger than the last."
       - type: "figures"
         variant: "ladder"
         items:
           - title: "LV="
+            logo: "../../assets/media/employers/lv.avif"
             prefix: "About"
             value: "1,500"
             suffix: "colleagues"
-            text: "Senior analyst developer from 2021, and the main developer on the ElectriX website, with Sitecore behind it and React in front."
+            text: "I joined as a senior analyst developer in 2021, and was the main developer on the ElectriX website, with Sitecore behind it and React in front."
           - title: "Allianz"
+            logo: "../../assets/media/employers/allianz.avif"
             prefix: "Over"
             value: "150,000"
             suffix: "colleagues"
-            text: "Sitecore team lead at Allianz Technology from 2023."
+            text: "My role moved to Allianz Technology under TUPE in 2023, where I was the Sitecore team lead."
           - title: "TCS"
+            logo: "../../assets/media/employers/tcs.avif"
             prefix: "Over"
             value: "500,000"
             suffix: "colleagues"
@@ -103,22 +130,26 @@ blocks:
     surface: "default"
     blocks:
       - type: "split"
-        ratio: "1:2"
-        sticky: true
+        ratio: "2:1"
+        sticky: "end"
+        reverseOnMobile: true
         columns:
-          - - type: "intro"
-              heading: "Where my skills kept broadening"
-              align: "left"
-              lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
           - - type: "indexList"
               variant: "ruled"
               items:
                 - title: "Front end"
+                  icon: "code"
                   text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
                 - title: "DevOps"
+                  icon: "loop"
                   text: "Azure DevOps pipelines for dependable builds and automated releases."
                 - title: "Infrastructure"
+                  icon: "server"
                   text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
+          - - type: "intro"
+              heading: "Where my skills kept broadening"
+              align: "left"
+              lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
   - type: "section"
     surface: "muted"
     blocks:
@@ -132,28 +163,24 @@ blocks:
               align: "left"
               lead: "Leading a team turned out to be a trade of its own."
           - - type: "indexList"
-              variant: "numbered"
+              variant: "ruled"
               items:
-                - text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
-                - text: "Running several streams of work at once without dropping any."
-                - text: "Translating what the business needs into work the developers can ship."
-                - text: "Coordinating changes that crossed teams, environments and workstreams."
-                - text: "Acting as Scrum Master for almost a year."
+                - icon: "users"
+                  text: "Line managing and mentoring up to seven developers, helping each of them progress towards their own goals and play to their strengths."
+                - icon: "layers"
+                  text: "Running several streams of work at once without dropping any."
+                - icon: "translate"
+                  text: "Translating what the business needs into work the developers can ship."
+                - icon: "network"
+                  text: "Coordinating changes that crossed teams, environments and workstreams."
+                - icon: "iteration"
+                  text: "Acting as Scrum Master for almost a year."
   - type: "section"
     surface: "default"
     blocks:
-      - type: "split"
-        ratio: "2:1"
-        columns:
-          - - type: "intro"
-              heading: "But it was never just a job"
-              align: "left"
-              lead: "I love making software, so I keep doing it outside work: an award-winning Umbraco package, games, websites and tools for editing photos."
-          - - type: "image"
-              frame: "none"
-              image:
-                src: "../../assets/media/03yabpct/umbracoaward.avif"
-                alt: "Umbraco package award 2021, winner"
+      - type: "intro"
+        heading: "But it was never just a job"
+        lead: "I love making software, so I keep doing it outside work: an award-winning Umbraco package, games, websites and tools for editing photos."
       - type: "cards"
         variant: "full"
         columns: 1
@@ -162,6 +189,10 @@ blocks:
             text: "A free package that generates static HTML sites from Umbraco content, so simple sites can be hosted cheaply and served fast."
             href: "/software/xstatic-for-umbraco/"
             cta: "See the package"
+            award:
+              label: "Winner"
+              title: "Umbraco Package Award"
+              detail: "Best newcomer 2021"
             image:
               src: "../../assets/media/egdifrhl/banner.avif"
               alt: ""
@@ -170,18 +201,18 @@ blocks:
         variant: "row"
         columns: 2
         items:
+          - title: "Is Baby In A Book?"
+            text: "A website that helps parents find books with their baby's name in them. We built it after struggling to find any for our twins."
+            href: "/software/is-baby-in-a-book/"
+            image:
+              src: "../../assets/media/ycspud32/biab-sam-site.avif"
+              alt: ""
+              decorative: true
           - title: "The Imposter"
             text: "A party game for four to seven people, played on their phones. Each round one player is secretly the imposter, and has to work out the secret word without being caught."
             href: "/software/the-imposter/"
             image:
               src: "../../assets/media/xwceuizg/imposter.avif"
-              alt: ""
-              decorative: true
-          - title: "XPEDITE for Umbraco"
-            text: "Sets up headless Umbraco websites for you, and automates building unit-tested components."
-            href: "/software/xpedite-for-umbraco/"
-            image:
-              src: "../../assets/media/gaajlr4q/banner.avif"
               alt: ""
               decorative: true
           - title: "PanoCapture"
@@ -199,7 +230,6 @@ blocks:
               alt: ""
               decorative: true
       - type: "intro"
-        align: "left"
         cta:
           label: "See all my software"
           href: "/software/"
@@ -207,8 +237,15 @@ blocks:
     surface: "muted"
     blocks:
       - type: "split"
-        ratio: "2:1"
+        ratio: "1:2"
+        reverseOnMobile: true
         columns:
+          - - type: "logoWall"
+              variant: "badges"
+              logos:
+                - name: "Claude Certified Architect, Foundations badge on Credly"
+                  logo: "../../assets/media/badges/cca-f.avif"
+                  href: "https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url"
           - - type: "intro"
               heading: "Getting ready for the agentic era"
               align: "left"
@@ -218,27 +255,31 @@ blocks:
                 At work, our tech lead and I took what I'd learned and moved the team to an AI-first workflow, with people reviewing the work and a shared marketplace of Claude skills.
 
                 Along the way I became a [Claude Certified Architect, Foundations](https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url) (CCA-F).
-          - - type: "logoWall"
-              variant: "badges"
-              logos:
-                - name: "Claude Certified Architect, Foundations badge on Credly"
-                  logo: "../../assets/media/badges/cca-f.avif"
-                  href: "https://www.credly.com/badges/fd2ce096-8dd2-40df-90cd-421011cfa5b2/public_url"
   - type: "section"
     surface: "default"
     blocks:
       - type: "intro"
         heading: "So, fifteen years later"
-        align: "left"
-        lead: "Coding agents now do more and more of the narrow, specialist work. What they can't do is know enough of every trade to point them at the right problem and spot when they've got it wrong. So in a world changing this fast, being capable across many trades is now the game. But I don't want to be Jack. I just want to be Sam."
+        lead: |-
+          Coding agents now do more and more of the narrow, specialist work.
+
+          What they can't do is know enough of every trade to point them at the right problem, and spot when they've got it wrong.
+
+          So in a world changing this fast, being capable across many trades is now the game.
+      - type: "statement"
+        variant: "manifesto"
+        align: "center"
+        lines:
+          - "But I don't want to be ~~Jack~~."
+          - "I just want to be Sam."
       - type: "statement"
         variant: "acrostic"
+        align: "center"
         lines:
           - "Skilled specialist shaping, scaling, and securing sites and software."
           - "Anthropic-accredited AI ace automating actions with agents."
           - "Modest man, mildly mortified marketing my mediocre merits."
       - type: "intro"
-        align: "left"
         cta:
           label: "Find me on LinkedIn"
           href: "https://www.linkedin.com/in/sam-mullins-31471425/"

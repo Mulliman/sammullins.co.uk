@@ -1,0 +1,145 @@
+---
+/**
+ * An award rosette (ticket 509): a scalloped disc with two ribbon tails, in the page's own ink, with
+ * the award's words set on it as real text. Used by a card's `award`; on its own it could mark an award
+ * on a software page or the CV.
+ *
+ * It rests slightly tilted and straightens on hover. With motion allowed it is pressed on, like a
+ * stamp, as it scrolls into view; it never fades, so screenshots and no-JS readers see it.
+ */
+interface Props {
+  label: string;
+  title: string;
+  detail?: string | undefined;
+  class?: string;
+}
+const { label, title, detail, class: className } = Astro.props;
+
+// A scalloped edge: `n` bumps round a circle, as one path on a 100-unit box.
+const n = 22;
+const r = 44;
+const bump = 3.6;
+const pts: string[] = [];
+for (let i = 0; i <= n * 2; i++) {
+  const a = (i / (n * 2)) * Math.PI * 2 - Math.PI / 2;
+  const rr = i % 2 === 0 ? r + bump : r - bump * 0.35;
+  pts.push(`${(50 + rr * Math.cos(a)).toFixed(2)} ${(50 + rr * Math.sin(a)).toFixed(2)}`);
+}
+// Quadratic curves through alternate points give soft scallops rather than a star.
+let d = `M ${pts[0]}`;
+for (let i = 1; i < pts.length - 1; i += 2) d += ` Q ${pts[i]} ${pts[i + 1]}`;
+d += ' Z';
+---
+
+<p class:list={['rosette', className]}>
+  <svg class="rosette__art" viewBox="0 0 100 128" aria-hidden="true" focusable="false">
+    <path class="rosette__tail" d="M33 80 L22 124 L33 116 L41 126 L49 86 Z" />
+    <path class="rosette__tail" d="M67 80 L78 124 L67 116 L59 126 L51 86 Z" />
+    <path class="rosette__disc" d={d} />
+    <circle class="rosette__ring" cx="50" cy="50" r="36" />
+  </svg>
+  <span class="rosette__text">
+    <span class="rosette__label">{label}</span>
+    <span class="rosette__title">{title}</span>
+    {detail && <span class="rosette__detail">{detail}</span>}
+  </span>
+</p>
+
+<style>
+  .rosette {
+    position: relative;
+    display: block;
+    width: var(--rosette-size, 8.5rem);
+    aspect-ratio: 100 / 128;
+    /* The words scale with the rosette (cqi units). */
+    container-type: inline-size;
+    margin: 0;
+    color: var(--color-bg);
+    rotate: -8deg;
+    transition: rotate var(--dur) var(--ease-out);
+  }
+  .rosette:hover,
+  :global(.card:hover) .rosette {
+    rotate: 0deg;
+  }
+  .rosette__art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .rosette__disc {
+    fill: var(--color-text-strong);
+  }
+  .rosette__tail {
+    fill: var(--color-text-muted);
+  }
+  .rosette__ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    stroke-dasharray: 1.6 1.6;
+    opacity: 0.6;
+  }
+  /* The words sit in the disc (the top 100 of the 128 units). */
+  .rosette__text {
+    position: absolute;
+    inset: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15em;
+    height: calc(100% * 100 / 128);
+    padding: 22%;
+    text-align: center;
+    font-family: var(--font-display);
+    line-height: var(--leading-hero);
+  }
+  .rosette__label {
+    font-size: 7.5cqi;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .rosette__title {
+    font-size: 11.5cqi;
+    font-weight: 750;
+    text-wrap: balance;
+  }
+  .rosette__detail {
+    font-size: 7.5cqi;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .rosette {
+        animation-name: rosette-stamp;
+        animation-timing-function: var(--ease-out);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 40%;
+      }
+    }
+  }
+  /* transform, not scale and rotate, so the resting tilt and the hover still apply afterwards. */
+  @keyframes rosette-stamp {
+    from {
+      transform: scale(1.25) rotate(-12deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rosette,
+    .rosette:hover,
+    :global(.card:hover) .rosette {
+      rotate: -8deg;
+      transition: none;
+    }
+  }
+</style>

@@ -56,4 +56,13 @@ Sam then sketched the page (`_sketches/Homepage.excalidraw` in the parent folder
   - The closing band now argues the payoff: agents do the narrow work, so breadth is what's scarce.
   - The page ends with a LinkedIn button, the CV as a second button (the new `intro.secondaryCta`), and "What I've been up to recently", showing the three newest articles. Archived articles are included, because every article is archived until the launch articles land.
 - Later: a subtle monochrome photo of Sam as a background (Sam, 26 November 2026), in the visual pass.
+- Design round (27 November 2026): five Opus and five Neon designs competed; Sam chose n1 "Monochrome Folio" (new blocks `figures`, `indexList` and `statement`; sticky splits). Then from Sam's notes on it:
+  - The hero is just the heading and "I'm Sam, a web developer in Bournemouth." The 2011 question opens the next band as a large centred quote (new `quote` variant `display`), with the rest split into two short paragraphs.
+  - "First, a C# CMS specialist". Logos can now open a popover (`logoWall` item `details`, HTML popover API, no script), with `href` as a "Visit" link in a new tab. Sitecore and Umbraco explain what they are.
+  - Client logos: no borders, faded until hovered, and each opens a popover. **Sam to write one or two sentences per client** (placeholders in square brackets).
+  - Enterprise: LV= was the only job Sam joined; Allianz (2023) and TCS (2025) were TUPE transfers. Monochrome employer logos (`figures` item `logo`) from Wikimedia (LV=, Allianz) and Simple Icons (TCS).
+  - Skills and team lead bands use line icons (`indexList` item `icon`, Lucide paths in `src/lib/icons.ts`), not numbers.
+  - Side projects: the award image is now a rosette on the xStatic card (`cards` item `award`, new `Rosette` component). XPEDITE is out; Is Baby In A Book? is in.
+  - Closing band: the lead is three short paragraphs; "But I don't want to be ~~Jack~~. I just want to be Sam." is its own statement, with Jack struck through as it scrolls in; the S, A, M lines only bold their first letter (`statement` gets `align`).
+  - Bands now flow between left, right (`split` `sticky: end`) and centred.
 - Open: whether to merge the enterprise and skills bands (Sam to decide from the screenshots).

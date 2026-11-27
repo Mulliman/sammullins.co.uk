@@ -5,6 +5,7 @@
  * typographic weight and proportional monochrome scale bars for stepped growth.
  */
 import Section from '../components/Section.astro';
+import Pic from '../components/Pic.astro';
 import { md } from '../lib/markdown';
 import type { BlockOf } from '../lib/content';
 
@@ -21,7 +22,14 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   <ol class:list={['figures', `figures--${block.variant}`]}>
     {block.items.map((item) => (
       <li class="figures__item">
-        <Heading class="figures__title">{item.title}</Heading>
+        {item.logo ? (
+          <Heading class="figures__title figures__title--logo">
+            <span class="visually-hidden">{item.title}</span>
+            <Pic src={item.logo} alt="" preset="logo" class="figures__logo" />
+          </Heading>
+        ) : (
+          <Heading class="figures__title">{item.title}</Heading>
+        )}
         <p class="figures__metric">
           {item.prefix && <span class="figures__prefix">{item.prefix}</span>}
           <span class="figures__value" data-count-value={item.value}>
@@ -129,6 +137,36 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     line-height: var(--leading-heading);
     letter-spacing: var(--tracking-heading);
     color: var(--color-text-strong);
+  }
+
+  /* A logo in place of the title (ticket 509): black masters, greyed here and inverted in dark mode. */
+  .figures__title--logo {
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+  }
+  .figures__title--logo :global(picture) {
+    display: contents;
+  }
+  .figures__title--logo :global(img) {
+    width: auto;
+    max-width: 9rem;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+    opacity: 0.7;
+    transition: opacity var(--dur) var(--ease);
+  }
+  .figures__item:hover .figures__title--logo :global(img) {
+    opacity: 1;
+  }
+  :global(:root[data-theme='dark']) .figures__title--logo :global(img) {
+    filter: invert(1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .figures__title--logo :global(img) {
+      filter: invert(1);
+    }
   }
 
   .figures__metric {
