@@ -4,6 +4,7 @@
  * `variant: numbered` pairs each row with a tabular 01/02/03 index rail;
  * `variant: ruled` lays out titled rows across a hairline two-column editorial grid.
  * An item's `icon` (ticket 509) sits in the rail instead of a number.
+ * `variant: columns` (ticket 509) sets the items side by side, centred, with the icon on top.
  */
 import Icon from '../components/Icon.astro';
 import Section from '../components/Section.astro';
@@ -137,6 +138,59 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     .index-list__icon {
       width: 3.25rem;
     }
+  }
+
+  /* Columns (ticket 509): up to three across, centred, icon above title above text, no rules. */
+  .index-list--columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l);
+    border-top: 0;
+  }
+  @media (min-width: 48rem) {
+    .index-list--columns {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--space-l-xl);
+    }
+  }
+  .index-list--columns .index-list__item {
+    align-content: start;
+    padding: 0;
+    border-bottom: 0;
+  }
+  /* Phones: rows with the icon beside the text, left-aligned like the heading above them. */
+  @media (max-width: 47.99rem) {
+    .index-list--columns .index-list__item {
+      grid-template-columns: 3.25rem minmax(0, 1fr);
+      gap: var(--space-s);
+    }
+    .index-list--columns .index-list__icon {
+      width: 3.25rem;
+    }
+  }
+  @media (min-width: 48rem) {
+    .index-list--columns .index-list__item {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: var(--space-s);
+      text-align: center;
+    }
+    .index-list--columns .index-list__icon {
+      width: 3.75rem;
+    }
+    .index-list--columns .index-list__body {
+      justify-items: center;
+    }
+  }
+  .index-list--columns .index-list__icon :global(.icon) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .index-list--columns .index-list__item:hover .index-list__title {
+    translate: none;
+  }
+  .index-list--columns .index-list__text {
+    max-width: 22rem;
   }
 
   .index-list__body {

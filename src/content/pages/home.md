@@ -129,27 +129,22 @@ blocks:
   - type: "section"
     surface: "default"
     blocks:
-      - type: "split"
-        ratio: "2:1"
-        sticky: "end"
-        reverseOnMobile: true
-        columns:
-          - - type: "indexList"
-              variant: "ruled"
-              items:
-                - title: "Front end"
-                  icon: "code"
-                  text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
-                - title: "DevOps"
-                  icon: "loop"
-                  text: "Azure DevOps pipelines for dependable builds and automated releases."
-                - title: "Infrastructure"
-                  icon: "server"
-                  text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
-          - - type: "intro"
-              heading: "Where my skills kept broadening"
-              align: "left"
-              lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
+      # Sam (27 November 2026): centred, with three columns underneath, like the original site.
+      - type: "intro"
+        heading: "Where my skills kept broadening"
+        lead: "Running bigger platforms meant looking after more of the stack, so I kept learning."
+      - type: "indexList"
+        variant: "columns"
+        items:
+          - title: "Front end"
+            icon: "code"
+            text: "React, TypeScript and JavaScript, at work on ElectriX and outside work on my own projects."
+          - title: "DevOps"
+            icon: "loop"
+            text: "Azure DevOps pipelines for dependable builds and automated releases."
+          - title: "Infrastructure"
+            icon: "server"
+            text: "Sitecore Managed Cloud on Azure Kubernetes Service, run with PowerShell, Ansible and Terraform."
   - type: "section"
     surface: "muted"
     blocks:

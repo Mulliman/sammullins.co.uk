@@ -268,7 +268,8 @@ const leafBlocks = (image: ImageFn) => {
   const indexList = z.object({
     type: z.literal('indexList'),
     heading: z.string().optional(),
-    variant: z.enum(['ruled', 'numbered']).default('ruled'),
+    /** columns (ticket 509): centred columns, icon on top, like the original site's skill bands. */
+    variant: z.enum(['ruled', 'numbered', 'columns']).default('ruled'),
     surface: surface.default('default'),
     items: z
       .array(

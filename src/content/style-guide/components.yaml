@@ -1127,6 +1127,22 @@ index-list-numbered-muted:
       - text: Running several streams of work at once without dropping any.
       - text: Translating business needs into shippable engineering work.
 
+index-list-columns-default:
+  title: Centred columns with icons, default surface
+  block:
+    type: indexList
+    variant: columns
+    items:
+      - title: Front end
+        icon: code
+        text: Up to three across on a desktop, stacked on a phone.
+      - title: DevOps
+        icon: loop
+        text: Centred, with the icon above the title.
+      - title: Infrastructure
+        icon: server
+        text: Like the original site's skill bands.
+
 index-list-ruled-inverse:
   title: Ruled rows, inverse surface
   block:
