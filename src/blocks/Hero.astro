@@ -254,11 +254,10 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
     line-height: var(--leading-hero);
     letter-spacing: -0.035em;
   }
+  /* 509-symmetry: no rule above the lead; the space that held it is kept as margin. */
   .hero--marked .hero__sub--lead {
     max-width: 36em;
-    margin-top: var(--space-m-l);
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--color-inverse-border);
+    margin-top: calc(var(--space-m-l) + var(--space-m));
     color: var(--color-text-inverse-muted);
   }
   .hero__mark {

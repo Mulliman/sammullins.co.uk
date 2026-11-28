@@ -39,16 +39,17 @@ const done = status === 'done';
 </Section>
 
 <style>
+  /* 509-symmetry: no border. A soft shadow frames the row; hover and open lift it. */
   .disclosure {
     background: var(--color-surface);
     color: var(--color-text);
-    border: 1px solid var(--color-border);
     border-radius: var(--radius-m);
-    transition: border-color var(--dur) var(--ease);
+    box-shadow: var(--shadow-card-rest);
+    transition: box-shadow var(--dur) var(--ease);
   }
   .disclosure:hover,
   .disclosure[open] {
-    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
   }
   /* Ticket 210: the body opens and closes smoothly where the browser can animate to auto height
      (::details-content and interpolate-size); elsewhere it simply opens. */
@@ -120,7 +121,6 @@ const done = status === 'done';
 
   .disclosure__body {
     padding: var(--space-s) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--color-border);
     min-width: 0;
   }
   /* Children are nested blocks; let them use the disclosure's full width. */

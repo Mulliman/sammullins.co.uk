@@ -121,10 +121,14 @@ const kindLabel = {
   .timeline__when {
     font-variant-numeric: tabular-nums;
   }
+  /* 509-symmetry: a tonal pill, not an outlined one. */
   .timeline__badge {
     padding: 0 0.5em;
-    border: 1px solid var(--color-border);
+    background: var(--color-bg-muted);
     border-radius: var(--radius-pill);
+  }
+  :global(.surface-muted) .timeline__badge {
+    background: var(--color-surface);
   }
   .timeline__title {
     font-size: var(--step-1);

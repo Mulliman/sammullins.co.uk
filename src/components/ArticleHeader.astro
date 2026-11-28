@@ -41,9 +41,9 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
 </header>
 
 <style>
+  /* 509-symmetry: no rule under the header; the space below it does the separating. */
   .article-head {
-    padding-block: var(--space-section) var(--space-m-l);
-    border-bottom: 1px solid var(--color-border);
+    padding-block: var(--space-section) var(--space-l);
   }
   .article-head__title {
     max-width: 22ch;
@@ -68,12 +68,12 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
   }
+  /* A tonal box, as the callout's archive tone; the text itself says it is from the archive. */
   .article-head__archived {
     max-width: var(--measure);
     margin-top: var(--space-m);
     padding: var(--space-xs) var(--space-s);
-    border-left: 4px solid var(--brand-orange);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: var(--radius-m);
     background: var(--color-bg-muted);
     font-size: var(--step--1);
   }

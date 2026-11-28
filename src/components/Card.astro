@@ -183,10 +183,8 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     }
   }
 
-  /* Text: no box, a rule above, like an entry in a list. */
+  /* Text: no box and no rule (509-symmetry); the grid's gap separates one entry from the next. */
   .card--text {
-    padding-top: var(--space-s);
-    border-top: 1px solid var(--color-border);
     border-radius: 0;
   }
   .card--text .card__body {

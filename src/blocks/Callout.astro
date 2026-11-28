@@ -77,11 +77,10 @@ const showTitle = Boolean(title) && title !== label;
 <style>
   .callout {
     --accent: var(--color-note);
-    /* Ticket 210: a faint wash of the tone and a slim bar, instead of a boxed admonition. */
+    /* Ticket 210: a faint wash of the tone, instead of a boxed admonition. 509-symmetry: no edge at all;
+       the icon and the label carry the tone, so the box is a tonal surface with a radius. */
     background: color-mix(in srgb, var(--accent) 6%, var(--color-surface));
     color: var(--color-text);
-    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--color-border));
-    border-left: 3px solid var(--accent);
     border-radius: var(--radius-m);
     padding: var(--space-s) var(--space-m);
   }
@@ -94,8 +93,6 @@ const showTitle = Boolean(title) && title !== label;
   .callout--legacy {
     --accent: var(--brand-orange);
     background: var(--color-bg-muted);
-    border-color: var(--color-border);
-    border-left-color: var(--accent);
   }
 
   .callout__label {

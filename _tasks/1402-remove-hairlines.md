@@ -2,7 +2,7 @@
 id: "1402"
 title: "Remove the remaining hairline rules across blocks and layout pieces"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: M
 owner: agent

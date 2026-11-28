@@ -57,23 +57,24 @@ const { prev, next } = block;
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
-    /* Ticket 210: hairline tiles that firm up and nudge their arrow on hover, instead of grey slabs. */
+    /* Ticket 210: tiles that firm up and nudge their arrow on hover, instead of grey slabs.
+       509-symmetry: no border; a soft shadow at rest, a firmer one on hover. */
     padding: var(--space-s-m) var(--space-m);
     min-width: 0;
     overflow-wrap: anywhere;
     background: var(--color-surface);
     color: var(--color-text);
-    border: 1px solid var(--color-border);
     border-radius: var(--radius-m);
+    box-shadow: var(--shadow-card-rest);
     text-decoration: none;
-    transition: border-color var(--dur) var(--ease-out);
+    transition: box-shadow var(--dur) var(--ease-out);
   }
   .nextprev__tile--next {
     text-align: right;
     align-items: flex-end;
   }
   .nextprev__tile:hover {
-    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
   }
   .nextprev__label > span {
     display: inline-block;

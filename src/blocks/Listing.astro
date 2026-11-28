@@ -140,8 +140,11 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   }
 
   /* List */
+  /* 509-symmetry: no rules between rows; the gap does the separating. */
   .listing__list,
   .notes {
+    display: grid;
+    gap: var(--space-s);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -159,11 +162,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     row-gap: var(--space-3xs);
     align-items: start;
     padding-block: var(--space-s);
-    border-bottom: 1px solid var(--color-border);
     transition: background-color var(--dur) var(--ease);
-  }
-  .listing__list {
-    border-top: 1px solid var(--color-border);
   }
   /* Ticket 210: the row answers the pointer, a faint wash that bleeds just past the text and a nudge of
      the thumbnail. */
@@ -276,7 +275,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   .note {
     position: relative;
     padding-block: var(--space-2xs);
-    border-bottom: 1px solid var(--color-border);
   }
   .note__head {
     display: flex;

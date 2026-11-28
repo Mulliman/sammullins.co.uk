@@ -52,7 +52,8 @@ const { block, nested = false } = Astro.props;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-2xs);
   }
-  /* The number: a ringed figure, so the order reads at a glance. */
+  /* The number: a tonal disc, so the order reads at a glance. 509-symmetry: no ring, and no hairline
+     joining the steps; the numbers already carry the sequence. */
   .steps__item::before {
     content: counter(step);
     position: absolute;
@@ -65,21 +66,13 @@ const { block, nested = false } = Astro.props;
     font-weight: var(--weight-strong);
     font-variant-numeric: tabular-nums;
     color: var(--color-heading);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg-muted);
     border-radius: 50%;
     font-family: var(--font-display);
     font-size: var(--step--1);
   }
-  /* Ticket 210: a hairline joins each number to the next, so long steps still read as one sequence. */
-  .steps__item:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: calc(1rem - 0.5px);
-    top: 2.25rem;
-    bottom: calc(-1 * var(--space-m) + 0.25rem);
-    width: 1px;
-    background: var(--color-border);
+  :global(.surface-muted) .steps__item::before {
+    background: var(--color-surface);
   }
   .steps__text {
     max-width: none;

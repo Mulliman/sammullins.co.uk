@@ -55,11 +55,16 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     color: var(--color-text-strong);
   }
 
+  /* 509-symmetry: no rules. Rows are separated by space, and a hovered row takes a tonal band. */
   .index-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-border);
+  }
+  .index-list--numbered,
+  .index-list--ruled {
+    display: grid;
+    gap: var(--space-xs);
   }
 
   .index-list__item {
@@ -67,11 +72,17 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-2xs) var(--space-m);
     padding-block: var(--space-m);
-    border-bottom: 1px solid var(--color-border);
-    transition: border-color var(--dur) var(--ease);
+    padding-inline: var(--space-s);
+    /* The band bleeds into the margin, so the text stays on the heading's left edge. */
+    margin-inline: calc(-1 * var(--space-s));
+    border-radius: var(--radius-m);
+    transition: background-color var(--dur) var(--ease);
   }
   .index-list__item:hover {
-    border-bottom-color: var(--color-border-strong);
+    background-color: var(--color-bg-muted);
+  }
+  :global(.surface-muted) .index-list__item:hover {
+    background-color: var(--color-surface);
   }
 
   /* Numbered variant: quiet tabular index rail on the left. */
@@ -114,20 +125,21 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     place-items: center;
     width: 2.75rem;
     aspect-ratio: 1;
-    border: 1px solid var(--color-border-strong);
     border-radius: 50%;
+    background: var(--color-bg-muted);
     color: var(--color-text-strong);
     transition:
       background-color var(--dur) var(--ease),
-      color var(--dur) var(--ease),
-      border-color var(--dur) var(--ease);
+      color var(--dur) var(--ease);
+  }
+  :global(.surface-muted) .index-list__icon {
+    background: var(--color-surface);
   }
   .index-list__icon :global(.icon) {
     width: 1.3rem;
     height: 1.3rem;
   }
   .index-list__item:hover .index-list__icon {
-    border-color: var(--color-text-strong);
     background: var(--color-text-strong);
     color: var(--color-bg);
   }
@@ -146,7 +158,6 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     display: flex;
     flex-direction: column;
     gap: var(--space-m);
-    border-top: 0;
   }
   @media (min-width: 48rem) {
     .index-list--columns {
@@ -170,10 +181,13 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
       column-gap: var(--space-l);
     }
   }
-  .index-list--columns .index-list__item {
+  .index-list--columns .index-list__item,
+  .index-list--columns .index-list__item:hover {
     align-content: start;
     padding: 0;
-    border-bottom: 0;
+    margin-inline: 0;
+    border-radius: 0;
+    background: none;
   }
   /* Phones: rows with the icon beside the text, left-aligned like the heading above them. */
   @media (max-width: 47.99rem) {
