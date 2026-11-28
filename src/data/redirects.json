@@ -5,9 +5,9 @@
     "reason": "Duplicate article merged; kept the internally linked one (ticket 503)"
   },
   "/media/nabbcnxd/umbracofolio_0-1-0.zip": {
-    "to": "/software/umbracofolio/",
+    "to": "/software/",
     "status": 301,
-    "reason": "UmbracoFolio is legacy; the 16 MB package download was retired, so the old link lands on its archived page"
+    "reason": "UmbracoFolio is retired (Sam, 28 November 2026); the old package download lands on the software page"
   },
   "/blocks-demo/text/": {
     "to": "/style-guide/components/",
@@ -33,5 +33,10 @@
     "to": "/party-games/the-imposter/",
     "status": 301,
     "reason": "The Imposter moved into the party games section (ticket 1403)"
+  },
+  "/software/umbracofolio/": {
+    "to": "/software/",
+    "status": 301,
+    "reason": "UmbracoFolio is retired and its page removed (Sam, 28 November 2026)"
   }
 }

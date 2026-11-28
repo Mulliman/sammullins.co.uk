@@ -37,45 +37,52 @@ blocks:
     blocks:
       - type: "intro"
         heading: "Employment"
-      - type: "cards"
-        variant: "text"
-        columns: 2
+      # Sam (28 November 2026): one job per row, the years where the icons sit elsewhere.
+      - type: "indexList"
+        variant: "ruled"
         items:
-          - title: "Sitecore team lead (2025 to present)"
+          - title: "Sitecore team lead"
+            marker: "25-now"
             text: |-
-              **Tata Consultancy Services (TCS)**
+                **Tata Consultancy Services (TCS)**
 
-              My role moved to Tata Consultancy Services under TUPE in 2025, and I carried on leading the team on the Allianz account.
-          - title: "Sitecore team lead (2023 to 2025)"
+                My role moved to Tata Consultancy Services under TUPE in 2025, and I carried on leading the team on the Allianz account.
+          - title: "Sitecore team lead"
+            marker: "23-25"
             text: |-
-              **Allianz Technology**
+                **Allianz Technology**
 
-              My role moved to Allianz Technology under TUPE in 2023, where I was the Sitecore team lead. Leader of a team of 7 Sitecore developers, supporting, mentoring, and managing them so that we could reliably maintain and deliver new functionality on our existing Sitecore estate.
-          - title: "Senior analyst developer (2021 to 2023)"
+                My role moved to Allianz Technology under TUPE in 2023, where I was the Sitecore team lead. Leader of a team of 7 Sitecore developers, supporting, mentoring, and managing them so that we could reliably maintain and deliver new functionality on our existing Sitecore estate.
+          - title: "Senior analyst developer"
+            marker: "21-23"
             text: |-
-              **LV=**
+                **LV=**
 
-              Main developer creating the new ElectriX website with Sitecore and React.Js. Part of the team upgrading the entire platform to Sitecore 10.2 and moving to Docker and Managed Cloud.
-          - title: "Mid-level web developer (2016 to 2021)"
+                Main developer creating the new ElectriX website with Sitecore and React.Js. Part of the team upgrading the entire platform to Sitecore 10.2 and moving to Docker and Managed Cloud.
+          - title: "Mid-level web developer"
+            marker: "16-21"
             text: |-
-              **Redweb**
+                **Redweb**
 
-              Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
-          - title: "Web developer (2013 to 2016)"
+                Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
+          - title: "Web developer"
+            marker: "13-16"
             text: |-
-              **Redweb**
+                **Redweb**
 
-              Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
-          - title: "Graduate developer (2012 to 2013)"
+                Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
+          - title: "Graduate developer"
+            marker: "12-13"
             text: |-
-              **Redweb**
+                **Redweb**
 
-              Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
-          - title: "Student developer (2010 to 2011)"
+                Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
+          - title: "Student developer"
+            marker: "10-11"
             text: |-
-              **Redweb**
+                **Redweb**
 
-              Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
+                Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
   - type: "section"
     surface: "default"
     blocks:
@@ -146,13 +153,6 @@ blocks:
         variant: "row"
         columns: 2
         items:
-          - title: "UmbracoFolio"
-            text: "Every component I build for my website is available for free to anyone else that wants to use it. Just install the UmbracoFolio package to a clean Umbraco installation."
-            href: "/software/umbracofolio/"
-            image:
-              src: "../../assets/media/qbtdzvgw/uf.avif"
-              alt: ""
-              decorative: true
           - title: "PostCapture"
             text: "A Capture One plugin and standalone program that adds watermarks and borders to photos based on their EXIF data."
             href: "/software/postcapture/"

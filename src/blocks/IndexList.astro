@@ -27,7 +27,10 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
       <li
         class:list={[
           'index-list__item',
-          { 'index-list__item--titled': Boolean(item.title), 'index-list__item--icon': Boolean(item.icon) },
+          {
+            'index-list__item--titled': Boolean(item.title),
+            'index-list__item--icon': Boolean(item.icon || item.marker),
+          },
         ]}
       >
         {item.icon && (
@@ -35,6 +38,7 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
             <Icon name={item.icon} />
           </span>
         )}
+        {!item.icon && item.marker && <span class="index-list__icon index-list__marker">{item.marker}</span>}
         {block.variant === 'numbered' && !item.icon && (
           <span class="index-list__num" aria-hidden="true">
             {String(i + 1).padStart(2, '0')}
@@ -228,6 +232,33 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   }
   .index-list--columns .index-list__text {
     max-width: 22rem;
+  }
+
+  /* A text marker (509-symmetry): a pill, so a range like "25-now" fits. */
+  .index-list__marker {
+    width: auto;
+    min-width: 2.75rem;
+    aspect-ratio: auto;
+    min-height: 2.75rem;
+    padding-inline: 0.6em;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .index-list__item--icon:has(.index-list__marker) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  @media (min-width: 40rem) {
+    .index-list__item--icon:has(.index-list__marker) {
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+    }
+    .index-list__marker {
+      justify-self: start;
+      min-height: 3.25rem;
+    }
   }
 
   .index-list__body {

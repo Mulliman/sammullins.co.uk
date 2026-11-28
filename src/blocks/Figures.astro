@@ -153,6 +153,17 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   }
 
   /* A logo in place of the title (ticket 509): black masters, greyed here and inverted in dark mode. */
+  /* With a logo, the number is the headline and the company is its context, under the bar (Sam,
+     28 November 2026). */
+  .figures__item:has(.figures__title--logo) .figures__metric {
+    order: -2;
+  }
+  .figures__item:has(.figures__title--logo) .figures__track {
+    order: -1;
+  }
+  .figures__item:has(.figures__title--logo) .figures__title {
+    margin-bottom: var(--space-2xs);
+  }
   /* A logo (509-symmetry): a small mark beside the name, like the icons elsewhere on the page. */
   .figures__title--logo {
     display: flex;

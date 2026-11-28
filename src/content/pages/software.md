@@ -66,9 +66,9 @@ blocks:
               decorative: true
       - type: "prose"
         markdown: |-
-          This site used to be built with two of my own open source projects, [UmbracoFolio](/software/umbracofolio/) and [xStatic](/software/xstatic-for-umbraco/). I started both so that I could build and host it for free.
+          This site used to be built on Umbraco and published with [xStatic](/software/xstatic-for-umbraco/), which I started so that I could host it for free.
 
-          The current version is built with [Astro](https://astro.build/), and the source is on [GitHub](https://github.com/Mulliman/sammullins.co.uk). If you'd rather run your own site on Umbraco, UmbracoFolio and xStatic are still there: anyone with a bit of ASP.Net knowledge should be able to set one up within an hour.
+          The current version is built with [Astro](https://astro.build/), and the source is on [GitHub](https://github.com/Mulliman/sammullins.co.uk). If you'd rather run your own site on Umbraco, xStatic is still there.
 
           Umbraco is a fantastic CMS that can handle pretty much any task you throw at it, and like my two products is open source and free! You can install Umbraco via NuGet or by visiting [their website](https://umbraco.com/).
   - type: "section"

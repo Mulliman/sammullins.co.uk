@@ -36,7 +36,6 @@ d += ' Z';
     <path class="rosette__tail" d="M33 80 L22 124 L33 116 L41 126 L49 86 Z" />
     <path class="rosette__tail" d="M67 80 L78 124 L67 116 L59 126 L51 86 Z" />
     <path class="rosette__disc" d={d} />
-    <circle class="rosette__ring" cx="50" cy="50" r="36" />
   </svg>
   <span class="rosette__text">
     <span class="rosette__label">{label}</span>
@@ -82,13 +81,6 @@ d += ' Z';
   }
   .rosette__tail {
     fill: var(--color-text-muted);
-  }
-  .rosette__ring {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 0.8;
-    stroke-dasharray: 1.6 1.6;
-    opacity: 0.6;
   }
   /* The words sit in the disc (the top 100 of the 128 units). */
   .rosette__text {
