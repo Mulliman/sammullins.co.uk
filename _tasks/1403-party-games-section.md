@@ -2,7 +2,7 @@
 id: "1403"
 title: "Party games section: an index and a page per game"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: L
 owner: agent

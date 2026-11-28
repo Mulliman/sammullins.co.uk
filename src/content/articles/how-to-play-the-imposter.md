@@ -31,7 +31,7 @@ blocks:
     items:
       - title: "The Imposter"
         text: "The party game’s project page."
-        href: "/software/the-imposter/"
+        href: "/party-games/the-imposter/"
       - title: "5 cool things I used to build The Imposter"
         text: "Ionic, SignalR and the rest of the stack."
         href: "/articles/5-cool-things-i-used-to-build-the-imposter/"

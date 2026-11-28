@@ -30,7 +30,7 @@ blocks:
           decorative: true
       - title: "Learn more about The Imposter"
         text: "Learn more about how to play The Imposter and what tech was used to create it."
-        href: "/software/the-imposter/"
+        href: "/party-games/the-imposter/"
         image:
           src: "../../assets/media/xffg40lh/imposter-head.avif"
           alt: ""

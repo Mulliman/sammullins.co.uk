@@ -28,5 +28,10 @@
     "to": "/style-guide/components/",
     "status": 301,
     "reason": "Christmas theme demo moved into the style guide; points at the components page until a theme page exists (ticket 1304)"
+  },
+  "/software/the-imposter/": {
+    "to": "/party-games/the-imposter/",
+    "status": 301,
+    "reason": "The Imposter moved into the party games section (ticket 1403)"
   }
 }

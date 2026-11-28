@@ -206,11 +206,11 @@ blocks:
               src: "../../assets/media/ycspud32/biab-sam-site.avif"
               alt: ""
               decorative: true
-          - title: "The Imposter"
-            text: "A party game for four to seven people, played on their phones. Each round one player is secretly the imposter, and has to work out the secret word without being caught."
-            href: "/software/the-imposter/"
+          - title: "Party games"
+            text: "Four games for a room full of people, each on their own phone: The Imposter, It All Ends In Tiers, Blowhard and Spoof."
+            href: "/party-games/"
             image:
-              src: "../../assets/media/xwceuizg/imposter.avif"
+              src: "../../assets/media/party-games/party-games.avif"
               alt: ""
               decorative: true
           - title: "PanoCapture"

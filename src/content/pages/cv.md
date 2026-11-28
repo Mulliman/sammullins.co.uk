@@ -138,8 +138,8 @@ blocks:
             href: "/software/postcapture/"
           - title: "For everyone"
             text: |-
-              '[The Imposter](/software/the-imposter/ "The Imposter")' is my most complex personal project; a progressive web app (PWA) party game that uses Ionic, Angular, .Net Core, SignalR, and Cosmos DB to provide a native feeling, real time experience.
-            href: "/software/the-imposter/"
+              '[The Imposter](/party-games/the-imposter/ "The Imposter")' is my most complex personal project; a progressive web app (PWA) party game that uses Ionic, Angular, .Net Core, SignalR, and Cosmos DB to provide a native feeling, real time experience.
+            href: "/party-games/the-imposter/"
   - type: "split"
     ratio: "1:1"
     columns:
