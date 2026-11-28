@@ -17,6 +17,10 @@ blocks:
     provider: "youtube"
     id: "LwaZ4JD5AeU"
     title: "PanoCapture (video)"
+    poster:
+      src: "../../assets/media/youtube/panocapture-install-and-use.avif"
+      alt: ""
+      decorative: true
 ---
 
 For information please go to the GitHub page at [https://mulliman.github.io/PanoCapture/](https://mulliman.github.io/PanoCapture/)

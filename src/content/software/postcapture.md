@@ -17,6 +17,10 @@ blocks:
     provider: "youtube"
     id: "AW3xLKlumw8"
     title: "PostCapture (video)"
+    poster:
+      src: "../../assets/media/youtube/postcapture-video.avif"
+      alt: ""
+      decorative: true
 ---
 
 For information please go to the GitHub page at [https://mulliman.github.io/PostCapture/](https://mulliman.github.io/PostCapture/)

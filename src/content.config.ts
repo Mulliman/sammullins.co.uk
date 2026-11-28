@@ -93,6 +93,8 @@ const leafBlocks = (image: ImageFn) => {
   const prose = z.object({
     type: z.literal('prose'),
     markdown: z.string(),
+    /** The first paragraph is a lead: larger and darker, to open a page or a band (509-symmetry). */
+    lead: z.boolean().default(false),
     align: align.default('left'),
     surface: surface.default('default'),
   });

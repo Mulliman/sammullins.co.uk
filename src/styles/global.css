@@ -495,6 +495,14 @@
     max-width: var(--measure);
     overflow-wrap: anywhere;
   }
+  /* A lead (509-symmetry): the opening paragraph reads larger and darker, so a page or article
+     doesn't open on a grey block of body text. */
+  .prose--lead > p:first-child {
+    font-size: var(--step-1);
+    line-height: var(--leading-lead);
+    color: var(--color-heading);
+    text-wrap: pretty;
+  }
   .prose h2 {
     font-size: var(--step-3);
   }

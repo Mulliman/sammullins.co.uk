@@ -127,13 +127,8 @@ const { themeToggle = true, sticky = site.features.stickyHeader } = Astro.props;
       background-color var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
   }
-  /* Stuck (ticket 210): the bar goes slightly translucent and frosts what scrolls under it. */
-  @supports (backdrop-filter: blur(1px)) {
-    :global(html.js) .site-header.is-stuck {
-      background: color-mix(in srgb, var(--color-bg) 82%, transparent);
-      backdrop-filter: saturate(1.4) blur(14px);
-    }
-  }
+  /* Stuck: the bar stays solid (Sam, 28 November 2026: a translucent bar made the links hard to read
+     over dark bands). A soft shadow separates it. */
   .site-header__sentinel {
     position: absolute;
     inset: 0 0 auto;

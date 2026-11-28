@@ -10,6 +10,10 @@ blocks:
     provider: "youtube"
     id: "_BW8oV3LI1Q"
     title: "xStatic 14 - Get Started"
+    poster:
+      src: "../../assets/media/youtube/xstatic-14-get-started.avif"
+      alt: ""
+      decorative: true
   - type: "cards"
     variant: "full"
     surface: "muted"

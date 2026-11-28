@@ -13,14 +13,15 @@ blocks:
     subheading: "Sage of Empires is a web app that gives users sage advice for the civ they are currently playing with / against to use on their 2nd monitor."
   - type: "body"
     surface: "default"
-  - type: "cards"
-    variant: "full"
+  - type: "section"
     surface: "muted"
-    columns: 2
-    items:
-      - title: "Do you play AOE2 DE?"
-        text: "If so you can try this free tool at https://sage-of-empires.web.app/. If you have any build orders you wish to contribute, please submit a PR at https://github.com/Mulliman/sage-of-empires."
-        href: "https://sage-of-empires.web.app/"
+    blocks:
+      - type: "intro"
+        heading: "Do you play AOE2 DE?"
+        lead: "If so you can try this free tool at https://sage-of-empires.web.app/. If you have any build orders you wish to contribute, please submit a PR at https://github.com/Mulliman/sage-of-empires."
+        cta:
+          label: "Open Sage of Empires"
+          href: "https://sage-of-empires.web.app/"
 ---
 
 Age of Empires 2 DE now has over 35 different civilisations, and remembering all their different units, bonuses and build orders is very hard. I built this web app using Angular 10 and the Material toolkit with the hope of helping me improve!  

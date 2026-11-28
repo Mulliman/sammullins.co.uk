@@ -26,7 +26,7 @@ const withToc = !nested && toc.length >= 3;
 
 {Content && !withToc && (
   <Section surface={block.surface} width="narrow" nested={nested}>
-    <div class="prose">
+    <div class="prose prose--lead">
       <BodyHtml>
         <Content />
       </BodyHtml>
@@ -46,7 +46,7 @@ const withToc = !nested && toc.length >= 3;
           ))}
         </ol>
       </details>
-      <div class="prose">
+      <div class="prose prose--lead">
         <BodyHtml>
           <Content />
         </BodyHtml>

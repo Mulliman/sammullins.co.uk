@@ -45,7 +45,7 @@ limit: positive integer (optional)
 |---|---|
 | `hero` | `variant`, `heading`, `subheading`, `image`, `align`, `ctas`, `mark` |
 | `intro` | `heading`, `lead`, `cta`, `secondaryCta`, `align`, `variant`, `surface` |
-| `prose` | `markdown`, `align`, `surface` |
+| `prose` | `markdown`, `lead`, `align`, `surface` |
 | `body` | `surface` |
 | `callout` | `tone`, `title`, `body` |
 | `image` | `image`, `caption`, `width`, `frame`, `backdrop`, `surface` |
@@ -95,6 +95,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `markdown` | string | yes |  |
+| `lead` | boolean | no | `false` |
 | `align` | center \| left | no | `'left'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 

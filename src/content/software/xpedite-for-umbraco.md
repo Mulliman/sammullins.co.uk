@@ -15,22 +15,26 @@ blocks:
     subheading: "Create Umbraco headless websites FAST!"
   - type: "body"
     surface: "default"
-  - type: "cards"
-    variant: "full"
-    surface: "default"
-    columns: 3
+  - type: "indexList"
+    variant: "columns"
     items:
       - title: "Easy install"
+        icon: "download"
         text: "All you need to do to install XPEDITE is add the NuGet package to your project. The section is automatically added to the admin user and if you use the XPEDITE.StarterKit package you will have some basic items installed automatically."
       - title: "Guided setup"
+        icon: "wand"
         text: "No need for a readme, XPEDITE gives you all the instructions you need on the dashboard. When you complete a step it automatically gets crossed off. Some parts of the process are even automated and can be completed with a single button click."
       - title: "A light framework"
+        icon: "feather"
         text: "A small amount of files are added to your Next.js project that give you the minimum functionality required to connect to Umbraco and render headless pages using a familiar templates, partials, and blocks convention similar to server side Umbraco sites."
       - title: "Automatic code generation"
+        icon: "code"
         text: "XPEDITE generates unstyled react components based on settings configured by the developer in simple to use GUI in the Umbraco backoffice. This can be downloaded or directly applied to your codebase with a single button click."
       - title: "AUTOMATIC Unit test generation"
+        icon: "test"
         text: "Based on React testing library and Jest, XPEDITE automatically generates the mock data and unit test files needed to unit test your components. The snapshot test is automatically configured, all you need to do is fill in your own assertions based on how you want your components to work."
       - title: "Helpful assistants"
+        icon: "bot"
         text: "Inbuilt assistants will check for missing configuration or best practices suggestions and allow these to be resolved with a click of a button. Examples include setting up blocks in all relevant data types and adding documentation pages."
   - type: "prose"
     markdown: "XPEDITE is very easy to set up. Below is a video showing how you can install, configure, and automatically generate code."
@@ -38,6 +42,10 @@ blocks:
     provider: "youtube"
     id: "uSQ823rxnVc"
     title: "XPEDITE for Umbraco (video)"
+    poster:
+      src: "../../assets/media/youtube/xpedite-video.avif"
+      alt: ""
+      decorative: true
   - type: "prose"
     markdown: |-
       ## Install the XPEDITE StarterKit

@@ -14,6 +14,7 @@ blocks:
     surface: "default"
     blocks:
       - type: "prose"
+        lead: true
         markdown: |-
           As well as spending my career building production websites for others I also like to build software for myself. If I build something that could be used by anyone else, I try to make the code open source and release it as a free product. I've built products that can be used by web developers, photographers and people just looking for a bit of fun.
   - type: "section"
@@ -109,13 +110,38 @@ blocks:
         align: "center"
       - type: "cards"
         variant: "row"
-        columns: 1
+        columns: 2
         items:
-          - title: "Party games"
-            text: "Four games for a room full of people, each on their own phone: The Imposter, It All Ends In Tiers, Blowhard and Spoof."
-            href: "/party-games/"
+          - title: "The Imposter"
+            text: "Everyone knows the secret word except one. Find them."
+            href: "/party-games/the-imposter/"
             image:
-              src: "../../assets/media/party-games/party-games.avif"
+              src: "../../assets/media/party-games/imposter.avif"
               alt: ""
               decorative: true
+          - title: "It All Ends In Tiers"
+            text: "Rank five things. Guess how your friends rank them. In beta."
+            href: "/party-games/tiers/"
+            image:
+              src: "../../assets/media/party-games/tiers.avif"
+              alt: ""
+              decorative: true
+          - title: "Blowhard"
+            text: "Invent a convincing fake answer. Spot the truth among the bluffs. In beta."
+            href: "/party-games/blowhard/"
+            image:
+              src: "../../assets/media/party-games/blowhard.avif"
+              alt: ""
+              decorative: true
+          - title: "Spoof"
+            text: "Hide some coins. Call the total. Don't be the last one left. In beta."
+            href: "/party-games/spoof/"
+            image:
+              src: "../../assets/media/party-games/spoof.avif"
+              alt: ""
+              decorative: true
+      - type: "intro"
+        cta:
+          label: "See all the party games"
+          href: "/party-games/"
 ---

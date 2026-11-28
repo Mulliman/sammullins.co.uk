@@ -12,40 +12,49 @@ blocks:
     variant: "plain"
     align: "center"
     heading: "xStatic for Umbraco"
-    subheading: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content."
-  - type: "body"
+    subheading: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
+  # 509-symmetry (Sam, 28 November 2026): the reasons as icon columns, and a clear call to action.
+  - type: "section"
     surface: "default"
-  - type: "cards"
-    variant: "full"
-    surface: "default"
-    columns: 3
-    items:
-      - title: "Starting small"
-        text: "Hosting an Umbraco website can be a a bit expensive when you start out. As long as you have a personal computer on which you can install Umbraco you can host a small website for free using Netlify! You still have local access to the great Umbraco management interface for creating your content."
-      - title: "You're planning to grow"
-        text: "You may only need a small static site now, but what happens if you need to leverage the more powerful functionality of Umbraco in the future? Simple, just take the site you've built and move it to a full .Net host! As you've used Umbraco all along your site can grow with you. No need for a rebuild!"
-      - title: "You need to be secure"
-        text: "Are you running an extremely sensitive operation? Statically generating a site from Umbraco means that the public site doesn't need to access any code or databases."
-      - title: "It needs to be fast"
-        text: "What can be faster than simply serving a file that already exists? Static sites are perfect for CDN / Edge servers."
-      - title: "You like to share"
-        text: "xStatic is perfect for showcasing your open source Umbraco plugins. Do you have a new starter kit or a fancy piece of front end wizardry? Install into Umbraco, generate your example website and host on Netlify for free."
-      - title: "You want to attract clients"
-        text: "Why not add a few images and styles to your existing base build and push the result to Netlify in minutes. You can share or demo this website and separate you from your competition."
-  - type: "cards"
-    variant: "full"
-    surface: "default"
-    columns: 2
-    items:
-      - title: "xStatic on Our Umbraco"
-        text: "Download or install this package from the official Umbraco package repository."
-        href: "https://our.umbraco.com/packages/backoffice-extensions/xstatic/"
-        award:
-          label: "Winner"
-          title: "Umbraco Package Award"
-          detail: "Best newcomer 2021"
+    blocks:
+      - type: "intro"
+        heading: "Is xStatic for you?"
+        lead: "Static site builders have become popular over the last few years as a viable alternative to the classic CMS. Below are some of the reasons to consider using xStatic."
+      - type: "indexList"
+        variant: "columns"
+        items:
+          - title: "Starting small"
+            icon: "sprout"
+            text: "Hosting an Umbraco website can be a a bit expensive when you start out. As long as you have a personal computer on which you can install Umbraco you can host a small website for free using Netlify! You still have local access to the great Umbraco management interface for creating your content."
+          - title: "You're planning to grow"
+            icon: "growth"
+            text: "You may only need a small static site now, but what happens if you need to leverage the more powerful functionality of Umbraco in the future? Simple, just take the site you've built and move it to a full .Net host! As you've used Umbraco all along your site can grow with you. No need for a rebuild!"
+          - title: "You need to be secure"
+            icon: "secure"
+            text: "Are you running an extremely sensitive operation? Statically generating a site from Umbraco means that the public site doesn't need to access any code or databases."
+          - title: "It needs to be fast"
+            icon: "fast"
+            text: "What can be faster than simply serving a file that already exists? Static sites are perfect for CDN / Edge servers."
+          - title: "You like to share"
+            icon: "share"
+            text: "xStatic is perfect for showcasing your open source Umbraco plugins. Do you have a new starter kit or a fancy piece of front end wizardry? Install into Umbraco, generate your example website and host on Netlify for free."
+          - title: "You want to attract clients"
+            icon: "briefcase"
+            text: "Why not add a few images and styles to your existing base build and push the result to Netlify in minutes. You can share or demo this website and separate you from your competition."
   - type: "section"
     surface: "muted"
+    blocks:
+      - type: "intro"
+        heading: "Get xStatic"
+        lead: "Download or install this package from the official Umbraco package repository."
+        cta:
+          label: "xStatic on Our Umbraco"
+          href: "https://our.umbraco.com/packages/backoffice-extensions/xstatic/"
+        secondaryCta:
+          label: "Fork it on GitHub"
+          href: "https://github.com/Mulliman/xStatic-for-Umbraco"
+  - type: "section"
+    surface: "default"
     blocks:
       - type: "intro"
         heading: "Documentation"
@@ -78,12 +87,4 @@ blocks:
           - title: "Extending xStatic v2+"
             text: "You can extend xStatic even more with the version 2 upgrade and this is the place to find out how."
             href: "/software/xstatic-for-umbraco/extending-xstatic-2/"
-  - type: "prose"
-    markdown: "If you want to contribute to xStatic, please fork the repository at [https://github.com/Mulliman/xStatic-for-Umbraco](https://github.com/Mulliman/xStatic-for-Umbraco)"
 ---
-
-This allows for very cheap and fast hosting of simple sites.
-
-## Is xStatic for you?
-
-#### xStatic has the potential to be used in a variety of different ways. Static site builders have become popular over the last few years as a viable alternative to the classic CMS. Below are some of the reasons to consider using xStatic.
