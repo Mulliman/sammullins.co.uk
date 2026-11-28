@@ -2,8 +2,8 @@
 title: "Transformers"
 description: "Transformers are xStatic components that take the static content for a content item, perform an operation, and return an altered string. These can be used to change hostnames, alter image URLs, or…"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 8
 blocks:

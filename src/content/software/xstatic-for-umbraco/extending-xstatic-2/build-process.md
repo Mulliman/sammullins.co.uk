@@ -2,8 +2,8 @@
 title: "Build Process"
 description: "The build process is the first of the two main xStatic processes. This is in control of iterating through the site, generating the static versions, and storing them locally ready for deployment.…"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 1
 blocks:

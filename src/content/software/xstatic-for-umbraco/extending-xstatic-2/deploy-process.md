@@ -2,8 +2,8 @@
 title: "Deploy process"
 description: "The deploy process is the second main process in xStatic. This stage takes the built output and pushes it to a location configured by the user. In the CMS dashboard you fill in these details in…"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 2
 blocks:

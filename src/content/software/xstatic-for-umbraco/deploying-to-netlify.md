@@ -5,8 +5,8 @@ cover:
   src: "../../../assets/media/egdifrhl/banner.avif"
   alt: "The xStatic logo in pink and orange on a dark purple background"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco"
 order: 2
 blocks:

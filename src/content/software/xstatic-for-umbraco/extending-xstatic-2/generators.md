@@ -2,8 +2,8 @@
 title: "Generators"
 description: "A generator defines how a umbraco nodes are turned into static files. Generally speaking, to create static HTML websites you will not need to create a custom implementation of this, you can…"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 6
 blocks:

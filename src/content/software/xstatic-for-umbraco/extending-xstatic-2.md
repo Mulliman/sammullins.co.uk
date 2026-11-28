@@ -5,8 +5,8 @@ cover:
   src: "../../../assets/media/nsipcjdg/banner.avif"
   alt: "The xStatic logo above the words xStatic v3"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco"
 order: 8
 blocks:

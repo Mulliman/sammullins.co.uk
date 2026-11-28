@@ -5,8 +5,8 @@ description: |-
 
   This can be used to…
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 3
 blocks:

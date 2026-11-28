@@ -2,7 +2,7 @@
 id: "1404"
 title: "xStatic is current: take it and its docs out of the archive"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: S
 owner: agent

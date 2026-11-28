@@ -4,8 +4,8 @@ description: |-
   There are two types of namers in xStatic, file name generators and image crop name generators.
   Image crop name generators are used by the `CroppedImageUrlTransformer` and the base generator class…
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 5
 blocks:

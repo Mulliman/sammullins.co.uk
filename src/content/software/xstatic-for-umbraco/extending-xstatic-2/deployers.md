@@ -2,8 +2,8 @@
 title: "Deployers"
 description: "A deployer in xStatic is a component that takes a folder of static files and pushes it to a remote location. Creating your own deployer is fairly straightforward, but check NuGet first for any…"
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 4
 blocks:

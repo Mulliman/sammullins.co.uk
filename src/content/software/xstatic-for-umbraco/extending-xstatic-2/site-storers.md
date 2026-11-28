@@ -2,8 +2,8 @@
 title: "Site Storers"
 description: "Site storers are the component that stores the generated files ready for use by the deployer process in xStatic."
 authorship: "sam"
-status: "legacy"
-archived: true
+status: "active"
+archived: false
 series: "xstatic-for-umbraco/extending-xstatic-2"
 order: 7
 blocks:
