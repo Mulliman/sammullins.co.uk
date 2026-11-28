@@ -282,8 +282,8 @@ const leafBlocks = (image: ImageFn) => {
           title: z.string().optional(),
           /** A line icon beside the row, from src/lib/icons.ts (ticket 509). */
           icon: z.enum(iconNames).optional(),
-          /** Or a short marker in its place, such as the years of a job ("23-25"). */
-          marker: z.string().min(1).max(7).optional(),
+          /** Short lines under the title, such as a job's company and dates: the first reads stronger. */
+          meta: z.array(z.string().min(1)).optional(),
           text: z.string().min(1),
         }),
       )

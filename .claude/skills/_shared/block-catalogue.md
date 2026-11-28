@@ -227,7 +227,7 @@ limit: positive integer (optional)
 | `heading` | string | no |  |
 | `variant` | ruled \| numbered \| columns | no | `'columns'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
-| `items` | z .array(z.object({ title: string, icon: z.enum(iconNames), marker: string (min 1) (max 7), text: string (min 1), }),)  (min 1) | no |  |
+| `items` | z .array(z.object({ title: string, icon: z.enum(iconNames), meta: z.array(string (min 1)), text: string (min 1), }),)  (min 1) | no |  |
 
 ## `statement`
 

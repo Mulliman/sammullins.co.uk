@@ -29,7 +29,7 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
           'index-list__item',
           {
             'index-list__item--titled': Boolean(item.title),
-            'index-list__item--icon': Boolean(item.icon || item.marker),
+            'index-list__item--icon': Boolean(item.icon),
           },
         ]}
       >
@@ -38,14 +38,26 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
             <Icon name={item.icon} />
           </span>
         )}
-        {!item.icon && item.marker && <span class="index-list__icon index-list__marker">{item.marker}</span>}
         {block.variant === 'numbered' && !item.icon && (
           <span class="index-list__num" aria-hidden="true">
             {String(i + 1).padStart(2, '0')}
           </span>
         )}
         <div class="index-list__body">
-          {item.title && <Heading class="index-list__title">{item.title}</Heading>}
+          {item.title && (
+            <div class="index-list__head">
+              <Heading class="index-list__title">{item.title}</Heading>
+              {item.meta && item.meta.length > 0 && (
+                <p class="index-list__meta">
+                  {item.meta.map((line, j) => (
+                    <span class:list={['index-list__meta-line', { 'index-list__meta-line--lead': j === 0 }]}>
+                      {line}
+                    </span>
+                  ))}
+                </p>
+              )}
+            </div>
+          )}
           <div class="index-list__text" set:html={md(item.text)} />
         </div>
       </li>
@@ -234,30 +246,28 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
     max-width: 22rem;
   }
 
-  /* A text marker (509-symmetry): a pill, so a range like "25-now" fits. */
-  .index-list__marker {
-    width: auto;
-    min-width: 2.75rem;
-    aspect-ratio: auto;
-    min-height: 2.75rem;
-    padding-inline: 0.6em;
-    border-radius: var(--radius-pill);
-    font-family: var(--font-display);
+  /* Lines under a title (509-symmetry), e.g. a job's company and dates. The text beside them starts level
+     with the title (Sam, 28 November 2026). */
+  .index-list__head {
+    display: grid;
+    gap: var(--space-3xs);
+    align-content: start;
+  }
+  .index-list__meta {
+    display: grid;
+    margin: 0;
     font-size: var(--step--1);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+    line-height: var(--leading-small);
+    color: var(--color-text-muted);
   }
-  .index-list__item--icon:has(.index-list__marker) {
-    grid-template-columns: auto minmax(0, 1fr);
+  .index-list__meta-line--lead {
+    font-weight: var(--weight-strong);
+    color: var(--color-text-strong);
   }
+  /* A ruled title sits level with the first line of the text beside it. */
   @media (min-width: 40rem) {
-    .index-list__item--icon:has(.index-list__marker) {
-      grid-template-columns: 5.5rem minmax(0, 1fr);
-    }
-    .index-list__marker {
-      justify-self: start;
-      min-height: 3.25rem;
+    .index-list--ruled .index-list__item--titled .index-list__title {
+      font-size: var(--step-1);
     }
   }
 
@@ -271,7 +281,7 @@ const Heading = block.heading || nested ? 'h3' : 'h2';
   @media (min-width: 40rem) {
     .index-list--ruled .index-list__item--titled .index-list__body {
       grid-template-columns: minmax(9rem, 12rem) minmax(0, 1fr);
-      align-items: baseline;
+      align-items: start;
       gap: var(--space-xs) var(--space-l);
     }
   }

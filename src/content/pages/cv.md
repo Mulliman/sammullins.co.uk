@@ -37,51 +37,37 @@ blocks:
     blocks:
       - type: "intro"
         heading: "Employment"
-      # Sam (28 November 2026): one job per row, the years where the icons sit elsewhere.
+      # Sam (28 November 2026): one job per row; company and dates under the title, the text level with it.
       - type: "indexList"
         variant: "ruled"
         items:
           - title: "Sitecore team lead"
-            marker: "25-now"
+            meta: ["Tata Consultancy Services (TCS)", "2025 to present"]
             text: |-
-                **Tata Consultancy Services (TCS)**
-
                 My role moved to Tata Consultancy Services under TUPE in 2025, and I carried on leading the team on the Allianz account.
           - title: "Sitecore team lead"
-            marker: "23-25"
+            meta: ["Allianz Technology", "2023 to 2025"]
             text: |-
-                **Allianz Technology**
-
                 My role moved to Allianz Technology under TUPE in 2023, where I was the Sitecore team lead. Leader of a team of 7 Sitecore developers, supporting, mentoring, and managing them so that we could reliably maintain and deliver new functionality on our existing Sitecore estate.
           - title: "Senior analyst developer"
-            marker: "21-23"
+            meta: ["LV=", "2021 to 2023"]
             text: |-
-                **LV=**
-
                 Main developer creating the new ElectriX website with Sitecore and React.Js. Part of the team upgrading the entire platform to Sitecore 10.2 and moving to Docker and Managed Cloud.
           - title: "Mid-level web developer"
-            marker: "16-21"
+            meta: ["Redweb", "2016 to 2021"]
             text: |-
-                **Redweb**
-
                 Built, onboarded, upgraded and supported a portfolio of Sitecore sites. Mentored and line managed up to three developers. Provided training and consultancy services for clients. Clients include The RNLI, The Royal College of Surgeons, Mace Group, and Guide Dogs.
           - title: "Web developer"
-            marker: "13-16"
+            meta: ["Redweb", "2013 to 2016"]
             text: |-
-                **Redweb**
-
                 Created large ecommerce integrated Sitecore projects with integration to an array of 3rd party and internal system. Worked off site in a contracting role to create an API for a client's internal system. Mentored student developers. Clients included The Royal College of Surgeons, City & Guilds, Farrow & Ball, and Action on Hearing Loss.
           - title: "Graduate developer"
-            marker: "12-13"
+            meta: ["Redweb", "2012 to 2013"]
             text: |-
-                **Redweb**
-
                 Built Sitecore and Umbraco sites as well as standalone web applications. Clients included Insight Vacations.
           - title: "Student developer"
-            marker: "10-11"
+            meta: ["Redweb", "2010 to 2011"]
             text: |-
-                **Redweb**
-
                 Built a variety of websites using Umbraco and Sitecore. Also built internal web applications and components. Worked for clients such as Aviagen Turkeys and Action on Hearing Loss.
   - type: "section"
     surface: "default"
