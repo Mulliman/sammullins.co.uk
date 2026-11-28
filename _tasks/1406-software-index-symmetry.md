@@ -2,7 +2,7 @@
 id: "1406"
 title: "Software index in the symmetry design, linking the party games section"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: M
 owner: agent
