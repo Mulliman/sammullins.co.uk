@@ -2,7 +2,7 @@
 id: "1405"
 title: "CV in the symmetry design"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: M
 owner: agent
