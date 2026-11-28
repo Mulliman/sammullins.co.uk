@@ -1,7 +1,16 @@
 ---
 /**
- * Layout for the unlisted style guide (ticket 1301). Wraps BaseLayout with noindex, a side nav of
- * guide pages, an on-page section list, and previous/next links between guide pages.
+ * Layout for the unlisted style guide (tickets 1301, 1401). Wraps BaseLayout with noindex.
+ *
+ * Sam (28 November 2026): every guide page shares one look, matching the site. The guide's navigation is a
+ * bar that sticks under the site header: the guide's pages and the theme switcher, then a second row with
+ * the component groups (on the components pages) or the page's own sections. Headings are centred like the
+ * site's bands, and previous and next links close the page.
+ *
+ *   wide      the page renders its own full-width bands (the component group pages); otherwise its content
+ *             sits in the site's container.
+ *   subnav    a second row in the bar (the component groups).
+ *   sections  the page's own sections, as jump links.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StyleGuideThemeSwitcher from './StyleGuideThemeSwitcher.astro';
@@ -10,178 +19,113 @@ import { readyStyleGuidePages, styleGuideNeighbours } from '../lib/style-guide';
 interface Props {
   title: string;
   description: string;
-  /** On-page sections (heading ids) shown in the side nav. */
+  /** On-page sections (heading ids), shown as jump links under the page heading. */
   sections?: { id: string; label: string }[];
-  /** Full width, for pages that show blocks as they look on the site: the guide's navigation moves to a
-      bar along the top, and the page content is not boxed in a column (Sam, 28 November 2026). */
+  /** The page draws its own full-width bands. */
   wide?: boolean;
-  /** A second row of links under the guide nav on a wide page (the component groups). */
+  /** A second row of links in the bar (the component groups). */
   subnav?: { href: string; label: string }[];
 }
 
 const { title, description, sections = [], wide = false, subnav = [] } = Astro.props;
 const path = Astro.url.pathname;
 const pages = readyStyleGuidePages();
-const { prev, next } = styleGuideNeighbours(path);
+const { prev, next } = styleGuideNeighbours(
+  path.startsWith('/style-guide/components/') ? '/style-guide/components/' : path,
+);
+// A page is current for its own URL; the components entry is also current on its group pages.
+const current = (href: string) =>
+  href === path ? 'page' : href !== '/style-guide/' && path.startsWith(href) ? 'true' : undefined;
 ---
 
 <BaseLayout title={title} description={description} noindex={true}>
-  {wide ? (
-    <>
-      <div class="container guide-bar">
-        <nav aria-label="Style guide pages" class="guide-bar__nav">
+  <div class="guide-bar">
+    <div class="container guide-bar__inner">
+      <nav aria-label="Style guide pages" class="guide-bar__nav">
+        <ul>
+          {pages.map((p) => (
+            <li>
+              <a href={p.href} aria-current={current(p.href)}>
+                {p.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div class="guide-bar__tools">
+        <StyleGuideThemeSwitcher />
+      </div>
+      {subnav.length > 0 ? (
+        <nav aria-label="Component groups" class="guide-bar__sub">
           <ul>
-            {pages.map((p) => (
+            {subnav.map((l) => (
               <li>
-                <a
-                  href={p.href}
-                  aria-current={
-                    p.href === path
-                      ? 'page'
-                      : path.startsWith(p.href) && p.href !== '/style-guide/'
-                        ? 'true'
-                        : undefined
-                  }
-                >
-                  {p.title}
+                <a href={l.href} aria-current={l.href === path ? 'page' : undefined}>
+                  {l.label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
-        <StyleGuideThemeSwitcher />
-        {subnav.length > 0 && (
-          <nav aria-label="Component groups" class="guide-bar__sub">
+      ) : (
+        sections.length > 0 && (
+          <nav aria-label="On this page" class="guide-bar__sub">
             <ul>
-              {subnav.map((l) => (
+              {sections.map((x) => (
                 <li>
-                  <a href={l.href} aria-current={l.href === path ? 'page' : undefined}>
-                    {l.label}
-                  </a>
+                  <a href={`#${x.id}`}>{x.label}</a>
                 </li>
               ))}
             </ul>
           </nav>
-        )}
-      </div>
-      <slot />
-    </>
-  ) : (
-    <div class="container guide">
-      <aside class="guide__aside">
-        <StyleGuideThemeSwitcher />
-        <nav aria-label="Style guide pages">
-          <ul>
-            {pages.map((p) => (
-              <li>
-                <a href={p.href} aria-current={p.href === path ? 'page' : undefined}>
-                  {p.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        {sections.length > 0 && (
-          <nav aria-label="On this page" class="guide__sections">
-            <ul>
-              {sections.map((s) => (
-                <li>
-                  <a href={`#${s.id}`}>{s.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
-      </aside>
-
-      <div class="guide__content">
-        <slot />
-
-        {(prev || next) && (
-          <nav aria-label="Style guide, previous and next" class="guide__pager">
-            {prev ? (
-              <a href={prev.href} class="guide__pager-link guide__pager-link--prev">
-                <span class="guide__pager-dir">Previous</span>
-                <span>{prev.title}</span>
-              </a>
-            ) : (
-              <span />
-            )}
-            {next && (
-              <a href={next.href} class="guide__pager-link guide__pager-link--next">
-                <span class="guide__pager-dir">Next</span>
-                <span>{next.title}</span>
-              </a>
-            )}
-          </nav>
-        )}
-      </div>
+        )
+      )}
     </div>
+  </div>
+
+  {wide ? (
+    <slot />
+  ) : (
+    <div class="container guide-page">
+      <slot />
+    </div>
+  )}
+
+  {(prev || next) && (
+    <nav aria-label="Style guide, previous and next" class="container guide-pager">
+      {prev ? (
+        <a href={prev.href} class="guide-pager__link guide-pager__link--prev">
+          <span class="guide-pager__dir">Previous</span>
+          <span>{prev.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a href={next.href} class="guide-pager__link guide-pager__link--next">
+          <span class="guide-pager__dir">Next</span>
+          <span>{next.title}</span>
+        </a>
+      )}
+    </nav>
   )}
 </BaseLayout>
 
 <style>
-  .guide {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-l);
-    padding-block: var(--space-l);
-  }
-  @media (min-width: 960px) {
-    .guide {
-      grid-template-columns: 14rem minmax(0, 1fr);
-      align-items: start;
-      gap: var(--space-xl);
-    }
-    /* The side nav scrolls on its own when it is taller than the screen, so all of it can be reached. */
-    .guide__aside {
-      position: sticky;
-      top: calc(var(--header-h) + var(--space-s));
-      max-height: calc(100vh - var(--header-h) - var(--space-m));
-      overflow-y: auto;
-      overscroll-behavior: contain;
-    }
-  }
-  .guide__content {
-    min-width: 0;
-  }
-
-  .guide__aside ul {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-3xs);
-  }
-  .guide__aside nav + nav {
-    margin-top: var(--space-m);
-  }
-  .guide__aside a {
-    display: block;
-    padding: var(--space-3xs) var(--space-2xs);
-    border-radius: var(--radius);
-    color: var(--color-text);
-    text-decoration: none;
-  }
-  .guide__aside a:hover {
-    color: var(--color-heading);
-    background: var(--color-bg-muted);
-  }
-  .guide__aside a[aria-current='page'] {
-    color: var(--color-text-strong);
-    background: var(--color-bg-muted);
-    font-weight: var(--weight-strong);
-  }
-  .guide__sections a {
-    font-size: var(--step--1);
-  }
-
-  /* Wide pages: the guide's pages, and the component groups, as rows of links along the top. */
+  /* The guide bar sticks under the site header's bar, solid like it. */
   .guide-bar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 20;
+    background: var(--color-bg);
+    box-shadow: var(--shadow-header);
+  }
+  .guide-bar__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: var(--space-xs) var(--space-s);
-    padding-block: var(--space-s);
+    gap: var(--space-3xs) var(--space-s);
+    padding-block: var(--space-2xs);
   }
   .guide-bar ul {
     display: flex;
@@ -203,7 +147,7 @@ const { prev, next } = styleGuideNeighbours(path);
     text-decoration: none;
   }
   .guide-bar__sub a {
-    background: var(--color-bg-muted);
+    color: var(--color-text-muted);
   }
   .guide-bar a:hover {
     color: var(--color-heading);
@@ -214,32 +158,124 @@ const { prev, next } = styleGuideNeighbours(path);
     background: var(--color-text-strong);
     font-weight: var(--weight-strong);
   }
+  /* The theme switcher, compact in the bar. */
+  .guide-bar__tools :global(.guide-switcher) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0;
+  }
+  /* The switcher's buttons as the bar's pills: no outlines, the pressed one filled. */
+  .guide-bar__tools :global(.guide-switcher__group) {
+    display: flex;
+    gap: var(--space-3xs);
+    padding: 2px;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-muted);
+  }
+  .guide-bar__tools :global(.guide-switcher__button) {
+    padding: var(--space-3xs) var(--space-xs);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text);
+    font-size: var(--step--1);
+  }
+  .guide-bar__tools :global(.guide-switcher__button[aria-pressed='true']) {
+    background: var(--color-text-strong);
+    color: var(--color-bg);
+  }
+  /* Phones and small tablets: each row is one line that scrolls sideways, so the sticky bar stays short. */
+  @media (max-width: 47.99rem) {
+    .guide-bar__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3xs);
+      padding-block: var(--space-3xs);
+    }
+    .guide-bar ul,
+    .guide-bar__tools :global(.guide-switcher) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .guide-bar li {
+      flex: none;
+    }
+    .guide-bar__tools :global(.guide-switcher__group) {
+      flex: none;
+    }
+    .guide-bar__tools {
+      grid-row: 3;
+    }
+    .guide-bar__sub {
+      grid-row: 2;
+    }
+  }
 
-  .guide__pager {
+  /* An ordinary guide page: its content in the site's container, its sections as a centred row of links. */
+  .guide-page {
+    padding-block: var(--space-l) var(--space-xl);
+  }
+  /* Like the site: the page heading and its opening paragraph centred, section headings centred, longer
+     text left-aligned under them. */
+  .guide-page :global(h1) {
+    margin: 0 0 var(--space-s);
+    text-align: center;
+  }
+  .guide-page :global(:is(h1 + p, h1 + p + p)) {
+    max-width: 40em;
+    margin-inline: auto;
+    font-size: var(--step-1);
+    line-height: var(--leading-lead);
+    color: var(--color-text-muted);
+    text-align: center;
+    text-wrap: balance;
+  }
+  .guide-page :global(h2) {
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+  /* Text columns sit in the middle of the page, at a readable width. */
+  .guide-page :global(.prose) {
+    margin-inline: auto;
+  }
+  .guide-page :global(h2 + p) {
+    max-width: 44em;
+    margin-inline: auto;
+  }
+  /* Headings that links jump to clear both sticky bars. */
+  .guide-page :global([id]) {
+    scroll-margin-top: calc(var(--header-h) + 6rem);
+  }
+
+  .guide-pager {
     display: grid;
     gap: var(--space-s);
-    margin-top: var(--space-xl);
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-l) var(--space-xl);
   }
   @media (min-width: 640px) {
-    .guide__pager {
+    .guide-pager {
       grid-template-columns: 1fr 1fr;
     }
   }
-  .guide__pager-link {
+  .guide-pager__link {
     display: grid;
     gap: var(--space-3xs);
-    padding: var(--space-s);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius-m);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card-rest);
     text-decoration: none;
     color: var(--color-heading);
+    transition: box-shadow var(--dur) var(--ease-out);
   }
-  .guide__pager-link--next {
+  .guide-pager__link:hover {
+    box-shadow: var(--shadow-card);
+  }
+  .guide-pager__link--next {
     text-align: right;
   }
-  .guide__pager-dir {
+  .guide-pager__dir {
     font-size: var(--step--1);
     color: var(--color-text-muted);
   }

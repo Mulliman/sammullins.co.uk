@@ -1,8 +1,9 @@
 ---
 /**
  * Style guide: one component group (Sam, 28 November 2026). Each block's examples are rendered by the real
- * block components at full width, exactly as on the site; a dark strip names each example, and the YAML and
- * the block's fields are tucked into closed disclosures so the page reads like the site, not a manual.
+ * block components at full width, exactly as on the site. A row of tabs switches between a block's
+ * variations, one shown at a time; the YAML and the block's fields are tucked into closed disclosures.
+ * Without JS the tabs stay hidden and every example is shown in turn, each under its own heading.
  */
 import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
 import Blocks from '../../../components/Blocks.astro';
@@ -73,27 +74,96 @@ const subnav = componentGroups.map((g) => ({ href: `/style-guide/components/${g.
         </details>
       </div>
 
-      {s.examples.map((ex) => (
-        <div class="sg-example">
-          <div class="sg-example__bar">
-            <div class="container sg-example__bar-inner">
-              <h3 class="sg-example__title">{ex.title}</h3>
+      <div class="sg-tabs" data-tabs>
+        {s.examples.length > 1 && (
+          <div class="container">
+            <div class="sg-tabs__list" role="tablist" aria-label={`${s.title} variations`} hidden data-tablist>
+              {s.examples.map((ex, i) => (
+                <button
+                  type="button"
+                  role="tab"
+                  class="sg-tabs__tab"
+                  id={`tab-${ex.id}`}
+                  aria-controls={`panel-${ex.id}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  tabindex={i === 0 ? 0 : -1}
+                >
+                  {ex.title}
+                </button>
+              ))}
             </div>
           </div>
-          <div class="sg-example__render">
-            <Blocks blocks={[ex.block]} Content={StyleGuideSampleBody} />
+        )}
+        {s.examples.map((ex) => (
+          <div class="sg-example" id={`panel-${ex.id}`} data-panel data-tab={`tab-${ex.id}`}>
+            <div class="container">
+              <h3 class="sg-example__title">{ex.title}</h3>
+            </div>
+            <div class="sg-example__render">
+              <Blocks blocks={[ex.block]} Content={StyleGuideSampleBody} />
+            </div>
+            <div class="container sg-example__code">
+              <details class="sg-details">
+                <summary>YAML</summary>
+                <Blocks blocks={[{ type: 'code', lang: 'yaml', filename: `${ex.id}.yaml`, code: ex.yaml }]} nested />
+              </details>
+            </div>
           </div>
-          <div class="container sg-example__code">
-            <details class="sg-details">
-              <summary>YAML</summary>
-              <Blocks blocks={[{ type: 'code', lang: 'yaml', filename: `${ex.id}.yaml`, code: ex.yaml }]} nested />
-            </details>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   ))}
 </StyleGuideLayout>
+
+<script>
+  // Tabs for a block's variations (Sam, 28 November 2026): one example shown at a time. Arrow keys,
+  // Home and End move between tabs (the WAI-ARIA tabs pattern, activation follows focus).
+  for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
+    const list = root.querySelector<HTMLElement>('[data-tablist]');
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    if (!list || panels.length < 2) continue;
+    const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    list.hidden = false;
+    root.classList.add('is-tabbed');
+    for (const p of panels) {
+      p.setAttribute('role', 'tabpanel');
+      p.setAttribute('aria-labelledby', p.dataset.tab ?? '');
+      p.tabIndex = -1;
+    }
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+        panels[j]!.hidden = i !== j;
+      });
+      if (focus) tabs[i]!.focus();
+    };
+    select(0);
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const last = tabs.length - 1;
+        const to =
+          e.key === 'ArrowRight'
+            ? i === last
+              ? 0
+              : i + 1
+            : e.key === 'ArrowLeft'
+              ? i === 0
+                ? last
+                : i - 1
+              : e.key === 'Home'
+                ? 0
+                : e.key === 'End'
+                  ? last
+                  : -1;
+        if (to < 0) return;
+        e.preventDefault();
+        select(to, true);
+      });
+    });
+  }
+</script>
 
 <style>
   .sg-head {
@@ -153,19 +223,49 @@ const subnav = componentGroups.map((g) => ({ href: `/style-guide/components/${g.
     color: var(--color-text-muted);
   }
 
-  /* The strip that names an example is clearly guide chrome, not part of the page it shows. */
-  .sg-example__bar {
-    background: var(--color-bg-inverse);
-    color: var(--color-text-inverse);
+  /* Tabs: one row of pills per block, the selected one filled. */
+  .sg-tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2xs);
+    padding-bottom: var(--space-s);
   }
-  .sg-example__bar-inner {
-    padding-block: var(--space-2xs);
+  .sg-tabs__list[hidden] {
+    display: none;
   }
-  .sg-example__title {
-    margin: 0;
+  .sg-tabs__tab {
+    padding: var(--space-3xs) var(--space-s);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-muted);
+    color: var(--color-text);
+    font: inherit;
     font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .sg-tabs__tab:hover {
+    color: var(--color-heading);
+  }
+  .sg-tabs__tab[aria-selected='true'] {
+    background: var(--color-text-strong);
+    color: var(--color-bg);
     font-weight: var(--weight-strong);
-    color: inherit;
+  }
+  /* Without JS, each example has a heading; with tabs, the tab names it. */
+  .sg-example__title {
+    margin: var(--space-m) 0 var(--space-xs);
+    font-size: var(--step-0);
+    font-weight: var(--weight-strong);
+    color: var(--color-text-muted);
+  }
+  .sg-tabs.is-tabbed .sg-example__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .sg-example__render {
     min-width: 0;

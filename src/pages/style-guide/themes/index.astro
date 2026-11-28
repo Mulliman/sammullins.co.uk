@@ -2,7 +2,7 @@
 /**
  * Style guide: themes (ticket 1303). Unlisted like the rest of the guide (ticket 1301).
  *
- * The switcher in the guide's side nav previews any mode and page theme on every guide page. This
+ * The switcher in the guide's bar previews any mode and page theme on every guide page. This
  * page is static: for each page theme in pageThemes, a token diff against default and a contrast
  * table, both computed at build time from the theme files (src/lib/tokens.ts). Nothing here needs JS.
  */
@@ -46,9 +46,10 @@ const themes = pageThemes.map((name) => ({
   <section id="modes" class="guide-section">
     <h2>Light and dark</h2>
     <p>
-      The switcher in the side nav sets light, dark or system mode, and the page theme, on every guide page. The choice
-      is kept in the URL, for example <code>?theme=christmas&amp;mode=dark</code>, so a view can be shared. Without JS
-      the switcher is hidden and the pages show the default system mode. The tables below do not depend on JS.
+      The switcher in the bar at the top sets light, dark or system mode, and the page theme, on every guide page. The
+      choice is kept in the URL, for example <code>?theme=christmas&amp;mode=dark</code>, so a view can be shared.
+      Without JS the switcher is hidden and the pages show the default system mode. The tables below do not depend on
+      JS.
     </p>
     <p>
       Light and dark values come from the same theme file. The dark values apply under <code>data-theme='dark'</code>,
