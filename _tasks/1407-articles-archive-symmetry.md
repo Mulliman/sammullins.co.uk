@@ -2,7 +2,7 @@
 id: "1407"
 title: "Articles index and archive in the symmetry design"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: S
 owner: agent
