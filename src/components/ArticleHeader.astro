@@ -41,24 +41,49 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
 </header>
 
 <style>
-  /* 509-symmetry: no rule under the header; the space below it does the separating. */
+  /* 509-symmetry: the title, meta and subtitle are centred. No rule under the header; the space below it
+     does the separating. */
   .article-head {
     padding-block: var(--space-section) var(--space-l);
+    text-align: center;
   }
   .article-head__title {
     max-width: 22ch;
+    margin-inline: auto;
     font-size: var(--step-6);
+    text-wrap: balance;
   }
+  /* A centred subtitle of two lines at most on a desktop. Longer descriptions are clamped visually only;
+     the full text stays in the page. */
   .article-head__lead {
     max-width: 40em;
-    margin-top: var(--space-s);
+    margin: var(--space-s) auto 0;
     font-size: var(--step-1);
     line-height: var(--leading-lead);
     color: var(--color-text-muted);
+    text-wrap: balance;
+  }
+  @supports (-webkit-line-clamp: 2) {
+    @media (min-width: 40rem) {
+      .article-head__lead {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+  /* Phones: the centred title and subtitle sit in a narrower measure than the body, as the intro does. */
+  @media (max-width: 39.99rem) {
+    .article-head__title,
+    .article-head__lead {
+      padding-inline: var(--space-s);
+    }
   }
   .article-head__meta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-2xs) var(--space-m);
     margin-top: var(--space-m);
     padding: 0;
@@ -68,14 +93,15 @@ const fmt = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', ye
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
   }
-  /* A tonal box, as the callout's archive tone; the text itself says it is from the archive. */
+  /* A tonal panel with a radius, centred as a block. The words stay left-aligned: this is longer text. */
   .article-head__archived {
     max-width: var(--measure);
-    margin-top: var(--space-m);
+    margin: var(--space-m) auto 0;
     padding: var(--space-xs) var(--space-s);
     border-radius: var(--radius-m);
     background: var(--color-bg-muted);
     font-size: var(--step--1);
+    text-align: left;
   }
   .article-head__archived strong {
     color: var(--color-heading);
