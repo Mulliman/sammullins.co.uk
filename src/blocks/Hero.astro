@@ -167,15 +167,10 @@ const headingParts = heading.split(/~~(.+?)~~/).map((text, i) => ({ text, struck
   }
   /* Phones (ticket 210): a hero with a paragraph lead reads left-aligned; centred lines that long are
      hard to follow. */
+  /* 509-symmetry: a centred hero stays centred on phones; subheadings are kept short (ticket 1401). */
   @media (max-width: 39.99rem) {
-    .hero--center:has(.hero__sub--lead) .hero__text {
-      text-align: left;
-    }
-    .hero--center .hero__sub--lead {
-      text-wrap: pretty;
-    }
-    .hero--center:has(.hero__sub--lead) .hero__ctas {
-      justify-content: flex-start;
+    .hero--center .hero__text {
+      padding-inline: var(--space-s);
     }
   }
   .hero--blurred .hero__sub {

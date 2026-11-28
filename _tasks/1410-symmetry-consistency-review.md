@@ -2,7 +2,7 @@
 id: "1410"
 title: "Whole-site consistency review against the home page"
 epic: Site-wide design
-status: todo
+status: done
 priority: p1
 size: M
 owner: agent

@@ -311,10 +311,14 @@
     border-radius: var(--radius);
   }
 
+  /* A thematic break (509-symmetry: no hairlines): three small centred dots and space, not a rule. */
   hr {
     border: 0;
-    border-top: 1px solid var(--color-border);
-    margin-block: var(--space-l);
+    height: 0.4em;
+    width: 2.6em;
+    margin: var(--space-l) auto;
+    background: radial-gradient(circle, var(--color-border-strong) 0.2em, transparent 0.21em) 0 50% / 0.9em 0.4em
+      repeat-x;
   }
 
   ::selection {

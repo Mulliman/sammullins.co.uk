@@ -130,6 +130,10 @@ const kindLabel = {
   :global(.surface-muted) .timeline__badge {
     background: var(--color-surface);
   }
+  /* On a dark band the inverse surface keeps the light text readable. */
+  :global(.surface-inverse) .timeline__badge {
+    background: var(--color-surface-inverse);
+  }
   .timeline__title {
     font-size: var(--step-1);
     line-height: var(--leading-heading);

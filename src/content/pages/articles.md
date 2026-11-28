@@ -9,35 +9,28 @@ blocks:
     align: "center"
     heading: "Articles"
     subheading: "Write-ups, notes and the occasional deep dive."
-  - type: "section"
+  # A listing with no entries renders nothing, heading included, so the Articles and Notes bands only
+  # appear once there is something in them (every article is archived until the launch articles land).
+  - type: "listing"
+    heading: "Articles"
+    variant: "grid"
     surface: "default"
-    blocks:
-      - type: "intro"
-        heading: "Articles"
-      - type: "listing"
-        variant: "grid"
-        query:
-          from: "articles"
-          kind: "article"
-  - type: "section"
+    query:
+      from: "articles"
+      kind: "article"
+  - type: "listing"
+    heading: "Notes"
+    variant: "notes"
     surface: "muted"
-    blocks:
-      - type: "intro"
-        heading: "Notes"
-      - type: "listing"
-        variant: "notes"
-        query:
-          from: "articles"
-          kind: "note"
-          limit: 20
-  - type: "section"
+    query:
+      from: "articles"
+      kind: "note"
+      limit: 20
+  - type: "listing"
+    heading: "From the archive"
+    variant: "list"
     surface: "default"
-    blocks:
-      - type: "intro"
-        heading: "From the archive"
-      - type: "listing"
-        variant: "list"
-        query:
-          from: "articles"
-          archived: "only"
+    query:
+      from: "articles"
+      archived: "only"
 ---

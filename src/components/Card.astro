@@ -106,6 +106,11 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     }
   }
 
+  /* An award on a card with no image sits beside the text, not over it. */
+  .card--award:not(:has(.card__media)) .card__body {
+    padding-right: calc(8.5rem + var(--space-s));
+  }
+
   /* Full: image on top, then title, meta, text and the call to action pinned to the bottom. */
   /* 509-symmetry: no hairline edges. Cards sit on a soft shadow (and a lighter surface in dark mode). */
   .card--full {
