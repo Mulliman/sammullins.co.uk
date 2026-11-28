@@ -144,6 +144,16 @@ prose-default-left:
       - A list item
       - Another list item with a [link](https://example.com/)
 
+prose-lead:
+  title: Lead paragraph (opens a page or a band)
+  block:
+    type: prose
+    lead: true
+    markdown: |-
+      With `lead: true` the first paragraph reads larger and darker, so a page doesn't open on a grey block of body text. Article and product bodies get this automatically.
+
+      The paragraphs after it are ordinary body text, left-aligned in the narrow column.
+
 prose-muted-center:
   title: Muted surface, centred
   block:
@@ -608,10 +618,12 @@ logo-wall-default:
     variant: logos
     heading: People I have worked with
     surface: default
+    hint: Select a logo to see what I did there.
     logos:
       - name: Client One
         logo: ../../assets/demo/logo.jpg
         href: https://example.com/
+        details: With `details`, a logo opens a popover; `href` becomes its "Visit" link. The `hint` line tells people the logos open.
       - name: Client Two
         logo: ../../assets/demo/logo.jpg
       - name: Client Three
@@ -883,6 +895,23 @@ split-sticky:
             - text: Second editorial point in the right column.
             - text: Third editorial point in the right column.
 
+split-narrow:
+  title: Narrow split (short text beside small logos)
+  block:
+    type: split
+    ratio: "2:1"
+    narrow: true
+    columns:
+      - - type: prose
+          markdown: "With `narrow: true` both columns stay within the text measure, so a short paragraph and small logos sit together instead of at opposite edges."
+      - - type: logoWall
+          variant: badges
+          logos:
+            - name: Sitecore
+              logo: ../../assets/media/badges/sitecore.avif
+            - name: Umbraco
+              logo: ../../assets/media/badges/umbraco.avif
+
 split-sticky-end:
   title: Ratio 2:1, sticky second column (heading first on a phone)
   block:
@@ -1097,6 +1126,19 @@ index-list-ruled-default:
       - title: DevOps
         icon: loop
         text: Automated pipelines for dependable builds and releases.
+
+index-list-meta-rows:
+  title: Ruled rows with lines under the title (the CV's jobs)
+  block:
+    type: indexList
+    variant: ruled
+    items:
+      - title: Sitecore team lead
+        meta: [Allianz Technology, 2023 to 2025]
+        text: The text starts level with the title. The first `meta` line reads stronger (a company), the rest quieter (dates).
+      - title: Senior analyst developer
+        meta: [LV=, 2021 to 2023]
+        text: On a phone the title, the lines and the text stack.
 
 index-list-icons-muted:
   title: Icon rail, no titles, muted surface
