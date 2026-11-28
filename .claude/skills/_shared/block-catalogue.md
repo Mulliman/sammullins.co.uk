@@ -215,7 +215,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | columns \| ladder | no | `'columns'` |
-| `align` | center \| left | no | `'left'` |
+| `align` | center \| left | no | `'center'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | z .array(z.object({ title: string (min 1), value: string (min 1), logo: image(), prefix: string, suffix: string, text: string, }),)  (min 1) | no |  |
 
@@ -224,7 +224,7 @@ limit: positive integer (optional)
 | field | type | required | default |
 |---|---|---|---|
 | `heading` | string | no |  |
-| `variant` | ruled \| numbered \| columns | no | `'ruled'` |
+| `variant` | ruled \| numbered \| columns | no | `'columns'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `items` | z .array(z.object({ title: string, icon: z.enum(iconNames), text: string (min 1), }),)  (min 1) | no |  |
 
@@ -234,7 +234,7 @@ limit: positive integer (optional)
 |---|---|---|---|
 | `heading` | string | no |  |
 | `variant` | manifesto \| acrostic | no | `'manifesto'` |
-| `align` | center \| left | no | `'left'` |
+| `align` | center \| left | no | `'center'` |
 | `surface` | default \| muted \| inverse | no | `'default'` |
 | `lines` | z.array(string (min 1)) (min 1) | yes |  |
 

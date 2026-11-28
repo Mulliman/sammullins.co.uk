@@ -130,3 +130,17 @@ Answer: Launch with new content at some point in November 2026. Cutover plan acc
 ### Q: TypeScript 7 while Astro and typescript-eslint catch up? (10 Nov 2026)
 Recommended: hold at TS 6 until `astro check` supports TS 7.
 Answer: No, move to where the tooling is heading now; beta tooling is fine for a personal site. Type checking runs on TypeScript 7.1 beta (`@typescript/native`) with `@astrojs/ts-content-mapper` for `.astro` files, replacing the deprecated `astro check`. `typescript` stays aliased to `@typescript/typescript6` only because typescript-eslint needs the TS 6 API; drop the alias once typescript-eslint supports TS 7.1+ (typescript-eslint/typescript-eslint#10940).
+
+### Q: Symmetry design rules (27 November 2026)
+Recommended: the 2026 home page (ticket 509, branch `509-symmetry`) is the reference for every page.
+Answer: Sam chose the symmetry variation and wants the whole site consistent with it (tickets 1401 to 1410). Every page follows these rules:
+1. Section headings are centred, with an optional centred subtitle of two lines at most on a desktop. Longer text goes below it.
+2. Longer text is left-aligned in the narrow column (`prose`, the article body), for readability.
+3. Components in a section are balanced or symmetrical, though not strictly: centred icon columns (three or four across, a short last row centred), two-up cards, a short text beside small logos in a narrow split.
+4. No hairline rules or borders where avoidable: use space, a tonal surface or a soft shadow (`--shadow-card-rest`). Focus outlines, form fields, code and table cells keep theirs.
+5. Generous space around sections and titles on every screen, phones included; images, icons and figures are compact on phones.
+6. The footer keeps the old site's four boxes (logo, What do I do?, Free stuff!, Get in touch): 1 x 4, 2 x 2, then one column.
+7. On phones the logo is centred, the theme toggle sits left and the menu is an icon on the right ("Menu" is for screen readers).
+8. Monochrome palette and the existing fonts; logos and project images keep their own colours.
+The band recipe: a `section` holding a centred `intro` (heading and short subtitle), then one balanced component, then optional left-aligned `prose`. Bands alternate `muted` and `default`; the last band before the footer is never dark (the footer is).
+

@@ -250,7 +250,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('figures'),
     heading: z.string().optional(),
     variant: z.enum(['columns', 'ladder']).default('columns'),
-    align: align.default('left'),
+    align: align.default('center'),
     surface: surface.default('default'),
     items: z
       .array(
@@ -272,7 +272,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('indexList'),
     heading: z.string().optional(),
     /** columns (ticket 509): centred columns, icon on top, like the original site's skill bands. */
-    variant: z.enum(['ruled', 'numbered', 'columns']).default('ruled'),
+    variant: z.enum(['ruled', 'numbered', 'columns']).default('columns'),
     surface: surface.default('default'),
     items: z
       .array(
@@ -292,7 +292,7 @@ const leafBlocks = (image: ImageFn) => {
     type: z.literal('statement'),
     heading: z.string().optional(),
     variant: z.enum(['manifesto', 'acrostic']).default('manifesto'),
-    align: align.default('left'),
+    align: align.default('center'),
     surface: surface.default('default'),
     lines: z.array(z.string().min(1)).min(1),
   });

@@ -33,6 +33,7 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | 11xx | Docs | README, architecture, licence notices |
 | 12xx | Launch | Content gate, review, cutover, decommission |
 | 13xx | Style guide | Unlisted living style guide: foundations, themes, components, elements, page structures |
+| 14xx | Site-wide design | The home page's symmetry design (ticket 509) on every page |
 
 ## Ticket index
 
@@ -119,6 +120,16 @@ The whole rebuild of sammullins.co.uk, specified as tickets. Decisions behind th
 | [1305](1305-style-guide-elements.md) | Style guide: generic styles and HTML elements | p1 | S | agent | 1301 |
 | [1306](1306-style-guide-page-structures.md) | Style guide: example page structures | p1 | M | pair | 1301, 1304 |
 | [1307](1307-style-guide-ci.md) | Visual regression in CI: revisit once the redesign settles | p2 | M | agent | 205, 206, 310, 312, 314 |
+| [1401](1401-symmetry-rules-and-defaults.md) | Symmetry design rules: write them down and make them the defaults | p1 | M | agent | 509 |
+| [1402](1402-remove-hairlines.md) | Remove the remaining hairline rules across blocks and layout pieces | p1 | M | agent | 1401 |
+| [1403](1403-party-games-section.md) | Party games section: an index and a page per game | p1 | L | agent | 1401 |
+| [1404](1404-xstatic-not-archived.md) | xStatic is current: take it and its docs out of the archive | p1 | S | agent | 1401 |
+| [1405](1405-cv-symmetry.md) | CV in the symmetry design | p1 | M | agent | 1402 |
+| [1406](1406-software-index-symmetry.md) | Software index in the symmetry design, linking the party games section | p1 | M | agent | 1402, 1403, 1404 |
+| [1407](1407-articles-archive-symmetry.md) | Articles index and archive in the symmetry design | p1 | S | agent | 1402, 1404 |
+| [1408](1408-software-pages-symmetry.md) | Software product and docs pages in the symmetry design | p1 | M | agent | 1402, 1404 |
+| [1409](1409-article-template-symmetry.md) | Article pages and the 404 in the symmetry design | p1 | M | agent | 1402 |
+| [1410](1410-symmetry-consistency-review.md) | Whole-site consistency review against the home page | p1 | M | agent | 1403, 1405, 1406, 1407, 1408, 1409 |
 
 ## Suggested order
 

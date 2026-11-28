@@ -84,6 +84,10 @@ Where things go:
 - A software page or docs lives at `src/content/software/<product>[/<doc>].md`. Docs set `series` and `order` to get prev/next automatically.
 - Images: put masters in `src/assets/media/<folder>/` (use the `add-images` skill) and reference them **relative to the .md file**.
 
+## Design
+
+Every page follows the symmetry design rules in [`_docs/decisions.md`](_docs/decisions.md) ("Symmetry design rules"): centred headings with short subtitles, left-aligned longer text, balanced components, no hairlines, compact images on phones. The home page (`src/content/pages/home.md`) is the reference: copy its band recipe.
+
 ## Voice
 
 - Write as Sam, in the first person ("I"). Use "we" only when a team is actually meant.
