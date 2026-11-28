@@ -7,7 +7,8 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { serve } from './server.mjs';
 
-const DEMO = '/style-guide/components/';
+// The embed and the gallery are on the style guide's media group page.
+const DEMO = '/style-guide/components/media/';
 let browser, srv;
 before(async () => {
   srv = await serve();

@@ -4,9 +4,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { DIST } from './helpers.mjs';
+import { DIST, componentGroupsHtml } from './helpers.mjs';
 
-const html = readFileSync(join(DIST, 'style-guide', 'components', 'index.html'), 'utf8');
+const html = componentGroupsHtml();
 const between = (from, to) => html.slice(html.indexOf(from), to ? html.indexOf(to, html.indexOf(from)) : undefined);
 
 test('disclosure: closed by default, open when asked, and done is said in words', () => {

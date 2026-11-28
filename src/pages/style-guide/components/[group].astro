@@ -1,0 +1,217 @@
+---
+/**
+ * Style guide: one component group (Sam, 28 November 2026). Each block's examples are rendered by the real
+ * block components at full width, exactly as on the site; a dark strip names each example, and the YAML and
+ * the block's fields are tucked into closed disclosures so the page reads like the site, not a manual.
+ */
+import StyleGuideLayout from '../../../components/StyleGuideLayout.astro';
+import Blocks from '../../../components/Blocks.astro';
+import StyleGuideSampleBody from '../../../components/StyleGuideSampleBody.astro';
+import { componentGroups, componentSections, type ComponentGroup } from '../../../lib/style-guide-sections';
+
+export function getStaticPaths() {
+  return componentGroups.map((group) => ({ params: { group: group.slug }, props: { group } }));
+}
+
+interface Props {
+  group: ComponentGroup;
+}
+const { group } = Astro.props;
+const all = await componentSections();
+const sections = group.types.map((t) => all.get(t)!);
+const subnav = componentGroups.map((g) => ({ href: `/style-guide/components/${g.slug}/`, label: g.title }));
+---
+
+<StyleGuideLayout title={`${group.title}: components`} description={group.summary} wide={true} subnav={subnav}>
+  <div class="container sg-head">
+    <h1>{group.title}</h1>
+    <p class="sg-head__lead">{group.summary}</p>
+    <nav aria-label="Blocks on this page" class="sg-jump">
+      <ul>
+        {sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>{s.title}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  {sections.map((s) => (
+    <section class="sg-block" aria-labelledby={s.id}>
+      <div class="container sg-block__head">
+        <h2 id={s.id}>{s.title}</h2>
+        <p class="sg-block__summary">{s.summary}</p>
+        <details class="sg-details">
+          <summary>Fields</summary>
+          <div class="sg-table">
+            <table class="sg-fields">
+              <thead>
+                <tr>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Default</th>
+                </tr>
+              </thead>
+              <tbody>
+                {s.fields.map((f) => (
+                  <tr>
+                    <th scope="row">
+                      <code>{f.key}</code>
+                    </th>
+                    <td>
+                      <code>{f.type}</code>
+                    </td>
+                    <td>{f.optional || f.dflt ? 'No' : 'Yes'}</td>
+                    <td>{f.dflt ? <code>{f.dflt}</code> : ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      {s.examples.map((ex) => (
+        <div class="sg-example">
+          <div class="sg-example__bar">
+            <div class="container sg-example__bar-inner">
+              <h3 class="sg-example__title">{ex.title}</h3>
+            </div>
+          </div>
+          <div class="sg-example__render">
+            <Blocks blocks={[ex.block]} Content={StyleGuideSampleBody} />
+          </div>
+          <div class="container sg-example__code">
+            <details class="sg-details">
+              <summary>YAML</summary>
+              <Blocks blocks={[{ type: 'code', lang: 'yaml', filename: `${ex.id}.yaml`, code: ex.yaml }]} nested />
+            </details>
+          </div>
+        </div>
+      ))}
+    </section>
+  ))}
+</StyleGuideLayout>
+
+<style>
+  .sg-head {
+    padding-block: var(--space-l) var(--space-m-l);
+    text-align: center;
+  }
+  .sg-head h1 {
+    margin: 0 0 var(--space-s);
+  }
+  .sg-head__lead {
+    max-width: 36em;
+    margin: 0 auto;
+    font-size: var(--step-1);
+    line-height: var(--leading-lead);
+    color: var(--color-text-muted);
+    text-wrap: balance;
+  }
+  .sg-jump ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2xs);
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+  }
+  .sg-jump a {
+    display: block;
+    padding: var(--space-3xs) var(--space-s);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-muted);
+    color: var(--color-text-strong);
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+  .sg-jump a:hover {
+    background: var(--color-text-strong);
+    color: var(--color-bg);
+  }
+
+  /* One block: a centred heading, then its examples one after another, full width. */
+  .sg-block {
+    padding-top: var(--space-xl);
+    scroll-margin-top: var(--header-h);
+  }
+  .sg-block__head {
+    padding-bottom: var(--space-m);
+    text-align: center;
+  }
+  .sg-block__head h2 {
+    margin: 0 0 var(--space-2xs);
+    scroll-margin-top: calc(var(--header-h) + var(--space-s));
+  }
+  .sg-block__summary {
+    max-width: 36em;
+    margin: 0 auto;
+    color: var(--color-text-muted);
+  }
+
+  /* The strip that names an example is clearly guide chrome, not part of the page it shows. */
+  .sg-example__bar {
+    background: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+  }
+  .sg-example__bar-inner {
+    padding-block: var(--space-2xs);
+  }
+  .sg-example__title {
+    margin: 0;
+    font-size: var(--step--1);
+    font-weight: var(--weight-strong);
+    color: inherit;
+  }
+  .sg-example__render {
+    min-width: 0;
+  }
+  .sg-example__code {
+    padding-block: var(--space-xs) var(--space-m);
+  }
+
+  .sg-details {
+    text-align: left;
+  }
+  .sg-block__head .sg-details {
+    display: inline-block;
+    max-width: 100%;
+    margin-top: var(--space-s);
+  }
+  .sg-details > summary {
+    display: inline-block;
+    padding: var(--space-3xs) var(--space-s);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-muted);
+    color: var(--color-text-strong);
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .sg-details[open] > summary {
+    margin-bottom: var(--space-s);
+  }
+  .sg-table {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .sg-fields {
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+  .sg-fields th,
+  .sg-fields td {
+    padding: var(--space-3xs) var(--space-xs);
+    text-align: left;
+    vertical-align: top;
+  }
+  .sg-fields tbody tr:nth-child(odd) {
+    background: var(--color-bg-muted);
+  }
+  .sg-fields code {
+    overflow-wrap: anywhere;
+  }
+</style>

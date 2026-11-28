@@ -51,7 +51,20 @@ export function styleGuideReadyPaths() {
   for (const m of src.matchAll(/href: '([^']+)',[\s\S]*?ready: (true|false),/g)) {
     if (m[2] === 'true') out.push(m[1]);
   }
-  return out;
+  return [...out, ...componentGroupPaths()];
+}
+
+/** The style guide's component group pages, parsed from src/lib/style-guide-sections.ts. Returns site paths. */
+export function componentGroupPaths() {
+  const src = readFileSync(join(ROOT, 'src/lib/style-guide-sections.ts'), 'utf8');
+  return [...src.matchAll(/slug: '([^']+)'/g)].map((m) => `/style-guide/components/${m[1]}/`);
+}
+
+/** The built HTML of every component group page, joined: together they show every example. */
+export function componentGroupsHtml() {
+  return componentGroupPaths()
+    .map((p) => readFileSync(join(DIST, ...p.split('/').filter(Boolean), 'index.html'), 'utf8'))
+    .join('\n');
 }
 
 /** The page theme names from src/styles/themes/index.ts (ticket 207). */

@@ -5,14 +5,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { DIST, ROOT, redirects } from './helpers.mjs';
+import { DIST, ROOT, redirects, componentGroupsHtml } from './helpers.mjs';
 import { parseSchema, enumOptions } from '../scripts/skills/schema-blocks.mjs';
 
 const PAGE = join(DIST, 'style-guide', 'components', 'index.html');
 const SOURCE = join(ROOT, 'src', 'content.config.ts');
 const EXAMPLES = join(ROOT, 'src', 'content', 'style-guide', 'components.yaml');
 
-const html = readFileSync(PAGE, 'utf8');
+// The examples are on the component group pages (one per group); the components page lists the groups.
+const html = componentGroupsHtml();
 const { blocks, shared } = parseSchema(readFileSync(SOURCE, 'utf8'));
 
 /** Reverses Astro's HTML escaping in a code block's text. */
