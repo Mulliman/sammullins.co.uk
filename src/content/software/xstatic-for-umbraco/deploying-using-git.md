@@ -12,6 +12,7 @@ order: 3
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Deploying using Git"
     subheading: "Using Git to deploy your static site means that you can easily release to GitHub Pages, as well as any other continuous deployment platform."
   - type: "body"

@@ -12,6 +12,7 @@ order: 2
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Deploying to Netlify"
     subheading: "Setting up a Netlify site is free, and should only take a few minutes to create and configure within xStatic."
   - type: "body"

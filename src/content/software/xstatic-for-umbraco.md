@@ -10,12 +10,13 @@ archived: false
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "xStatic for Umbraco"
-    subheading: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content. This allows for very cheap and fast hosting of simple sites."
+    subheading: "xStatic is a free Umbraco package that generates static HTML sites from Umbraco content."
   - type: "body"
     surface: "default"
   - type: "cards"
-    variant: "text"
+    variant: "full"
     surface: "default"
     columns: 3
     items:
@@ -32,13 +33,17 @@ blocks:
       - title: "You want to attract clients"
         text: "Why not add a few images and styles to your existing base build and push the result to Netlify in minutes. You can share or demo this website and separate you from your competition."
   - type: "cards"
-    variant: "text"
+    variant: "full"
     surface: "default"
     columns: 2
     items:
       - title: "xStatic on Our Umbraco"
         text: "Download or install this package from the official Umbraco package repository."
         href: "https://our.umbraco.com/packages/backoffice-extensions/xstatic/"
+        award:
+          label: "Winner"
+          title: "Umbraco Package Award"
+          detail: "Best newcomer 2021"
   - type: "section"
     surface: "muted"
     blocks:
@@ -46,8 +51,8 @@ blocks:
         heading: "Documentation"
         align: "center"
       - type: "cards"
-        variant: "text"
-        columns: 3
+        variant: "row"
+        columns: 2
         items:
           - title: "Building your first static site"
             text: "Setting up xStatic is easy, and following these steps you can configure your first static site within minutes."
@@ -76,6 +81,8 @@ blocks:
   - type: "prose"
     markdown: "If you want to contribute to xStatic, please fork the repository at [https://github.com/Mulliman/xStatic-for-Umbraco](https://github.com/Mulliman/xStatic-for-Umbraco)"
 ---
+
+This allows for very cheap and fast hosting of simple sites.
 
 ## Is xStatic for you?
 

@@ -12,6 +12,7 @@ order: 7
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Extending xStatic v1"
     subheading: "You can extend xStatic to generate and transform the output to fit your specific requirements."
   - type: "body"

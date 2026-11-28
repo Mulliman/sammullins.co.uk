@@ -12,6 +12,7 @@ order: 1
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Autogenerate components with XPEDITE"
     subheading: "Why start from scratch when XPEDITE can create your Next.js components for you. You choose your Umbraco content types and XPEDITE outputs headless React components that consume the data from the Umbraco Delivery API."
   - type: "body"

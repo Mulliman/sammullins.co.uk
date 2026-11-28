@@ -6,6 +6,11 @@ cover:
   alt: "The PostCapture logo in orange on black"
 authorship: "sam"
 blocks:
+  - type: "hero"
+    variant: "plain"
+    align: "center"
+    heading: "PostCapture"
+    subheading: "PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data."
   - type: "body"
     surface: "default"
   - type: "embed"
@@ -13,9 +18,5 @@ blocks:
     id: "AW3xLKlumw8"
     title: "PostCapture (video)"
 ---
-
-# PostCapture
-
-PostCapture is a CaptureOne plugin (and standalone program) that applies different watermarks and borders to images depending on EXIF data.
 
 For information please go to the GitHub page at [https://mulliman.github.io/PostCapture/](https://mulliman.github.io/PostCapture/)

@@ -12,6 +12,7 @@ order: 1
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Building your first static site"
     subheading: "Setting up xStatic is easy, and following these steps you can configure your first static site within minutes."
   - type: "body"

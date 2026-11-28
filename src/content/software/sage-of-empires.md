@@ -8,12 +8,13 @@ authorship: "sam"
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Sage of Empires"
     subheading: "Sage of Empires is a web app that gives users sage advice for the civ they are currently playing with / against to use on their 2nd monitor."
   - type: "body"
     surface: "default"
   - type: "cards"
-    variant: "text"
+    variant: "full"
     surface: "muted"
     columns: 2
     items:

@@ -6,6 +6,11 @@ cover:
   alt: "The PanoCapture logo in blue on black"
 authorship: "sam"
 blocks:
+  - type: "hero"
+    variant: "plain"
+    align: "center"
+    heading: "PanoCapture"
+    subheading: "PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos."
   - type: "body"
     surface: "default"
   - type: "embed"
@@ -13,9 +18,5 @@ blocks:
     id: "LwaZ4JD5AeU"
     title: "PanoCapture (video)"
 ---
-
-# PanoCapture
-
-PanoCapture is a free and open source plugin for CaptureOne that allows users to create panoramas from multiple photos.
 
 For information please go to the GitHub page at [https://mulliman.github.io/PanoCapture/](https://mulliman.github.io/PanoCapture/)

@@ -12,6 +12,7 @@ order: 5
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Image crops"
     subheading: "xStatic works with the built in Umbraco image cropping functionality, but you do need to do a little bit of configuration."
   - type: "body"

@@ -12,6 +12,7 @@ order: 2
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Autogenerate tests with XPEDITE"
     subheading: "Creating mock data for unit testing is very tedious, so XPEDITE allows you to create test files with data that comes directly from items you've created in the CMS."
   - type: "body"

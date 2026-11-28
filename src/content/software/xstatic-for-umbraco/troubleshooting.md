@@ -12,6 +12,7 @@ order: 6
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Troubleshooting"
     subheading: "xStatic should work out of the box, but if it doesn't, this is the place to check first."
   - type: "body"

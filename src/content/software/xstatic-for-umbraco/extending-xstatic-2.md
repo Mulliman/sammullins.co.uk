@@ -12,6 +12,7 @@ order: 8
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Extending xStatic v2+"
     subheading: "You can extend xStatic even more with the version 2 upgrade and this is the place to find out how."
   - type: "cards"

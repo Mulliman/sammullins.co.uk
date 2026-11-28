@@ -6,10 +6,13 @@ cover:
   alt: "The Is Baby in a Book? logo: a cartoon baby with a question mark above it, reading a book"
 authorship: "sam"
 blocks:
-  - type: "body"
-    surface: "muted"
+  - type: "hero"
+    variant: "plain"
+    align: "center"
+    heading: "Is Baby In A Book?"
+    subheading: "Struggling to find that perfect gift for a little one? Find a book with their name in it using Is Baby In A Book!"
   - type: "image"
-    surface: "inverse"
+    surface: "muted"
     width: "wide"
     image:
       src: "../../assets/media/3gyc45vu/biab-thin-banner.avif"
@@ -35,6 +38,3 @@ blocks:
       One problem we faced during the build was allowing my wife to efficiently populate the data without SQL management skills. The way I achieved this was by creating a Chrome extension that she could trigger on the amazon page for the book; this would then auto-populate most of the data allowing her to add a book to the site in seconds.
 ---
 
-# Is Baby In A Book?
-
-Struggling to find that perfect gift for a little one? Find a book with their name in it using Is Baby In A Book!

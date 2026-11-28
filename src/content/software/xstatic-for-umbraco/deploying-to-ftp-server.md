@@ -12,6 +12,7 @@ order: 4
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "Deploying to FTP server"
     subheading: "if you have an existing server with FTP access, this may an easy option. xStatic will update the remote server to mirror the files built locally; this seems to be slower than the Git and Netlify deployment methods."
   - type: "body"

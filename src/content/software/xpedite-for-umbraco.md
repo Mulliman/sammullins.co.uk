@@ -10,12 +10,13 @@ archived: true
 blocks:
   - type: "hero"
     variant: "plain"
+    align: "center"
     heading: "XPEDITE for Umbraco"
-    subheading: "Create Umbraco headless websites FAST! XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components."
+    subheading: "Create Umbraco headless websites FAST!"
   - type: "body"
     surface: "default"
   - type: "cards"
-    variant: "text"
+    variant: "full"
     surface: "default"
     columns: 3
     items:
@@ -72,7 +73,7 @@ blocks:
         heading: "Documentation"
         align: "center"
       - type: "cards"
-        variant: "text"
+        variant: "row"
         columns: 2
         items:
           - title: "Autogenerate components with XPEDITE"
@@ -82,6 +83,8 @@ blocks:
             text: "Creating mock data for unit testing is very tedious, so XPEDITE allows you to create test files with data that comes directly from items you've created in the CMS."
             href: "/software/xpedite-for-umbraco/autogenerate-tests/"
 ---
+
+XPEDITE guides you through setting up headless Umbraco websites and automates building unit tested components.
 
 ## Why use XPEDITE?
 
